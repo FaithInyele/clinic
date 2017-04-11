@@ -1,0 +1,206 @@
+/**
+custom edits my Makamu E.
+these changes are designed to tweak the metis css so as to allign the site with mt theme
+ */
+div#wrap.bg-dark.dk{
+    background-color: #F5F5F5 !important;
+    color: #53CDF6 !important;
+}
+nav.navbar.navbar-inverse.navbar-static-top{
+    background-color: #F5F5F5 !important
+}
+a{
+    color: #53CDF6 !important;
+}
+a:hover{
+    color: red !important;
+}
+div.collapse.navbar-collapse.navbar-ex1-collapse{
+    border-color: #53CDF6;
+}
+.bg-blue.dker{
+    background-color: #444444!important;
+}
+._login{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+div.panel-heading{
+    text-align: center;
+    background-color: #53CDF6 !important;
+}
+button.btn.btn-primary{
+    background-color: #53CDF6 !important;
+}
+label{
+    text-align: left !important;
+    color: #53CDF6;
+}
+.row{
+    margin-right: 15px;
+    margin-left: 15px;
+}
+/**
+form wizard styles
+ */
+
+
+.top-content { padding: 40px 0 170px 0; }
+
+.top-content .text { color: #fff; }
+.top-content .text h1 { color: #fff; }
+.top-content .description { margin: 20px 0 10px 0; }
+.top-content .description p { opacity: 0.8; }
+.top-content .description a { color: #fff; }
+.top-content .description a:hover,
+.top-content .description a:focus { border-bottom: 1px dotted #fff; }
+
+.form-box { padding-top: 40px; }
+
+.f1 {
+    padding: 25px; background: #fff;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+.f1 h3 { margin-top: 0; margin-bottom: 5px; text-transform: uppercase; }
+
+.f1-steps { overflow: hidden; position: relative; margin-top: 20px; }
+
+.f1-progress { position: absolute; top: 24px; left: 0; width: 100%; height: 1px; background: #ddd; }
+.f1-progress-line { position: absolute;
+    top: 0; left: 0;
+    height: 1px;
+    background: #53CDF6; }
+
+.f1-step {
+    position: relative;
+    float: left;
+    width: 33.333333%;
+    padding: 0 5px; }
+
+.f1-step-icon {
+    display: inline-block; width: 40px; height: 40px; margin-top: 4px; background: #ddd;
+    font-size: 16px; color: #fff; line-height: 40px;
+    -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;
+}
+.f1-step.activated .f1-step-icon {
+    background: #fff;
+    border: 1px solid #53CDF6;
+    color: #53CDF6;
+    line-height: 38px;
+}
+.f1-step.active .f1-step-icon {
+    width: 48px;
+    height: 48px;
+    margin-top: 0;
+    background: #53CDF6;
+    font-size: 22px;
+    line-height: 48px;
+}
+
+.f1-step p { color: #ccc; }
+.f1-step.activated p { color: #53CDF6; }
+.f1-step.active p { color: #53CDF6; }
+
+.f1 fieldset { display: none; text-align: left; }
+
+.f1-buttons { text-align: right; }
+
+.f1 .input-error { border-color: #f35b3f; }
+
+div.f1-step-icon{
+    text-align: center;
+}
+.form-box{
+    padding-top: 0px !important;
+}
+
+/**
+Vue Modal
+ */
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+    display: table;
+    transition: opacity .3s ease;
+}
+
+.modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.modal-container {
+    width: 60%;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
+    transition: all .3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+.modal-default-button {
+    float: right;
+}
+
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
+
+.modal-enter {
+    opacity: 0;
+}
+
+.modal-leave-active {
+    opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+
+.pullquote-left{
+    border-left:5px solid #53CDF6;
+    margin-top: 20px;
+    background-color: #F5F5F5;
+}
+.pullquote-left:hover{
+    background-color: #49ffe1 !important;
+}
+.pullquote-left a:hover{
+    color: white !important;
+}
+.myTicket{
+    min-height: 200px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+.myTicket div.panel-heading{
+    text-align: left !important;
+}
+.modal-container{
+    width: 90% !important;
+}
