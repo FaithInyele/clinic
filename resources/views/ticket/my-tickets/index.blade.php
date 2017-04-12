@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <issuedticket></issuedticket>
+   {{-- <issuedticket></issuedticket>--}}
+    <atlab></atlab>
 @endsection

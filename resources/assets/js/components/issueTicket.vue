@@ -251,7 +251,8 @@
                 chooseMed: false,
                 labTechnicians: [],
                 selectedLabTech: '',
-                successtoLab: false
+                successtoLab: false,
+
             }
         },
         methods:{

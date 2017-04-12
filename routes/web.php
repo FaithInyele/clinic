@@ -63,6 +63,12 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('progress/atlab', 'ProgressController@atLab');
 
 
+    /**
+     * atLab routes.
+     */
+    Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
+
+
 });
 
 

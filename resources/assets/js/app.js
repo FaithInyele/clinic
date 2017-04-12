@@ -23,6 +23,8 @@ Vue.component('ticket', require('./components/ticket.vue'));
 
 Vue.component('issuedticket', require('./components/issueTicket.vue'));
 
+Vue.component('atlab', require('./components/atLab.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {
