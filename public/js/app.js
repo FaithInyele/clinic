@@ -12397,7 +12397,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             clients: [],
             currentClient: [],
             saveButton: 'Save',
-            resultsButton: 'Send Results'
+            resultsButton: 'Send Resultss'
         };
     },
     methods: {
@@ -12418,6 +12418,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.clients = response.data;
             }.bind(this));
         },
+        submitResults: function submitResults() {
+            var inheritance = this;
+            console.log('haha');
+        },
         //open a given ticket
         currentTicket: function currentTicket(ticket_id) {
             var inheritance = this;
@@ -12430,7 +12434,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //save results
         saveResults: function saveResults(data) {
             var inheritance = this;
-            console.log(JSON.stringify(data));
             axios.post(base_url + '/atlab/test/update', data).then(function (response) {
                 console.log(response.data);
             });
@@ -37754,7 +37757,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }, [_vm._v(_vm._s(_vm.saveButton))]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary"
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        _vm.submitResults()
+      }
+    }
   }, [_vm._v(_vm._s(_vm.resultsButton))])])], 2), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {

@@ -139,7 +139,7 @@
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="btn btn-primary" @click="saveResults(currentClient.tests)">{{ saveButton }}</button>
-                                                    <button class="btn btn-primary">{{ resultsButton }}</button>
+                                                    <button class="btn btn-primary" @click="submitResults()">{{ resultsButton }}</button>
                                                 </div>
                                             </div>
 
@@ -179,7 +179,7 @@
                 clients: [],
                 currentClient: [],
                 saveButton: 'Save',
-                resultsButton: 'Send Results'
+                resultsButton: 'Send Resultss'
             }
         },
         methods:{
@@ -201,6 +201,11 @@
                         inheritance.clients = response.data;
                     }.bind(this))
             },
+            submitResults: function () {
+                var inheritance = this;
+                console.log('haha');
+
+            },
             //open a given ticket
             currentTicket: function (ticket_id) {
                 var inheritance = this;
@@ -214,10 +219,6 @@
             //save results
             saveResults: function (data) {
                 var inheritance = this;
-                //console.log(JSON.stringify(data));
-                $.each(JSON.stringify(data), function(i, item) {
-                    console.log(data[i].id);
-                });​
                 axios.post(base_url+'/atlab/test/update', data)
                     .then(function (response) {
                         console.log(response.data);

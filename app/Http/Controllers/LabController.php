@@ -30,18 +30,23 @@ class LabController extends Controller
         return Response::json($ticket);
     }
 
+    /**
+     * update tests--> adding test results
+     *
+     * @param Request $request
+     * @return mixed
+     */
     public function updateTest(Request $request){
         $data = array();
         foreach ($request->all() as $item){
-            /*unset($item['created_at']);
-            unset($item['updated_at']);*/
             DB::table('tests')
                 ->where('id', $item['id'])
                 ->update(['result'=>$item['result']]);
-            /*$test = new Test($item);
-            $test->save();
-            array_push($data, $test);*/
         }
         return Response::json($data);
+    }
+
+    public function finishTest(Request $request){
+
     }
 }
