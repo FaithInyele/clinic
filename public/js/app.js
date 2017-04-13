@@ -12372,6 +12372,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12382,7 +12395,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             ticketModal: false,
             clients: [],
-            currentClient: []
+            currentClient: [],
+            saveButton: 'Save',
+            resultsButton: 'Send Results'
         };
     },
     methods: {
@@ -12410,8 +12425,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
                 inheritance.currentClient = response.data;
             }.bind(this));
-
             inheritance.ticketModal = true;
+        },
+        //save results
+        saveResults: function saveResults(data) {
+            var inheritance = this;
+            console.log(JSON.stringify(data));
+            axios.post(base_url + '/atlab/test/update', data).then(function (response) {
+                console.log(response.data);
+            });
         }
     }
 };
@@ -37620,6 +37642,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-container"
   }, [(_vm.currentClient.client) ? _c('div', {
     staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-4"
   }, [_c('div', {
@@ -37632,26 +37656,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "src": "https://placehold.it/140x100"
     }
-  })]), _vm._v(" "), (_vm.currentTicket.client) ? _c('div', {
+  })]), _vm._v(" "), (_vm.currentClient.client) ? _c('div', {
     staticClass: "row"
-  }, [_c('h5', [_c('p', [_c('b', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.first_name) + ",  " + _vm._s(_vm.currentTicket.client.other_names))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.type))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.yob))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.currentTicket.updated_at))]), _vm._v(" "), _c('input', {
+  }, [_c('h5', [_c('p', [_c('b', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.first_name) + ",  " + _vm._s(_vm.currentClient.client.other_names))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.type))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.yob))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.currentClient.updated_at))]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.currentTicket.id),
-      expression: "currentTicket.id"
+      value: (_vm.currentClient.id),
+      expression: "currentClient.id"
     }],
     attrs: {
       "type": "hidden",
       "id": "hiddenTicketId"
     },
     domProps: {
-      "value": (_vm.currentTicket.id)
+      "value": (_vm.currentClient.id)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.currentTicket.id = $event.target.value
+        _vm.currentClient.id = $event.target.value
       }
     }
   })])]) : _vm._e()]), _vm._v(" "), _c('div', {
@@ -37686,18 +37710,57 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "progress"
     }
-  }, [_c('h1', [_vm._v("Requested Tests")]), _vm._v(" "), _vm._l((_vm.currentClient.tests), function(test) {
+  }, [_c('h3', [_vm._v("Requested Tests")]), _vm._v(" "), _vm._l((_vm.currentClient.tests), function(test) {
     return _c('div', {
       staticClass: "form-group"
     }, [_c('div', {
-      staticClass: "row"
-    }, [_vm._v("\n                                                    " + _vm._s(test.description) + "\n                                                ")])])
-  })], 2), _vm._v(" "), _c('div', {
+      staticClass: "row pullquote-left"
+    }, [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "padding-left": "10px",
+        "padding-right": "10px",
+        "margin-bottom": "10px"
+      }
+    }, [_c('h4', [_vm._v(_vm._s(test.description))]), _vm._v(" "), _c('h6', [_vm._v("requested at: " + _vm._s(test.created_at))]), _vm._v(" "), _c('label', {
+      staticStyle: {
+        "font-size": "9px"
+      }
+    }, [_vm._v("Enter results here:")]), _vm._v(" "), _c('textarea', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (test.results),
+        expression: "test.results"
+      }],
+      staticClass: "form-control",
+      domProps: {
+        "value": (test.results)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          test.results = $event.target.value
+        }
+      }
+    })])])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "pull-right"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        _vm.saveResults(_vm.currentClient.tests)
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.saveButton))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary"
+  }, [_vm._v(_vm._s(_vm.resultsButton))])])], 2), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
       "id": "history"
     }
-  }, [_c('h1', [_vm._v("History")])])])])])]) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_c('h1', [_vm._v("History")])])])])])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "modal-default-button",

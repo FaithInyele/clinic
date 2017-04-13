@@ -28,4 +28,13 @@ class LabController extends Controller
 
         return Response::json($ticket);
     }
+
+    public function updateTest(Request $request){
+        foreach ($request as $item){
+            $test = new Test($item);
+            $test->save();
+        }
+        return Response::json($request->all());
+
+    }
 }

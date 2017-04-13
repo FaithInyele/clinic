@@ -67,6 +67,7 @@ Route::group(['middleware' => 'logIn'], function () {
      * atLab routes.
      */
     Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
+    Route::post('atlab/test/update', 'LabController@updateTest');
 
 
 });

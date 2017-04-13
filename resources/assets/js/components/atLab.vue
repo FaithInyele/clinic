@@ -99,17 +99,19 @@
                         </div>-->
 
                         <div class="modal-body" v-if="currentClient.client">
+                            <slot name="body">
+                                <div class="row">
                                 <div class="col-md-4">
                                     <div class="row">
                                         <img src="https://placehold.it/140x100" style="width: 100%; height: auto">
                                     </div>
-                                    <div class="row" v-if="currentTicket.client">
+                                    <div class="row" v-if="currentClient.client">
                                         <h5>
-                                            <p><b>Client Name:</b> {{currentTicket.client.first_name}},  {{currentTicket.client.other_names}}</p>
-                                            <p><b>Client Type:</b> {{currentTicket.client.type}}</p>
-                                            <p><b>Year of Birth:</b> {{currentTicket.client.yob}}</p>
-                                            <p>{{currentTicket.updated_at}}</p>
-                                            <input type="hidden" v-model="currentTicket.id" id="hiddenTicketId">
+                                            <p><b>Client Name:</b> {{currentClient.client.first_name}},  {{currentClient.client.other_names}}</p>
+                                            <p><b>Client Type:</b> {{currentClient.client.type}}</p>
+                                            <p><b>Year of Birth:</b> {{currentClient.client.yob}}</p>
+                                            <p>{{currentClient.updated_at}}</p>
+                                            <input type="hidden" v-model="currentClient.id" id="hiddenTicketId">
                                         </h5>
                                     </div>
 
@@ -123,11 +125,21 @@
 
                                         <div class="row tab-content" >
                                             <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
-                                                <h1>Requested Tests</h1>
+                                                <h3>Requested Tests</h3>
                                                 <div class="form-group" v-for="test in currentClient.tests">
-                                                    <div class="row">
-                                                        {{ test.description }}
+                                                    <div class="row pullquote-left">
+                                                        <div class="row" style="padding-left: 10px;padding-right: 10px;margin-bottom: 10px">
+                                                            <h4>{{ test.description }}</h4>
+                                                            <h6>requested at: {{ test.created_at }}</h6>
+                                                            <label style="font-size: 9px">Enter results here:</label>
+                                                            <textarea class="form-control" v-model="test.results">
+                                                            </textarea>
+                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="pull-right">
+                                                    <button class="btn btn-primary" @click="saveResults(currentClient.tests)">{{ saveButton }}</button>
+                                                    <button class="btn btn-primary">{{ resultsButton }}</button>
                                                 </div>
                                             </div>
 
@@ -137,11 +149,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                            </slot>
                         </div>
 
                         <div class="modal-footer">
                             <slot name="footer">
-
                                 <button class="modal-default-button" @click="closeTicket">
                                     Close
                                 </button>
@@ -164,7 +177,9 @@
             return{
                 ticketModal: false,
                 clients: [],
-                currentClient: []
+                currentClient: [],
+                saveButton: 'Save',
+                resultsButton: 'Send Results'
             }
         },
         methods:{
@@ -193,9 +208,17 @@
                 axios.get(base_url+'/atlab/view/'+ticket_id)
                     .then(function (response) {
                         inheritance.currentClient = response.data;
-                    }.bind(this))
-
+                    }.bind(this));
                 inheritance.ticketModal = true;
+            },
+            //save results
+            saveResults: function (data) {
+                var inheritance = this;
+                console.log(JSON.stringify(data));
+                axios.post(base_url+'/atlab/test/update', data)
+                    .then(function (response) {
+                        console.log(response.data);
+                    })
             }
         }
     }
