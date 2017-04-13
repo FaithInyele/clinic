@@ -37730,17 +37730,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: (test.results),
-        expression: "test.results"
+        value: (test.result),
+        expression: "test.result"
       }],
       staticClass: "form-control",
       domProps: {
-        "value": (test.results)
+        "value": (test.result)
       },
       on: {
         "input": function($event) {
           if ($event.target.composing) { return; }
-          test.results = $event.target.value
+          test.result = $event.target.value
         }
       }
     })])])])

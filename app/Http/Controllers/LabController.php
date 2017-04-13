@@ -8,6 +8,7 @@ use App\Ticket;
 use App\Progress;
 use App\Clients;
 use App\Test;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 
 class LabController extends Controller
@@ -30,11 +31,17 @@ class LabController extends Controller
     }
 
     public function updateTest(Request $request){
-        foreach ($request as $item){
-            $test = new Test($item);
+        $data = array();
+        foreach ($request->all() as $item){
+            /*unset($item['created_at']);
+            unset($item['updated_at']);*/
+            DB::table('tests')
+                ->where('id', $item['id'])
+                ->update(['result'=>$item['result']]);
+            /*$test = new Test($item);
             $test->save();
+            array_push($data, $test);*/
         }
-        return Response::json($request->all());
-
+        return Response::json($data);
     }
 }

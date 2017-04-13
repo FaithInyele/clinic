@@ -132,7 +132,7 @@
                                                             <h4>{{ test.description }}</h4>
                                                             <h6>requested at: {{ test.created_at }}</h6>
                                                             <label style="font-size: 9px">Enter results here:</label>
-                                                            <textarea class="form-control" v-model="test.results">
+                                                            <textarea class="form-control" v-model="test.result">
                                                             </textarea>
                                                         </div>
                                                     </div>
@@ -214,7 +214,10 @@
             //save results
             saveResults: function (data) {
                 var inheritance = this;
-                console.log(JSON.stringify(data));
+                //console.log(JSON.stringify(data));
+                $.each(JSON.stringify(data), function(i, item) {
+                    console.log(data[i].id);
+                });​
                 axios.post(base_url+'/atlab/test/update', data)
                     .then(function (response) {
                         console.log(response.data);
