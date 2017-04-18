@@ -11282,6 +11282,8 @@ Vue.component('ticket_start', __webpack_require__(52));
 
 Vue.component('ticket', __webpack_require__(51));
 
+Vue.component('chemist', __webpack_require__(98));
+
 Vue.component('issuedticket', __webpack_require__(50));
 
 Vue.component('atlab', __webpack_require__(49));
@@ -47634,6 +47636,456 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(12);
 
+
+/***/ }),
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+    data: function data() {
+        return {};
+    },
+    methods: {}
+};
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(97),
+  /* template */
+  __webpack_require__(99),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/chemist.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] chemist.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f2d91436", Component.options)
+  } else {
+    hotAPI.reload("data-v-f2d91436", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-8"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "panel-body myTicket"
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "dataTable",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
+    on: {
+      "click": _vm.openTicket
+    }
+  }, [_vm._v("Open")])])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)])])])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6)]), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-4"
+  }, [_vm._m(7), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(8), _vm._v(" "), _vm._l((_vm.clients), function(client) {
+    return _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(client.c_fname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.created_at))]), _vm._v(" "), _c('td', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.currentTicket(client.ticket_id)
+        }
+      }
+    }, [_vm._v("Open")])])])])
+  })], 2)])]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.ticketModal),
+      expression: "ticketModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container"
+  }, [(_vm.currentClient.client) ? _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('img', {
+    staticStyle: {
+      "width": "100%",
+      "height": "auto"
+    },
+    attrs: {
+      "src": "https://placehold.it/140x100"
+    }
+  })]), _vm._v(" "), (_vm.currentClient.client) ? _c('div', {
+    staticClass: "row"
+  }, [_c('h5', [_c('p', [_c('b', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.first_name) + ",  " + _vm._s(_vm.currentClient.client.other_names))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.type))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.yob))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.currentClient.updated_at))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.id),
+      expression: "currentClient.id"
+    }],
+    attrs: {
+      "type": "hidden",
+      "id": "hiddenTicketId"
+    },
+    domProps: {
+      "value": (_vm.currentClient.id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.id = $event.target.value
+      }
+    }
+  })])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8"
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "max-height": "450px",
+      "overflow-y": "scroll"
+    }
+  }, [_c('ul', {
+    staticClass: "nav nav-tabs"
+  }, [_c('li', {
+    staticClass: "active"
+  }, [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#progress"
+    }
+  }, [_vm._v("Ticket")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#history"
+    }
+  }, [_vm._v(" History")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row tab-content"
+  }, [_c('div', {
+    staticClass: "tab-pane fade in active",
+    staticStyle: {
+      "min-height": "80%"
+    },
+    attrs: {
+      "id": "progress"
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "history"
+    }
+  }, [_c('h1', [_vm._v("History")])])])])])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "modal-default-button",
+    on: {
+      "click": _vm.closeTicket
+    }
+  }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel-heading"
+  }, [_c('b', [_vm._v("New Clients (Issued Ticket Stage)")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Client")]), _vm._v(" "), _c('th', [_vm._v("Progress")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_vm._v("Open")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_vm._v("Open")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
+    attrs: {
+      "href": ""
+    }
+  }, [_vm._v("Open")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_c('b', [_vm._v("Lab Clients (Issued Lab Ticket)")])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body myTicket"
+  }, [_vm._v("\n                You are logged in!\n            ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-heading"
+  }, [_c('b', [_vm._v("Chemist Clients(Issued Chemist Ticket)")])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-body myTicket"
+  }, [_vm._v("\n                You are logged in!\n            ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert"
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('strong', [_vm._v("My List")]), _vm._v(" "), _c('br'), _vm._v("\n            It is Highly recommended you follow the list as is."), _c('br')])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Client")]), _vm._v(" "), _c('th', [_vm._v("Progress")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-f2d91436", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

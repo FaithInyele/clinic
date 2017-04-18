@@ -21,6 +21,8 @@ Vue.component('ticket_start', require('./components/ticket_start.vue'));
 
 Vue.component('ticket', require('./components/ticket.vue'));
 
+Vue.component('chemist', require('./components/chemist.vue'));
+
 Vue.component('issuedticket', require('./components/issueTicket.vue'));
 
 Vue.component('atlab', require('./components/atLab.vue'));
