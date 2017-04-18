@@ -141,60 +141,76 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-2">Seen Doctor/Nurse <b style="color: white;background-color: #fcf01a;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Current...</b></a>
                                                             <div id="accordion-2" class="accordion-section-content">
-                                                                <label>
-                                                                    Symptoms
-                                                                    <b style="font-size: 10px">
-                                                                        Input a single symptom, then hit enter before inputting another
-                                                                    </b>
-                                                                </label>
-                                                                <div class="row" style="width: 100%">
-                                                                    <div class="form-group">
-                                                                        <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="sympt">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <button class="btn btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
-                                                                    </div>
-                                                                    <hr>
-                                                                    <div class="row" v-show="recommendAction">
-                                                                        <div class="row">
-                                                                            <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a>
-                                                                            <a style="font-size: 10px" @click="prescribeMedication">Prescribe Medication</a>
+                                                                <div class="col-md-8">
+                                                                    <label>
+                                                                        Symptoms
+                                                                        <b style="font-size: 10px">
+                                                                            Input a single symptom, then hit enter before inputting another
+                                                                        </b>
+                                                                    </label>
+                                                                    <div class="row" style="width: 100%">
+                                                                        <div class="form-group">
+                                                                            <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="sympt">
                                                                         </div>
-                                                                        <div v-show="successtoLab" class="alert alert-info">
-                                                                            <h6>Success! Request sent. Send Cliend to Lab for Tests and Await response from Lab Technician</h6>
+                                                                        <div class="form-group">
+                                                                            <button class="btn btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
                                                                         </div>
-                                                                        <div class="row" v-show="chooseLab" style="font-size: 12px">
-                                                                            <label>
-                                                                                Select Lab Technician
-                                                                            </label>
-                                                                            <select class="form-control" v-model="selectedLabTech">
-                                                                                <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
-                                                                            </select>
-                                                                            <label>
-                                                                                Lab Tests:
-                                                                                <b style="font-size: 10px">
-                                                                                    Input a single test, then hit enter before inputting another.
-                                                                                </b>
-                                                                            </label>
-                                                                            <div class="form-group">
-                                                                                <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="tests">
+                                                                        <hr>
+                                                                        <div class="row" v-show="recommendAction">
+                                                                            <div class="row">
+                                                                                <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a>
+                                                                                <a style="font-size: 10px" @click="prescribeMedication">Prescribe Medication</a>
                                                                             </div>
-                                                                            <div class="form-group">
-                                                                                <button class="btn btn-primary" @click="saveLab">{{sendtoLab}}</button>
+                                                                            <div v-show="successtoLab" class="alert alert-info">
+                                                                                <h6>Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician</h6>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row" v-show="chooseMed" style="font-size: 12px">
-                                                                            Under Heavy Construction
+                                                                            <div class="row" v-show="chooseLab" style="font-size: 12px">
+                                                                                <label>
+                                                                                    Select Lab Technician
+                                                                                </label>
+                                                                                <select class="form-control" v-model="selectedLabTech">
+                                                                                    <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
+                                                                                </select>
+                                                                                <label>
+                                                                                    Lab Tests:
+                                                                                    <b style="font-size: 10px">
+                                                                                        Input a single test, then hit enter before inputting another.
+                                                                                    </b>
+                                                                                </label>
+                                                                                <div class="form-group">
+                                                                                    <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="tests">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <button class="btn btn-primary" @click="saveLab">{{sendtoLab}}</button>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row" v-show="chooseMed" style="font-size: 12px">
+                                                                                Under Heavy Construction
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-4">
+                                                                    <h6><b>Summary</b></h6>
+                                                                    <div class="row" style="font-size: 9px">
+                                                                        <label style="font-size: 11px">Symptoms recorded:</label><br>
+                                                                        <i v-for="symptom in currentTicket.symptoms">
+                                                                            {{symptom.description}},
+                                                                        </i>
+                                                                    </div>
+                                                                </div>
+
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
 
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-3">Seen a Lab Technician <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
                                                             <div id="accordion-3" class="accordion-section-content">
-                                                                <p>Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.</p>
+                                                                <div class="row" v-if="currentTicket.tests">
+                                                                    <div v-for="test in currentTicket.tests">
+                                                                        <b>{{test.description}}:</b> <i>{{test.result}}</i>
+                                                                    </div>
+                                                                </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div>
                                                         <div class="accordion-section">

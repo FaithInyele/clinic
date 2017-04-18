@@ -101,7 +101,7 @@ class TicketController extends Controller
         $title = 'iHospital | My Tickets';
         $rightbar = 'ticket';
 
-        return view('ticket.my-tickets.index', compact('title', 'rightbar'));
+        return view('ticket.my-tickets.index2', compact('title', 'rightbar'));
     }
 
     /**
@@ -113,7 +113,7 @@ class TicketController extends Controller
         //get all tickets for current user
         $ticket = Ticket::where('status', 'open')->get();
         $active = array();
-        //add client and progress details to each ticket
+        //add all relevant data to each ticket
         foreach ($ticket as $item){
             $item['client'] = Clients::findorFail($item->client_id);
             $item['progress'] = Progress::where('ticket_id', $item->id)->first();
@@ -133,6 +133,9 @@ class TicketController extends Controller
         $ticket = Ticket::findorFail($ticket_id);
         $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->get();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
+        $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
+        $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
+        $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
 
         return Response::json($ticket);
     }
@@ -218,6 +221,6 @@ class TicketController extends Controller
             'description'=>'Client at Lab'));
         $progress->save();
 
-        //ya ..yaya...too tired to write json response
+        //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
     }
 }

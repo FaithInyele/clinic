@@ -12684,6 +12684,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -38063,11 +38079,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "accordion-2"
     }
-  }, [_c('label', [_vm._v("\n                                                                Symptoms\n                                                                "), _c('b', {
+  }, [_c('div', {
+    staticClass: "col-md-8"
+  }, [_c('label', [_vm._v("\n                                                                    Symptoms\n                                                                    "), _c('b', {
     staticStyle: {
       "font-size": "10px"
     }
-  }, [_vm._v("\n                                                                    Input a single symptom, then hit enter before inputting another\n                                                                ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                        Input a single symptom, then hit enter before inputting another\n                                                                    ")])]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
       "width": "100%"
@@ -38124,7 +38142,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "successtoLab"
     }],
     staticClass: "alert alert-info"
-  }, [_c('h6', [_vm._v("Success! Request sent. Send Cliend to Lab for Tests and Await response from Lab Technician")])]), _vm._v(" "), _c('div', {
+  }, [_c('h6', [_vm._v("Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician")])]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -38135,7 +38153,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_c('label', [_vm._v("\n                                                                            Select Lab Technician\n                                                                        ")]), _vm._v(" "), _c('select', {
+  }, [_c('label', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -38160,11 +38178,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": labTechnician.id
       }
     }, [_vm._v(_vm._s(labTechnician.first_name))])
-  })), _vm._v(" "), _c('label', [_vm._v("\n                                                                            Lab Tests:\n                                                                            "), _c('b', {
+  })), _vm._v(" "), _c('label', [_vm._v("\n                                                                                Lab Tests:\n                                                                                "), _c('b', {
     staticStyle: {
       "font-size": "10px"
     }
-  }, [_vm._v("\n                                                                                Input a single test, then hit enter before inputting another.\n                                                                            ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                                    Input a single test, then hit enter before inputting another.\n                                                                                ")])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('input', {
     staticClass: "form-control",
@@ -38195,7 +38213,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_vm._v("\n                                                                        Under Heavy Construction\n                                                                    ")])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', [_c('b', [_vm._v("Summary")])]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "9px"
+    }
+  }, [_c('label', {
+    staticStyle: {
+      "font-size": "11px"
+    }
+  }, [_vm._v("Symptoms recorded:")]), _c('br'), _vm._v(" "), _vm._l((_vm.currentTicket.symptoms), function(symptom) {
+    return _c('i', [_vm._v("\n                                                                        " + _vm._s(symptom.description) + ",\n                                                                    ")])
+  })], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
@@ -38216,7 +38247,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "accordion-3"
     }
-  }, [_c('p', [_vm._v("Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.")])])]), _vm._v(" "), _c('div', {
+  }, [(_vm.currentTicket.tests) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.tests), function(test) {
+    return _c('div', [_c('b', [_vm._v(_vm._s(test.description) + ":")]), _vm._v(" "), _c('i', [_vm._v(_vm._s(test.result))])])
+  })) : _vm._e()])]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
