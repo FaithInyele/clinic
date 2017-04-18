@@ -12418,9 +12418,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.clients = response.data;
             }.bind(this));
         },
+        //close lab test and submit tthe results
         submitResults: function submitResults() {
             var inheritance = this;
-            console.log('haha');
+            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id);
+            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id).then(function () {
+                console.log('Success');
+            });
         },
         //open a given ticket
         currentTicket: function currentTicket(ticket_id) {

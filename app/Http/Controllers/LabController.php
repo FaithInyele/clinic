@@ -46,7 +46,12 @@ class LabController extends Controller
         return Response::json($data);
     }
 
-    public function finishTest(Request $request){
+    public function finishTest($lab_id){
+        //dd('haha');
+        DB::table('lab_datas')
+            ->where('id', $lab_id)
+            ->update(['status'=> 1]);
 
+        return Response::json(array('success'=>'success'));
     }
 }
