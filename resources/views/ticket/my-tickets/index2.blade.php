@@ -2,5 +2,6 @@
 
 @section('content')
     {{--<atlab></atlab>--}}
-    <issuedticket></issuedticket>
+    {{--<issuedticket></issuedticket>--}}
+    <chemist></chemist>
 @endsection

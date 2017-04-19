@@ -216,7 +216,20 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-4">Seen Chemist<b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
                                                             <div id="accordion-4" class="accordion-section-content">
-                                                                <p>Mauris interdum fringilla augue vitae tincidunt. Curabitur vitae tortor id eros euismod ultrices. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent nulla mi, rutrum ut feugiat at, vestibulum ut neque? Cras tincidunt enim vel aliquet facilisis. Duis congue ullamcorper vehicula. Proin nunc lacus, semper sit amet elit sit amet, aliquet pulvinar erat. Nunc pretium quis sapien eu rhoncus. Suspendisse ornare gravida mi, et placerat tellus tempor vitae.</p>
+                                                                <label>
+                                                                    Prescription
+                                                                    <b style="font-size: 10px">
+                                                                        Input a single prescription, then press enter before inputting another
+                                                                    </b>
+                                                                </label>
+
+                                                                    <div class="form-group">
+                                                                        <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="med">
+                                                                    </div>
+                                                                    <div class="form-group pull-right">
+                                                                        <button class="btn btn-primary" @click="saveP">{{savePrescription}}</button>
+                                                                        <button class="btn btn-primary" @click="submitP()">{{toChemist}}</button>
+                                                                    </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
                                                     </div><!--end .accordion-->
@@ -259,6 +272,8 @@
                 allActives: [],
                 currentTicket: [],
                 atDoctorButton: 'Save',
+                toChemist: 'Submit to Chemist',
+                savePrescription: 'Save',
                 sendtoLab: 'Send Client to Lab',
                 afterSymptoms: false,
                 symptoms: '',
@@ -330,6 +345,19 @@
               inheritance.chooseLab=false;
               inheritance.chooseMed=true;
             },
+            saveP: function () {
+                var inheritance = this;
+                inheritance.savePrescription = "Saving...";
+                var prescription = $('#med').val();
+                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+prescription+'&ticket_id='+inheritance.currentTicket.id);
+                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+prescription+'&ticket_id='+inheritance.currentTicket.id)
+                    .then(function () {
+                        inheritance.savePrescription = "Save";
+                    }.bind(this))
+            },
+            submitP: function () {
+                console.log('huh');
+            },
             //start a lab ticket.
             saveLab: function () {
               var inheritance = this;
@@ -338,7 +366,7 @@
               console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+tests+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id);
               axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+tests+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id)
                   .then(function () {
-                      inheritance.successtoLab = true
+                      inheritance.successtoLab = true;
                       inheritance.sendtoLab = 'Sent';
                   }.bind(this))
             }

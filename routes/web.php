@@ -54,6 +54,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/save/symptoms', 'TicketController@saveSymptoms');
     Route::get('tickets/my-tickets/query/labtechs', 'TicketController@activeLabTechnicians');
     Route::get('tickets/my-tickets/query/startlab', 'TicketController@startLab');
+    Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
 
 
 
@@ -61,6 +62,7 @@ Route::group(['middleware' => 'logIn'], function () {
      * Progress routes
      */
     Route::get('progress/atlab', 'ProgressController@atLab');
+    Route::get('progress/atchemist', 'ProgressController@atChemist');
 
 
     /**
@@ -69,6 +71,11 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
     Route::post('atlab/test/update', 'LabController@updateTest');
     Route::get('atlab/lab/update/{lab_id}', 'LabController@finishTest');
+
+    /**
+     * atChemist routes
+     */
+    Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
 
 
 });

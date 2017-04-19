@@ -73,7 +73,7 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    <tbody v-for="client in clients">
+                    <tbody v-for="client in allClients">
                     <tr>
                         <td>{{ client.c_fname}}</td>
                         <td>{{ client.created_at}}</td>
@@ -125,7 +125,9 @@
 
                                             <div class="row tab-content" >
                                                 <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
-
+                                                    <div v-for="medicine in currentClient.medicine">
+                                                        {{medicine.medicine}}
+                                                    </div>
                                                 </div>
 
                                                 <div id="history" class="tab-pane fade">
@@ -156,13 +158,35 @@
     export default {
         mounted: function() {
             console.log('Component mounted.');
+            this.clientsAtChemist();
         },
         data: function () {
             return{
-
+                ticketModal: false,
+                allClients: [],
+                currentClient: []
             }
         },
         methods:{
+            clientsAtChemist: function () {
+                var inheritance =this;
+                axios.get(base_url+'/progress/atchemist')
+                    .then(function (response) {
+                        inheritance.allClients = response.data;
+                    }.bind(this))
+            },
+            currentTicket: function (ticket_id) {
+                var inheritance=this;
+                axios(base_url+'/atchemist/view/'+ticket_id)
+                    .then(function (response) {
+                        inheritance.currentClient = response.data;
+                    }.bind(this))
+                inheritance.ticketModal=true
+            },
+            closeTicket: function () {
+                var inheritance =this;
+                inheritance.ticketModal=false;
+            }
 
         }
     }

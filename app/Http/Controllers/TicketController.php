@@ -12,6 +12,8 @@ use App\LabData;
 use App\Test;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use App\Prescription;
+use App\Medicine;
 
 class TicketController extends Controller
 {
@@ -222,5 +224,26 @@ class TicketController extends Controller
         $progress->save();
 
         //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
+    }
+
+    public function startChemist(Request $request){
+        //dd('aiii');
+        //start a prescription
+        $prescription = new Prescription(array(
+            'ticket_id'=>$request->ticket_id,
+            'assigned_to'=>2,
+            'status'=>0
+        ));
+        $prescription->save();
+        //save requested medications
+        $medication = explode(',', $request->med);
+        foreach ($medication as $item){
+            $data = new Medicine(array(
+                'prescription_id'=>$prescription->id,
+                'medicine'=>$item,
+                'status'=>'pending'
+            ));
+            $data->save();
+        }
     }
 }
