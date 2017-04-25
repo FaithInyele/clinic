@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="row">
-        <table class="table table-striped table-bordered dt-responsive" id="dataTable"
+        <listclients></listclients>
+        {{--<table class="table table-striped table-bordered dt-responsive" id="dataTable"
                cellspacing="0" width="100%">
             <thead>
             <tr>
@@ -27,7 +28,7 @@
                 </tr>
             @endforeach
             </tbody>
-        </table>
+        </table>--}}
     </div>
     <example v-show="clientEdit" @close="clientEdit = false">
 

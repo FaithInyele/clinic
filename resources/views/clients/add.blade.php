@@ -105,7 +105,7 @@
                             <label for="yob" class="row control-label">Year of Birth*</label><br>
 
                             <div class="row">
-                                <input id="yob" type="text" data-uk-datepicker="{format:'YYYY/MM/DD'}" class="required form-control" name="yob" value="{{ old('yob') }}" autofocus>
+                                <input id="yob" type="text" class="required form-control" name="yob" value="{{ old('yob') }}" autofocus>
 
                                 @if ($errors->has('yob'))
                                     <span class="help-block">
@@ -120,7 +120,7 @@
                             <label for="type" class="col-md-4 control-label">Client Type*</label><br>
 
                             <div class="row">
-                                <select id="type" name="type" class="form-control required">
+                                <select id="type" name="type" class="form-control required" onchange="reg_numberr()">
                                     <option value="" disabled selected>-Select Client Type-</option>
                                     <option value="Student">Student</option>
                                     <option value="Staff">Staff</option>
@@ -134,6 +134,25 @@
                                 @endif
                             </div>
                         </div>
+
+                        <!--Student Reg Number //optional-->
+                        <div class="form-group{{ $errors->has('reg_number') ? ' has-error' : '' }}">
+                            <!--<label for="reg_number" class="col-md-4 control-label">Student Registration Number*</label><br>-->
+
+                            <div class="row d_regNumber">
+{{--
+                                <input id="reg_number" type="text" class=" form-control" name="reg_number" value="{{ old('reg_number') }}" autofocus>
+--}}
+
+                                @if ($errors->has('reg_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('reg_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+
                         <div class="f1-buttons">
                             <button type="button" class="btn btn-next">Next</button>
                         </div>
@@ -261,8 +280,9 @@
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Warning!</strong> <br>
-            1. Ensure NO fields with '*' are Filled.<br>
-            3. Ensure All data is Valid.
+            1. All fields with a * should NOT be left blank.<br>
+            3. Ensure All data is Valid.<br>
+            3. A client registered will be available immediately for Ticket Assignment
         </div>
         <!-- .well well-small -->
         <div class="well well-small dark">
@@ -270,10 +290,11 @@
             <ul class="list-unstyled">
                 <li>My Facility <span class="inlinesparkline pull-right">Egerton, Sanatorium</span></li>
                 <hr>
-                <li>Active Users <span class="dynamicbar pull-right">20</span></li>
-                <li>Inactive Users <span class="inlinebar pull-right">4</span></li>
+                <li>Total Clients <span class="dynamicbar pull-right">{{ $total_clients }}</span></li>
+                <li>Active Tickets <span class="dynamicbar pull-right"> {{ $active_tickets }}</span></li>
+                {{--<li>Inactive Users <span class="inlinebar pull-right">4</span></li>
                 <hr>
-                <li>Total Users <span class="dynamicsparkline pull-right">24</span></li>
+                <li>Total Users <span class="dynamicsparkline pull-right">24</span></li>--}}
             </ul>
         </div>
         <!-- /.well well-small -->

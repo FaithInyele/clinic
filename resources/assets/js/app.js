@@ -29,6 +29,8 @@ Vue.component('atlab', require('./components/atLab.vue'));
 
 Vue.component('listusers', require('./components/listUsers.vue'));
 
+Vue.component('listclients', require('./components/listClients.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

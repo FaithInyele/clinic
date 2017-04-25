@@ -85,6 +85,18 @@
         } );
     </script>
     <script>
+        function reg_numberr() {
+            var clientType = $('#type').find(":selected").text();
+            if (clientType == 'Student'){
+                $('.d_regNumber').append(
+                    '<input id="reg_number" type="text" class="required form-control aki" name="reg_number" placeholder="Input Student Registration No." value="{{ old('reg_number') }}" autofocus>'
+                )
+            }else {
+                $('.d_regNumber input').remove();
+            }
+        }
+    </script>
+    <script>
         $( function() {
             $( "#accordion" ).accordion();
         } );

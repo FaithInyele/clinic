@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Clients;
 use App\SpecialCase;
+use Illuminate\Support\Facades\Response;
+use App\Ticket;
 
 class ClientsController extends Controller
 {
@@ -32,8 +34,10 @@ class ClientsController extends Controller
     {
         $title = 'iHospital | Add New Client';
         $rightbar = 'client';
+        $total_clients = count(Clients::all());
+        $active_tickets = count(Ticket::where('status', 'open')->get());
 
-        return view('clients.add', compact('rightbar', 'title'));
+        return view('clients.add', compact('rightbar', 'title', 'total_clients', 'active_tickets'));
     }
 
     /**
@@ -44,7 +48,11 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        $this->validate($request, [
+            'reg_number' => 'unique:clients',
+
+        ]);
+
 
         //save user to db
         $client = new Clients($request->all());
@@ -118,6 +126,12 @@ class ClientsController extends Controller
         return view('clients.special_condition.open', compact('title', 'rightbar', 'client_id', 'client_name'));
     }
 
+    /**
+     * add a client's special medical condition to the system
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function special_condition_save(Request $request){
 
         //dd($request->all());
@@ -126,5 +140,11 @@ class ClientsController extends Controller
 
         return redirect()->action('ClientsController@create')
             ->with('status', 'Special Medical Condition(s) Added.');
+    }
+
+    public function listAll(){
+        $clients = Clients::all();
+
+        return Response::json($clients);
     }
 }

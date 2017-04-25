@@ -11290,6 +11290,8 @@ Vue.component('atlab', __webpack_require__(51));
 
 Vue.component('listusers', __webpack_require__(54));
 
+Vue.component('listclients', __webpack_require__(104));
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -48289,6 +48291,178 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(12);
 
+
+/***/ }),
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.allClients();
+    },
+    data: function data() {
+        return {
+            clients: []
+        };
+    },
+    methods: {
+        allClients: function allClients() {
+            var inheritance = this;
+            axios.get(base_url + '/clients/all').then(function (response) {
+                inheritance.clients = response.data;
+            }.bind(this));
+            setTimeout(function () {
+                $("#vueTable").DataTable();
+            }, 500);
+        }
+
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(103),
+  /* template */
+  __webpack_require__(105),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/listClients.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] listClients.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5076e952", Component.options)
+  } else {
+    hotAPI.reload("data-v-5076e952", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "vueTable",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(client.first_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.yob))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.gender))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.id_number))]), _vm._v(" "), _vm._m(1, true)])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("First Name")]), _vm._v(" "), _c('th', [_vm._v("Other Name(s)")]), _vm._v(" "), _c('th', [_vm._v("D.O.B")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Gender")]), _vm._v(" "), _c('th', [_vm._v("Id No.")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', [_c('a', {
+    staticClass: "btn btn-danger"
+  }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-success"
+  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-success"
+  }, [_vm._v("Delete")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5076e952", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
