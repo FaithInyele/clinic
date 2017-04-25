@@ -224,7 +224,7 @@
             //save results
             saveResults: function (data) {
                 var inheritance = this;
-                axios.post(base_url+'/atlab/test/update', data)
+                axios.get(base_url+'/atlab/test/update?id='+data.id+'&active='+data.active)
                     .then(function (response) {
                         console.log(response.data);
                     })

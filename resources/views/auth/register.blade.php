@@ -75,7 +75,7 @@
                     <label for="yob" class="row control-label">Year of Birth</label><br>
 
                     <div class="row">
-                        <input id="yob" type="text" data-uk-datepicker="{format:'YYYY/MM/DD'}" class="form-control" name="yob" value="{{ old('yob') }}" required autofocus>
+                        <input id="yob" type="text" class="form-control" name="yob" value="{{ old('yob') }}" required autofocus>
 
                         @if ($errors->has('yob'))
                             <span class="help-block">
@@ -155,8 +155,9 @@
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Warning!</strong> <br>
-            1. Ensure NO fields are left Blank.<br>
-            3. Ensure All data is Valid.
+            1. Ensure NO fields are left blank while registering a user.<br>
+            3. Ensure All data is Valid.<br>
+            3. The newly registered user's account will be activated immediately after registration
         </div>
         <!-- .well well-small -->
         <div class="well well-small dark">
@@ -164,10 +165,10 @@
             <ul class="list-unstyled">
                 <li>My Facility <span class="inlinesparkline pull-right">Egerton, Sanatorium</span></li>
                 <hr>
-                <li>Active Users <span class="dynamicbar pull-right">20</span></li>
-                <li>Inactive Users <span class="inlinebar pull-right">4</span></li>
+                <li>Active Users <span class="dynamicbar pull-right">{{ $active_users }}</span></li>
+                <li>Inactive Users <span class="inlinebar pull-right"> {{ $inactive_users }} </span></li>
                 <hr>
-                <li>Total Users <span class="dynamicsparkline pull-right">24</span></li>
+                <li>Total Users <span class="dynamicsparkline pull-right">{{$total_users}}</span></li>
             </ul>
         </div>
         <!-- /.well well-small -->

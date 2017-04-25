@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -20,13 +22,43 @@ class RegisterController extends Controller
     }
 
     /**
+     * api call to get all users of the system
+     *
+     * @return mixed
+     */
+    public function allUsers(){
+        $users = User::all();
+
+        return Response::json($users);
+    }
+
+    /**
+     * api call too either activate or deactivate a given user
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function activate(Request $request){
+        $request['active'] = $request->active == 1 ? 0:1;
+        DB::table('users')
+            ->where('id', $request->id)
+            ->update(['active'=>$request->active]);
+
+        return Response::json($request->all());
+    }
+
+    /**
      * show registration form to add new user.
      */
     public function regForm(){
         $title = 'iHospital | Register New User';
         $rightbar = 'user';
 
-        return view('auth.register', compact('rightbar','title'));
+        $total_users = count(User::all());
+        $active_users = count(User::where('active', 1)->get());
+        $inactive_users = count(User::where('active', 0)->get());
+
+        return view('auth.register', compact('rightbar','title', 'total_users', 'active_users', 'inactive_users'));
     }
 
     /**

@@ -27,6 +27,8 @@ Vue.component('issuedticket', require('./components/issueTicket.vue'));
 
 Vue.component('atlab', require('./components/atLab.vue'));
 
+Vue.component('listusers', require('./components/listUsers.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {
