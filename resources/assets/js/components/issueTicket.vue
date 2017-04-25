@@ -96,8 +96,11 @@
                                 default header
                             </slot>
                         </div>-->
+                        <div class="modal-body" style="text-align: center">
+                            <img :src="baseUrl+'/images/loading.gif'">
+                        </div>
 
-                        <div class="modal-body">
+                        <!--<div class="modal-body" v-show="!modalLoading">
                             <slot name="body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -135,8 +138,8 @@
                                                                         <li>Ticket created at: <span class="inlinesparkline pull-right">{{currentTicket.created_at}}</span></li>
                                                                     </ul>
                                                                 </div>
-                                                            </div><!--end .accordion-section-content-->
-                                                        </div><!--end .accordion-section-->
+                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
+                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
 
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-2">Seen Doctor/Nurse <b style="color: white;background-color: #fcf01a;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Current...</b></a>
@@ -200,8 +203,8 @@
                                                                     </div>
                                                                 </div>
 
-                                                            </div><!--end .accordion-section-content-->
-                                                        </div><!--end .accordion-section-->
+                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
+                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
 
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-3">Seen a Lab Technician <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
@@ -211,7 +214,7 @@
                                                                         <b>{{test.description}}:</b> <i>{{test.result}}</i>
                                                                     </div>
                                                                 </div>
-                                                            </div><!--end .accordion-section-content-->
+                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
                                                         </div>
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-4">Seen Chemist<b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
@@ -230,9 +233,9 @@
                                                                         <button class="btn btn-primary" @click="saveP">{{savePrescription}}</button>
                                                                         <button class="btn btn-primary" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
-                                                            </div><!--end .accordion-section-content-->
-                                                        </div><!--end .accordion-section-->
-                                                    </div><!--end .accordion-->
+                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
+                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
+                                                    </div>&lt;!&ndash;end .accordion&ndash;&gt;
                                                 </div>
 
                                                 <div id="history" class="tab-pane fade">
@@ -243,13 +246,13 @@
                                     </div>
                                 </div>
                             </slot>
-                        </div>
+                        </div>-->
 
                         <div class="modal-footer">
                             <slot name="footer">
 
                                 <button class="modal-default-button" @click="closeTicket">
-                                    Close
+                                    Closes
                                 </button>
                             </slot>
                         </div>
@@ -283,6 +286,8 @@
                 labTechnicians: [],
                 selectedLabTech: '',
                 successtoLab: false,
+                modalLoading: true,
+                baseUrl: base_url
 
             }
         },
@@ -298,12 +303,12 @@
             //open a specific ticket, for docs/nurses
             openTicket: function (ticketid) {
                 var inheritance = this;
-                console.log(ticketid);
+                inheritance.modalLoading = true;
                 axios.get(base_url+'/tickets/my-tickets/'+ticketid)
                     .then(function (response) {
                         inheritance.currentTicket = response.data;
-                        this.labtechs();
-                        //console.log(response.data.client.first_name);
+                        inheritance.labtechs();
+                        //inheritance.modalLoading = false;
                     }.bind(this));
                 inheritance.ticketModal = true;
             },
@@ -315,8 +320,10 @@
             //list all active tickets, thatbelong to thelogged in user
             allActiveMethod: function () {
                 var inheritance = this;
+                console.log('ai');
                 axios.get(base_url+'/tickets/my-tickets/all-active')
                     .then(function (response) {
+                        console.log(response.data);
                         inheritance.allActives = response.data;
                     }.bind(this));
             },

@@ -17,8 +17,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-print-1.2.4/r-2.1.1/datatables.min.css"/>
     {{--<link rel="stylesheet" href="{{url('assets/css/form-elements.css')}}">--}}
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 
     <!-- Scripts -->
     <script>
@@ -70,8 +69,7 @@
 
     <script src="{{url('assets/js/scripts.js')}}"></script>
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-print-1.2.4/r-2.1.1/datatables.min.js"></script>
     <script>
         $(document).ready(function () {

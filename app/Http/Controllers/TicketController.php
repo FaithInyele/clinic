@@ -137,8 +137,9 @@ class TicketController extends Controller
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
-        $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
-
+        if ($ticket['lab_datas'] != null){
+            $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
+        }
         return Response::json($ticket);
     }
 
