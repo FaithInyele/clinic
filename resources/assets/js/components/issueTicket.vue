@@ -91,16 +91,17 @@
                 <div class="modal-wrapper">
                     <div class="modal-container">
 
-                        <!--<div class="modal-header">
+                        <div class="modal-header">
                             <slot name="header">
-                                default header
+                                <label>At Doctor/Nurse</label>
+                                <label class="pull-right">Status: {{status}}</label>
                             </slot>
-                        </div>-->
-                        <div class="modal-body" style="text-align: center">
+                        </div>
+                        <div class="modal-body" style="text-align: center" v-show="modalLoading">
                             <img :src="baseUrl+'/images/loading.gif'">
                         </div>
 
-                        <!--<div class="modal-body" v-show="!modalLoading">
+                        <div class="modal-body" v-show="!modalLoading">
                             <slot name="body">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -109,54 +110,69 @@
                                         </div>
                                         <div class="row" v-if="currentTicket.client">
                                             <h5>
-                                                <p><b>Client Name:</b> {{currentTicket.client.first_name}},  {{currentTicket.client.other_names}}</p>
-                                                <p><b>Client Type:</b> {{currentTicket.client.type}}</p>
-                                                <p><b>Year of Birth:</b> {{currentTicket.client.yob}}</p>
-                                                <p>{{currentTicket.updated_at}}</p>
+                                                <p><label>Client Name:</label> {{currentTicket.client.first_name}},  {{currentTicket.client.other_names}}</p>
+                                                <p><label>Client Type:</label> {{currentTicket.client.type}}</p>
+                                                <p><label>Year of Birth:</label> {{currentTicket.client.yob}}</p>
                                                 <input type="hidden" v-model="currentTicket.id" id="hiddenTicketId">
                                             </h5>
                                         </div>
 
                                     </div>
                                     <div class="col-md-8">
-                                        <div class="row" style="max-height: 450px;overflow-y: scroll">
+                                        <div class="row" style="max-height: 400px;overflow-y: scroll">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
+                                                <li><a data-toggle="tab" href="#special"> Special medical condition(s)</a></li>
                                                 <li><a data-toggle="tab" href="#history"> History</a></li>
                                             </ul>
 
                                             <div class="row tab-content" >
                                                 <div id="progress" class="tab-pane fade in active">
-                                                    <h1>Progress</h1>
+                                                    <h6>Progress </h6>
                                                     <div class="accordion">
+                                                        <!--first accordion-->
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-1">Assigned a Ticket <b style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Done</b></a>
-                                                            <div id="accordion-1" class="accordion-section-content">
+                                                            <a class="accordion-section-title" href="#accordion-1">
+                                                                Assigned a Ticket
+                                                                <b style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                    Done
+                                                                </b>
+                                                            </a>
+                                                            <div id="accordion-1" class="accordion-section-content" v-if="currentTicket.assigned_by">
                                                                 <div class="well well-small dark">
-                                                                    <strong>Details</strong> <br>
-                                                                    <ul class="list-unstyled">
-                                                                        <li>Ticket created at: <span class="inlinesparkline pull-right">{{currentTicket.created_at}}</span></li>
-                                                                    </ul>
+                                                                    <h6>This Ticket was created at: {{currentTicket.created_at}}</h6>
+                                                                    <h6>assigned by <i>{{currentTicket.assigned_by.last_name}}, {{currentTicket.assigned_by.first_name}}</i>  to  <i>{{currentTicket.assigned_to.last_name}}, {{currentTicket.assigned_to.first_name}}</i></h6>
                                                                 </div>
-                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
-                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
+                                                            </div><!--end .accordion-section-content-->
+                                                        </div><!--end .accordion-section-->
 
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-2">Seen Doctor/Nurse <b style="color: white;background-color: #fcf01a;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Current...</b></a>
+                                                            <a class="accordion-section-title" href="#accordion-2">
+                                                                at Doctor/Nurse
+                                                                <b style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                    Current...
+                                                                </b>
+                                                                <b style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                    Done
+                                                                </b>
+                                                                <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                    Pending...
+                                                                </b>
+                                                            </a>
                                                             <div id="accordion-2" class="accordion-section-content">
                                                                 <div class="col-md-8">
                                                                     <label>
-                                                                        Symptoms
-                                                                        <b style="font-size: 10px">
-                                                                            Input a single symptom, then hit enter before inputting another
+                                                                        Input Symptoms and general Observations, if any.<br>
+                                                                        <b style="font-size: 8px">
+                                                                            [Input a single symptom, then hit enter before inputting another]
                                                                         </b>
                                                                     </label>
                                                                     <div class="row" style="width: 100%">
                                                                         <div class="form-group">
-                                                                            <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="sympt">
+                                                                            <input type="text" class="form-control" data-role="tagsinput" id="sympt" v-model="currentTicket.tags">
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <button class="btn btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
+                                                                            <button class="btn btn-sm btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
                                                                         </div>
                                                                         <hr>
                                                                         <div class="row" v-show="recommendAction">
@@ -203,18 +219,23 @@
                                                                     </div>
                                                                 </div>
 
-                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
-                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
+                                                            </div><!--end .accordion-section-content-->
+                                                        </div><!--end .accordion-section-->
 
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-3">Seen a Lab Technician <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
+                                                            <a class="accordion-section-title" href="#accordion-3">
+                                                                Seen a Lab Technician
+                                                                <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                    Pending...
+                                                                </b>
+                                                            </a>
                                                             <div id="accordion-3" class="accordion-section-content">
                                                                 <div class="row" v-if="currentTicket.tests">
                                                                     <div v-for="test in currentTicket.tests">
                                                                         <b>{{test.description}}:</b> <i>{{test.result}}</i>
                                                                     </div>
                                                                 </div>
-                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
+                                                            </div><!--end .accordion-section-content-->
                                                         </div>
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-4">Seen Chemist<b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">Pending...</b></a>
@@ -233,12 +254,15 @@
                                                                         <button class="btn btn-primary" @click="saveP">{{savePrescription}}</button>
                                                                         <button class="btn btn-primary" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
-                                                            </div>&lt;!&ndash;end .accordion-section-content&ndash;&gt;
-                                                        </div>&lt;!&ndash;end .accordion-section&ndash;&gt;
-                                                    </div>&lt;!&ndash;end .accordion&ndash;&gt;
+                                                            </div><!--end .accordion-section-content-->
+                                                        </div><!--end .accordion-section-->
+                                                    </div><!--end .accordion-->
                                                 </div>
 
                                                 <div id="history" class="tab-pane fade">
+                                                    <h1>History</h1>
+                                                </div>
+                                                <div id="special" class="tab-pane fade">
                                                     <h1>History</h1>
                                                 </div>
                                             </div>
@@ -246,13 +270,13 @@
                                     </div>
                                 </div>
                             </slot>
-                        </div>-->
+                        </div>
 
                         <div class="modal-footer">
                             <slot name="footer">
 
                                 <button class="modal-default-button" @click="closeTicket">
-                                    Closes
+                                    Close
                                 </button>
                             </slot>
                         </div>
@@ -274,7 +298,7 @@
                 ticketModal: false,
                 allActives: [],
                 currentTicket: [],
-                atDoctorButton: 'Save',
+                atDoctorButton: 'Save Symptoms',
                 toChemist: 'Submit to Chemist',
                 savePrescription: 'Save',
                 sendtoLab: 'Send Client to Lab',
@@ -287,7 +311,8 @@
                 selectedLabTech: '',
                 successtoLab: false,
                 modalLoading: true,
-                baseUrl: base_url
+                baseUrl: base_url,
+                status: 'No Operation'
 
             }
         },
@@ -308,7 +333,7 @@
                     .then(function (response) {
                         inheritance.currentTicket = response.data;
                         inheritance.labtechs();
-                        //inheritance.modalLoading = false;
+                        inheritance.modalLoading = false;
                     }.bind(this));
                 inheritance.ticketModal = true;
             },
@@ -316,6 +341,7 @@
             closeTicket: function () {
                 var inheritance=this;
                 inheritance.ticketModal=false;
+                inheritance.currentTicket = [];
             },
             //list all active tickets, thatbelong to thelogged in user
             allActiveMethod: function () {
@@ -331,6 +357,7 @@
             saveSymptoms: function () {
                 var inheritance=this;
                 inheritance.atDoctorButton = 'Saving...';
+                inheritance.status = 'Saving Symptoms...';
                 var symptom = $('#sympt').val();
                 var hticket_id = $('#hiddenTicketId').val();
                 console.log(hticket_id);
@@ -339,7 +366,8 @@
                     .then(function (response) {
                         console.log(response);
                         inheritance.recommendAction = true;
-                        inheritance.atDoctorButton = 'Save';
+                        inheritance.atDoctorButton = 'Save Symptoms';
+                        inheritance.status = 'Symptoms Successfully Saved'
                     }.bind(this));
             },
             recommendLab: function () {

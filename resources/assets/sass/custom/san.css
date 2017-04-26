@@ -204,3 +204,6 @@ Vue Modal
 .modal-container{
     width: 90% !important;
 }
+.accordion-section-title{
+    background-color: #F5F8FA;
+}

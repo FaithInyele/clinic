@@ -12919,6 +12919,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12930,7 +12954,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             ticketModal: false,
             allActives: [],
             currentTicket: [],
-            atDoctorButton: 'Save',
+            atDoctorButton: 'Save Symptoms',
             toChemist: 'Submit to Chemist',
             savePrescription: 'Save',
             sendtoLab: 'Send Client to Lab',
@@ -12943,7 +12967,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             selectedLabTech: '',
             successtoLab: false,
             modalLoading: true,
-            baseUrl: base_url
+            baseUrl: base_url,
+            status: 'No Operation'
 
         };
     },
@@ -12962,7 +12987,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(base_url + '/tickets/my-tickets/' + ticketid).then(function (response) {
                 inheritance.currentTicket = response.data;
                 inheritance.labtechs();
-                //inheritance.modalLoading = false;
+                inheritance.modalLoading = false;
             }.bind(this));
             inheritance.ticketModal = true;
         },
@@ -12970,6 +12995,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         closeTicket: function closeTicket() {
             var inheritance = this;
             inheritance.ticketModal = false;
+            inheritance.currentTicket = [];
         },
         //list all active tickets, thatbelong to thelogged in user
         allActiveMethod: function allActiveMethod() {
@@ -12984,6 +13010,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveSymptoms: function saveSymptoms() {
             var inheritance = this;
             inheritance.atDoctorButton = 'Saving...';
+            inheritance.status = 'Saving Symptoms...';
             var symptom = $('#sympt').val();
             var hticket_id = $('#hiddenTicketId').val();
             console.log(hticket_id);
@@ -12991,7 +13018,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(base_url + '/tickets/my-tickets/save/symptoms?ticket_id=' + hticket_id + '&status=pending&symptoms=' + inheritance.symptoms).then(function (response) {
                 console.log(response);
                 inheritance.recommendAction = true;
-                inheritance.atDoctorButton = 'Save';
+                inheritance.atDoctorButton = 'Save Symptoms';
+                inheritance.status = 'Symptoms Successfully Saved';
             }.bind(this));
         },
         recommendLab: function recommendLab() {
@@ -38521,6 +38549,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "modal-container"
   }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
+    staticClass: "pull-right"
+  }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modalLoading),
+      expression: "modalLoading"
+    }],
     staticClass: "modal-body",
     staticStyle: {
       "text-align": "center"
@@ -38530,13 +38568,400 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "src": _vm.baseUrl + '/images/loading.gif'
     }
   })]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.modalLoading),
+      expression: "!modalLoading"
+    }],
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('img', {
+    staticStyle: {
+      "width": "100%",
+      "height": "auto"
+    },
+    attrs: {
+      "src": "https://placehold.it/140x100"
+    }
+  })]), _vm._v(" "), (_vm.currentTicket.client) ? _c('div', {
+    staticClass: "row"
+  }, [_c('h5', [_c('p', [_c('label', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.first_name) + ",  " + _vm._s(_vm.currentTicket.client.other_names))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.type))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.yob))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentTicket.id),
+      expression: "currentTicket.id"
+    }],
+    attrs: {
+      "type": "hidden",
+      "id": "hiddenTicketId"
+    },
+    domProps: {
+      "value": (_vm.currentTicket.id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentTicket.id = $event.target.value
+      }
+    }
+  })])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8"
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "max-height": "400px",
+      "overflow-y": "scroll"
+    }
+  }, [_c('ul', {
+    staticClass: "nav nav-tabs"
+  }, [_c('li', {
+    staticClass: "active"
+  }, [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#progress"
+    }
+  }, [_vm._v("Ticket")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#special"
+    }
+  }, [_vm._v(" Special medical condition(s)")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#history"
+    }
+  }, [_vm._v(" History")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row tab-content"
+  }, [_c('div', {
+    staticClass: "tab-pane fade in active",
+    attrs: {
+      "id": "progress"
+    }
+  }, [_c('h6', [_vm._v("Progress ")]), _vm._v(" "), _c('div', {
+    staticClass: "accordion"
+  }, [_c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-1"
+    }
+  }, [_vm._v("\n                                                            Assigned a Ticket\n                                                            "), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")])]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-1"
+    }
+  }, [_c('div', {
+    staticClass: "well well-small dark"
+  }, [_c('h6', [_vm._v("This Ticket was created at: " + _vm._s(_vm.currentTicket.created_at))]), _vm._v(" "), _c('h6', [_vm._v("assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-2"
+    }
+  }, [_vm._v("\n                                                            at Doctor/Nurse\n                                                            "), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]), _vm._v(" "), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]), _vm._v(" "), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-2"
+    }
+  }, [_c('div', {
+    staticClass: "col-md-8"
+  }, [_c('label', [_vm._v("\n                                                                    Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
+    staticStyle: {
+      "font-size": "8px"
+    }
+  }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "width": "100%"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentTicket.tags),
+      expression: "currentTicket.tags"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "data-role": "tagsinput",
+      "id": "sympt"
+    },
+    domProps: {
+      "value": (_vm.currentTicket.tags)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentTicket.tags = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-sm btn-primary",
+    on: {
+      "click": _vm.saveSymptoms
+    }
+  }, [_vm._v(_vm._s(_vm.atDoctorButton))])]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.recommendAction),
+      expression: "recommendAction"
+    }],
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.recommendLab
+    }
+  }, [_vm._v("Recommend Lab Test(s)")]), _vm._v(" "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.prescribeMedication
+    }
+  }, [_vm._v("Prescribe Medication")])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.successtoLab),
+      expression: "successtoLab"
+    }],
+    staticClass: "alert alert-info"
+  }, [_c('h6', [_vm._v("Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician")])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseLab),
+      expression: "chooseLab"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('label', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedLabTech),
+      expression: "selectedLabTech"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedLabTech = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.labTechnicians), function(labTechnician) {
+    return _c('option', {
+      domProps: {
+        "value": labTechnician.id
+      }
+    }, [_vm._v(_vm._s(labTechnician.first_name))])
+  })), _vm._v(" "), _c('label', [_vm._v("\n                                                                                Lab Tests:\n                                                                                "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                                    Input a single test, then hit enter before inputting another.\n                                                                                ")])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    staticClass: "form-control",
+    staticStyle: {
+      "min-height": "150px",
+      "width": "100%"
+    },
+    attrs: {
+      "type": "text",
+      "data-role": "tagsinput",
+      "id": "tests"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.saveLab
+    }
+  }, [_vm._v(_vm._s(_vm.sendtoLab))])])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseMed),
+      expression: "chooseMed"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', [_c('b', [_vm._v("Summary")])]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "9px"
+    }
+  }, [_c('label', {
+    staticStyle: {
+      "font-size": "11px"
+    }
+  }, [_vm._v("Symptoms recorded:")]), _c('br'), _vm._v(" "), _vm._l((_vm.currentTicket.symptoms), function(symptom) {
+    return _c('i', [_vm._v("\n                                                                        " + _vm._s(symptom.description) + ",\n                                                                    ")])
+  })], 2)])])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-3"
+    }
+  }, [_vm._v("\n                                                            Seen a Lab Technician\n                                                            "), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-3"
+    }
+  }, [(_vm.currentTicket.tests) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.tests), function(test) {
+    return _c('div', [_c('b', [_vm._v(_vm._s(test.description) + ":")]), _vm._v(" "), _c('i', [_vm._v(_vm._s(test.result))])])
+  })) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-4"
+    }
+  }, [_vm._v("Seen Chemist"), _c('b', {
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("Pending...")])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-4"
+    }
+  }, [_c('label', [_vm._v("\n                                                                Prescription\n                                                                "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                    Input a single prescription, then press enter before inputting another\n                                                                ")])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    staticClass: "form-control",
+    staticStyle: {
+      "min-height": "150px",
+      "width": "100%"
+    },
+    attrs: {
+      "type": "text",
+      "data-role": "tagsinput",
+      "id": "med"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group pull-right"
+  }, [_c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.saveP
+    }
+  }, [_vm._v(_vm._s(_vm.savePrescription))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "history"
+    }
+  }, [_c('h1', [_vm._v("History")])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "special"
+    }
+  }, [_c('h1', [_vm._v("History")])])])])])])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "modal-default-button",
     on: {
       "click": _vm.closeTicket
     }
-  }, [_vm._v("\n                                Closes\n                            ")])])], 2)])])])])], 1)
+  }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "panel-heading"

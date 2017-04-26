@@ -133,10 +133,19 @@ class TicketController extends Controller
      */
     public function selectedTicket($ticket_id){
         $ticket = Ticket::findorFail($ticket_id);
+        $ticket['assigned_by'] = User::findorFail($ticket->issued_by);
+        $ticket['assigned_to'] = User::findorFail($ticket->assigned_to);
         $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->get();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
+        if ($ticket['symptoms'] != null){
+            $tags = array();
+            foreach ($ticket['symptoms'] as $symptom){
+                $tags[] = $symptom->description;
+            }
+            $ticket['tags'] = implode(',', $tags);
+        }
         if ($ticket['lab_datas'] != null){
             $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
         }
@@ -150,6 +159,8 @@ class TicketController extends Controller
      * @return mixed
      */
     public function saveSymptoms(Request $request){
+        //delete any previos symptoms before a fresh insert, if any
+        $toDelete = Symptom::where('ticket_id', $request->ticket_id)->delete();
         //save symptoms
         $symptoms = explode(',', $request->symptoms);
         foreach ($symptoms as $symptom){
