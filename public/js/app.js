@@ -12943,6 +12943,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12988,6 +12991,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.currentTicket = response.data;
                 inheritance.labtechs();
                 inheritance.modalLoading = false;
+                setTimeout(function () {
+                    $('select').tagsinput('refresh');
+                }, 500);
             }.bind(this));
             inheritance.ticketModal = true;
         },
@@ -13012,6 +13018,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.atDoctorButton = 'Saving...';
             inheritance.status = 'Saving Symptoms...';
             var symptom = $('#sympt').val();
+            //console.log(symptom);
             var hticket_id = $('#hiddenTicketId').val();
             console.log(hticket_id);
             inheritance.symptoms = symptom;
@@ -38711,7 +38718,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "col-md-8"
-  }, [_c('label', [_vm._v("\n                                                                    Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
+  }, [_c('label', [_vm._v("\n                                                                    Input Symptomss and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
     staticStyle: {
       "font-size": "8px"
     }
@@ -38722,29 +38729,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.currentTicket.tags),
-      expression: "currentTicket.tags"
-    }],
-    staticClass: "form-control",
+  }, [_c('select', {
     attrs: {
-      "type": "text",
+      "multiple": "",
       "data-role": "tagsinput",
       "id": "sympt"
-    },
-    domProps: {
-      "value": (_vm.currentTicket.tags)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.currentTicket.tags = $event.target.value
-      }
     }
-  })]), _vm._v(" "), _c('div', {
+  }, [_vm._l((_vm.labTechnicians), function(labTechnician) {
+    return _c('option', {
+      attrs: {
+        "selected": "selected"
+      },
+      domProps: {
+        "value": labTechnician.first_name
+      }
+    }, [_vm._v(_vm._s(labTechnician.first_name))])
+  }), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "huh"
+    }
+  }, [_vm._v("huh")])], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary",

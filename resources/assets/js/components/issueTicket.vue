@@ -162,14 +162,17 @@
                                                             <div id="accordion-2" class="accordion-section-content">
                                                                 <div class="col-md-8">
                                                                     <label>
-                                                                        Input Symptoms and general Observations, if any.<br>
+                                                                        Input Symptomss and general Observations, if any.<br>
                                                                         <b style="font-size: 8px">
                                                                             [Input a single symptom, then hit enter before inputting another]
                                                                         </b>
                                                                     </label>
                                                                     <div class="row" style="width: 100%">
                                                                         <div class="form-group">
-                                                                            <input type="text" class="form-control" data-role="tagsinput" id="sympt" v-model="currentTicket.tags">
+                                                                            <select multiple data-role="tagsinput" id="sympt">
+                                                                                <option v-for="labTechnician in labTechnicians" :value="labTechnician.first_name" selected="selected">{{labTechnician.first_name}}</option>
+                                                                                <option value="huh">huh</option>
+                                                                            </select>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <button class="btn btn-sm btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
@@ -334,6 +337,7 @@
                         inheritance.currentTicket = response.data;
                         inheritance.labtechs();
                         inheritance.modalLoading = false;
+                        setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
                     }.bind(this));
                 inheritance.ticketModal = true;
             },
@@ -359,6 +363,7 @@
                 inheritance.atDoctorButton = 'Saving...';
                 inheritance.status = 'Saving Symptoms...';
                 var symptom = $('#sympt').val();
+                //console.log(symptom);
                 var hticket_id = $('#hiddenTicketId').val();
                 console.log(hticket_id);
                 inheritance.symptoms = symptom;
