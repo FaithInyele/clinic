@@ -144,7 +144,7 @@ class TicketController extends Controller
             foreach ($ticket['symptoms'] as $symptom){
                 $tags[] = $symptom->description;
             }
-            $ticket['tags'] = implode(',', $tags);
+            $ticket['tags'] = $tags;
         }
         if ($ticket['lab_datas'] != null){
             $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();

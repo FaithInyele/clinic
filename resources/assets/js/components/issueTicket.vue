@@ -169,14 +169,7 @@
                                                                     </label>
                                                                     <div class="row" style="width: 100%">
                                                                         <div class="form-group">
-                                                                            <select multiple data-role="tagsinput" id="sympt">
-                                                                                <option v-for="labTechnician in labTechnicians" :value="labTechnician.first_name" selected="selected">{{labTechnician.first_name}}</option>
-                                                                                <option value="huh">huh</option>
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <button class="btn btn-sm btn-primary" @click="saveSymptoms">{{atDoctorButton}}</button>
-                                                                        </div>
+                                                                            <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>                                                                        </div>
                                                                         <hr>
                                                                         <div class="row" v-show="recommendAction">
                                                                             <div class="row">
@@ -291,11 +284,14 @@
 </template>
 
 <script>
+    import InputTag from 'vue-input-tag'
+
     export default {
         mounted: function() {
             console.log('Component mounted.');
-            this.allActiveMethod()
+            this.allActiveMethod();
         },
+        components:{InputTag},
         data: function () {
             return{
                 ticketModal: false,
@@ -307,6 +303,7 @@
                 sendtoLab: 'Send Client to Lab',
                 afterSymptoms: false,
                 symptoms: '',
+                tagsArray: [],
                 recommendAction: true,
                 chooseLab: false,
                 chooseMed: false,
@@ -360,14 +357,15 @@
             //for doctor. save client's symptoms
             saveSymptoms: function () {
                 var inheritance=this;
+                console.log(inheritance.tagsArray);
                 inheritance.atDoctorButton = 'Saving...';
                 inheritance.status = 'Saving Symptoms...';
-                var symptom = $('#sympt').val();
+               // var symptom = $('#sympt').val();
                 //console.log(symptom);
                 var hticket_id = $('#hiddenTicketId').val();
                 console.log(hticket_id);
-                inheritance.symptoms = symptom;
-                axios.get(base_url+'/tickets/my-tickets/save/symptoms?ticket_id='+hticket_id+'&status=pending&symptoms='+inheritance.symptoms)
+                //inheritance.symptoms = symptom;
+                axios.get(base_url+'/tickets/my-tickets/save/symptoms?ticket_id='+hticket_id+'&status=pending&symptoms='+inheritance.currentTicket.tags)
                     .then(function (response) {
                         console.log(response);
                         inheritance.recommendAction = true;
