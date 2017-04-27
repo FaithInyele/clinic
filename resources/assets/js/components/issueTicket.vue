@@ -170,11 +170,11 @@
                                                                     <div class="row" style="width: 100%">
                                                                         <div class="form-group">
                                                                             <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>                                                                        </div>
-                                                                        <hr>
-                                                                        <div class="row" v-show="recommendAction">
-                                                                            <div class="row">
-                                                                                <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a>
-                                                                                <a style="font-size: 10px" @click="prescribeMedication">Prescribe Medication</a>
+                                                                        <hr style="margin: 0px">
+                                                                        <div v-show="recommendAction">
+                                                                            <div class="">
+                                                                                <a style="font-size: 15px" @click="recommendLab">Recommend Lab Test(s)</a> |
+                                                                                <a style="font-size: 15px" @click="prescribeMedication">Prescribe Medication</a>
                                                                             </div>
                                                                             <div v-show="successtoLab" class="alert alert-info">
                                                                                 <h6>Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician</h6>
@@ -183,7 +183,9 @@
                                                                                 <label>
                                                                                     Select Lab Technician
                                                                                 </label>
+
                                                                                 <select class="form-control" v-model="selectedLabTech">
+                                                                                    <option selected disabled>-Select a Lab Technician to Assign-</option>
                                                                                     <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
                                                                                 </select>
                                                                                 <label>
@@ -193,7 +195,7 @@
                                                                                     </b>
                                                                                 </label>
                                                                                 <div class="form-group">
-                                                                                    <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="tests">
+                                                                                    <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <button class="btn btn-primary" @click="saveLab">{{sendtoLab}}</button>
@@ -312,7 +314,8 @@
                 successtoLab: false,
                 modalLoading: true,
                 baseUrl: base_url,
-                status: 'No Operation'
+                status: 'No Operation',
+                test_tags: []
 
             }
         },
@@ -334,9 +337,16 @@
                         inheritance.currentTicket = response.data;
                         inheritance.labtechs();
                         inheritance.modalLoading = false;
+                        inheritance.updateTestTags();
                         setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
                     }.bind(this));
                 inheritance.ticketModal = true;
+            },
+            updateTestTags: function () {
+                var inheritance=this;
+                if (inheritance.currentTicket.ticket_tags != null){
+                    inheritance.test_tags = inheritance.currentTicket.ticket_tags;
+                }
             },
             //close the above opened ticket.
             closeTicket: function () {
@@ -399,13 +409,18 @@
             //start a lab ticket.
             saveLab: function () {
               var inheritance = this;
+              var ticket_id = inheritance.currentTicket.id;
+              var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
               inheritance.sendtoLab = 'Sending request...';
+              inheritance.status = 'Saving Tests...';
               var tests = $('#tests').val();
-              console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+tests+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id);
-              axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+tests+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id)
-                  .then(function () {
-                      inheritance.successtoLab = true;
+              console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.currentTicket.ticket_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
+              axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
+                  .then(function (response) {
+                      console.log(response);
+                      inheritance.status = 'Tests Successfully Saved';
                       inheritance.sendtoLab = 'Sent';
+                      inheritance.openTicket(ticket_id);
                   }.bind(this))
             }
 

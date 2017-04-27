@@ -44,7 +44,7 @@ const app = new Vue({
 
 require('../sass/custom/accordion');
 
-require('../sass/custom/tags/bootstrap-tagsinput');
+//require('../sass/custom/tags/bootstrap-tagsinput');
 
 require('metismenu');
 

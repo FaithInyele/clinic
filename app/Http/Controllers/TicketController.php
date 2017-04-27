@@ -148,6 +148,11 @@ class TicketController extends Controller
         }
         if ($ticket['lab_datas'] != null){
             $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
+            $tests = array();
+            foreach ($ticket['tests'] as $test){
+                $tests[] = $test->description;
+            }
+            $ticket['ticket_tags'] = $tests;
         }
         return Response::json($ticket);
     }
@@ -211,29 +216,44 @@ class TicketController extends Controller
     public function startLab(Request $request){
         //dd($request->all());
         //start Lab Ticket
-        $startLab = new LabData(array(
-            'ticket_id'=>$request->ticket_id,
-            'assigned_to'=>$request->technician,
-            'status'=>0
-        ));
-        $startLab->save();
-
-        //save lab tests
-        $test = explode(',', $request->tests);
-        foreach ($test as $item){
-            $data = new Test(array(
-                'lab_id'=>$startLab->id,
-                'description'=>$item
+        if($request->labdatas_id == 'null'){
+            $startLab = new LabData(array(
+                'ticket_id'=>$request->ticket_id,
+                'assigned_to'=>$request->technician,
+                'status'=>0
             ));
-            $data->save();
-        }
+            $startLab->save();
 
-        //update progress
-        $progress = new Progress(array(
-            'ticket_id'=>$request->ticket_id,
-            'user_id'=>Auth::user()->id,
-            'description'=>'Client at Lab'));
-        $progress->save();
+            //save lab tests
+            $test = explode(',', $request->tests);
+            foreach ($test as $item){
+                $data = new Test(array(
+                    'lab_id'=>$startLab->id,
+                    'description'=>$item
+                ));
+                $data->save();
+            }
+
+            //update progress
+            $progress = new Progress(array(
+                'ticket_id'=>$request->ticket_id,
+                'user_id'=>Auth::user()->id,
+                'description'=>'Client at Lab'));
+            $progress->save();
+        }else{
+            //delete previous tests
+            $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
+
+            //save lab tests
+            $test = explode(',', $request->tests);
+            foreach ($test as $item){
+                $data = new Test(array(
+                    'lab_id'=>$request->labdatas_id,
+                    'description'=>$item
+                ));
+                $data->save();
+            }
+        }
 
         //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
     }
