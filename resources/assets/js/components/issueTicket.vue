@@ -230,7 +230,14 @@
                                                             <div id="accordion-3" class="accordion-section-content">
                                                                 <div class="row" v-if="currentTicket.tests">
                                                                     <div v-for="test in currentTicket.tests">
-                                                                        <b>{{test.description}}:</b> <i>{{test.result}}</i>
+                                                                        <div class="row">
+                                                                            <div class="col-md-2" style="text-align: right">
+                                                                                <label>{{test.description}}:</label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <i v-if="test.result">{{test.result}}</i>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div><!--end .accordion-section-content-->
@@ -246,6 +253,7 @@
                                                                 </label>
 
                                                                     <div class="form-group">
+                                                                        <input-tag id="prescriptions_tags" placeholder="Add Prescriptions"  :on-change="savePrescription" :tags="prescription_tags"></input-tag>
                                                                         <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="med">
                                                                     </div>
                                                                     <div class="form-group pull-right">
@@ -315,7 +323,8 @@
                 modalLoading: true,
                 baseUrl: base_url,
                 status: 'No Operation',
-                test_tags: []
+                test_tags: [],
+                prescription_tags: []
 
             }
         },
@@ -347,6 +356,9 @@
                 if (inheritance.currentTicket.ticket_tags != null){
                     inheritance.test_tags = inheritance.currentTicket.ticket_tags;
                 }
+            },
+            updatePrescriptionTags: function () {
+                var inheritance = this;
             },
             //close the above opened ticket.
             closeTicket: function () {
@@ -393,6 +405,7 @@
               inheritance.chooseLab=false;
               inheritance.chooseMed=true;
             },
+            //save the prescriptions given
             saveP: function () {
                 var inheritance = this;
                 inheritance.savePrescription = "Saving...";
@@ -403,6 +416,7 @@
                         inheritance.savePrescription = "Save";
                     }.bind(this))
             },
+            //save all prescriptions and close chapter
             submitP: function () {
                 console.log('huh');
             },

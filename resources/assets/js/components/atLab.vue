@@ -92,32 +92,36 @@
                 <div class="modal-wrapper">
                     <div class="modal-container">
 
-                        <!--<div class="modal-header">
+                        <div class="modal-header">
                             <slot name="header">
-                                default header
+                                At Lab Technician
+                                <label class="pull-right">Status: {{status}}</label>
                             </slot>
-                        </div>-->
+                        </div>
+                        <div class="modal-body" style="text-align: center" v-show="modalLoading">
+                            <img :src="baseUrl+'/images/loading.gif'">
+                        </div>
 
-                        <div class="modal-body" v-if="currentClient.client">
-                            <slot name="body">
+                        <div class="modal-body" v-show="!modalLoading">
+                            <slot name="body" v-if="currentClient.client">
                                 <div class="row">
+
                                 <div class="col-md-4">
                                     <div class="row">
                                         <img src="https://placehold.it/140x100" style="width: 100%; height: auto">
                                     </div>
                                     <div class="row" v-if="currentClient.client">
                                         <h5>
-                                            <p><b>Client Name:</b> {{currentClient.client.first_name}},  {{currentClient.client.other_names}}</p>
-                                            <p><b>Client Type:</b> {{currentClient.client.type}}</p>
-                                            <p><b>Year of Birth:</b> {{currentClient.client.yob}}</p>
-                                            <p>{{currentClient.updated_at}}</p>
+                                            <p><label>Client Name:</label> {{currentClient.client.first_name}},  {{currentClient.client.other_names}}</p>
+                                            <p><label>Client Type:</label> {{currentClient.client.type}}</p>
+                                            <p><label>Year of Birth:</label> {{currentClient.client.yob}}</p>
                                             <input type="hidden" v-model="currentClient.id" id="hiddenTicketId">
                                         </h5>
                                     </div>
 
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="row" style="max-height: 450px;overflow-y: scroll">
+                                    <div class="row" style="max-height: 400px;overflow-y: scroll">
                                         <ul class="nav nav-tabs">
                                             <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
                                             <li><a data-toggle="tab" href="#history"> History</a></li>
@@ -125,12 +129,11 @@
 
                                         <div class="row tab-content" >
                                             <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
-                                                <h3>Requested Tests</h3>
+                                                <h6>Requested Tests</h6>
                                                 <div class="form-group" v-for="test in currentClient.tests">
                                                     <div class="row pullquote-left">
                                                         <div class="row" style="padding-left: 10px;padding-right: 10px;margin-bottom: 10px">
-                                                            <h4>{{ test.description }}</h4>
-                                                            <h6>requested at: {{ test.created_at }}</h6>
+                                                            <div>{{ test.description }} <i style="font-size: 10px" class="pull-right">requested at: {{ test.created_at }}</i></div>
                                                             <label style="font-size: 9px">Enter results here:</label>
                                                             <textarea class="form-control" v-model="test.result">
                                                             </textarea>
@@ -139,7 +142,7 @@
                                                 </div>
                                                 <div class="pull-right">
                                                     <button class="btn btn-primary" @click="saveResults(currentClient.tests)">{{ saveButton }}</button>
-                                                    <button class="btn btn-primary" @click="submitResults()">{{ resultsButton }}</button>
+                                                    <button class="btn btn-primary" @click="submitResults(currentClient.tests)">{{ resultsButton }}</button>
                                                 </div>
                                             </div>
 
@@ -176,16 +179,20 @@
         data: function () {
             return{
                 ticketModal: false,
+                modalLoading: true,
                 clients: [],
                 currentClient: [],
                 saveButton: 'Save',
-                resultsButton: 'Send Resultss'
+                resultsButton: 'Send Resultss',
+                baseUrl: base_url,
+                status: 'No Operation'
             }
         },
         methods:{
             //close modal
             closeTicket: function () {
                 var inheritance = this;
+                inheritance.currentClient = [];
                 inheritance.ticketModal = false;
             },
             //open modal
@@ -202,8 +209,9 @@
                     }.bind(this))
             },
             //close lab test and submit tthe results
-            submitResults: function () {
+            submitResults: function (data) {
                 var inheritance = this;
+                inheritance.saveResults(data);
                 console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id);
                 axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id)
                     .then(function () {
@@ -218,16 +226,22 @@
                 axios.get(base_url+'/atlab/view/'+ticket_id)
                     .then(function (response) {
                         inheritance.currentClient = response.data;
+                        inheritance.modalLoading = false;
                     }.bind(this));
                 inheritance.ticketModal = true;
             },
             //save results
             saveResults: function (data) {
                 var inheritance = this;
-                axios.get(base_url+'/atlab/test/update?id='+data.id+'&active='+data.active)
+                console.log(data);
+                inheritance.status = 'Saving Results...';
+                inheritance.saveButton = 'Saving...';
+                axios.post(base_url+'/atlab/test/update', data)
                     .then(function (response) {
                         console.log(response.data);
-                    })
+                        inheritance.status = 'Result(s) successfully Saved';
+                        inheritance.saveButton = 'Save';
+                    }.bind(this))
             }
         }
     }

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Response;
 class LabController extends Controller
 {
     /**
-     * retirieve all data related to a given ticket, -->for lab view
+     * retrieve all data related to a given ticket, -->for lab view
      *
      * @param $ticket_id
      * @return mixed
