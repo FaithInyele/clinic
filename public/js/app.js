@@ -12830,6 +12830,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -39310,7 +39312,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-container"
   }, [_c('div', {
     staticClass: "modal-header"
-  }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
+  }, [_vm._t("header", [_c('label', [_vm._v("At Chemist")]), _vm._v(" "), _c('label', {
     staticClass: "pull-right"
   }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
     directives: [{
@@ -39398,7 +39400,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "progress"
     }
   }, _vm._l((_vm.currentClient.medicine), function(medicine) {
-    return _c('div', [_c('hr'), _vm._v(" "), _c('div', {
+    return _c('div', [_c('div', {
+      staticStyle: {
+        "background-color": "#29f31e",
+        "border-radius": "10px"
+      }
+    }, [_c('hr'), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "col-md-5"
@@ -39412,7 +39419,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "data-toggle": "dropdown"
       }
-    }, [_vm._v("Confirm\n                                                                    "), _c('span', {
+    }, [_vm._v("Confirm\n                                                                        "), _c('span', {
       staticClass: "caret"
     })]), _vm._v(" "), _c('ul', {
       staticClass: "dropdown-menu"
@@ -39433,12 +39440,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("JavaScript")])])])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-5"
     }, [_c('input', {
-      staticClass: "form-control",
+      staticClass: "form-control sm",
       attrs: {
         "type": "text",
         "placeholder": "Alternative, if any"
       }
-    })])])])
+    })])])])])
   })), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {

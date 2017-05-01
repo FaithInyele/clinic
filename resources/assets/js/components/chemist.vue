@@ -94,7 +94,7 @@
 
                         <div class="modal-header">
                             <slot name="header">
-                                <label>At Doctor/Nurse</label>
+                                <label>At Chemist</label>
                                 <label class="pull-right">Status: {{status}}</label>
                             </slot>
                         </div>
@@ -129,21 +129,23 @@
                                             <div class="row tab-content" >
                                                 <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
                                                     <div v-for="medicine in currentClient.medicine">
-                                                        <hr>
-                                                        <div class="row">
-                                                            <div class="col-md-5">{{medicine.medicine}}</div>
-                                                            <div class="col-md-2">
-                                                                <div class="dropdown">
-                                                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Confirm
-                                                                        <span class="caret"></span></button>
-                                                                    <ul class="dropdown-menu">
-                                                                        <li><a @click="confirm(medicine)">HTML</a></li>
-                                                                        <li><a href="#">CSS</a></li>
-                                                                        <li><a href="#">JavaScript</a></li>
-                                                                    </ul>
-                                                                </div>                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <input type="text" class="form-control" placeholder="Alternative, if any">
+                                                        <div style="background-color: #29f31e;border-radius: 10px">
+                                                            <hr>
+                                                            <div class="row">
+                                                                <div class="col-md-5">{{medicine.medicine}}</div>
+                                                                <div class="col-md-2">
+                                                                    <div class="dropdown">
+                                                                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Confirm
+                                                                            <span class="caret"></span></button>
+                                                                        <ul class="dropdown-menu">
+                                                                            <li><a @click="confirm(medicine)">HTML</a></li>
+                                                                            <li><a href="#">CSS</a></li>
+                                                                            <li><a href="#">JavaScript</a></li>
+                                                                        </ul>
+                                                                    </div>                                                             </div>
+                                                                <div class="col-md-5">
+                                                                    <input type="text" class="form-control sm" placeholder="Alternative, if any">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
