@@ -18,7 +18,7 @@ class CreateMedicinesTable extends Migration
             $table->integer('prescription_id')->unsigned();
             $table->string('medicine');
             $table->string('alternatative')->nullable();
-            $table->string('status');  //issued or external(clientto buy prescription outside and return receipt for refund)
+            $table->string('status');  //issued or external(client to buy prescription outside and return receipt for refund)
             $table->timestamps();
 
             //create table relationships

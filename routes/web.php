@@ -81,6 +81,8 @@ Route::group(['middleware' => 'logIn'], function () {
      * atChemist routes
      */
     Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
+    Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
+    Route::get('atchemist/close/{prescription_id}', 'ChemistController@closePrescription');
 
 
 });

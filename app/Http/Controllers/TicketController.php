@@ -139,6 +139,8 @@ class TicketController extends Controller
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
+        $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
+        //implode symptom as tags
         if ($ticket['symptoms'] != null){
             $tags = array();
             foreach ($ticket['symptoms'] as $symptom){
@@ -146,6 +148,7 @@ class TicketController extends Controller
             }
             $ticket['tags'] = $tags;
         }
+        //implode test description as tags
         if ($ticket['lab_datas'] != null){
             $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
             $tests = array();
@@ -153,6 +156,16 @@ class TicketController extends Controller
                 $tests[] = $test->description;
             }
             $ticket['ticket_tags'] = $tests;
+        }
+        //implode prescription as tags
+        if ($ticket['prescription'] != null){
+            $ticket['med'] = 'huh';
+            $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
+            $p_tags = array();
+            foreach ($ticket['medicine'] as $medicine){
+                $p_tags[] = $medicine->medicine;
+            }
+            $ticket['medicine_tags'] = $p_tags;
         }
         return Response::json($ticket);
     }
@@ -261,21 +274,43 @@ class TicketController extends Controller
     public function startChemist(Request $request){
         //dd('aiii');
         //start a prescription
-        $prescription = new Prescription(array(
-            'ticket_id'=>$request->ticket_id,
-            'assigned_to'=>2,
-            'status'=>0
-        ));
-        $prescription->save();
-        //save requested medications
-        $medication = explode(',', $request->med);
-        foreach ($medication as $item){
-            $data = new Medicine(array(
-                'prescription_id'=>$prescription->id,
-                'medicine'=>$item,
-                'status'=>'pending'
+        //dd($request->all());
+        if ($request->prescription_id == 'null'){
+            dd('oh');
+            $prescription = new Prescription(array(
+                'ticket_id'=>$request->ticket_id,
+                'assigned_to'=>2,
+                'status'=>0
             ));
-            $data->save();
+            $prescription->save();
+            //save requested medications
+            $medication = explode(',', $request->med);
+            foreach ($medication as $item){
+                $data = new Medicine(array(
+                    'prescription_id'=>$request->prescription_id,
+                    'medicine'=>$item,
+                    'status'=>'pending'
+                ));
+                $data->save();
+            }
+        }else{
+
+            //dd('no');
+            //delete previous prescriptions
+            $toDelete = Medicine::where('prescription_id', $request->prescription_id)->delete();
+
+            //save medication
+            $medication = explode(',', $request->med);
+            foreach ($medication as $item){
+                $data = new Medicine(array(
+                    'prescription_id'=>$request->prescription_id,
+                    'medicine'=>$item,
+                    'status'=>'pending'
+                ));
+                $data->save();
+            }
         }
+        return Response::json(array('success'=>'success'));
+
     }
 }

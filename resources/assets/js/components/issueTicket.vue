@@ -253,11 +253,9 @@
                                                                 </label>
 
                                                                     <div class="form-group">
-                                                                        <input-tag id="prescriptions_tags" placeholder="Add Prescriptions"  :on-change="savePrescription" :tags="prescription_tags"></input-tag>
-                                                                        <input style="min-height: 150px;width: 100%" type="text" class="form-control" data-role="tagsinput" id="med">
+                                                                        <input-tag placeholder="Add Prescriptions"  :on-change="saveP" :tags="prescription_tags"></input-tag>
                                                                     </div>
                                                                     <div class="form-group pull-right">
-                                                                        <button class="btn btn-primary" @click="saveP">{{savePrescription}}</button>
                                                                         <button class="btn btn-primary" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
                                                             </div><!--end .accordion-section-content-->
@@ -347,6 +345,7 @@
                         inheritance.labtechs();
                         inheritance.modalLoading = false;
                         inheritance.updateTestTags();
+                        inheritance.updatePrescriptionTags();
                         setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
                     }.bind(this));
                 inheritance.ticketModal = true;
@@ -359,6 +358,9 @@
             },
             updatePrescriptionTags: function () {
                 var inheritance = this;
+                if (inheritance.currentTicket.medicine_tags != null){
+                    inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+                }
             },
             //close the above opened ticket.
             closeTicket: function () {
@@ -408,17 +410,28 @@
             //save the prescriptions given
             saveP: function () {
                 var inheritance = this;
+                inheritance.status = 'Saving Prescription(s)';
                 inheritance.savePrescription = "Saving...";
-                var prescription = $('#med').val();
-                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+prescription+'&ticket_id='+inheritance.currentTicket.id);
-                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+prescription+'&ticket_id='+inheritance.currentTicket.id)
+                var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
+                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
+                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
                     .then(function () {
+                        inheritance.status = 'Prescription(s) Successfully Saved';
                         inheritance.savePrescription = "Save";
+                        inheritance.openTicket(inheritance.currentTicket.id);
                     }.bind(this))
             },
             //save all prescriptions and close chapter
             submitP: function () {
-                console.log('huh');
+                var inheritance = this;
+                inheritance.status = 'Submitting Prescription(s)';
+              ;  inheritance.toChemist = 'Submitting';
+                axios.get(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id)
+                    .then(function (response) {
+                        inheritance.status = 'Prescription(s) Successfully Submitted';
+                        inheritance.openTicket(inheritance.currentTicket.id);
+                        inheritance.toChemist = 'Submit to Chemist';
+                    }.bind(this))
             },
             //start a lab ticket.
             saveLab: function () {

@@ -17,7 +17,7 @@ class CreatePrescriptionsTable extends Migration
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
             $table->integer('assigned_to')->unsigned();
-            $table->string('status');
+            $table->string('status'); //0 -->still editing 1-->submitted to chemist 2 --> chemist issued medication
             $table->timestamps();
 
             //create table relationships

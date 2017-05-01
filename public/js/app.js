@@ -12811,6 +12811,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12821,7 +12840,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             ticketModal: false,
             allClients: [],
-            currentClient: []
+            currentClient: [],
+            modalLoading: true,
+            status: 'No Operation',
+            baseUrl: base_url,
+            buttonInstance: ['button']
         };
     },
     methods: {
@@ -12833,14 +12856,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         currentTicket: function currentTicket(ticket_id) {
             var inheritance = this;
+            inheritance.ticketModal = true;
             axios(base_url + '/atchemist/view/' + ticket_id).then(function (response) {
                 inheritance.currentClient = response.data;
             }.bind(this));
-            inheritance.ticketModal = true;
+            inheritance.modalLoading = false;
         },
         closeTicket: function closeTicket() {
             var inheritance = this;
             inheritance.ticketModal = false;
+        },
+        confirm: function confirm(medicine) {
+            console.log('huh');
         }
 
     }
@@ -12854,8 +12881,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_input_tag__);
-//
-//
 //
 //
 //
@@ -13201,6 +13226,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.labtechs();
                 inheritance.modalLoading = false;
                 inheritance.updateTestTags();
+                inheritance.updatePrescriptionTags();
                 setTimeout(function () {
                     $('select').tagsinput('refresh');
                 }, 500);
@@ -13215,6 +13241,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         updatePrescriptionTags: function updatePrescriptionTags() {
             var inheritance = this;
+            if (inheritance.currentTicket.medicine_tags != null) {
+                inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+            }
         },
         //close the above opened ticket.
         closeTicket: function closeTicket() {
@@ -13262,16 +13291,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //save the prescriptions given
         saveP: function saveP() {
             var inheritance = this;
+            inheritance.status = 'Saving Prescription(s)';
             inheritance.savePrescription = "Saving...";
-            var prescription = $('#med').val();
-            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + prescription + '&ticket_id=' + inheritance.currentTicket.id);
-            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + prescription + '&ticket_id=' + inheritance.currentTicket.id).then(function () {
+            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
+            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
+            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
+                inheritance.status = 'Prescription(s) Successfully Saved';
                 inheritance.savePrescription = "Save";
+                inheritance.openTicket(inheritance.currentTicket.id);
             }.bind(this));
         },
         //save all prescriptions and close chapter
         submitP: function submitP() {
-            console.log('huh');
+            var inheritance = this;
+            inheritance.status = 'Submitting Prescription(s)';
+            ;inheritance.toChemist = 'Submitting';
+            axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id).then(function (response) {
+                inheritance.status = 'Prescription(s) Successfully Submitted';
+                inheritance.openTicket(inheritance.currentTicket.id);
+                inheritance.toChemist = 'Submit to Chemist';
+            }.bind(this));
         },
         //start a lab ticket.
         saveLab: function saveLab() {
@@ -39043,30 +39082,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('input-tag', {
     attrs: {
-      "id": "prescriptions_tags",
       "placeholder": "Add Prescriptions",
-      "on-change": _vm.savePrescription,
+      "on-change": _vm.saveP,
       "tags": _vm.prescription_tags
-    }
-  }), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    staticStyle: {
-      "min-height": "150px",
-      "width": "100%"
-    },
-    attrs: {
-      "type": "text",
-      "data-role": "tagsinput",
-      "id": "med"
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "form-group pull-right"
   }, [_c('button', {
-    staticClass: "btn btn-primary",
-    on: {
-      "click": _vm.saveP
-    }
-  }, [_vm._v(_vm._s(_vm.savePrescription))]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     on: {
       "click": function($event) {
@@ -39246,7 +39268,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._m(1), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
     on: {
-      "click": _vm.openTicket
+      "click": function($event) {}
     }
   }, [_vm._v("Open")])])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)])])])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6)]), _vm._v(" "), _c('div', {
     staticClass: "col-lg-4"
@@ -39286,7 +39308,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-wrapper"
   }, [_c('div', {
     staticClass: "modal-container"
-  }, [(_vm.currentClient.client) ? _c('div', {
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
+    staticClass: "pull-right"
+  }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modalLoading),
+      expression: "modalLoading"
+    }],
+    staticClass: "modal-body",
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.baseUrl + '/images/loading.gif'
+    }
+  })]), _vm._v(" "), (_vm.currentClient.client) ? _c('div', {
     staticClass: "modal-body"
   }, [_vm._t("body", [_c('div', {
     staticClass: "row"
@@ -39304,7 +39345,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), (_vm.currentClient.client) ? _c('div', {
     staticClass: "row"
-  }, [_c('h5', [_c('p', [_c('b', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.first_name) + ",  " + _vm._s(_vm.currentClient.client.other_names))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.type))]), _vm._v(" "), _c('p', [_c('b', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.yob))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.currentClient.updated_at))]), _vm._v(" "), _c('input', {
+  }, [_c('h5', [_c('p', [_c('label', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.first_name) + ",  " + _vm._s(_vm.currentClient.client.other_names))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.type))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentClient.client.yob))]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -39329,7 +39370,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row",
     staticStyle: {
-      "max-height": "450px",
+      "max-height": "400px",
       "overflow-y": "scroll"
     }
   }, [_c('ul', {
@@ -39357,7 +39398,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "progress"
     }
   }, _vm._l((_vm.currentClient.medicine), function(medicine) {
-    return _c('div', [_vm._v("\n                                                    " + _vm._s(medicine.medicine) + "\n                                                ")])
+    return _c('div', [_c('hr'), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-5"
+    }, [_vm._v(_vm._s(medicine.medicine))]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-2"
+    }, [_c('div', {
+      staticClass: "dropdown"
+    }, [_c('button', {
+      staticClass: "btn btn-sm btn-primary dropdown-toggle",
+      attrs: {
+        "type": "button",
+        "data-toggle": "dropdown"
+      }
+    }, [_vm._v("Confirm\n                                                                    "), _c('span', {
+      staticClass: "caret"
+    })]), _vm._v(" "), _c('ul', {
+      staticClass: "dropdown-menu"
+    }, [_c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine)
+        }
+      }
+    }, [_vm._v("HTML")])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_vm._v("CSS")])]), _vm._v(" "), _c('li', [_c('a', {
+      attrs: {
+        "href": "#"
+      }
+    }, [_vm._v("JavaScript")])])])])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-5"
+    }, [_c('input', {
+      staticClass: "form-control",
+      attrs: {
+        "type": "text",
+        "placeholder": "Alternative, if any"
+      }
+    })])])])
   })), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {

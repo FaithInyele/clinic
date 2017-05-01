@@ -18,7 +18,7 @@
                         <tr>
                             <td>Makamu</td>
                             <td>Issues Ticket</td>
-                            <td><a @click="openTicket">Open</a> </td>
+                            <td><a @click="">Open</a> </td>
                         </tr>
                         <tr>
                             <td>Makamu</td>
@@ -92,11 +92,15 @@
                 <div class="modal-wrapper">
                     <div class="modal-container">
 
-                        <!--<div class="modal-header">
+                        <div class="modal-header">
                             <slot name="header">
-                                default header
+                                <label>At Doctor/Nurse</label>
+                                <label class="pull-right">Status: {{status}}</label>
                             </slot>
-                        </div>-->
+                        </div>
+                        <div class="modal-body" style="text-align: center" v-show="modalLoading">
+                            <img :src="baseUrl+'/images/loading.gif'">
+                        </div>
 
                         <div class="modal-body" v-if="currentClient.client">
                             <slot name="body">
@@ -107,17 +111,16 @@
                                         </div>
                                         <div class="row" v-if="currentClient.client">
                                             <h5>
-                                                <p><b>Client Name:</b> {{currentClient.client.first_name}},  {{currentClient.client.other_names}}</p>
-                                                <p><b>Client Type:</b> {{currentClient.client.type}}</p>
-                                                <p><b>Year of Birth:</b> {{currentClient.client.yob}}</p>
-                                                <p>{{currentClient.updated_at}}</p>
+                                                <p><label>Client Name:</label> {{currentClient.client.first_name}},  {{currentClient.client.other_names}}</p>
+                                                <p><label>Client Type:</label> {{currentClient.client.type}}</p>
+                                                <p><label>Year of Birth:</label> {{currentClient.client.yob}}</p>
                                                 <input type="hidden" v-model="currentClient.id" id="hiddenTicketId">
                                             </h5>
                                         </div>
 
                                     </div>
                                     <div class="col-md-8">
-                                        <div class="row" style="max-height: 450px;overflow-y: scroll">
+                                        <div class="row" style="max-height: 400px;overflow-y: scroll">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
                                                 <li><a data-toggle="tab" href="#history"> History</a></li>
@@ -126,7 +129,23 @@
                                             <div class="row tab-content" >
                                                 <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
                                                     <div v-for="medicine in currentClient.medicine">
-                                                        {{medicine.medicine}}
+                                                        <hr>
+                                                        <div class="row">
+                                                            <div class="col-md-5">{{medicine.medicine}}</div>
+                                                            <div class="col-md-2">
+                                                                <div class="dropdown">
+                                                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Confirm
+                                                                        <span class="caret"></span></button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li><a @click="confirm(medicine)">HTML</a></li>
+                                                                        <li><a href="#">CSS</a></li>
+                                                                        <li><a href="#">JavaScript</a></li>
+                                                                    </ul>
+                                                                </div>                                                             </div>
+                                                            <div class="col-md-5">
+                                                                <input type="text" class="form-control" placeholder="Alternative, if any">
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
 
@@ -164,7 +183,11 @@
             return{
                 ticketModal: false,
                 allClients: [],
-                currentClient: []
+                currentClient: [],
+                modalLoading: true,
+                status: 'No Operation',
+                baseUrl: base_url,
+                buttonInstance: ['button']
             }
         },
         methods:{
@@ -177,15 +200,20 @@
             },
             currentTicket: function (ticket_id) {
                 var inheritance=this;
+                inheritance.ticketModal=true;
                 axios(base_url+'/atchemist/view/'+ticket_id)
                     .then(function (response) {
                         inheritance.currentClient = response.data;
-                    }.bind(this))
-                inheritance.ticketModal=true
+                    }.bind(this));
+                inheritance.modalLoading = false;
+
             },
             closeTicket: function () {
                 var inheritance =this;
                 inheritance.ticketModal=false;
+            },
+            confirm: function (medicine) {
+                console.log('huh');
             }
 
         }

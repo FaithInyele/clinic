@@ -11,9 +11,17 @@ use App\Test;
 use App\Prescription;
 use App\Medicine;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 class ChemistController extends Controller
 {
+
+    /**
+     * get all details about a specified ticket -->relevant data to a chemist.
+     *
+     * @param $ticket_id
+     * @return mixed
+     */
     public function currentTicket($ticket_id){
         //dd('huh');
         $ticket = Ticket::findorFail($ticket_id);
@@ -25,5 +33,23 @@ class ChemistController extends Controller
         $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
 
         return Response::json($ticket);
+    }
+
+    public function closePrescription($prescription_id){
+
+    }
+
+    /**
+     * function called by doctor, to submit final
+     *
+     * @param $prescription_id
+     * @return mixed
+     */
+    public function submitPrescription($prescription_id){
+        DB::table('prescriptions')
+            ->where('id', $prescription_id)
+            ->update(['status'=>1]);
+
+        return Response::json(array('success'=>'success'));
     }
 }
