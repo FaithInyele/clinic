@@ -52,4 +52,10 @@ class ChemistController extends Controller
 
         return Response::json(array('success'=>'success'));
     }
+
+    public function updatePrescription(Request $request){
+        DB::table('medicines')
+            ->where('id', $request->id)
+            ->update(['status'=>$request->status, 'alternatative'=>$request->alternatative]);
+    }
 }

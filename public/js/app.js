@@ -12846,7 +12846,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             modalLoading: true,
             status: 'No Operation',
             baseUrl: base_url,
-            buttonInstance: ['button']
+            buttonInstance: ['button'],
+            ro: true
         };
     },
     methods: {
@@ -12866,10 +12867,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeTicket: function closeTicket() {
             var inheritance = this;
+            inheritance.currentClient = [];
             inheritance.ticketModal = false;
         },
-        confirm: function confirm(medicine) {
-            console.log('huh');
+        confirm: function confirm(medicine, other) {
+            var inheritance = this;
+            inheritance.status = 'Updating Prescription...';
+            var ticket_id = inheritance.currentClient.id;
+            if (other == 'affirm') {
+                medicine.alternatative = null;
+                medicine.status = 'issued';
+            } else if (other == 'alternative') {} else if (other == 'external') {
+                medicine.alternatative = null;
+                medicine.status = 'issued';
+            }
+
+            axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
+                inheritance.currentTicket(ticket_id);
+                inheritance.status = 'Prescription Successfully Updated';
+            }.bind(this));
         }
 
     }
@@ -39400,14 +39416,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "progress"
     }
   }, _vm._l((_vm.currentClient.medicine), function(medicine) {
-    return _c('div', [_c('div', {
+    return _c('div', [_c('hr'), _vm._v(" "), _c('div', {
+      class: {
+        row: _vm.ro, successful: medicine.status == 'issued'
+      },
       staticStyle: {
-        "background-color": "#29f31e",
-        "border-radius": "10px"
+        "border-radius": "5px",
+        "padding-top": "10px",
+        "padding-bottom": "10px"
       }
-    }, [_c('hr'), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('div', {
+    }, [_c('div', [_c('div', {
       staticClass: "col-md-5"
     }, [_vm._v(_vm._s(medicine.medicine))]), _vm._v(" "), _c('div', {
       staticClass: "col-md-2"
@@ -39426,24 +39444,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('li', [_c('a', {
       on: {
         "click": function($event) {
-          _vm.confirm(medicine)
+          _vm.confirm(medicine, 'affirm')
         }
       }
-    }, [_vm._v("HTML")])]), _vm._v(" "), _c('li', [_c('a', {
-      attrs: {
-        "href": "#"
+    }, [_vm._v("Affirm")])]), _vm._v(" "), _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine, 'external')
+        }
       }
-    }, [_vm._v("CSS")])]), _vm._v(" "), _c('li', [_c('a', {
-      attrs: {
-        "href": "#"
+    }, [_vm._v("External")])]), _vm._v(" "), _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine, 'alternative')
+        }
       }
-    }, [_vm._v("JavaScript")])])])])]), _vm._v(" "), _c('div', {
+    }, [_vm._v("Alternative")])])])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-5"
     }, [_c('input', {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: (medicine.alternatative),
+        expression: "medicine.alternatative"
+      }],
       staticClass: "form-control sm",
       attrs: {
         "type": "text",
         "placeholder": "Alternative, if any"
+      },
+      domProps: {
+        "value": (medicine.alternatative)
+      },
+      on: {
+        "input": function($event) {
+          if ($event.target.composing) { return; }
+          medicine.alternatative = $event.target.value
+        }
       }
     })])])])])
   })), _vm._v(" "), _c('div', {
