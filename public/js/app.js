@@ -13403,6 +13403,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -13411,10 +13442,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     data: function data() {
         return {
-            clients: []
+            clients: [],
+            clientModal: false
         };
     },
     methods: {
+        openModal: function openModal() {
+            var inheritance = this;
+            inheritance.clientsModal = true;
+        },
+        closeModal: function closeModal() {
+            var inheritance = this;
+            inheritance.clientsModal = false;
+        },
         allClients: function allClients() {
             var inheritance = this;
             axios.get(base_url + '/clients/all').then(function (response) {
@@ -13423,7 +13463,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             setTimeout(function () {
                 $("#vueTable").DataTable();
             }, 500);
-        }
+        },
+        viewClient: function viewClient(client) {},
+        editClient: function editClient(client) {}
 
     }
 };
@@ -38286,7 +38328,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
+  return _c('div', [_c('table', {
     staticClass: "table table-striped table-bordered dt-responsive",
     staticStyle: {
       "font-size": "10px"
@@ -38297,18 +38339,55 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "width": "100%"
     }
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(client.first_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.yob))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.gender))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.id_number))]), _vm._v(" "), _vm._m(1, true)])
-  }))])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(client.first_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.yob))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.gender))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.id_number))]), _vm._v(" "), _c('td', [_c('a', {
+      staticClass: "btn btn-success",
+      on: {
+        "click": function($event) {
+          _vm.openModal()
+        }
+      }
+    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
+      staticClass: "btn btn-success",
+      on: {
+        "click": function($event) {
+          _vm.editClient(client)
+        }
+      }
+    }, [_vm._v("Edit")])])])
+  }))]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.clientModal),
+      expression: "clientModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container"
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_vm._v("\n                            default header\n                        ")])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_vm._v("\n                            Under Heavy Construction. "), _c('i', {
+    staticClass: "fa-gear"
+  })])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_vm._v("\n                            default footer\n                            "), _c('button', {
+    staticClass: "modal-default-button",
+    on: {
+      "click": function($event) {
+        _vm.closeModal()
+      }
+    }
+  }, [_vm._v("\n                                OK\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("First Name")]), _vm._v(" "), _c('th', [_vm._v("Other Name(s)")]), _vm._v(" "), _c('th', [_vm._v("D.O.B")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Gender")]), _vm._v(" "), _c('th', [_vm._v("Id No.")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('a', {
-    staticClass: "btn btn-danger"
-  }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-success"
-  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-success"
-  }, [_vm._v("Delete")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

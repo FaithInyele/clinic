@@ -50,10 +50,7 @@ class ClientsController extends Controller
     {
         $this->validate($request, [
             'reg_number' => 'unique:clients',
-
         ]);
-
-
         //save user to db
         $client = new Clients($request->all());
         $client->save();
@@ -101,10 +98,10 @@ class ClientsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
     }

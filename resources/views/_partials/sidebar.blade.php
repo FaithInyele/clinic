@@ -29,6 +29,7 @@
                 <i class="fa fa-home"></i><span class="link-title">&nbsp;Home</span>
             </a>
         </li>
+        @if(Auth::user()->role == 'Admin')
         <li @if(isset($rightbar)) @if($rightbar=='user')class="active" @endif @endif>
             <a href="javascript:;">
                 <i class="fa fa-user "></i>
@@ -46,6 +47,7 @@
                 </li>
             </ul>
         </li>
+        @endif
         <li @if(isset($rightbar)) @if($rightbar=='client')class="active" @endif @endif>
             <a href="javascript:;">
                 <i class="fa fa-user "></i>
@@ -57,10 +59,12 @@
                     <a href="{{url('clients')}}">
                         <i class="fa fa-list"></i>&nbsp; List All </a>
                 </li>
+                @if(Auth::user()->role == 'Receptionist')
                 <li>
                     <a href="{{url('clients/add')}}">
                         <i class="fa fa-plus-square"></i>&nbsp; Add New Client </a>
                 </li>
+                @endif
             </ul>
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='ticket')class="active" @endif @endif>
