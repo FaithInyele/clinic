@@ -41,13 +41,13 @@
         },
         watch: {
             searchTerm: function () {
-                this.results = []
-                this.searchClient()
+                this.results = [];
+                this.searchClient();
             }
         },
         methods:{
             searchClient: _.debounce(function () {
-                var relation=this
+                var relation=this;
                 this.buttonText = 'Searching...'
                 console.log(base_url+'/tickets/search?term='+this.searchTerm);
                 axios.get(base_url+'/tickets/search?term='+this.searchTerm)

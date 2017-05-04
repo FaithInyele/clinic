@@ -12832,6 +12832,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12874,18 +12875,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.status = 'Updating Prescription...';
             var ticket_id = inheritance.currentClient.id;
+            var wah = false;
             if (other == 'affirm') {
+                wah = true;
                 medicine.alternatative = null;
                 medicine.status = 'issued';
-            } else if (other == 'alternative') {} else if (other == 'external') {
+            } else if (other == 'alternative') {
+                if (medicine.alternatative == null) {} else {
+                    medicine.status = 'issued';
+                    wah = true;
+                }
+            } else if (other == 'external') {
+                wah = true;
                 medicine.alternatative = null;
-                medicine.status = 'issued';
+                medicine.status = 'external';
             }
-
-            axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
-                inheritance.currentTicket(ticket_id);
-                inheritance.status = 'Prescription Successfully Updated';
-            }.bind(this));
+            if (wah == true) {
+                axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
+                    inheritance.currentTicket(ticket_id);
+                    inheritance.status = 'Prescription Successfully Updated';
+                }.bind(this));
+            }
+        },
+        alternative: function alternative(medicine) {
+            console.log(medicine.medicine);
         }
 
     }
@@ -39418,48 +39431,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, _vm._l((_vm.currentClient.medicine), function(medicine) {
     return _c('div', [_c('hr'), _vm._v(" "), _c('div', {
       class: {
-        row: _vm.ro, successful: medicine.status == 'issued'
+        row: _vm.ro, successful: medicine.status == 'issued' || medicine.status == 'external'
       },
       staticStyle: {
-        "border-radius": "5px",
         "padding-top": "10px",
         "padding-bottom": "10px"
       }
     }, [_c('div', [_c('div', {
       staticClass: "col-md-5"
     }, [_vm._v(_vm._s(medicine.medicine))]), _vm._v(" "), _c('div', {
-      staticClass: "col-md-2"
-    }, [_c('div', {
-      staticClass: "dropdown"
-    }, [_c('button', {
-      staticClass: "btn btn-sm btn-primary dropdown-toggle",
-      attrs: {
-        "type": "button",
-        "data-toggle": "dropdown"
-      }
-    }, [_vm._v("Confirm\n                                                                        "), _c('span', {
-      staticClass: "caret"
-    })]), _vm._v(" "), _c('ul', {
-      staticClass: "dropdown-menu"
-    }, [_c('li', [_c('a', {
-      on: {
-        "click": function($event) {
-          _vm.confirm(medicine, 'affirm')
-        }
-      }
-    }, [_vm._v("Affirm")])]), _vm._v(" "), _c('li', [_c('a', {
-      on: {
-        "click": function($event) {
-          _vm.confirm(medicine, 'external')
-        }
-      }
-    }, [_vm._v("External")])]), _vm._v(" "), _c('li', [_c('a', {
-      on: {
-        "click": function($event) {
-          _vm.confirm(medicine, 'alternative')
-        }
-      }
-    }, [_vm._v("Alternative")])])])])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-5"
     }, [_c('input', {
       directives: [{
@@ -39482,7 +39462,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           medicine.alternatative = $event.target.value
         }
       }
-    })])])])])
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-2"
+    }, [_c('div', {
+      staticClass: "dropdown"
+    }, [_c('button', {
+      staticClass: "btn btn-sm btn-primary dropdown-toggle",
+      attrs: {
+        "type": "button",
+        "data-toggle": "dropdown"
+      }
+    }, [_vm._v("Confirm\n                                                                        "), _c('span', {
+      staticClass: "caret"
+    })]), _vm._v(" "), _c('ul', {
+      staticClass: "dropdown-menu"
+    }, [_c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine, 'affirm')
+        }
+      }
+    }, [_vm._v("Affirm " + _vm._s(medicine.medicine))])]), _vm._v(" "), _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine, 'alternative')
+        }
+      }
+    }, [_vm._v("Affirm Alternative")])]), _vm._v(" "), _c('li', [_c('a', {
+      on: {
+        "click": function($event) {
+          _vm.confirm(medicine, 'external')
+        }
+      }
+    }, [_vm._v("Affirm External Purchase")])])])])])])])])
   })), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {

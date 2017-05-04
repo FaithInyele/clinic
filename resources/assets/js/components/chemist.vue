@@ -130,21 +130,22 @@
                                                 <div id="progress" class="tab-pane fade in active" style="min-height: 80%">
                                                     <div v-for="medicine in currentClient.medicine">
                                                         <hr>
-                                                        <div :class="{row : ro, successful: medicine.status == 'issued'}" style="border-radius: 5px;padding-top: 10px;padding-bottom: 10px">
+                                                        <div :class="{row : ro, successful: medicine.status == 'issued' || medicine.status == 'external'}" style="padding-top: 10px;padding-bottom: 10px">
                                                             <div>
                                                                 <div class="col-md-5">{{medicine.medicine}}</div>
+                                                                <div class="col-md-5">
+                                                                    <input type="text" class="form-control sm" placeholder="Alternative, if any" v-model="medicine.alternatative">
+                                                                </div>
                                                                 <div class="col-md-2">
                                                                     <div class="dropdown">
                                                                         <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Confirm
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
-                                                                            <li><a @click="confirm(medicine, 'affirm')">Affirm</a></li>
-                                                                            <li><a @click="confirm(medicine, 'external')">External</a></li>
-                                                                            <li><a @click="confirm(medicine, 'alternative')">Alternative</a></li>
+                                                                            <li><a @click="confirm(medicine, 'affirm')">Affirm {{medicine.medicine}}</a></li>
+                                                                            <li><a @click="confirm(medicine, 'alternative')">Affirm Alternative</a></li>
+                                                                            <li><a @click="confirm(medicine, 'external')">Affirm External Purchase</a></li>
                                                                         </ul>
-                                                                    </div>                                                             </div>
-                                                                <div class="col-md-5">
-                                                                    <input type="text" class="form-control sm" placeholder="Alternative, if any" v-model="medicine.alternatative">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -220,21 +221,34 @@
                 var inheritance = this;
                 inheritance.status = 'Updating Prescription...';
                 var ticket_id = inheritance.currentClient.id;
+                var wah= false;
                 if (other == 'affirm'){
+                    wah = true;
                     medicine.alternatative = null;
                     medicine.status = 'issued';
                 }else if (other == 'alternative'){
+                    if (medicine.alternatative == null){
 
+                    }else{
+                        medicine.status = 'issued';
+                        wah = true;
+                    }
                 }else if(other == 'external'){
+                    wah = true;
                     medicine.alternatative = null;
-                    medicine.status = 'issued';
+                    medicine.status = 'external';
+                }
+                if (wah == true){
+                    axios.post(base_url+'/atchemist/update', medicine)
+                        .then(function (response) {
+                            inheritance.currentTicket(ticket_id);
+                            inheritance.status = 'Prescription Successfully Updated';
+                        }.bind(this))
                 }
 
-                axios.post(base_url+'/atchemist/update', medicine)
-                    .then(function (response) {
-                        inheritance.currentTicket(ticket_id);
-                        inheritance.status = 'Prescription Successfully Updated';
-                    }.bind(this))
+            },
+            alternative: function (medicine) {
+                console.log(medicine.medicine);
             }
 
         }
