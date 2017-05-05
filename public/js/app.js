@@ -13501,7 +13501,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             clients: [],
             clientModal: false,
-            currentClient: []
+            currentClient: [],
+            updateButton: 'Update'
         };
     },
     methods: {
@@ -13530,7 +13531,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.clientModal = true;
             }.bind(this));
         },
-        editClient: function editClient(client) {}
+        editClient: function editClient(client) {
+            var inheritance = this;
+            inheritance.updateButton = 'Updating...';
+            axios.post(base_url + '/clients/edit', client).then(function (response) {
+                inheritance.updateButton = "Update";
+                inheritance.allClients();
+                inheritance.closeModal();
+            }.bind(this));
+        }
 
     }
 };
@@ -38651,9 +38660,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._t("footer", [_c('button', {
     staticClass: "btn btn-success",
     on: {
-      "click": function($event) {}
+      "click": function($event) {
+        _vm.editClient(_vm.currentClient)
+      }
     }
-  }, [_vm._v("\n                                Update\n                            ")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("\n                                " + _vm._s(_vm.updateButton) + "\n                            ")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     on: {
       "click": function($event) {

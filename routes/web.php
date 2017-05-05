@@ -42,6 +42,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('clients/all', 'ClientsController@listAll');
     Route::post('clients/delete', 'ClientsController@destroy');
     Route::get('clients/{id}', 'ClientsController@show');
+    Route::post('clients/edit', 'ClientsController@update');
 
 //special condition routes
     Route::get('clients/medical-conditions/open', 'ClientsController@special_condition');

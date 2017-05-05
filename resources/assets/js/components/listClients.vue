@@ -104,8 +104,8 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button class="btn btn-success" @click="">
-                                    Update
+                                <button class="btn btn-success" @click="editClient(currentClient)">
+                                    {{updateButton}}
                                 </button>
                                 <button class="btn btn-danger" @click="closeModal()">
                                     Cancel
@@ -129,7 +129,8 @@
             return{
                 clients: [],
                 clientModal: false,
-                currentClient: []
+                currentClient: [],
+                updateButton: 'Update'
             }
         },
         methods:{
@@ -160,7 +161,14 @@
                 
             },
             editClient: function (client) {
-                
+                var inheritance = this;
+                inheritance.updateButton = 'Updating...';
+                axios.post(base_url+'/clients/edit', client)
+                    .then(function (response) {
+                        inheritance.updateButton = "Update"
+                        inheritance.allClients();
+                        inheritance.closeModal();
+                    }.bind(this))
             }
 
         }

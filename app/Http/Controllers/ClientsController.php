@@ -7,6 +7,7 @@ use App\Clients;
 use App\SpecialCase;
 use Illuminate\Support\Facades\Response;
 use App\Ticket;
+use Illuminate\Support\Facades\DB;
 
 class ClientsController extends Controller
 {
@@ -89,12 +90,14 @@ class ClientsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        DB::table('clients')
+            ->where('id', $request->id)
+            ->update($request->all());
+
     }
 
     /**
