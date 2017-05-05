@@ -62,14 +62,16 @@ class ClientsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource.(client)
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $client = Clients::findorFail($id);
+
+        return Response::json($client);
     }
 
     /**

@@ -13434,6 +13434,63 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -13443,17 +13500,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             clients: [],
-            clientModal: false
+            clientModal: false,
+            currentClient: []
         };
     },
     methods: {
         openModal: function openModal() {
             var inheritance = this;
-            inheritance.clientsModal = true;
+            inheritance.clientModal = true;
         },
         closeModal: function closeModal() {
             var inheritance = this;
-            inheritance.clientsModal = false;
+            inheritance.clientModal = false;
         },
         allClients: function allClients() {
             var inheritance = this;
@@ -13464,7 +13522,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 $("#vueTable").DataTable();
             }, 500);
         },
-        viewClient: function viewClient(client) {},
+        viewClient: function viewClient(client) {
+            var inheritance = this;
+            console.log(client.id);
+            axios.get(base_url + '/clients/' + client.id).then(function (response) {
+                inheritance.currentClient = response.data;
+                inheritance.clientModal = true;
+            }.bind(this));
+        },
         editClient: function editClient(client) {}
 
     }
@@ -38343,7 +38408,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-success",
       on: {
         "click": function($event) {
-          _vm.openModal()
+          _vm.viewClient(client)
         }
       }
     }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
@@ -38368,24 +38433,234 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-mask"
   }, [_c('div', {
     staticClass: "modal-wrapper"
-  }, [_c('div', {
-    staticClass: "modal-container"
+  }, [(_vm.currentClient.id) ? _c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
   }, [_c('div', {
     staticClass: "modal-header"
-  }, [_vm._t("header", [_vm._v("\n                            default header\n                        ")])], 2), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_vm._t("body", [_vm._v("\n                            Under Heavy Construction. "), _c('i', {
-    staticClass: "fa-gear"
-  })])], 2), _vm._v(" "), _c('div', {
+  }, [_vm._t("header", [_c('label', [_vm._v("\n                                " + _vm._s(_vm.currentClient.first_name) + ", " + _vm._s(_vm.currentClient.other_names) + "\n                            ")]), _vm._v(" "), _c('h6', {
+    staticClass: "pull-right"
+  }, [_vm._v("\n                                last updated on: " + _vm._s(_vm.currentClient.updated_at) + "\n                            ")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body",
+    staticStyle: {
+      "max-height": "350px",
+      "overflow-y": "scroll"
+    }
+  }, [_vm._t("body", [_c('hr'), _vm._v(" "), _c('label', [_vm._v("Personal Information")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("First Name:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.first_name),
+      expression: "currentClient.first_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.first_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.first_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Other Name(s):")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.other_names),
+      expression: "currentClient.other_names"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.other_names)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.other_names = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Date of Birth:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.yob),
+      expression: "currentClient.yob"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.yob)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.yob = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', [_vm._v("Contact Information")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Phone Number:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.phone),
+      expression: "currentClient.phone"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.phone)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.phone = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Email Address:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.email),
+      expression: "currentClient.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.email = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Physical Address:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.address),
+      expression: "currentClient.address"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.address)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.address = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('label', [_vm._v("Next-of-Keen Information")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Keen Type:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.keen_type),
+      expression: "currentClient.keen_type"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.keen_type)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.keen_type = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Keen Name:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.keen_name),
+      expression: "currentClient.keen_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.keen_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.keen_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Keen Contacts:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentClient.keen_contact),
+      expression: "currentClient.keen_contact"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.currentClient.keen_contact)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentClient.keen_contact = $event.target.value
+      }
+    }
+  })])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
-  }, [_vm._t("footer", [_vm._v("\n                            default footer\n                            "), _c('button', {
-    staticClass: "modal-default-button",
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("\n                                Update\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
     on: {
       "click": function($event) {
         _vm.closeModal()
       }
     }
-  }, [_vm._v("\n                                OK\n                            ")])])], 2)])])])])], 1)
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)]) : _vm._e()])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("First Name")]), _vm._v(" "), _c('th', [_vm._v("Other Name(s)")]), _vm._v(" "), _c('th', [_vm._v("D.O.B")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Gender")]), _vm._v(" "), _c('th', [_vm._v("Id No.")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}

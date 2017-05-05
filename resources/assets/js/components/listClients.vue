@@ -22,7 +22,7 @@
                 <td>{{ client.gender}}</td>
                 <td>{{ client.id_number}}</td>
                 <td>
-                    <a class="btn btn-success" @click="openModal()">Open</a>
+                    <a class="btn btn-success" @click="viewClient(client)">Open</a>
                     <a class="btn btn-success" @click="editClient(client)">Edit</a>
                 </td>
             </tr>
@@ -33,25 +33,82 @@
         <transition name="modal">
             <div class="modal-mask" v-show="clientModal">
                 <div class="modal-wrapper">
-                    <div class="modal-container">
+                    <div class="modal-container" v-if="currentClient.id" style="width: 50% !important">
 
                         <div class="modal-header">
                             <slot name="header">
-                                default header
+                                <label>
+                                    {{currentClient.first_name}}, {{currentClient.other_names}}
+                                </label>
+                                <h6 class="pull-right">
+                                    last updated on: {{currentClient.updated_at}}
+                                </h6>
                             </slot>
                         </div>
 
-                        <div class="modal-body">
+                        <div class="modal-body" style="max-height: 350px; overflow-y: scroll">
                             <slot name="body">
-                                Under Heavy Construction. <i class="fa-gear"></i>
+                                <hr>
+                                <label>Personal Information</label>
+                                <div class="form-group">
+                                    <h6>First Name:</h6>
+                                    <input type="text" v-model="currentClient.first_name" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Other Name(s):</h6>
+                                    <input type="text" v-model="currentClient.other_names" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Date of Birth:</h6>
+                                    <input type="text" v-model="currentClient.yob" class="form-control">
+                                </div>
+                                <hr>
+                                <label>Contact Information</label>
+
+                                <div class="form-group">
+                                    <h6>Phone Number:</h6>
+                                    <input type="text" v-model="currentClient.phone" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Email Address:</h6>
+                                    <input type="text" v-model="currentClient.email" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Physical Address:</h6>
+                                    <input type="text" v-model="currentClient.address" class="form-control">
+                                </div>
+                                <hr>
+                                <label>Next-of-Keen Information</label>
+
+                                <div class="form-group">
+                                    <h6>Keen Type:</h6>
+                                    <input type="text" v-model="currentClient.keen_type" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Keen Name:</h6>
+                                    <input type="text" v-model="currentClient.keen_name" class="form-control">
+                                </div>
+
+                                <div class="form-group">
+                                    <h6>Keen Contacts:</h6>
+                                    <input type="text" v-model="currentClient.keen_contact" class="form-control">
+                                </div>
+
                             </slot>
                         </div>
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                default footer
-                                <button class="modal-default-button" @click="closeModal()">
-                                    OK
+                                <button class="btn btn-success" @click="">
+                                    Update
+                                </button>
+                                <button class="btn btn-danger" @click="closeModal()">
+                                    Cancel
                                 </button>
                             </slot>
                         </div>
@@ -71,17 +128,18 @@
         data: function () {
             return{
                 clients: [],
-                clientModal: false
+                clientModal: false,
+                currentClient: []
             }
         },
         methods:{
             openModal: function () {
                 var inheritance= this;
-                inheritance.clientsModal = true;
+                inheritance.clientModal = true;
             },
             closeModal: function () {
                 var inheritance = this;
-                inheritance.clientsModal = false;
+                inheritance.clientModal = false;
             },
             allClients: function () {
                 var inheritance = this;
@@ -92,6 +150,13 @@
                 setTimeout(function() { $("#vueTable").DataTable(); }, 500);
             },
             viewClient: function (client) {
+                var inheritance = this;
+                console.log(client.id);
+                axios.get(base_url+'/clients/'+client.id)
+                    .then(function (response) {
+                        inheritance.currentClient = response.data;
+                        inheritance.clientModal = true;
+                    }.bind(this));
                 
             },
             editClient: function (client) {
