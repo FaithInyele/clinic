@@ -1,7 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--<atlab></atlab>--}}
-    {{--<issuedticket></issuedticket>--}}
-    <chemist></chemist>
+    @if(Auth::user()->role == 'Receptionist')
+        <!--receptionist components-->
+        <ticket_start></ticket_start>
+    @endif
+
+    @if(Auth::user()->role == 'Nurse/Doctor')
+        <!--nurse/doctor components-->
+        <issuedticket></issuedticket>
+    @endif
+
+    @if(Auth::user()->role == 'Lab Technician')
+        <!--lab technician components-->
+        <atlab></atlab>
+    @endif
+
+    @if(Auth::user()->role == 'Chemist')
+        <!--chemist components-->
+        <chemist></chemist>
+    @endif
 @endsection

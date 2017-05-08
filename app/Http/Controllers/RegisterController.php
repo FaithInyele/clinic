@@ -62,9 +62,10 @@ class RegisterController extends Controller
     }
 
     /**
-     * save a new user
+     * Register a new User to the system
      *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request){
 
