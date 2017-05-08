@@ -210,3 +210,6 @@ Vue Modal
 .successful{
     background-color: #76ff7b;
 }
+.failure{
+    background-color: red;
+}

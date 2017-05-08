@@ -24,13 +24,9 @@ Route::group(['middleware' => 'logIn'], function () {
      */
 
     Route::post('users/add', 'RegisterController@store');
-
     Route::get('users/add', 'RegisterController@regForm');
-
     Route::get('users/view', 'RegisterController@listAll');
-
     Route::get('users/all', 'RegisterController@allUsers');
-
     Route::post('users/activate', 'RegisterController@activate');
 
     /**

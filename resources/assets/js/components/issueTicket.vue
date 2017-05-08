@@ -94,7 +94,7 @@
                         <div class="modal-header">
                             <slot name="header">
                                 <label>At Doctor/Nurse</label>
-                                <label class="pull-right">Status: {{status}}</label>
+                                <label :class="{alert: statusSuccess, 'alert-success': statusSuccess, 'alert': statusError, 'alert-danger': statusError, 'pull-right': classLoad}" style="text-align: right">Status: {{status}}</label>
                             </slot>
                         </div>
                         <div class="modal-body" style="text-align: center" v-show="modalLoading">
@@ -106,7 +106,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <img src="https://placehold.it/140x100" style="width: 100%; height: auto">
+                                            <img src="https://placehold.it/140x100" style="width: 100%; height: auto;border-radius: 10px">
                                         </div>
                                         <div class="row" v-if="currentTicket.client">
                                             <h5>
@@ -132,41 +132,36 @@
                                                     <div class="accordion">
                                                         <!--first accordion-->
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-1">
+                                                            <a class="accordion-section-title"  href="#accordion-1" style="color: white">
                                                                 Assigned a Ticket
-                                                                <b style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description != 'Ticket Created'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
                                                                 </b>
                                                             </a>
                                                             <div id="accordion-1" class="accordion-section-content" v-if="currentTicket.assigned_by">
-                                                                <div class="well well-small dark">
-                                                                    <h6>This Ticket was created at: {{currentTicket.created_at}}</h6>
-                                                                    <h6>assigned by <i>{{currentTicket.assigned_by.last_name}}, {{currentTicket.assigned_by.first_name}}</i>  to  <i>{{currentTicket.assigned_to.last_name}}, {{currentTicket.assigned_to.first_name}}</i></h6>
-                                                                </div>
+                                                                    <h6><i class="fa fa-check"></i> This Ticket was created on: {{currentTicket.created_at}},</h6>
+                                                                    <h6><i class="fa fa-check"></i>and assigned by <i>{{currentTicket.assigned_by.last_name}}, {{currentTicket.assigned_by.first_name}}</i>  to  <i>{{currentTicket.assigned_to.last_name}}, {{currentTicket.assigned_to.first_name}}</i></h6>
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
 
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-2">
                                                                 at Doctor/Nurse
-                                                                <b style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Client at Doctor'" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Current...
                                                                 </b>
-                                                                <b style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description != 'Client at Doctor'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
-                                                                </b>
-                                                                <b style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
-                                                                    Pending...
                                                                 </b>
                                                             </a>
                                                             <div id="accordion-2" class="accordion-section-content">
                                                                 <div class="col-md-8">
-                                                                    <label>
-                                                                        Input Symptomss and general Observations, if any.<br>
+                                                                    <div>
+                                                                        Input Symptoms and general Observations, if any.<br>
                                                                         <b style="font-size: 8px">
                                                                             [Input a single symptom, then hit enter before inputting another]
                                                                         </b>
-                                                                    </label>
+                                                                    </div>
                                                                     <div class="row" style="width: 100%">
                                                                         <div class="form-group">
                                                                             <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>                                                                        </div>
@@ -176,29 +171,26 @@
                                                                                 <a style="font-size: 15px" @click="recommendLab">Recommend Lab Test(s)</a> |
                                                                                 <a style="font-size: 15px" @click="prescribeMedication">Prescribe Medication</a>
                                                                             </div>
-                                                                            <div v-show="successtoLab" class="alert alert-info">
-                                                                                <h6>Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician</h6>
-                                                                            </div>
                                                                             <div class="row" v-show="chooseLab" style="font-size: 12px">
-                                                                                <label>
+                                                                                <div>
                                                                                     Select Lab Technician
-                                                                                </label>
+                                                                                </div>
 
                                                                                 <select class="form-control" v-model="selectedLabTech">
                                                                                     <option selected disabled>-Select a Lab Technician to Assign-</option>
                                                                                     <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
                                                                                 </select>
                                                                                 <label>
-                                                                                    Lab Tests:
+                                                                                    Input Required Lab Tests:<br>
                                                                                     <b style="font-size: 10px">
-                                                                                        Input a single test, then hit enter before inputting another.
+                                                                                        [Input a single test, then hit enter before inputting another.]
                                                                                     </b>
                                                                                 </label>
                                                                                 <div class="form-group">
                                                                                     <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <button class="btn btn-primary" @click="saveLab">{{sendtoLab}}</button>
+                                                                                    <button class="btn btn-sm btn-primary pull-right" @click="saveLab">{{sendtoLab}}</button>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row" v-show="chooseMed" style="font-size: 12px">
@@ -208,7 +200,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-4">
-                                                                    <h6><b>Summary</b></h6>
+                                                                    <h6><b><u>Previous Instance Summary:</u></b></h6>
                                                                     <div class="row" style="font-size: 9px">
                                                                         <label style="font-size: 11px">Symptoms recorded:</label><br>
                                                                         <i v-for="symptom in currentTicket.symptoms">
@@ -322,7 +314,10 @@
                 baseUrl: base_url,
                 status: 'No Operation',
                 test_tags: [],
-                prescription_tags: []
+                prescription_tags: [],
+                statusError: false,
+                statusSuccess: false,
+                classLoad: true
 
             }
         },
@@ -417,9 +412,17 @@
                 axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
                     .then(function () {
                         inheritance.status = 'Prescription(s) Successfully Saved';
+                        inheritance.statusSuccess = true;
+                        inheritance.statusError = false;
                         inheritance.savePrescription = "Save";
                         inheritance.openTicket(inheritance.currentTicket.id);
                     }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'Error, Contact Admin if Error Persists';
+                        inheritance.statusError = true;
+                        inheritance.statusSuccess = false;
+
+                    });
             },
             //save all prescriptions and close chapter
             submitP: function () {

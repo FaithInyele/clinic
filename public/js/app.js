@@ -13197,14 +13197,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -13236,7 +13228,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             baseUrl: base_url,
             status: 'No Operation',
             test_tags: [],
-            prescription_tags: []
+            prescription_tags: [],
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true
 
         };
     },
@@ -13328,9 +13323,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
             axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
                 inheritance.status = 'Prescription(s) Successfully Saved';
+                inheritance.statusSuccess = true;
+                inheritance.statusError = false;
                 inheritance.savePrescription = "Save";
                 inheritance.openTicket(inheritance.currentTicket.id);
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'Error, Contact Admin if Error Persists';
+                inheritance.statusError = true;
+                inheritance.statusSuccess = false;
+            });
         },
         //save all prescriptions and close chapter
         submitP: function submitP() {
@@ -39120,7 +39121,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "modal-header"
   }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
-    staticClass: "pull-right"
+    class: {
+      alert: _vm.statusSuccess, 'alert-success': _vm.statusSuccess, 'alert': _vm.statusError, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad
+    },
+    staticStyle: {
+      "text-align": "right"
+    }
   }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
@@ -39153,7 +39159,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticStyle: {
       "width": "100%",
-      "height": "auto"
+      "height": "auto",
+      "border-radius": "10px"
     },
     attrs: {
       "src": "https://placehold.it/140x100"
@@ -39220,10 +39227,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "white"
+    },
     attrs: {
       "href": "#accordion-1"
     }
-  }, [_vm._v("\n                                                            Assigned a Ticket\n                                                            "), _c('b', {
+  }, [_vm._v("\n                                                            Assigned a Ticket\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description != 'Ticket Created'),
+      expression: "currentTicket.progress.description != 'Ticket Created'"
+    }],
+    staticClass: "pull-right",
     staticStyle: {
       "color": "white",
       "background-color": "green",
@@ -39232,21 +39249,30 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("\n                                                                Done\n                                                            ")])]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-1"
     }
-  }, [_c('div', {
-    staticClass: "well well-small dark"
-  }, [_c('h6', [_vm._v("This Ticket was created at: " + _vm._s(_vm.currentTicket.created_at))]), _vm._v(" "), _c('h6', [_vm._v("assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v(" This Ticket was created on: " + _vm._s(_vm.currentTicket.created_at) + ",")]), _vm._v(" "), _c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v("and assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
     attrs: {
       "href": "#accordion-2"
     }
-  }, [_vm._v("\n                                                            at Doctor/Nurse\n                                                            "), _c('b', {
+  }, [_vm._v("\n                                                            at Doctor/Nurse\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Client at Doctor'),
+      expression: "currentTicket.progress.description == 'Client at Doctor'"
+    }],
+    staticClass: "pull-right",
     staticStyle: {
       "color": "white",
       "background-color": "#f6fcab",
@@ -39255,7 +39281,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("\n                                                                Current...\n                                                            ")]), _vm._v(" "), _c('b', {
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description != 'Client at Doctor'),
+      expression: "currentTicket.progress.description != 'Client at Doctor'"
+    }],
+    staticClass: "pull-right",
     staticStyle: {
       "color": "white",
       "background-color": "green",
@@ -39264,23 +39297,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("\n                                                                Done\n                                                            ")]), _vm._v(" "), _c('b', {
-    staticStyle: {
-      "color": "white",
-      "background-color": "#f2534e",
-      "border-radius": "5px",
-      "margin-left": "10px",
-      "padding-left": "3px",
-      "padding-right": "3px"
-    }
-  }, [_vm._v("\n                                                                Pending...\n                                                            ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-2"
     }
   }, [_c('div', {
     staticClass: "col-md-8"
-  }, [_c('label', [_vm._v("\n                                                                    Input Symptomss and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
+  }, [_c('div', [_vm._v("\n                                                                    Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
     staticStyle: {
       "font-size": "8px"
     }
@@ -39326,14 +39350,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.successtoLab),
-      expression: "successtoLab"
-    }],
-    staticClass: "alert alert-info"
-  }, [_c('h6', [_vm._v("Success! Request sent. Send Client to Lab for Tests and Await response from Lab Technician")])]), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
       value: (_vm.chooseLab),
       expression: "chooseLab"
     }],
@@ -39341,7 +39357,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_c('label', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), _c('select', {
+  }, [_c('div', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -39371,11 +39387,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": labTechnician.id
       }
     }, [_vm._v(_vm._s(labTechnician.first_name))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v("\n                                                                                Lab Tests:\n                                                                                "), _c('b', {
+  })], 2), _vm._v(" "), _c('label', [_vm._v("\n                                                                                Input Required Lab Tests:"), _c('br'), _vm._v(" "), _c('b', {
     staticStyle: {
       "font-size": "10px"
     }
-  }, [_vm._v("\n                                                                                    Input a single test, then hit enter before inputting another.\n                                                                                ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                                    [Input a single test, then hit enter before inputting another.]\n                                                                                ")])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('input-tag', {
     attrs: {
@@ -39387,7 +39403,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
-    staticClass: "btn btn-primary",
+    staticClass: "btn btn-sm btn-primary pull-right",
     on: {
       "click": _vm.saveLab
     }
@@ -39404,7 +39420,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
-  }, [_c('h6', [_c('b', [_vm._v("Summary")])]), _vm._v(" "), _c('div', {
+  }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
       "font-size": "9px"

@@ -135,7 +135,7 @@ class TicketController extends Controller
         $ticket = Ticket::findorFail($ticket_id);
         $ticket['assigned_by'] = User::findorFail($ticket->issued_by);
         $ticket['assigned_to'] = User::findorFail($ticket->assigned_to);
-        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->get();
+        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
@@ -190,7 +190,7 @@ class TicketController extends Controller
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
-            'description'=>'Client at Doctor\'s'));
+            'description'=>'Client at Doctor'));
         $progress->save();
 
         return Response::json(array('status'=>'success'));
