@@ -140,6 +140,10 @@ class TicketController extends Controller
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
+        //get lab technician assigned lab test
+        if ($ticket['lab_datas'] != null || !empty($ticket['lab_datas'])){
+            $ticket['lab_technician'] = User::findorFail($ticket['lab_datas']->assigned_to);
+        }
         //implode symptom as tags
         if ($ticket['symptoms'] != null){
             $tags = array();

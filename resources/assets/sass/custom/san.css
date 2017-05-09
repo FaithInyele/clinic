@@ -213,3 +213,7 @@ Vue Modal
 .failure{
     background-color: red;
 }
+.completed{
+    pointer-events: none;
+    opacity: 0.4;
+}

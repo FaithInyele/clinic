@@ -13197,6 +13197,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -39303,18 +39305,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "accordion-2"
     }
   }, [_c('div', {
-    staticClass: "col-md-8"
+    class: {
+      'col-md-8': _vm.classLoad
+    }
   }, [_c('div', [_vm._v("\n                                                                    Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
     staticStyle: {
       "font-size": "8px"
     }
   }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), _c('div', {
-    staticClass: "row",
-    staticStyle: {
-      "width": "100%"
+    staticClass: "form-group",
+    class: {
+      completed: _vm.classLoad
     }
-  }, [_c('div', {
-    staticClass: "form-group"
   }, [_c('input-tag', {
     attrs: {
       "placeholder": "Add Symptoms",
@@ -39381,6 +39383,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "selected": "",
       "disabled": ""
     }
+  }), _vm._v(" "), _c('option', {
+    attrs: {
+      "selected": "",
+      "disabled": "",
+      "value": ""
+    }
   }, [_vm._v("-Select a Lab Technician to Assign-")]), _vm._v(" "), _vm._l((_vm.labTechnicians), function(labTechnician) {
     return _c('option', {
       domProps: {
@@ -39418,7 +39426,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",

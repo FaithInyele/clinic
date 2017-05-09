@@ -155,16 +155,17 @@
                                                                 </b>
                                                             </a>
                                                             <div id="accordion-2" class="accordion-section-content">
-                                                                <div class="col-md-8">
+                                                                <div :class="{'col-md-8': classLoad}">
                                                                     <div>
                                                                         Input Symptoms and general Observations, if any.<br>
                                                                         <b style="font-size: 8px">
                                                                             [Input a single symptom, then hit enter before inputting another]
                                                                         </b>
                                                                     </div>
-                                                                    <div class="row" style="width: 100%">
-                                                                        <div class="form-group">
-                                                                            <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>                                                                        </div>
+
+                                                                    <div class="form-group" :class="{completed: classLoad}">
+                                                                            <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>
+                                                                    </div>
                                                                         <hr style="margin: 0px">
                                                                         <div v-show="recommendAction">
                                                                             <div class="">
@@ -177,7 +178,8 @@
                                                                                 </div>
 
                                                                                 <select class="form-control" v-model="selectedLabTech">
-                                                                                    <option selected disabled>-Select a Lab Technician to Assign-</option>
+                                                                                    <option selected disabled></option>
+                                                                                    <option selected disabled value="">-Select a Lab Technician to Assign-</option>
                                                                                     <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
                                                                                 </select>
                                                                                 <label>
@@ -197,7 +199,7 @@
                                                                                 Under Heavy Construction
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <h6><b><u>Previous Instance Summary:</u></b></h6>
