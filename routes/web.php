@@ -58,6 +58,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/save/symptoms', 'TicketController@saveSymptoms');
     Route::get('tickets/my-tickets/query/labtechs', 'TicketController@activeLabTechnicians');
     Route::get('tickets/my-tickets/query/startlab', 'TicketController@startLab');
+    Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
 
 

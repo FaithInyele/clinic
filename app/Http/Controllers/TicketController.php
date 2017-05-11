@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use App\Prescription;
 use App\Medicine;
+use Illuminate\Support\Facades\DB;
 
 class TicketController extends Controller
 {
@@ -183,6 +184,7 @@ class TicketController extends Controller
     public function saveSymptoms(Request $request){
         //delete any previos symptoms before a fresh insert, if any
         $toDelete = Symptom::where('ticket_id', $request->ticket_id)->delete();
+
         //save symptoms
         $symptoms = explode(',', $request->symptoms);
         foreach ($symptoms as $symptom){
@@ -237,7 +239,7 @@ class TicketController extends Controller
             $startLab = new LabData(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>$request->technician,
-                'status'=>0
+                'status'=>-1
             ));
             $startLab->save();
 
@@ -250,13 +252,6 @@ class TicketController extends Controller
                 ));
                 $data->save();
             }
-
-            //update progress
-            $progress = new Progress(array(
-                'ticket_id'=>$request->ticket_id,
-                'user_id'=>Auth::user()->id,
-                'description'=>'Client at Lab'));
-            $progress->save();
         }else{
             //delete previous tests
             $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
@@ -273,6 +268,20 @@ class TicketController extends Controller
         }
 
         //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
+    }
+
+    public function sendLab(Request $request){
+        //dd($request->all());
+        DB::table('lab_datas')
+            ->where('id', $request->labdatas_id)
+            ->update(['status'=>0]);
+
+        //update progress
+        $progress = new Progress(array(
+            'ticket_id'=>$request->ticket_id,
+            'user_id'=>Auth::user()->id,
+            'description'=>'Client at Lab'));
+        $progress->save();
     }
 
     public function startChemist(Request $request){

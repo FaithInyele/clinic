@@ -12,6 +12,7 @@ use App\Prescription;
 use App\Medicine;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ChemistController extends Controller
 {
@@ -45,10 +46,18 @@ class ChemistController extends Controller
      * @param $prescription_id
      * @return mixed
      */
-    public function submitPrescription($prescription_id){
+    public function submitPrescription($prescription_id, Request $request){
+        //close prescription (doctor's part)
         DB::table('prescriptions')
             ->where('id', $prescription_id)
             ->update(['status'=>1]);
+
+        //update progress
+        $progress = new Progress(array(
+            'ticket_id'=>$request->ticket_id,
+            'user_id'=>Auth::user()->id,
+            'description'=>'Client at Chemist'));
+        $progress->save();
 
         return Response::json(array('success'=>'success'));
     }

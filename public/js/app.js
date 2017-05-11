@@ -12591,7 +12591,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             clients: [],
             currentClient: [],
             saveButton: 'Save',
-            resultsButton: 'Send Resultss',
+            resultsButton: 'Send Results',
             baseUrl: base_url,
             status: 'No Operation'
         };
@@ -12615,12 +12615,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.clients = response.data;
             }.bind(this));
         },
-        //close lab test and submit tthe results
+        //close lab test and submit the results
         submitResults: function submitResults(data) {
             var inheritance = this;
             inheritance.saveResults(data);
-            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id);
-            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id).then(function () {
+            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id);
+            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id).then(function () {
                 console.log('Success');
             });
         },
@@ -13199,6 +13199,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13253,6 +13272,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.currentTicket = response.data;
                 inheritance.labtechs();
                 inheritance.modalLoading = false;
+                if (response.data.progress.description == 'Client at Lab') {
+                    inheritance.status = "Currently awaiting response from Lab Results";
+                }
                 inheritance.updateTestTags();
                 inheritance.updatePrescriptionTags();
                 setTimeout(function () {
@@ -13340,7 +13362,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.status = 'Submitting Prescription(s)';
             ;inheritance.toChemist = 'Submitting';
-            axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id).then(function (response) {
+            axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
                 inheritance.status = 'Prescription(s) Successfully Submitted';
                 inheritance.openTicket(inheritance.currentTicket.id);
                 inheritance.toChemist = 'Submit to Chemist';
@@ -13349,6 +13371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //start a lab ticket.
         saveLab: function saveLab() {
             var inheritance = this;
+            console.log(inheritance.selectedLabTech);
             var ticket_id = inheritance.currentTicket.id;
             var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : null;
             inheritance.sendtoLab = 'Sending request...';
@@ -13361,6 +13384,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.sendtoLab = 'Sent';
                 inheritance.openTicket(ticket_id);
             }.bind(this));
+            console.log('wewe');
+        },
+        //send client to lab
+        sendLab: function sendLab() {
+            var inheritance = this;
+            console.log(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id);
+            //inheritance.saveLab();
+            axios.get(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id).then(function (response) {});
         }
 
     }
@@ -39312,10 +39343,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "8px"
     }
-  }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group",
     class: {
-      completed: _vm.classLoad
+      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
     }
   }, [_c('input-tag', {
     attrs: {
@@ -39323,7 +39354,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "on-change": _vm.saveSymptoms,
       "tags": _vm.currentTicket.tags
     }
-  })], 1), _vm._v(" "), _c('hr', {
+  })], 1) : _vm._e(), _vm._v(" "), _c('hr', {
     staticStyle: {
       "margin": "0px"
     }
@@ -39336,14 +39367,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }]
   }, [_c('div', {}, [_c('a', {
     staticStyle: {
-      "font-size": "15px"
+      "font-size": "10px"
     },
     on: {
       "click": _vm.recommendLab
     }
   }, [_vm._v("Recommend Lab Test(s)")]), _vm._v(" |\n                                                                            "), _c('a', {
     staticStyle: {
-      "font-size": "15px"
+      "font-size": "10px"
     },
     on: {
       "click": _vm.prescribeMedication
@@ -39359,7 +39390,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_c('div', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), _c('select', {
+  }, [_c('div', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), (_vm.currentTicket.lab_technician) ? _c('h5', [_vm._v("\n                                                                                " + _vm._s(_vm.currentTicket.lab_technician.first_name) + "\n                                                                            ")]) : _vm._e(), _vm._v(" "), (!_vm.currentTicket.lab_technician) ? _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -39381,11 +39412,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('option', {
     attrs: {
       "selected": "",
-      "disabled": ""
-    }
-  }), _vm._v(" "), _c('option', {
-    attrs: {
-      "selected": "",
       "disabled": "",
       "value": ""
     }
@@ -39395,12 +39421,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": labTechnician.id
       }
     }, [_vm._v(_vm._s(labTechnician.first_name))])
-  })], 2), _vm._v(" "), _c('label', [_vm._v("\n                                                                                Input Required Lab Tests:"), _c('br'), _vm._v(" "), _c('b', {
+  })], 2) : _vm._e(), _vm._v(" "), _c('div', [_vm._v("\n                                                                                Input Required Lab Tests:"), _c('br'), _vm._v(" "), _c('b', {
     staticStyle: {
       "font-size": "10px"
     }
-  }, [_vm._v("\n                                                                                    [Input a single test, then hit enter before inputting another.]\n                                                                                ")])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
+  }, [_vm._v("\n                                                                                    [Input a single test, then hit enter before inputting another.]\n                                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
+    }
   }, [_c('input-tag', {
     attrs: {
       "id": "test_tags",
@@ -39408,14 +39437,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "on-change": _vm.saveLab,
       "tags": _vm.test_tags
     }
-  })], 1), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
+    }
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary pull-right",
     on: {
-      "click": _vm.saveLab
+      "click": _vm.sendLab
     }
-  }, [_vm._v(_vm._s(_vm.sendtoLab))])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.sendtoLab))])]) : _vm._e()]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -39446,7 +39478,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "#accordion-3"
     }
-  }, [_vm._v("\n                                                            Seen a Lab Technician\n                                                            "), _c('b', {
+  }, [_vm._v("\n                                                            Seen a Lab Technician\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Ticket Created' || _vm.currentTicket.progress.description == 'Client at Doctor' || _vm.currentTicket.progress.description == 'Client at Lab'),
+      expression: "currentTicket.progress.description == 'Ticket Created' || currentTicket.progress.description == 'Client at Doctor'|| currentTicket.progress.description == 'Client at Lab'"
+    }],
+    staticClass: "pull-right",
     staticStyle: {
       "color": "white",
       "background-color": "#f2534e",
@@ -39455,7 +39494,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("\n                                                                Pending...\n                                                            ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Results Available'),
+      expression: "currentTicket.progress.description == 'Results Available'"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Client at Chemist'),
+      expression: "currentTicket.progress.description == 'Client at Chemist'"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-3"
@@ -39480,7 +39551,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "#accordion-4"
     }
-  }, [_vm._v("Seen Chemist"), _c('b', {
+  }, [_vm._v("\n                                                            Seen Chemist\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description != 'Client at Chemist'),
+      expression: "currentTicket.progress.description != 'Client at Chemist'"
+    }],
+    staticClass: "pull-right",
     staticStyle: {
       "color": "white",
       "background-color": "#f2534e",
@@ -39489,7 +39567,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("Pending...")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Client at Chemist'),
+      expression: "currentTicket.progress.description == 'Client at Chemist'"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.description == 'Medication Given'),
+      expression: "currentTicket.progress.description == 'Medication Given'"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-4"
@@ -39498,15 +39608,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "10px"
     }
-  }, [_vm._v("\n                                                                    Input a single prescription, then press enter before inputting another\n                                                                ")])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
+  }, [_vm._v("\n                                                                    Input a single prescription, then press enter before inputting another\n                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.currentTicket.progress.description == 'Client at Chemist' || _vm.currentTicket.progress.description == 'Medication Given'
+    }
   }, [_c('input-tag', {
     attrs: {
       "placeholder": "Add Prescriptions",
       "on-change": _vm.saveP,
       "tags": _vm.prescription_tags
     }
-  })], 1), _vm._v(" "), _c('div', {
+  })], 1) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group pull-right"
   }, [_c('button', {
     staticClass: "btn btn-primary",

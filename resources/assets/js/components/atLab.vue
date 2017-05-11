@@ -183,7 +183,7 @@
                 clients: [],
                 currentClient: [],
                 saveButton: 'Save',
-                resultsButton: 'Send Resultss',
+                resultsButton: 'Send Results',
                 baseUrl: base_url,
                 status: 'No Operation'
             }
@@ -208,12 +208,12 @@
                         inheritance.clients = response.data;
                     }.bind(this))
             },
-            //close lab test and submit tthe results
+            //close lab test and submit the results
             submitResults: function (data) {
                 var inheritance = this;
                 inheritance.saveResults(data);
-                console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id);
-                axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id)
+                console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id);
+                axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id)
                     .then(function () {
                         console.log('Success');
                     })

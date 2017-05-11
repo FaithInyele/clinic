@@ -10,6 +10,7 @@ use App\Clients;
 use App\Test;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 
 class LabController extends Controller
 {
@@ -46,11 +47,18 @@ class LabController extends Controller
         return Response::json($data);
     }
 
-    public function finishTest($lab_id){
-        //dd('haha');
+    public function finishTest($lab_id, Request $request){
+        //dd($lab_id);
         DB::table('lab_datas')
             ->where('id', $lab_id)
             ->update(['status'=> 1]);
+
+        //update progress
+        $progress = new Progress(array(
+            'ticket_id'=>$request->ticket_id,
+            'user_id'=>Auth::user()->id,
+            'description'=>'Results Available'));
+        $progress->save();
 
         return Response::json(array('success'=>'success'));
     }
