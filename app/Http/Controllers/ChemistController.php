@@ -36,8 +36,20 @@ class ChemistController extends Controller
         return Response::json($ticket);
     }
 
-    public function closePrescription($prescription_id){
+    public function closePrescription(Request $request){
+        //close prescription (doctor's part)
+        DB::table('prescriptions')
+            ->where('id', $request->prescription_id)
+            ->update(['status'=>2]);
 
+        //update progress
+        $progress = new Progress(array(
+            'ticket_id'=>$request->ticket_id,
+            'user_id'=>Auth::user()->id,
+            'description'=>'Prescription Given'));
+        $progress->save();
+
+        return Response::json(array('success'=>'success'));
     }
 
     /**

@@ -82,7 +82,7 @@ Route::group(['middleware' => 'logIn'], function () {
      */
     Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
     Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
-    Route::get('atchemist/close/{prescription_id}', 'ChemistController@closePrescription');
+    Route::get('atchemist/close', 'ChemistController@closePrescription');
     Route::post('atchemist/update', 'ChemistController@updatePrescription');
 
 

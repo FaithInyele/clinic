@@ -164,7 +164,8 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button class="modal-default-button" @click="closeTicket">
+                                <button class="modal-default-button" @click="closeMedication">Finish</button>
+                                <button class="modal-default-button pull-right" @click="closeTicket">
                                     Close
                                 </button>
                             </slot>
@@ -249,6 +250,15 @@
             },
             alternative: function (medicine) {
                 console.log(medicine.medicine);
+            },
+            closeMedication: function () {
+                var inheritance = this;
+                inheritance.status = "Closing up Prescription...";
+                console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
+                axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id)
+                    .then(function (response) {
+                        inheritance.status = 'Prescription Closed Successfully';
+                    });
             }
 
         }

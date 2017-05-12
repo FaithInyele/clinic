@@ -66,15 +66,16 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{url('assets/js/jquery.backstretch.min.js')}}"></script>
-
     <script src="{{url('assets/js/scripts.js')}}"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-print-1.2.4/r-2.1.1/datatables.min.js"></script>
     <script>
+        //dataTables
         $(document).ready(function () {
             $("#dataTable").dataTable();
+            $('#c_submit').attr('disabled', true);
         });
+        //datePicker
         $( function() {
             $( "#yob" ).datepicker({
                 changeMonth: true,
@@ -82,6 +83,23 @@
                 dateFormat: 'yy-mm-dd'
             });
         } );
+        //inputLength
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        function confirmPayment() {
+            if ($('#p_check').is(":checked"))
+            {
+                $('#c_submit').attr('disabled', false)
+            }else {
+                $('#c_submit').attr('disabled', true)
+            }
+        }
     </script>
     <script>
         function reg_numberr() {

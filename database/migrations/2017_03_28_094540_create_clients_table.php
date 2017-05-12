@@ -24,6 +24,7 @@ class CreateClientsTable extends Migration
             $table->string('type');
             $table->string('phone');
             $table->string('address')->nullable();
+            $table->integer('reg_fee')->nullable();
             $table->string('email')->nullable();
             $table->string('keen_type')->nullable();
             $table->string('keen_name')->nullable();

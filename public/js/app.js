@@ -12833,6 +12833,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12899,6 +12900,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         alternative: function alternative(medicine) {
             console.log(medicine.medicine);
+        },
+        closeMedication: function closeMedication() {
+            var inheritance = this;
+            inheritance.status = "Closing up Prescription...";
+            console.log(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id);
+            axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id).then(function (response) {
+                inheritance.status = 'Prescription Closed Successfully';
+            });
         }
 
     }
@@ -40005,6 +40014,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "modal-default-button",
+    on: {
+      "click": _vm.closeMedication
+    }
+  }, [_vm._v("Finish")]), _vm._v(" "), _c('button', {
+    staticClass: "modal-default-button pull-right",
     on: {
       "click": _vm.closeTicket
     }

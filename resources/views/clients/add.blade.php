@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="col-lg-8 form-style">
         @if (session('newClient'))
@@ -32,16 +31,12 @@
                             <p>Next of Keen</p>
                         </div>
                     </div>
-
                     <fieldset>
-
-                        <!--firstname-->
+                        <!--first name-->
                         <div class="form-group{{ $errors->has('first_name') ? ' has-error' : '' }}">
                             <label for="first_name" class="col-md-4 control-label">First Name*</label><br>
-
                             <div class="row">
                                 <input id="first_name" type="text" class="required form-control" name="first_name" value="{{ old('first_name') }}" autofocus>
-
                                 @if ($errors->has('first_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('first_name') }}</strong>
@@ -49,14 +44,11 @@
                                 @endif
                             </div>
                         </div>
-
-                        <!--lastname-->
+                        <!--last name-->
                         <div class="form-group{{ $errors->has('other_names') ? ' has-error' : '' }}">
                             <label for="other_names" class="col-md-4 control-label">Other Name(s)*</label><br>
-
                             <div class="row">
                                 <input id="other_names" type="text" class="required form-control" name="other_names" value="{{ old('other_names') }}" autofocus>
-
                                 @if ($errors->has('other_names'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('other_names') }}</strong>
@@ -64,14 +56,11 @@
                                 @endif
                             </div>
                         </div>
-
-                        <!--idnumber-->
+                        <!--id number-->
                         <div class="form-group{{ $errors->has('id_number') ? ' has-error' : '' }}">
                             <label for="id_number" class="row control-label">ID Number/Birth Certificate Number*</label><br>
-
                             <div class="row">
-                                <input id="id_number" type="number" class="required form-control" name="id_number" value="{{ old('id_number') }}" autofocus>
-
+                                <input id="id_number" type="text" maxlength="12" minlength="8" onkeypress="return isNumber(event)" class="required form-control" name="id_number" value="{{ old('id_number') }}" autofocus>
                                 @if ($errors->has('id_number'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('id_number') }}</strong>
@@ -79,19 +68,15 @@
                                 @endif
                             </div>
                         </div>
-
-
                         <!--gender-->
                         <div class="form-group{{ $errors->has('gender') ? ' has-error' : '' }}">
                             <label for="gender" class="col-md-4 control-label">Gender*</label><br>
-
                             <div class="row">
                                 <select id="gender" name="gender" class="required form-control">
                                     <option value="" disabled selected>-Select Gender-</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
-
                                 @if ($errors->has('gender'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('gender') }}</strong>
@@ -99,14 +84,11 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--year of birth-->
                         <div class="form-group{{ $errors->has('yob') ? ' has-error' : '' }}">
                             <label for="yob" class="row control-label">Year of Birth*</label><br>
-
                             <div class="row">
                                 <input id="yob" type="text" class="required form-control" name="yob" value="{{ old('yob') }}" autofocus>
-
                                 @if ($errors->has('yob'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('yob') }}</strong>
@@ -114,11 +96,9 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--client type-->
                         <div class="form-group{{ $errors->has('type') ? ' has-error' : '' }}">
                             <label for="type" class="col-md-4 control-label">Client Type*</label><br>
-
                             <div class="row">
                                 <select id="type" name="type" class="form-control required" onchange="reg_numberr()">
                                     <option value="" disabled selected>-Select Client Type-</option>
@@ -126,7 +106,6 @@
                                     <option value="Staff">Staff</option>
                                     <option value="Others">Others</option>
                                 </select>
-
                                 @if ($errors->has('type'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('type') }}</strong>
@@ -134,16 +113,9 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--Student Reg Number //optional-->
                         <div class="form-group{{ $errors->has('reg_number') ? ' has-error' : '' }}">
-                            <!--<label for="reg_number" class="col-md-4 control-label">Student Registration Number*</label><br>-->
-
                             <div class="row d_regNumber">
-{{--
-                                <input id="reg_number" type="text" class=" form-control" name="reg_number" value="{{ old('reg_number') }}" autofocus>
---}}
-
                                 @if ($errors->has('reg_number'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('reg_number') }}</strong>
@@ -151,23 +123,17 @@
                                 @endif
                             </div>
                         </div>
-
-
                         <div class="f1-buttons">
-                            <button type="button" class="btn btn-next">Next</button>
+                            <button type="button" class="btn btn-next">Next<i class="fa fa-arrow-right"></i></button>
                         </div>
                     </fieldset>
-
                     <fieldset>
                         <h4>Client Contact Details:</h4>
-
                         <!--Phone number-->
                         <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
                             <label for="phone" class="col-md-4 control-label">Phone Number*</label>
-
                             <div class="row">
-                                <input id="phone" type="number" class="form-control required" name="phone" value="{{ old('phone') }}" required>
-
+                                <input id="phone" type="text" maxlength="12" minlength="8" onkeypress="return isNumber(event)" class="form-control required" name="phone" value="{{ old('phone') }}" required>
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('phone') }}</strong>
@@ -175,11 +141,9 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--Physical Address-->
                         <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
                             <label for="address" class="col-md-4 control-label">Physical Address</label>
-
                             <div class="row">
                                 <textarea id="address" name="address" class="form-control">
                                     {{ old('address') }}
@@ -191,14 +155,11 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--email address-->
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
                             <div class="row">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}">
-
                                 @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -207,17 +168,15 @@
                             </div>
                         </div>
                         <div class="f1-buttons">
-                            <button type="button" class="btn btn-previous">Previous</button>
-                            <button type="button" class="btn btn-next">Next</button>
+                            <button type="button" class="btn btn-previous"><i class="fa fa-arrow-left"></i> Previous</button>
+                            <button type="button" class="btn btn-next">Next<i class="fa fa-arrow-right"></i></button>
                         </div>
                     </fieldset>
-
                     <fieldset>
                         <h4>Next of Keen:</h4>
                         <!--keen relationship-->
                         <div class="form-group{{ $errors->has('keen_type') ? ' has-error' : '' }}">
                             <label for="keen_type" class="col-md-4 control-label">Relationship with Next of Keen</label>
-
                             <div class="row">
                                 <select id="keen_type" name="keen_type" class="form-control">
                                     <option value="" selected disabled>-Relationship with Keen-</option>
@@ -235,14 +194,11 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--next of keen names-->
                         <div class="form-group{{ $errors->has('keen_name') ? ' has-error' : '' }}">
                             <label for="keen_name" class="row control-label">Next of Keen Name(s)</label>
-
                             <div class="row">
                                 <input id="keen_name" type="keen_name" class="form-control" name="keen_name" value="{{ old('keen_name') }}">
-
                                 @if ($errors->has('keen_name'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('keen_name') }}</strong>
@@ -250,11 +206,9 @@
                                 @endif
                             </div>
                         </div>
-
                         <!--next of keen contact-->
                         <div class="form-group{{ $errors->has('keen_contact') ? ' has-error' : '' }}">
                             <label for="keen_contact" class="row control-label">Contact Details</label>
-
                             <div class="row">
                                 <textarea id="keen_contact" name="keen_contact" class="form-control">
                                     {{ old('keen_contact') }}
@@ -266,12 +220,18 @@
                                 @endif
                             </div>
                         </div>
+                        <!--confirm payment -->
+                        <div class="form-group">
+                            <div class="row" style="font-size: 12px">
+                                <input type="checkbox" id="p_check" value="paid" onchange="confirmPayment()">
+                                Confirm. if Client has Paid the KSH. 100 Registration fee.
+                            </div>
+                        </div>
                         <div class="f1-buttons">
-                            <button type="button" class="btn btn-primary btn-previous">Previous</button>
-                            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                            <button type="button" class="btn btn-primary btn-previous"><i class="fa fa-arrow-left"></i>Previous</button>
+                            <button type="submit" id="c_submit" class="btn btn-primary btn-submit">Submit</button>
                         </div>
                     </fieldset>
-
                 </form>
             </div>
         </div>
