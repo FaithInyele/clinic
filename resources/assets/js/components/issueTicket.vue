@@ -219,13 +219,13 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-3">
                                                                 Seen a Lab Technician
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Ticket Created' || currentTicket.progress.description == 'Client at Doctor'|| currentTicket.progress.description == 'Client at Lab'" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level < 2" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Pending...
                                                                 </b>
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Results Available'" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level == 2" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Current...
                                                                 </b>
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Client at Chemist'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level > 2" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
                                                                 </b>
                                                             </a>
@@ -247,13 +247,13 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-4">
                                                                 Seen Chemist
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description != 'Client at Chemist'" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level < 3" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Pending...
                                                                 </b>
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Client at Chemist'" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level == 3" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Current...
                                                                 </b>
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Medication Given'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level > 3" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
                                                                 </b>
                                                             </a>
@@ -265,11 +265,11 @@
                                                                     </b>
                                                                 </label>
 
-                                                                    <div v-if="currentTicket.progress" :class="{completed: currentTicket.progress.description == 'Client at Chemist' || currentTicket.progress.description == 'Medication Given'}">
+                                                                    <div v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 4}">
                                                                         <input-tag placeholder="Add Prescriptions"  :on-change="saveP" :tags="prescription_tags"></input-tag>
                                                                     </div>
-                                                                    <div class="form-group pull-right">
-                                                                        <button class="btn btn-primary" @click="submitP()">{{toChemist}}</button>
+                                                                    <div class="form-group pull-right" v-if="currentTicket.progress">
+                                                                        <button :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 4}" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
@@ -459,7 +459,7 @@
                 inheritance.revertStatus();
                 inheritance.status = 'Saving Prescription(s)';
                 inheritance.savePrescription = "Saving...";
-                var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
+                var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
                 console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
                 axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
                     .then(function () {
@@ -480,6 +480,7 @@
                 inheritance.revertStatus();
                 inheritance.status = 'Submitting Prescription(s)';
                 inheritance.toChemist = 'Submitting';
+                console.log(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id);
                 axios.get(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id)
                     .then(function (response) {
                         inheritance.status = 'Prescription(s) Successfully Submitted';
@@ -504,6 +505,7 @@
               console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.currentTicket.ticket_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
               axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
                   .then(function (response) {
+                      inheritance.currentTicket.lab_datas = response.data;
                       inheritance.status = 'Tests Successfully Saved';
                       inheritance.statusSuccess = true;
                       inheritance.sendtoLab = 'Sent';

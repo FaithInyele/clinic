@@ -95,7 +95,7 @@
                         <div class="modal-header">
                             <slot name="header">
                                 <label>At Chemist</label>
-                                <label class="pull-right">Status: {{status}}</label>
+                                <label :class="{'alert-success': statusSuccess,'alert-danger': statusError, 'pull-right': classLoad, 'alert-info': statusWarn}" style="text-align: right">Status: {{status}}</label>
                             </slot>
                         </div>
                         <div class="modal-body" style="text-align: center" v-show="modalLoading">
@@ -107,7 +107,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="row">
-                                            <img src="https://placehold.it/140x100" style="width: 100%; height: auto">
+                                            <img src="https://placehold.it/140x100" style="width: 100%; height: auto;border-radius: 10px">
                                         </div>
                                         <div class="row" v-if="currentClient.client">
                                             <h5>
@@ -138,7 +138,7 @@
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="dropdown">
-                                                                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Confirm
+                                                                        <button :class="{btn: classLoad, 'btn-sm': classLoad, 'btn-primary': classLoad, 'dropdown-toggle':classLoad, completed: currentClient.progress.level > 4}" type="button" data-toggle="dropdown">Confirm
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
                                                                             <li><a @click="confirm(medicine, 'affirm')">Affirm {{medicine.medicine}}</a></li>
@@ -164,8 +164,8 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button class="modal-default-button" @click="closeMedication">Finish</button>
-                                <button class="modal-default-button pull-right" @click="closeTicket">
+                                <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4}" @click="closeMedication">Finish</button>
+                                <button :class="{'btn btn-danger':classLoad, 'pull-right':classLoad}" @click="closeTicket">
                                     Close
                                 </button>
                             </slot>
@@ -192,7 +192,11 @@
                 status: 'No Operation',
                 baseUrl: base_url,
                 buttonInstance: ['button'],
-                ro: true
+                ro: true,
+                statusError: false,
+                statusSuccess: false,
+                classLoad: true,
+                statusWarn: false
             }
         },
         methods:{
@@ -205,12 +209,12 @@
             },
             currentTicket: function (ticket_id) {
                 var inheritance=this;
-                inheritance.ticketModal=true;
                 axios(base_url+'/atchemist/view/'+ticket_id)
                     .then(function (response) {
                         inheritance.currentClient = response.data;
+                        inheritance.modalLoading = false;
+                        inheritance.ticketModal=true;
                     }.bind(this));
-                inheritance.modalLoading = false;
 
             },
             closeTicket: function () {
@@ -218,8 +222,16 @@
                 inheritance.currentClient = [];
                 inheritance.ticketModal=false;
             },
+            //reverse status
+            reverseStatus: function () {
+                var inheritance = this;
+                inheritance.statusSuccess =false;
+                inheritance.statusWarn = false;
+                inheritance.statusError = false;
+            },
             confirm: function (medicine, other) {
                 var inheritance = this;
+                inheritance.reverseStatus();
                 inheritance.status = 'Updating Prescription...';
                 var ticket_id = inheritance.currentClient.id;
                 var wah= false;
@@ -229,7 +241,8 @@
                     medicine.status = 'issued';
                 }else if (other == 'alternative'){
                     if (medicine.alternatative == null){
-
+                        inheritance.status = 'Alternative Medication is Empty!';
+                        inheritance.statusError = true;
                     }else{
                         medicine.status = 'issued';
                         wah = true;
@@ -244,7 +257,12 @@
                         .then(function (response) {
                             inheritance.currentTicket(ticket_id);
                             inheritance.status = 'Prescription Successfully Updated';
+                            inheritance.statusSuccess = true;
                         }.bind(this))
+                        .catch(function (error) {
+                            inheritance.status = 'There was an Error while Processing your Request';
+                            inheritance.statusError = true;
+                        });
                 }
 
             },
@@ -253,11 +271,17 @@
             },
             closeMedication: function () {
                 var inheritance = this;
+                inheritance.reverseStatus();
                 inheritance.status = "Closing up Prescription...";
                 console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
                 axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id)
                     .then(function (response) {
                         inheritance.status = 'Prescription Closed Successfully';
+                        inheritance.statusSuccess = true;
+                    })
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
                     });
             }
 

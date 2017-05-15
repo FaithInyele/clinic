@@ -245,6 +245,8 @@ class TicketController extends Controller
                 ));
                 $data->save();
             }
+
+            return Response::json($startLab);
         }else{
             //delete previous tests
             $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
@@ -257,6 +259,8 @@ class TicketController extends Controller
                 ));
                 $data->save();
             }
+            $startLab = LabData::findorFail($request->labdatas_id);
+            return Response::json($startLab);
         }
 
         //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
@@ -280,11 +284,8 @@ class TicketController extends Controller
     }
 
     public function startChemist(Request $request){
-        //dd('aiii');
-        //start a prescription
-        //dd($request->all());
-        if ($request->prescription_id == 'null'){
-            dd('oh');
+        if ($request->prescription_id == 'none'){
+            dd('hoho');
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>2,
@@ -295,18 +296,14 @@ class TicketController extends Controller
             $medication = explode(',', $request->med);
             foreach ($medication as $item){
                 $data = new Medicine(array(
-                    'prescription_id'=>$request->prescription_id,
+                    'prescription_id'=>$prescription->id,
                     'medicine'=>$item,
                     'status'=>'pending'
                 ));
                 $data->save();
             }
         }else{
-
-            //dd('no');
-            //delete previous prescriptions
             $toDelete = Medicine::where('prescription_id', $request->prescription_id)->delete();
-
             //save medication
             $medication = explode(',', $request->med);
             foreach ($medication as $item){

@@ -26,7 +26,7 @@ class ChemistController extends Controller
     public function currentTicket($ticket_id){
         //dd('huh');
         $ticket = Ticket::findorFail($ticket_id);
-        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->get();
+        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_data'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
@@ -46,6 +46,7 @@ class ChemistController extends Controller
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
+            'level'=>5,
             'description'=>'Prescription Given'));
         $progress->save();
 
@@ -59,15 +60,18 @@ class ChemistController extends Controller
      * @return mixed
      */
     public function submitPrescription($prescription_id, Request $request){
+        //dd($request->ticket_id);
         //close prescription (doctor's part)
         DB::table('prescriptions')
             ->where('id', $prescription_id)
             ->update(['status'=>1]);
 
+        //dd('huh');
         //update progress
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
+            'level'=>4,
             'description'=>'Client at Chemist'));
         $progress->save();
 

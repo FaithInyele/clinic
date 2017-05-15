@@ -12593,7 +12593,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             saveButton: 'Save',
             resultsButton: 'Send Results',
             baseUrl: base_url,
-            status: 'No Operation'
+            status: 'No Operation',
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false
         };
     },
     methods: {
@@ -12608,20 +12612,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.ticketModal = true;
         },
+        //revert all status
+        revertStatus: function revertStatus() {
+            var inheritance = this;
+            inheritance.statusError = false;
+            inheritance.statusSuccess = false;
+            inheritance.statusWarn = false;
+        },
         //get all clients for lab
         clientsAtLab: function clientsAtLab() {
             var inheritance = this;
             axios.get(base_url + '/progress/atlab').then(function (response) {
                 inheritance.clients = response.data;
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         //close lab test and submit the results
         submitResults: function submitResults(data) {
             var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.resultsButton = 'Sending Results';
+            inheritance.status = 'Sending Results to Doctor';
             inheritance.saveResults(data);
             console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id);
             axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id).then(function () {
-                console.log('Success');
+                inheritance.resultsButton = 'Send Results';
+                inheritance.status = 'Results Successfully Submitted';
+                inheritance.statusSuccess = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
             });
         },
         //open a given ticket
@@ -12631,20 +12653,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
                 inheritance.currentClient = response.data;
                 inheritance.modalLoading = false;
-            }.bind(this));
-            inheritance.ticketModal = true;
+                inheritance.ticketModal = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         //save results
         saveResults: function saveResults(data) {
             var inheritance = this;
-            console.log(data);
+            inheritance.revertStatus();
             inheritance.status = 'Saving Results...';
             inheritance.saveButton = 'Saving...';
             axios.post(base_url + '/atlab/test/update', data).then(function (response) {
-                console.log(response.data);
                 inheritance.status = 'Result(s) successfully Saved';
+                inheritance.statusSuccess = true;
                 inheritance.saveButton = 'Save';
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         }
     }
 };
@@ -12849,7 +12877,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             status: 'No Operation',
             baseUrl: base_url,
             buttonInstance: ['button'],
-            ro: true
+            ro: true,
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false
         };
     },
     methods: {
@@ -12861,19 +12893,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         currentTicket: function currentTicket(ticket_id) {
             var inheritance = this;
-            inheritance.ticketModal = true;
             axios(base_url + '/atchemist/view/' + ticket_id).then(function (response) {
                 inheritance.currentClient = response.data;
+                inheritance.modalLoading = false;
+                inheritance.ticketModal = true;
             }.bind(this));
-            inheritance.modalLoading = false;
         },
         closeTicket: function closeTicket() {
             var inheritance = this;
             inheritance.currentClient = [];
             inheritance.ticketModal = false;
         },
+        //reverse status
+        reverseStatus: function reverseStatus() {
+            var inheritance = this;
+            inheritance.statusSuccess = false;
+            inheritance.statusWarn = false;
+            inheritance.statusError = false;
+        },
         confirm: function confirm(medicine, other) {
             var inheritance = this;
+            inheritance.reverseStatus();
             inheritance.status = 'Updating Prescription...';
             var ticket_id = inheritance.currentClient.id;
             var wah = false;
@@ -12882,7 +12922,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 medicine.alternatative = null;
                 medicine.status = 'issued';
             } else if (other == 'alternative') {
-                if (medicine.alternatative == null) {} else {
+                if (medicine.alternatative == null) {
+                    inheritance.status = 'Alternative Medication is Empty!';
+                    inheritance.statusError = true;
+                } else {
                     medicine.status = 'issued';
                     wah = true;
                 }
@@ -12895,7 +12938,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
                     inheritance.currentTicket(ticket_id);
                     inheritance.status = 'Prescription Successfully Updated';
-                }.bind(this));
+                    inheritance.statusSuccess = true;
+                }.bind(this)).catch(function (error) {
+                    inheritance.status = 'There was an Error while Processing your Request';
+                    inheritance.statusError = true;
+                });
             }
         },
         alternative: function alternative(medicine) {
@@ -12903,10 +12950,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeMedication: function closeMedication() {
             var inheritance = this;
+            inheritance.reverseStatus();
             inheritance.status = "Closing up Prescription...";
             console.log(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id);
             axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id).then(function (response) {
                 inheritance.status = 'Prescription Closed Successfully';
+                inheritance.statusSuccess = true;
+            }).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
             });
         }
 
@@ -13376,7 +13428,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.revertStatus();
             inheritance.status = 'Saving Prescription(s)';
             inheritance.savePrescription = "Saving...";
-            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
+            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
             console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
             axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
                 inheritance.status = 'Prescription(s) Successfully Saved';
@@ -13395,6 +13447,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.revertStatus();
             inheritance.status = 'Submitting Prescription(s)';
             inheritance.toChemist = 'Submitting';
+            console.log(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id);
             axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
                 inheritance.status = 'Prescription(s) Successfully Submitted';
                 inheritance.statusSuccess = true;
@@ -13416,6 +13469,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var tests = $('#tests').val();
             console.log(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.currentTicket.ticket_tags + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id);
             axios.get(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.test_tags + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id).then(function (response) {
+                inheritance.currentTicket.lab_datas = response.data;
                 inheritance.status = 'Tests Successfully Saved';
                 inheritance.statusSuccess = true;
                 inheritance.sendtoLab = 'Sent';
@@ -38873,8 +38927,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-container"
   }, [_c('div', {
     staticClass: "modal-header"
-  }, [_vm._t("header", [_vm._v("\n                            At Lab Technician\n                            "), _c('label', {
-    staticClass: "pull-right"
+  }, [_vm._t("header", [_c('label', [_vm._v("At Lab Technician")]), _vm._v(" "), _c('label', {
+    class: {
+      'alert-success': _vm.statusSuccess, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad, 'alert-info': _vm.statusWarn
+    },
+    staticStyle: {
+      "text-align": "right"
+    }
   }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
@@ -38907,7 +38966,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticStyle: {
       "width": "100%",
-      "height": "auto"
+      "height": "auto",
+      "border-radius": "10px"
     },
     attrs: {
       "src": "https://placehold.it/140x100"
@@ -39531,8 +39591,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Ticket Created' || _vm.currentTicket.progress.description == 'Client at Doctor' || _vm.currentTicket.progress.description == 'Client at Lab'),
-      expression: "currentTicket.progress.description == 'Ticket Created' || currentTicket.progress.description == 'Client at Doctor'|| currentTicket.progress.description == 'Client at Lab'"
+      value: (_vm.currentTicket.progress.level < 2),
+      expression: "currentTicket.progress.level < 2"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39547,8 +39607,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Results Available'),
-      expression: "currentTicket.progress.description == 'Results Available'"
+      value: (_vm.currentTicket.progress.level == 2),
+      expression: "currentTicket.progress.level == 2"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39563,8 +39623,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Client at Chemist'),
-      expression: "currentTicket.progress.description == 'Client at Chemist'"
+      value: (_vm.currentTicket.progress.level > 2),
+      expression: "currentTicket.progress.level > 2"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39604,8 +39664,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description != 'Client at Chemist'),
-      expression: "currentTicket.progress.description != 'Client at Chemist'"
+      value: (_vm.currentTicket.progress.level < 3),
+      expression: "currentTicket.progress.level < 3"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39620,8 +39680,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Client at Chemist'),
-      expression: "currentTicket.progress.description == 'Client at Chemist'"
+      value: (_vm.currentTicket.progress.level == 3),
+      expression: "currentTicket.progress.level == 3"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39636,8 +39696,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Medication Given'),
-      expression: "currentTicket.progress.description == 'Medication Given'"
+      value: (_vm.currentTicket.progress.level > 3),
+      expression: "currentTicket.progress.level > 3"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39659,7 +39719,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                                                    Input a single prescription, then press enter before inputting another\n                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     class: {
-      completed: _vm.currentTicket.progress.description == 'Client at Chemist' || _vm.currentTicket.progress.description == 'Medication Given'
+      completed: _vm.currentTicket.progress.level >= 4
     }
   }, [_c('input-tag', {
     attrs: {
@@ -39667,16 +39727,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "on-change": _vm.saveP,
       "tags": _vm.prescription_tags
     }
-  })], 1) : _vm._e(), _vm._v(" "), _c('div', {
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group pull-right"
   }, [_c('button', {
-    staticClass: "btn btn-primary",
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 4
+    },
     on: {
       "click": function($event) {
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))])])])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()])])])]), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
       "id": "history"
@@ -39892,7 +39954,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "modal-header"
   }, [_vm._t("header", [_c('label', [_vm._v("At Chemist")]), _vm._v(" "), _c('label', {
-    staticClass: "pull-right"
+    class: {
+      'alert-success': _vm.statusSuccess, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad, 'alert-info': _vm.statusWarn
+    },
+    staticStyle: {
+      "text-align": "right"
+    }
   }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
@@ -39919,7 +39986,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('img', {
     staticStyle: {
       "width": "100%",
-      "height": "auto"
+      "height": "auto",
+      "border-radius": "10px"
     },
     attrs: {
       "src": "https://placehold.it/140x100"
@@ -40017,7 +40085,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_c('div', {
       staticClass: "dropdown"
     }, [_c('button', {
-      staticClass: "btn btn-sm btn-primary dropdown-toggle",
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-primary': _vm.classLoad, 'dropdown-toggle': _vm.classLoad, completed: _vm.currentClient.progress.level > 4
+      },
       attrs: {
         "type": "button",
         "data-toggle": "dropdown"
@@ -40052,13 +40122,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('h1', [_vm._v("History")])])])])])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
-  }, [_vm._t("footer", [_c('button', {
-    staticClass: "modal-default-button",
+  }, [_vm._t("footer", [(_vm.currentClient.progress) ? _c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentClient.progress.level > 4
+    },
     on: {
       "click": _vm.closeMedication
     }
-  }, [_vm._v("Finish")]), _vm._v(" "), _c('button', {
-    staticClass: "modal-default-button pull-right",
+  }, [_vm._v("Finish")]) : _vm._e(), _vm._v(" "), _c('button', {
+    class: {
+      'btn btn-danger': _vm.classLoad, 'pull-right': _vm.classLoad
+    },
     on: {
       "click": _vm.closeTicket
     }

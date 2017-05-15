@@ -57,6 +57,7 @@ class LabController extends Controller
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
+            'level'=>3,
             'description'=>'Results Available'));
         $progress->save();
 

@@ -94,8 +94,8 @@
 
                         <div class="modal-header">
                             <slot name="header">
-                                At Lab Technician
-                                <label class="pull-right">Status: {{status}}</label>
+                                <label>At Lab Technician</label>
+                                <label :class="{'alert-success': statusSuccess,'alert-danger': statusError, 'pull-right': classLoad, 'alert-info': statusWarn}" style="text-align: right">Status: {{status}}</label>
                             </slot>
                         </div>
                         <div class="modal-body" style="text-align: center" v-show="modalLoading">
@@ -108,7 +108,7 @@
 
                                 <div class="col-md-4">
                                     <div class="row">
-                                        <img src="https://placehold.it/140x100" style="width: 100%; height: auto">
+                                        <img src="https://placehold.it/140x100" style="width: 100%; height: auto;border-radius: 10px">
                                     </div>
                                     <div class="row" v-if="currentClient.client">
                                         <h5>
@@ -185,7 +185,11 @@
                 saveButton: 'Save',
                 resultsButton: 'Send Results',
                 baseUrl: base_url,
-                status: 'No Operation'
+                status: 'No Operation',
+                statusError: false,
+                statusSuccess: false,
+                classLoad: true,
+                statusWarn: false
             }
         },
         methods:{
@@ -200,6 +204,13 @@
                 var inheritance =this;
                 inheritance.ticketModal=true;
             },
+            //revert all status
+            revertStatus: function () {
+                var inheritance =this;
+                inheritance.statusError = false;
+                inheritance.statusSuccess = false;
+                inheritance.statusWarn = false;
+            },
             //get all clients for lab
             clientsAtLab: function () {
                 var inheritance =this;
@@ -207,17 +218,29 @@
                     .then(function (response) {
                         inheritance.clients = response.data;
                     }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             },
             //close lab test and submit the results
             submitResults: function (data) {
                 var inheritance = this;
+                inheritance.revertStatus();
+                inheritance.resultsButton = 'Sending Results';
+                inheritance.status = 'Sending Results to Doctor';
                 inheritance.saveResults(data);
                 console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id);
                 axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id)
                     .then(function () {
-                        console.log('Success');
-                    })
-
+                        inheritance.resultsButton = 'Send Results';
+                        inheritance.status = 'Results Successfully Submitted';
+                        inheritance.statusSuccess = true;
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             },
             //open a given ticket
             currentTicket: function (ticket_id) {
@@ -227,21 +250,29 @@
                     .then(function (response) {
                         inheritance.currentClient = response.data;
                         inheritance.modalLoading = false;
-                    }.bind(this));
-                inheritance.ticketModal = true;
+                        inheritance.ticketModal = true;
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             },
             //save results
             saveResults: function (data) {
                 var inheritance = this;
-                console.log(data);
+                inheritance.revertStatus();
                 inheritance.status = 'Saving Results...';
                 inheritance.saveButton = 'Saving...';
                 axios.post(base_url+'/atlab/test/update', data)
                     .then(function (response) {
-                        console.log(response.data);
                         inheritance.status = 'Result(s) successfully Saved';
+                        inheritance.statusSuccess = true;
                         inheritance.saveButton = 'Save';
                     }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             }
         }
     }
