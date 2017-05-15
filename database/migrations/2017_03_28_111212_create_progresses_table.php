@@ -17,6 +17,7 @@ class CreateProgressesTable extends Migration
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('level');
             $table->string('description');
             $table->timestamps();
 

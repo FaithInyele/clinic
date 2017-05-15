@@ -40,15 +40,12 @@ class TicketController extends Controller
      */
     public function searchClient(Request $request){
         $search_term = $request->term;
-
         $results = Clients::where('first_name', 'LIKE', '%'.$search_term.'%')
             ->orwhere('other_names', 'LIKE', '%'.$search_term.'%')
             ->orwhere('id_number', 'LIKE', '%'.$search_term.'%')
             ->get();
-
         return Response::json($results);
     }
-
     /**
      * display form where a client is assigned a given doctor/nurse
      *
@@ -58,10 +55,8 @@ class TicketController extends Controller
     public function start_form(Request $request){
         $title = 'iHospital | Assign Ticket';
         $rightbar = 'ticket';
-
         $data = $request->all();
         $available_doctors = User::where('role', 'Nurse/Doctor')->get();
-
         return view('ticket.start', compact('rightbar', 'title', 'data', 'available_doctors'));
     }
 
@@ -71,7 +66,6 @@ class TicketController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-
     public function start_store(Request $request){
         //issued by
         $request['issued_by'] = Auth::user()->id;
@@ -86,6 +80,7 @@ class TicketController extends Controller
         $progress = new Progress(array(
             'ticket_id'=>$ticket->id,
             'user_id'=>$ticket->issued_by,
+            'level'=>0,
             'description'=>'Ticket Created'));
         $progress->save();
 
@@ -182,20 +177,19 @@ class TicketController extends Controller
      * @return mixed
      */
     public function saveSymptoms(Request $request){
-        //delete any previos symptoms before a fresh insert, if any
+        //delete any previous symptoms before a fresh insert, if any
         $toDelete = Symptom::where('ticket_id', $request->ticket_id)->delete();
-
         //save symptoms
         $symptoms = explode(',', $request->symptoms);
         foreach ($symptoms as $symptom){
             $data = new Symptom(array('ticket_id'=>$request->ticket_id,'description'=>$symptom));
             $data->save();
         }
-
         //update progress
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
+            'level'=>1,
             'description'=>'Client at Doctor'));
         $progress->save();
 
@@ -228,12 +222,11 @@ class TicketController extends Controller
     }
 
     /**
-     * sending client to lab for tests
+     * saving client tests* to lab for tests
      *
      * @param Request $request
      */
     public function startLab(Request $request){
-        //dd($request->all());
         //start Lab Ticket
         if($request->labdatas_id == 'null'){
             $startLab = new LabData(array(
@@ -255,7 +248,6 @@ class TicketController extends Controller
         }else{
             //delete previous tests
             $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
-
             //save lab tests
             $test = explode(',', $request->tests);
             foreach ($test as $item){
@@ -271,7 +263,7 @@ class TicketController extends Controller
     }
 
     public function sendLab(Request $request){
-        //dd($request->all());
+        //update lab datas table
         DB::table('lab_datas')
             ->where('id', $request->labdatas_id)
             ->update(['status'=>0]);
@@ -280,8 +272,11 @@ class TicketController extends Controller
         $progress = new Progress(array(
             'ticket_id'=>$request->ticket_id,
             'user_id'=>Auth::user()->id,
+            'level'=>2,
             'description'=>'Client at Lab'));
         $progress->save();
+        $progress = Progress::where('ticket_id', $request->ticket_id)->latest()->first();
+        return Response::json($progress);
     }
 
     public function startChemist(Request $request){

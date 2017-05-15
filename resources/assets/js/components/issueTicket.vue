@@ -94,7 +94,7 @@
                         <div class="modal-header">
                             <slot name="header">
                                 <label>At Doctor/Nurse</label>
-                                <label :class="{alert: statusSuccess, 'alert-success': statusSuccess, 'alert': statusError, 'alert-danger': statusError, 'pull-right': classLoad}" style="text-align: right">Status: {{status}}</label>
+                                <label :class="{'alert-success': statusSuccess,'alert-danger': statusError, 'pull-right': classLoad, 'alert-info': statusWarn}" style="text-align: right">Status: {{status}}</label>
                             </slot>
                         </div>
                         <div class="modal-body" style="text-align: center" v-show="modalLoading">
@@ -134,7 +134,7 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title"  href="#accordion-1" style="color: white">
                                                                 Assigned a Ticket
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description != 'Ticket Created'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level >= 0" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
                                                                 </b>
                                                             </a>
@@ -147,10 +147,10 @@
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title" href="#accordion-2">
                                                                 at Doctor/Nurse
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description == 'Client at Doctor'" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level <= 1" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Current...
                                                                 </b>
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.description != 'Client at Doctor'" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
+                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level > 1" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
                                                                 </b>
                                                             </a>
@@ -163,7 +163,7 @@
                                                                         </b>
                                                                     </div>
 
-                                                                    <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.description == 'Client at Lab' || currentTicket.progress.description == 'Client at Chemist'}">
+                                                                    <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
                                                                             <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>
                                                                     </div>
                                                                         <hr style="margin: 0px">
@@ -190,10 +190,10 @@
                                                                                         [Input a single test, then hit enter before inputting another.]
                                                                                     </b>
                                                                                 </div>
-                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.description == 'Client at Lab' || currentTicket.progress.description == 'Client at Chemist'}">
+                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
                                                                                     <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                 </div>
-                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.description == 'Client at Lab' || currentTicket.progress.description == 'Client at Chemist'}">
+                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
                                                                                     <button class="btn btn-sm btn-primary pull-right" @click="sendLab">{{sendtoLab}}</button>
                                                                                 </div>
                                                                             </div>
@@ -338,7 +338,8 @@
                 prescription_tags: [],
                 statusError: false,
                 statusSuccess: false,
-                classLoad: true
+                classLoad: true,
+                statusWarn: false
 
             }
         },
@@ -349,7 +350,11 @@
               axios.get(base_url+'/tickets/my-tickets/query/labtechs')
                   .then(function (response) {
                       inheritance.labTechnicians = response.data;
-                  }.bind(this));
+                  }.bind(this))
+                  .catch(function (error) {
+                      inheritance.status = 'There was an Error while Processing your Request';
+                      inheritance.statusError = true;
+                  });
             },
             //open a specific ticket, for docs/nurses
             openTicket: function (ticketid) {
@@ -361,12 +366,17 @@
                         inheritance.labtechs();
                         inheritance.modalLoading = false;
                         if(response.data.progress.description == 'Client at Lab'){
-                            inheritance.status = "Currently awaiting response from Lab Results"
+                            inheritance.status = "Currently awaiting response from Lab";
+                            inheritance.statusWarn = true;
                         }
                         inheritance.updateTestTags();
                         inheritance.updatePrescriptionTags();
                         setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
-                    }.bind(this));
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
                 inheritance.ticketModal = true;
             },
             updateTestTags: function () {
@@ -387,7 +397,7 @@
                 inheritance.ticketModal=false;
                 inheritance.currentTicket = [];
             },
-            //list all active tickets, thatbelong to thelogged in user
+            //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {
                 var inheritance = this;
                 console.log('ai');
@@ -395,12 +405,24 @@
                     .then(function (response) {
                         console.log(response.data);
                         inheritance.allActives = response.data;
-                    }.bind(this));
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
+            //revert all status during api call
+            revertStatus: function () {
+              var inheritance = this;
+              inheritance.statusSuccess = false;
+              inheritance.statusError = false;
+              inheritance.statusWarn = false;
             },
             //for doctor. save client's symptoms
             saveSymptoms: function () {
                 var inheritance=this;
                 console.log(inheritance.tagsArray);
+                inheritance.revertStatus();
                 inheritance.atDoctorButton = 'Saving...';
                 inheritance.status = 'Saving Symptoms...';
                // var symptom = $('#sympt').val();
@@ -413,8 +435,13 @@
                         console.log(response);
                         inheritance.recommendAction = true;
                         inheritance.atDoctorButton = 'Save Symptoms';
-                        inheritance.status = 'Symptoms Successfully Saved'
-                    }.bind(this));
+                        inheritance.status = 'Symptoms Successfully Saved';
+                        inheritance.statusSuccess = true;
+                    }.bind(this))
+                .catch(function (error) {
+                    inheritance.status = 'There was an Error while Processing your Request';
+                    inheritance.statusError = true;
+                });
             },
             recommendLab: function () {
                 var inheritance=this;
@@ -429,6 +456,7 @@
             //save the prescriptions given
             saveP: function () {
                 var inheritance = this;
+                inheritance.revertStatus();
                 inheritance.status = 'Saving Prescription(s)';
                 inheritance.savePrescription = "Saving...";
                 var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
@@ -439,58 +467,73 @@
                         inheritance.statusSuccess = true;
                         inheritance.statusError = false;
                         inheritance.savePrescription = "Save";
-                        inheritance.openTicket(inheritance.currentTicket.id);
+                        //inheritance.openTicket(inheritance.currentTicket.id);
                     }.bind(this))
                     .catch(function (error) {
-                        inheritance.status = 'Error, Contact Admin if Error Persists';
+                        inheritance.status = 'There was an Error while Processing your Request';
                         inheritance.statusError = true;
-                        inheritance.statusSuccess = false;
-
                     });
             },
             //save all prescriptions and close chapter
             submitP: function () {
                 var inheritance = this;
+                inheritance.revertStatus();
                 inheritance.status = 'Submitting Prescription(s)';
-              ;  inheritance.toChemist = 'Submitting';
+                inheritance.toChemist = 'Submitting';
                 axios.get(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id)
                     .then(function (response) {
                         inheritance.status = 'Prescription(s) Successfully Submitted';
-                        inheritance.openTicket(inheritance.currentTicket.id);
+                        inheritance.statusSuccess =true;
+                        //inheritance.openTicket(inheritance.currentTicket.id);
                         inheritance.toChemist = 'Submit to Chemist';
                     }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             },
             //start a lab ticket.
             saveLab: function () {
               var inheritance = this;
-              console.log(inheritance.selectedLabTech);
+              inheritance.revertStatus();
               var ticket_id = inheritance.currentTicket.id;
               var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
-              inheritance.sendtoLab = 'Sending request...';
+              inheritance.sendtoLab = 'Saving Lab Test(s)...';
               inheritance.status = 'Saving Tests...';
               var tests = $('#tests').val();
               console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.currentTicket.ticket_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
               axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
                   .then(function (response) {
-                      console.log(response);
                       inheritance.status = 'Tests Successfully Saved';
+                      inheritance.statusSuccess = true;
                       inheritance.sendtoLab = 'Sent';
-                      inheritance.openTicket(ticket_id);
-                  }.bind(this));
-                console.log('wewe');
+                      //inheritance.openTicket(ticket_id);
+                  }.bind(this))
+                  .catch(function (error) {
+                      inheritance.status = 'There was an Error while Processing your Request';
+                      inheritance.statusError = true;
+                  });
             },
             //send client to lab
             sendLab: function () {
                 var inheritance = this;
-                console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
+                inheritance.revertStatus();
+                inheritance.status = 'Sending Client data to Lab...';
+                inheritance.sendtoLab = 'Sending...';
+                //console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
                 //inheritance.saveLab();
                 axios.get(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id)
                     .then(function (response) {
-
-                    })
-
+                        inheritance.currentTicket.progress = response.data;
+                        inheritance.sendtoLab = 'Send Client to Lab';
+                        inheritance.status = 'Data Successfully Send to Lab';
+                        inheritance.statusSuccess = true;
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
             }
-
         }
     }
 </script>

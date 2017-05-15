@@ -13261,7 +13261,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             prescription_tags: [],
             statusError: false,
             statusSuccess: false,
-            classLoad: true
+            classLoad: true,
+            statusWarn: false
 
         };
     },
@@ -13271,7 +13272,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             axios.get(base_url + '/tickets/my-tickets/query/labtechs').then(function (response) {
                 inheritance.labTechnicians = response.data;
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         //open a specific ticket, for docs/nurses
         openTicket: function openTicket(ticketid) {
@@ -13282,14 +13286,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.labtechs();
                 inheritance.modalLoading = false;
                 if (response.data.progress.description == 'Client at Lab') {
-                    inheritance.status = "Currently awaiting response from Lab Results";
+                    inheritance.status = "Currently awaiting response from Lab";
+                    inheritance.statusWarn = true;
                 }
                 inheritance.updateTestTags();
                 inheritance.updatePrescriptionTags();
                 setTimeout(function () {
                     $('select').tagsinput('refresh');
                 }, 500);
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
             inheritance.ticketModal = true;
         },
         updateTestTags: function updateTestTags() {
@@ -13310,19 +13318,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.ticketModal = false;
             inheritance.currentTicket = [];
         },
-        //list all active tickets, thatbelong to thelogged in user
+        //list all active tickets, that belong to the logged in user
         allActiveMethod: function allActiveMethod() {
             var inheritance = this;
             console.log('ai');
             axios.get(base_url + '/tickets/my-tickets/all-active').then(function (response) {
                 console.log(response.data);
                 inheritance.allActives = response.data;
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //revert all status during api call
+        revertStatus: function revertStatus() {
+            var inheritance = this;
+            inheritance.statusSuccess = false;
+            inheritance.statusError = false;
+            inheritance.statusWarn = false;
         },
         //for doctor. save client's symptoms
         saveSymptoms: function saveSymptoms() {
             var inheritance = this;
             console.log(inheritance.tagsArray);
+            inheritance.revertStatus();
             inheritance.atDoctorButton = 'Saving...';
             inheritance.status = 'Saving Symptoms...';
             // var symptom = $('#sympt').val();
@@ -13335,7 +13354,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.recommendAction = true;
                 inheritance.atDoctorButton = 'Save Symptoms';
                 inheritance.status = 'Symptoms Successfully Saved';
-            }.bind(this));
+                inheritance.statusSuccess = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         recommendLab: function recommendLab() {
             var inheritance = this;
@@ -13350,6 +13373,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //save the prescriptions given
         saveP: function saveP() {
             var inheritance = this;
+            inheritance.revertStatus();
             inheritance.status = 'Saving Prescription(s)';
             inheritance.savePrescription = "Saving...";
             var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : null;
@@ -13359,50 +13383,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.statusSuccess = true;
                 inheritance.statusError = false;
                 inheritance.savePrescription = "Save";
-                inheritance.openTicket(inheritance.currentTicket.id);
+                //inheritance.openTicket(inheritance.currentTicket.id);
             }.bind(this)).catch(function (error) {
-                inheritance.status = 'Error, Contact Admin if Error Persists';
+                inheritance.status = 'There was an Error while Processing your Request';
                 inheritance.statusError = true;
-                inheritance.statusSuccess = false;
             });
         },
         //save all prescriptions and close chapter
         submitP: function submitP() {
             var inheritance = this;
+            inheritance.revertStatus();
             inheritance.status = 'Submitting Prescription(s)';
-            ;inheritance.toChemist = 'Submitting';
+            inheritance.toChemist = 'Submitting';
             axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
                 inheritance.status = 'Prescription(s) Successfully Submitted';
-                inheritance.openTicket(inheritance.currentTicket.id);
+                inheritance.statusSuccess = true;
+                //inheritance.openTicket(inheritance.currentTicket.id);
                 inheritance.toChemist = 'Submit to Chemist';
-            }.bind(this));
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         //start a lab ticket.
         saveLab: function saveLab() {
             var inheritance = this;
-            console.log(inheritance.selectedLabTech);
+            inheritance.revertStatus();
             var ticket_id = inheritance.currentTicket.id;
             var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : null;
-            inheritance.sendtoLab = 'Sending request...';
+            inheritance.sendtoLab = 'Saving Lab Test(s)...';
             inheritance.status = 'Saving Tests...';
             var tests = $('#tests').val();
             console.log(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.currentTicket.ticket_tags + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id);
             axios.get(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.test_tags + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id).then(function (response) {
-                console.log(response);
                 inheritance.status = 'Tests Successfully Saved';
+                inheritance.statusSuccess = true;
                 inheritance.sendtoLab = 'Sent';
-                inheritance.openTicket(ticket_id);
-            }.bind(this));
-            console.log('wewe');
+                //inheritance.openTicket(ticket_id);
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         //send client to lab
         sendLab: function sendLab() {
             var inheritance = this;
-            console.log(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id);
+            inheritance.revertStatus();
+            inheritance.status = 'Sending Client data to Lab...';
+            inheritance.sendtoLab = 'Sending...';
+            //console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
             //inheritance.saveLab();
-            axios.get(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id).then(function (response) {});
+            axios.get(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id).then(function (response) {
+                inheritance.currentTicket.progress = response.data;
+                inheritance.sendtoLab = 'Send Client to Lab';
+                inheritance.status = 'Data Successfully Send to Lab';
+                inheritance.statusSuccess = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         }
-
     }
 };
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
@@ -39164,7 +39204,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-header"
   }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
     class: {
-      alert: _vm.statusSuccess, 'alert-success': _vm.statusSuccess, 'alert': _vm.statusError, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad
+      'alert-success': _vm.statusSuccess, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad, 'alert-info': _vm.statusWarn
     },
     staticStyle: {
       "text-align": "right"
@@ -39279,8 +39319,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description != 'Ticket Created'),
-      expression: "currentTicket.progress.description != 'Ticket Created'"
+      value: (_vm.currentTicket.progress.level >= 0),
+      expression: "currentTicket.progress.level >= 0"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39311,8 +39351,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description == 'Client at Doctor'),
-      expression: "currentTicket.progress.description == 'Client at Doctor'"
+      value: (_vm.currentTicket.progress.level <= 1),
+      expression: "currentTicket.progress.level <= 1"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39327,8 +39367,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "show",
       rawName: "v-show",
-      value: (_vm.currentTicket.progress.description != 'Client at Doctor'),
-      expression: "currentTicket.progress.description != 'Client at Doctor'"
+      value: (_vm.currentTicket.progress.level > 1),
+      expression: "currentTicket.progress.level > 1"
     }],
     staticClass: "pull-right",
     staticStyle: {
@@ -39355,7 +39395,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group",
     class: {
-      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
+      completed: _vm.currentTicket.progress.level >= 2
     }
   }, [_c('input-tag', {
     attrs: {
@@ -39437,7 +39477,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n                                                                                    [Input a single test, then hit enter before inputting another.]\n                                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group",
     class: {
-      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
+      completed: _vm.currentTicket.progress.level >= 2
     }
   }, [_c('input-tag', {
     attrs: {
@@ -39449,7 +39489,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 1) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group",
     class: {
-      completed: _vm.currentTicket.progress.description == 'Client at Lab' || _vm.currentTicket.progress.description == 'Client at Chemist'
+      completed: _vm.currentTicket.progress.level >= 2
     }
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary pull-right",
