@@ -88,7 +88,10 @@ Route::group(['middleware' => 'logIn'], function () {
     /**
      * resources routes
      */
+    //lab resources
     Route::get('resources/lab', 'LabResourceController@index');
+    Route::get('resources/lab/all', 'LabResourceController@all');
+    Route::post('resources/lab/new', 'LabResourceController@addNew');
 
 });
 

@@ -31,6 +31,8 @@ Vue.component('listusers', require('./components/listUsers.vue'));
 
 Vue.component('listclients', require('./components/listClients.vue'));
 
+Vue.component('labresource', require('./components/labResource.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

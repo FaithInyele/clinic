@@ -11369,6 +11369,8 @@ Vue.component('listusers', __webpack_require__(96));
 
 Vue.component('listclients', __webpack_require__(95));
 
+Vue.component('labresource', __webpack_require__(150));
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -13374,9 +13376,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //list all active tickets, that belong to the logged in user
         allActiveMethod: function allActiveMethod() {
             var inheritance = this;
-            console.log('ai');
             axios.get(base_url + '/tickets/my-tickets/all-active').then(function (response) {
-                console.log(response.data);
                 inheritance.allActives = response.data;
             }.bind(this)).catch(function (error) {
                 inheritance.status = 'There was an Error while Processing your Request';
@@ -49767,6 +49767,490 @@ module.exports = function(module) {
 __webpack_require__(19);
 module.exports = __webpack_require__(20);
 
+
+/***/ }),
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.allResources();
+    },
+    data: function data() {
+        return {
+            resources: [],
+            resourceAddModal: false,
+            newResource: [],
+            saveButton: 'Save',
+            afterSaveButton: false,
+            classLoad: true
+        };
+    },
+    methods: {
+        openAddModal: function openAddModal() {
+            var inheritance = this;
+            inheritance.resourceAddModal = true;
+            inheritance.afterSaveButton = false;
+        },
+        closeAddModal: function closeAddModal() {
+            var inheritance = this;
+            inheritance.resourceAddModal = false;
+        },
+        allResources: function allResources() {
+            var inheritance = this;
+            axios.get(base_url + '/resources/lab/all').then(function (response) {
+                inheritance.resources = response.data;
+            }.bind(this));
+            setTimeout(function () {
+                $("#vueTable").DataTable();
+            }, 500);
+        },
+        saveResource: function saveResource() {
+            var inheritance = this;
+            inheritance.saveButton = 'Saving...';
+            console.log(inheritance.newResource);
+            axios.post(base_url + '/resources/lab/new', { resource_name: inheritance.newResource.resource_name,
+                description: inheritance.newResource.description,
+                unit_price: inheritance.newResource.unit_price }).then(function (response) {
+                console.log(response.data);
+                inheritance.saveButton = 'Saved';
+                inheritance.afterSaveButton = true;
+                inheritance.allResources();
+            }.bind(this));
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 150 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(149),
+  /* template */
+  __webpack_require__(151),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/labResource.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] labResource.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f1c493fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-f1c493fa", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 151 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "form-group"
+  }, [_c('button', {
+    staticClass: "btn btn-sm btn-primary",
+    on: {
+      "click": _vm.openAddModal
+    }
+  }, [_vm._v("Add New Lab Resource")])]), _vm._v(" "), _c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "vueTable",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.resources), function(resource) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(resource.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.description))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.unit_price))]), _vm._v(" "), _c('td', [_c('a', {
+      staticClass: "btn btn-success",
+      on: {
+        "click": function($event) {
+          _vm.viewClient(_vm.client)
+        }
+      }
+    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
+      staticClass: "btn btn-success",
+      on: {
+        "click": function($event) {
+          _vm.editClient(_vm.client)
+        }
+      }
+    }, [_vm._v("Edit")])])])
+  }))]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.resourceAddModal),
+      expression: "resourceAddModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Add New Lab Resource")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body",
+    staticStyle: {
+      "max-height": "350px",
+      "overflow-y": "scroll"
+    }
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Name")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newResource.resource_name),
+      expression: "newResource.resource_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.newResource.resource_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newResource.resource_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Description")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newResource.description),
+      expression: "newResource.description"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      "value": (_vm.newResource.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newResource.description = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Unit Price")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newResource.unit_price),
+      expression: "newResource.unit_price"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number"
+    },
+    domProps: {
+      "value": (_vm.newResource.unit_price)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newResource.unit_price = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })])])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.afterSaveButton
+    },
+    on: {
+      "click": function($event) {
+        _vm.saveResource()
+      }
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.saveButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    on: {
+      "click": function($event) {
+        _vm.closeAddModal()
+      }
+    }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Test Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Unit Price")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-f1c493fa", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
