@@ -395,15 +395,14 @@
             closeTicket: function () {
                 var inheritance=this;
                 inheritance.ticketModal=false;
+                inheritance.status = 'No Operation';
                 inheritance.currentTicket = [];
             },
             //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {
                 var inheritance = this;
-                console.log('ai');
                 axios.get(base_url+'/tickets/my-tickets/all-active')
                     .then(function (response) {
-                        console.log(response.data);
                         inheritance.allActives = response.data;
                     }.bind(this))
                     .catch(function (error) {

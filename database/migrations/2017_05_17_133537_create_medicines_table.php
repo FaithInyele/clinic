@@ -16,13 +16,14 @@ class CreateMedicinesTable extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('prescription_id')->unsigned();
-            $table->string('medicine');
+            $table->integer('chemist_resource_id')->unsigned();
             $table->string('alternatative')->nullable();
             $table->string('status');  //issued or external(client to buy prescription outside and return receipt for refund)
             $table->timestamps();
 
             //create table relationships
             $table->foreign('prescription_id')->references('id')->on('prescriptions');
+            $table->foreign('chemist_resource_id')->references('id')->on('chemist_resources');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestsTable extends Migration
+class CreateMedicineTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tests', function (Blueprint $table) {
+        Schema::create('medicine_transactions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('lab_id')->unsigned();
-            $table->string('description');
-            $table->string('result')->nullable();
+            $table->integer('stock_id')->unsigned();
+            $table->integer('stock');
+            $table->integer('price');
             $table->timestamps();
-
-            //create table relationships
-            $table->foreign('lab_id')->references('id')->on('lab_datas');
         });
     }
 
@@ -32,6 +29,6 @@ class CreateTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tests');
+        Schema::dropIfExists('medicine_transactions');
     }
 }

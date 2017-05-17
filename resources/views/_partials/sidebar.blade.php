@@ -88,6 +88,23 @@
                 </li>
             </ul>
         </li>
+        <li @if(isset($rightbar)) @if($rightbar=='resources')class="active" @endif @endif>
+            <a href="javascript:;">
+                <i class="fa fa-user "></i>
+                <span class="link-title">Resources</span>
+                <span class="fa arrow"></span>
+            </a>
+            <ul class="collapse">
+                <li>
+                    <a href="{{url('tickets')}}">
+                        <i class="fa fa-list"></i> Chemist Resources</a>
+                </li>
+                <li>
+                    <a href="{{url('resources/lab')}}">
+                        <i class="fa fa-list"></i>&nbsp; Lab Resources</a>
+                </li>
+            </ul>
+        </li>
     </ul>
     <!-- /#menu -->
 </div>

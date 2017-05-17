@@ -13368,6 +13368,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         closeTicket: function closeTicket() {
             var inheritance = this;
             inheritance.ticketModal = false;
+            inheritance.status = 'No Operation';
             inheritance.currentTicket = [];
         },
         //list all active tickets, that belong to the logged in user

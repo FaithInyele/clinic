@@ -85,6 +85,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('atchemist/close', 'ChemistController@closePrescription');
     Route::post('atchemist/update', 'ChemistController@updatePrescription');
 
+    /**
+     * resources routes
+     */
+    Route::get('resources/lab', 'LabResourceController@index');
 
 });
 
