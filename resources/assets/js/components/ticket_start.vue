@@ -11,7 +11,7 @@
                 {{ buttonText }}
             </div>
             <div class="alert alert-warning" v-show="noResults">
-                No results found. U can try a different Criteria
+                No results found. You can try a different Criteria
             </div>
         </div>
         <div class="row pullquote-left" v-for="result in results" style="padding-left: 20px">

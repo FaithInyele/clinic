@@ -11,6 +11,7 @@ use App\Test;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use App\LabResource;
 
 class LabController extends Controller
 {
@@ -62,5 +63,25 @@ class LabController extends Controller
         $progress->save();
 
         return Response::json(array('success'=>'success'));
+    }
+    public function search(Request $request){
+        $results = LabResource::where('resource_name', 'LIKE', '%'.$request->q.'%')
+            ->orwhere('description', 'LIKE', '%'.$request->q.'%')
+            ->get();
+        if ($request->labdatas_id == 'null'){
+            foreach ($results as $result){
+                $result['status'] = false;
+            }
+        }else{
+            foreach ($results as $result){
+                if ($test = Test::where('lab_id', $request->labdatas_id)
+                    ->where('lab_resource_id', $result->id)->exists()){
+                    $result['status'] = true;
+                }else{
+                    $result['status'] = false;
+                }
+            }
+        }
+        return Response::json($results);
     }
 }

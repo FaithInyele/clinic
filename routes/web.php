@@ -93,6 +93,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/lab/all', 'LabResourceController@all');
     Route::post('resources/lab/new', 'LabResourceController@addNew');
 
+
+
+    Route::get('search/test', 'LabController@search');
+
 });
 
 

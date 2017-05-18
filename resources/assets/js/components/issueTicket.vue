@@ -187,11 +187,32 @@
                                                                                 <div>
                                                                                     Input Required Lab Tests:<br>
                                                                                     <b style="font-size: 10px">
-                                                                                        [Input a single test, then hit enter before inputting another.]
-                                                                                    </b>
+                                                                                        <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
+                                                                                            <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
+                                                                                        </div>                                                                                    </b>
                                                                                 </div>
-                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
-                                                                                    <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
+                                                                                <input type="text" class="form-control input-sm" v-model="searchTest">
+                                                                                <div class="alert alert-warning" v-show="noResults">
+                                                                                    No results found.
+                                                                                </div>
+                                                                                <div class="row" v-for="result in results">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4">
+                                                                                            <label>Name</label><br>
+                                                                                            {{result.resource_name}}
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <label>Unit Price</label><br>
+                                                                                            {{result.unit_price}}
+                                                                                        </div>
+                                                                                        <div class="col-sm-2" style="padding-top: 10px">
+                                                                                            <button v-if="result" v-show="result.status==false" class="btn btn-sm btn-success" @click="addTest(result)">Add</button>
+                                                                                            <button v-if="result" v-show="result.status==true" class="btn btn-sm btn-danger" @click="removeTest(result)">Remove</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <hr style="margin: 5px !important;">
+                                                                                    </div>
                                                                                 </div>
                                                                                 <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
                                                                                     <button class="btn btn-sm btn-primary pull-right" @click="sendLab">{{sendtoLab}}</button>
@@ -335,15 +356,59 @@
                 baseUrl: base_url,
                 status: 'No Operation',
                 test_tags: [],
+                test_tagsId: [],
                 prescription_tags: [],
                 statusError: false,
                 statusSuccess: false,
                 classLoad: true,
-                statusWarn: false
+                statusWarn: false,
+                searchTest: '',
+                results: [],
+                noResults:false
 
             }
         },
+        watch: {
+            searchTest: function () {
+                this.results = [];
+                this.findTests();
+            }
+        },
         methods:{
+            addTest: function (result) {
+              var inheritance = this;
+              inheritance.test_tags.push(result.resource_name);
+              inheritance.test_tagsId.push(result.id);
+              inheritance.saveLab();
+              inheritance.findTests();
+            },
+            removeTest: function (result) {
+                var inheritance = this;
+                let index = inheritance.test_tags.indexOf(result.resource_name);
+                this.test_tags.splice(index, 1);
+                let index2 = inheritance.test_tagsId.indexOf(result.id);
+                this.test_tagsId.splice(index, 1);
+                inheritance.saveLab();
+                inheritance.findTests();
+            },
+            //search thru lab tests
+            findTests: _.debounce(function () {
+                var inheritance= this;
+                var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : 'null';
+                console.log(base_url+'/search/test?q='+inheritance.searchTest+'&labdatas_id='+labdatas_id);
+                if (inheritance.searchTest.length >=1){
+                axios.get(base_url+'/search/test?q='+inheritance.searchTest+'&labdatas_id='+labdatas_id)
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.length == 0){
+                            inheritance.noResults = true;
+                        }else {
+                            inheritance.noResults = false;
+                        }
+                        inheritance.results = response.data;
+                    }.bind(this))
+                }
+            }, 500),
             //get all Active Lab Technicians
             labtechs: function () {
               var inheritance = this;
@@ -383,6 +448,7 @@
                 var inheritance=this;
                 if (inheritance.currentTicket.ticket_tags != null){
                     inheritance.test_tags = inheritance.currentTicket.ticket_tags;
+                    inheritance.test_tagsId = inheritance.currentTicket.test_tagsId;
                 }
             },
             updatePrescriptionTags: function () {
@@ -498,11 +564,12 @@
               inheritance.revertStatus();
               var ticket_id = inheritance.currentTicket.id;
               var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
+              //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
               inheritance.sendtoLab = 'Saving Lab Test(s)...';
               inheritance.status = 'Saving Tests...';
               var tests = $('#tests').val();
-              console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.currentTicket.ticket_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
-              axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tags+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
+              console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
+              axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
                   .then(function (response) {
                       inheritance.currentTicket.lab_datas = response.data;
                       inheritance.status = 'Tests Successfully Saved';

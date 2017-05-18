@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Response;
 use App\Prescription;
 use App\Medicine;
 use Illuminate\Support\Facades\DB;
+use App\LabResource;
 
 class TicketController extends Controller
 {
@@ -152,10 +153,17 @@ class TicketController extends Controller
         if ($ticket['lab_datas'] != null){
             $ticket['tests'] = Test::where('lab_id', $ticket['lab_datas']->id)->get();
             $tests = array();
+            $test_id = array();
+            //dd($ticket['tests']);
             foreach ($ticket['tests'] as $test){
-                $tests[] = $test->description;
+                //dd($test->lab_resource_id);
+                $test_details = LabResource::findorFail($test->lab_resource_id);
+                //dd($fuck);
+                $tests[] = $test_details->resource_name;
+                $test_id[] = $test_details->id;
             }
             $ticket['ticket_tags'] = $tests;
+            $ticket['test_tagsId'] = $test_id;
         }
         //implode prescription as tags
         if ($ticket['prescription'] != null){
@@ -241,7 +249,7 @@ class TicketController extends Controller
             foreach ($test as $item){
                 $data = new Test(array(
                     'lab_id'=>$startLab->id,
-                    'description'=>$item
+                    'lab_resource_id'=>$item
                 ));
                 $data->save();
             }
@@ -251,13 +259,15 @@ class TicketController extends Controller
             //delete previous tests
             $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
             //save lab tests
-            $test = explode(',', $request->tests);
-            foreach ($test as $item){
-                $data = new Test(array(
-                    'lab_id'=>$request->labdatas_id,
-                    'description'=>$item
-                ));
-                $data->save();
+            if (!empty($request->tests)) {
+                $test = explode(',', $request->tests);
+                foreach ($test as $item) {
+                    $data = new Test(array(
+                        'lab_id' => $request->labdatas_id,
+                        'lab_resource_id' => $item
+                    ));
+                    $data->save();
+                }
             }
             $startLab = LabData::findorFail($request->labdatas_id);
             return Response::json($startLab);
