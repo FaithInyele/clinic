@@ -133,7 +133,7 @@
                                                 <div class="form-group" v-for="test in currentClient.tests">
                                                     <div class="row pullquote-left">
                                                         <div class="row" style="padding-left: 10px;padding-right: 10px;margin-bottom: 10px">
-                                                            <div>{{ test.description }} <i style="font-size: 10px" class="pull-right">requested at: {{ test.created_at }}</i></div>
+                                                            <div>{{ test.details.resource_name }} <i style="font-size: 10px" class="pull-right">requested at: {{ test.created_at }}</i></div>
                                                             <label style="font-size: 9px">Enter results here:</label>
                                                             <textarea class="form-control" v-model="test.result">
                                                             </textarea>
@@ -158,7 +158,7 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button class="modal-default-button" @click="closeTicket">
+                                <button class="btn btn-danger" @click="closeTicket">
                                     Close
                                 </button>
                             </slot>

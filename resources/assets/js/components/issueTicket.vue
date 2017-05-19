@@ -187,7 +187,7 @@
                                                                                 <div>
                                                                                     Input Required Lab Tests:<br>
                                                                                     <b style="font-size: 10px">
-                                                                                        <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
+                                                                                        <div class="form-group completed" v-if="currentTicket.progress">
                                                                                             <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                         </div>                                                                                    </b>
                                                                                 </div>
@@ -255,7 +255,7 @@
                                                                     <div v-for="test in currentTicket.tests">
                                                                         <div class="row">
                                                                             <div class="col-md-2" style="text-align: right">
-                                                                                <label>{{test.description}}:</label>
+                                                                                <label>{{test.details.resource_name}}:</label>
                                                                             </div>
                                                                             <div class="col-md-8">
                                                                                 <i v-if="test.result">{{test.result}}</i>
@@ -565,7 +565,7 @@
               var ticket_id = inheritance.currentTicket.id;
               var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
               //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
-              inheritance.sendtoLab = 'Saving Lab Test(s)...';
+              //inheritance.sendtoLab = 'Saving Lab Test(s)...';
               inheritance.status = 'Saving Tests...';
               var tests = $('#tests').val();
               console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
@@ -574,7 +574,7 @@
                       inheritance.currentTicket.lab_datas = response.data;
                       inheritance.status = 'Tests Successfully Saved';
                       inheritance.statusSuccess = true;
-                      inheritance.sendtoLab = 'Sent';
+                      //inheritance.sendtoLab = 'Sent';
                       //inheritance.openTicket(ticket_id);
                   }.bind(this))
                   .catch(function (error) {

@@ -158,7 +158,7 @@ class TicketController extends Controller
             foreach ($ticket['tests'] as $test){
                 //dd($test->lab_resource_id);
                 $test_details = LabResource::findorFail($test->lab_resource_id);
-                //dd($fuck);
+                $test['details'] = $test_details;
                 $tests[] = $test_details->resource_name;
                 $test_id[] = $test_details->id;
             }

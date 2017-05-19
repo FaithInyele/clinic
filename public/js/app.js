@@ -13531,7 +13531,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var ticket_id = inheritance.currentTicket.id;
             var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : null;
             //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
-            inheritance.sendtoLab = 'Saving Lab Test(s)...';
+            //inheritance.sendtoLab = 'Saving Lab Test(s)...';
             inheritance.status = 'Saving Tests...';
             var tests = $('#tests').val();
             console.log(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.test_tagsId + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id);
@@ -13539,7 +13539,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.currentTicket.lab_datas = response.data;
                 inheritance.status = 'Tests Successfully Saved';
                 inheritance.statusSuccess = true;
-                inheritance.sendtoLab = 'Sent';
+                //inheritance.sendtoLab = 'Sent';
                 //inheritance.openTicket(ticket_id);
             }.bind(this)).catch(function (error) {
                 inheritance.status = 'There was an Error while Processing your Request';
@@ -39372,7 +39372,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "padding-right": "10px",
         "margin-bottom": "10px"
       }
-    }, [_c('div', [_vm._v(_vm._s(test.description) + " "), _c('i', {
+    }, [_c('div', [_vm._v(_vm._s(test.details.resource_name) + " "), _c('i', {
       staticClass: "pull-right",
       staticStyle: {
         "font-size": "10px"
@@ -39423,7 +39423,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h1', [_vm._v("History")])])])])])])]) : _vm._e()], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
-    staticClass: "modal-default-button",
+    staticClass: "btn btn-danger",
     on: {
       "click": _vm.closeTicket
     }
@@ -39869,10 +39869,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "font-size": "10px"
     }
   }, [(_vm.currentTicket.progress) ? _c('div', {
-    staticClass: "form-group",
-    class: {
-      completed: _vm.currentTicket.progress.level >= 2
-    }
+    staticClass: "form-group completed"
   }, [_c('input-tag', {
     attrs: {
       "id": "test_tags",
@@ -40059,7 +40056,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticStyle: {
         "text-align": "right"
       }
-    }, [_c('label', [_vm._v(_vm._s(test.description) + ":")])]), _vm._v(" "), _c('div', {
+    }, [_c('label', [_vm._v(_vm._s(test.details.resource_name) + ":")])]), _vm._v(" "), _c('div', {
       staticClass: "col-md-8"
     }, [(test.result) ? _c('i', [_vm._v(_vm._s(test.result))]) : _vm._e()])])])
   })) : _vm._e()])]), _vm._v(" "), _c('div', {

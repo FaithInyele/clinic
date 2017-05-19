@@ -28,6 +28,11 @@ class LabController extends Controller
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_data'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
+        if ($ticket['tests']){
+            foreach ($ticket['tests'] as $test){
+                $test['details'] = LabResource::findorFail($test->lab_resource_id);
+            }
+        }
 
         return Response::json($ticket);
     }
