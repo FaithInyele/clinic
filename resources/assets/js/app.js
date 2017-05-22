@@ -33,6 +33,8 @@ Vue.component('listclients', require('./components/listClients.vue'));
 
 Vue.component('labresource', require('./components/labResource.vue'));
 
+Vue.component('chemistresource', require('./components/chemistResource.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

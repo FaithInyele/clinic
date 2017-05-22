@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\ChemistResource;
 use App\Ticket;
 use App\Progress;
 use App\Clients;
@@ -82,5 +83,27 @@ class ChemistController extends Controller
         DB::table('medicines')
             ->where('id', $request->id)
             ->update(['status'=>$request->status, 'alternatative'=>$request->alternatative]);
+    }
+    public function search(Request $request){
+        //dd('huh');
+        $results = ChemistResource::where('resource_name', 'LIKE', '%'.$request->q.'%')
+            ->orwhere('description', 'LIKE', '%'.$request->q.'%')
+            ->get();
+        //dd('huh');
+        if ($request->prescription_id == 'null'){
+            foreach ($results as $result){
+                $result['status'] = false;
+            }
+        }else{
+            foreach ($results as $result){
+                if ($medicine = Medicine::where('prescription_id', $request->prescription_id)
+                    ->where('chemist_resource_id', $result->id)->exists()){
+                    $result['status'] = true;
+                }else{
+                    $result['status'] = false;
+                }
+            }
+        }
+        return Response::json($results);
     }
 }

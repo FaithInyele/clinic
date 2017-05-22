@@ -286,9 +286,34 @@
                                                                     </b>
                                                                 </label>
 
-                                                                    <div v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 4}">
-                                                                        <input-tag placeholder="Add Prescriptions"  :on-change="saveP" :tags="prescription_tags"></input-tag>
+                                                                    <div v-if="currentTicket.progress" :class="{completed: classLoad}">
+                                                                        <input-tag :on-change="saveP" :tags="prescription_tags"></input-tag>
                                                                     </div>
+
+                                                                        <input type="text" class="form-control input-sm" v-model="searchPrescription">
+
+                                                                <div class="alert alert-warning" v-show="noPrescriptionResults">
+                                                                    No results found.
+                                                                </div>
+                                                                <div class="row" v-for="result in prescriptionResults">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-4">
+                                                                            <label>Name</label><br>
+                                                                            {{result.resource_name}}
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <label>Unit Price</label><br>
+                                                                            {{result.unit_price}}
+                                                                        </div>
+                                                                        <div class="col-sm-2" style="padding-top: 10px">
+                                                                            <button v-if="result" v-show="result.status==false" class="btn btn-sm btn-success" @click="addTest(result)">Add</button>
+                                                                            <button v-if="result" v-show="result.status==true" class="btn btn-sm btn-danger" @click="removeTest(result)">Remove</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <hr style="margin: 5px !important;">
+                                                                    </div>
+                                                                </div>
                                                                     <div class="form-group pull-right" v-if="currentTicket.progress">
                                                                         <button :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 4}" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
@@ -364,14 +389,20 @@
                 statusWarn: false,
                 searchTest: '',
                 results: [],
-                noResults:false
-
+                prescriptionResults: [],
+                noResults:false,
+                searchPrescription: '',
+                noPrescriptionResults: false
             }
         },
         watch: {
             searchTest: function () {
                 this.results = [];
                 this.findTests();
+            },
+            searchPrescription: function () {
+                this.prescriptionResults = [];
+                this.findPrescription();
             }
         },
         methods:{
@@ -407,6 +438,24 @@
                         }
                         inheritance.results = response.data;
                     }.bind(this))
+                }
+            }, 500),
+            findPrescription: _.debounce(function () {
+                var inheritance = this;
+                console.log('huh');
+                var prescription_id = inheritance.currentTicket.prescription !=null ? inheritance.currentTicket.prescription.id : 'null';
+                console.log(base_url+'/search/prescription?q='+inheritance.searchPrescription+'&prescription_id='+prescription_id);
+                if (inheritance.searchPrescription.length >=1){
+                    axios.get(base_url+'/search/prescription?q='+inheritance.searchPrescription+'&prescription_id='+prescription_id)
+                        .then(function (response) {
+                            console.log(response);
+                            if (response.data.length == 0){
+                                inheritance.noPrescriptionResults = true;
+                            }else {
+                                inheritance.noPrescriptionResults = false;
+                            }
+                            inheritance.prescriptionResults = response.data;
+                        }.bind(this))
                 }
             }, 500),
             //get all Active Lab Technicians

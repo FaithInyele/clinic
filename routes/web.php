@@ -92,10 +92,15 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/lab', 'LabResourceController@index');
     Route::get('resources/lab/all', 'LabResourceController@all');
     Route::post('resources/lab/new', 'LabResourceController@addNew');
+    //chemist resources
+    Route::get('resources/chemist', 'ChemistResourceController@index');
+    Route::get('resources/chemist/all', 'ChemistResourceController@all');
+    Route::post('resources/chemist/new', 'ChemistResourceController@addNew');
 
 
 
     Route::get('search/test', 'LabController@search');
+    Route::get('search/prescription', 'ChemistController@search');
 
 });
 

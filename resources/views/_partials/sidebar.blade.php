@@ -96,7 +96,7 @@
             </a>
             <ul class="collapse">
                 <li>
-                    <a href="{{url('tickets')}}">
+                    <a href="{{url('resources/chemist')}}">
                         <i class="fa fa-list"></i> Chemist Resources</a>
                 </li>
                 <li>
