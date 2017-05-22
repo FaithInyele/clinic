@@ -306,8 +306,8 @@
                                                                             {{result.unit_price}}
                                                                         </div>
                                                                         <div class="col-sm-2" style="padding-top: 10px">
-                                                                            <button v-if="result" v-show="result.status==false" class="btn btn-sm btn-success" @click="addTest(result)">Add</button>
-                                                                            <button v-if="result" v-show="result.status==true" class="btn btn-sm btn-danger" @click="removeTest(result)">Remove</button>
+                                                                            <button v-if="result" v-show="result.status==false" class="btn btn-sm btn-success" @click="addPrescription(result)">Add</button>
+                                                                            <button v-if="result" v-show="result.status==true" class="btn btn-sm btn-danger" @click="removePrescription(result)">Remove</button>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -383,6 +383,7 @@
                 test_tags: [],
                 test_tagsId: [],
                 prescription_tags: [],
+                prescription_tagsId: [],
                 statusError: false,
                 statusSuccess: false,
                 classLoad: true,
@@ -421,6 +422,22 @@
                 this.test_tagsId.splice(index, 1);
                 inheritance.saveLab();
                 inheritance.findTests();
+            },
+            addPrescription: function (result) {
+                var inheritance = this;
+                inheritance.prescription_tags.push(result.resource_name);
+                inheritance.prescription_tagsId.push(result.id);
+                inheritance.saveP();
+                inheritance.findPrescription();
+            },
+            removePrescription: function (result) {
+                var inheritance = this;
+                let index = inheritance.prescription_tags.indexOf(result.resource_name);
+                this.prescription_tags.splice(index, 1);
+                let index2 = inheritance.prescription_tagsId.indexOf(result.id);
+                this.prescription_tagsId.splice(index, 1);
+                inheritance.saveP();
+                inheritance.findPrescription();
             },
             //search thru lab tests
             findTests: _.debounce(function () {
@@ -504,6 +521,7 @@
                 var inheritance = this;
                 if (inheritance.currentTicket.medicine_tags != null){
                     inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+                    inheritance.prescription_tagsId = inheritance.currentTicket.medicine_tagsId;
                 }
             },
             //close the above opened ticket.
@@ -574,8 +592,8 @@
                 inheritance.status = 'Saving Prescription(s)';
                 inheritance.savePrescription = "Saving...";
                 var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
-                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
-                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tags+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
+                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
+                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
                     .then(function () {
                         inheritance.status = 'Prescription(s) Successfully Saved';
                         inheritance.statusSuccess = true;

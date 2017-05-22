@@ -13595,6 +13595,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             test_tags: [],
             test_tagsId: [],
             prescription_tags: [],
+            prescription_tagsId: [],
             statusError: false,
             statusSuccess: false,
             classLoad: true,
@@ -13633,6 +13634,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.test_tagsId.splice(index, 1);
             inheritance.saveLab();
             inheritance.findTests();
+        },
+        addPrescription: function addPrescription(result) {
+            var inheritance = this;
+            inheritance.prescription_tags.push(result.resource_name);
+            inheritance.prescription_tagsId.push(result.id);
+            inheritance.saveP();
+            inheritance.findPrescription();
+        },
+        removePrescription: function removePrescription(result) {
+            var inheritance = this;
+            var index = inheritance.prescription_tags.indexOf(result.resource_name);
+            this.prescription_tags.splice(index, 1);
+            var index2 = inheritance.prescription_tagsId.indexOf(result.id);
+            this.prescription_tagsId.splice(index, 1);
+            inheritance.saveP();
+            inheritance.findPrescription();
         },
         //search thru lab tests
         findTests: _.debounce(function () {
@@ -13712,6 +13729,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             if (inheritance.currentTicket.medicine_tags != null) {
                 inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+                inheritance.prescription_tagsId = inheritance.currentTicket.medicine_tagsId;
             }
         },
         //close the above opened ticket.
@@ -13778,8 +13796,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.status = 'Saving Prescription(s)';
             inheritance.savePrescription = "Saving...";
             var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
-            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
-            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tags + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
+            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
+            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
                 inheritance.status = 'Prescription(s) Successfully Saved';
                 inheritance.statusSuccess = true;
                 inheritance.statusError = false;
@@ -40683,7 +40701,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-sm btn-success",
       on: {
         "click": function($event) {
-          _vm.addTest(result)
+          _vm.addPrescription(result)
         }
       }
     }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
@@ -40696,7 +40714,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-sm btn-danger",
       on: {
         "click": function($event) {
-          _vm.removeTest(result)
+          _vm.removePrescription(result)
         }
       }
     }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {

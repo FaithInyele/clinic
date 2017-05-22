@@ -16,6 +16,7 @@ use App\Prescription;
 use App\Medicine;
 use Illuminate\Support\Facades\DB;
 use App\LabResource;
+use App\ChemistResource;
 
 class TicketController extends Controller
 {
@@ -170,10 +171,15 @@ class TicketController extends Controller
             $ticket['med'] = 'huh';
             $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
             $p_tags = array();
+            $p_id = array();
             foreach ($ticket['medicine'] as $medicine){
-                $p_tags[] = $medicine->medicine;
+                $medicine_details = ChemistResource::findorFail($medicine->chemist_resource_id);
+                $medicine['details'] = $medicine_details;
+                $p_tags[] = $medicine_details->resource_name;
+                $p_id[] = $medicine_details->id;
             }
             $ticket['medicine_tags'] = $p_tags;
+            $ticket['medicine_tagsId'] = $p_id;
         }
         return Response::json($ticket);
     }
@@ -295,7 +301,6 @@ class TicketController extends Controller
 
     public function startChemist(Request $request){
         if ($request->prescription_id == 'none'){
-            dd('hoho');
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>2,
@@ -307,7 +312,7 @@ class TicketController extends Controller
             foreach ($medication as $item){
                 $data = new Medicine(array(
                     'prescription_id'=>$prescription->id,
-                    'medicine'=>$item,
+                    'chemist_resource_id'=>$item,
                     'status'=>'pending'
                 ));
                 $data->save();
@@ -315,14 +320,16 @@ class TicketController extends Controller
         }else{
             $toDelete = Medicine::where('prescription_id', $request->prescription_id)->delete();
             //save medication
-            $medication = explode(',', $request->med);
-            foreach ($medication as $item){
-                $data = new Medicine(array(
-                    'prescription_id'=>$request->prescription_id,
-                    'medicine'=>$item,
-                    'status'=>'pending'
-                ));
-                $data->save();
+            if (!empty($request->med)) {
+                $medication = explode(',', $request->med);
+                foreach ($medication as $item) {
+                    $data = new Medicine(array(
+                        'prescription_id' => $request->prescription_id,
+                        'chemist_resource_id' => $item,
+                        'status' => 'pending'
+                    ));
+                    $data->save();
+                }
             }
         }
         return Response::json(array('success'=>'success'));
