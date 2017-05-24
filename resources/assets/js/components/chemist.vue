@@ -132,7 +132,7 @@
                                                         <hr>
                                                         <div :class="{row : ro, successful: medicine.status == 'issued' || medicine.status == 'external'}" style="padding-top: 10px;padding-bottom: 10px">
                                                             <div>
-                                                                <div class="col-md-5">{{medicine.medicine}}</div>
+                                                                <div class="col-md-5">{{medicine.details.resource_name}}</div>
                                                                 <div class="col-md-5">
                                                                     <input type="text" class="form-control sm" placeholder="Alternative, if any" v-model="medicine.alternatative">
                                                                 </div>

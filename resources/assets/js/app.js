@@ -35,6 +35,8 @@ Vue.component('labresource', require('./components/labResource.vue'));
 
 Vue.component('chemistresource', require('./components/chemistResource.vue'));
 
+Vue.component('preferences', require('./components/preferences.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

@@ -165,7 +165,7 @@
                 inheritance.updateButton = 'Updating...';
                 axios.post(base_url+'/clients/edit', client)
                     .then(function (response) {
-                        inheritance.updateButton = "Update"
+                        inheritance.updateButton = "Update";
                         inheritance.allClients();
                         inheritance.closeModal();
                     }.bind(this))

@@ -105,6 +105,23 @@
                 </li>
             </ul>
         </li>
+        <li @if(isset($rightbar)) @if($rightbar=='preferences')class="active" @endif @endif>
+            <a href="javascript:;">
+                <i class="fa fa-user "></i>
+                <span class="link-title">Preferences</span>
+                <span class="fa arrow"></span>
+            </a>
+            <ul class="collapse">
+                <li>
+                    <a href="{{url('preferences')}}">
+                        <i class="fa fa-list"></i> Preferences</a>
+                </li>
+                <li>
+                    <a href="{{url('preferences/service-fees')}}">
+                        <i class="fa fa-list"></i>&nbsp; Service Fees</a>
+                </li>
+            </ul>
+        </li>
     </ul>
     <!-- /#menu -->
 </div>

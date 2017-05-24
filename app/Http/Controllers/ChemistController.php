@@ -33,6 +33,9 @@ class ChemistController extends Controller
         $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
         $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
+        foreach ($ticket['medicine'] as $medicine){
+            $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
+        }
 
         return Response::json($ticket);
     }

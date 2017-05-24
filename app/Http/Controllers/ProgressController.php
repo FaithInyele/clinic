@@ -52,7 +52,7 @@ class ProgressController extends Controller
                 'clients.first_name as c_fname',
                 'clients.other_names as c_othernames')
             //->where('lab_datas.assigned_to', '=', 7)
-            ->where('prescriptions.status', '=', 0)
+            ->where('prescriptions.status', '=', 1)
             ->get();
 
         return Response::json($atChemist);

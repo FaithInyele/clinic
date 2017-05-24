@@ -18,6 +18,7 @@ class CreateTestsTable extends Migration
             $table->integer('lab_id')->unsigned();
             $table->integer('lab_resource_id')->unsigned();
             $table->string('result')->nullable();
+            $table->integer('amount')->nullable();
             $table->timestamps();
 
             //create table relationships

@@ -224,7 +224,7 @@
                         <div class="form-group">
                             <div class="row" style="font-size: 12px">
                                 <input type="checkbox" id="p_check" value="paid" onchange="confirmPayment()">
-                                Confirm. if Client has Paid the KSH. 100 Registration fee.
+                                Confirm. if Client has Paid the KSH. {{$registration_fee->fee->amount}} Registration fee.
                             </div>
                         </div>
                         <div class="f1-buttons">
@@ -242,7 +242,8 @@
             <strong>Warning!</strong> <br>
             1. All fields with a * should NOT be left blank.<br>
             3. Ensure All data is Valid.<br>
-            3. A client registered will be available immediately for Ticket Assignment
+            3. A client registered will be available immediately for Ticket Assignment<br>
+            4. Registration Fee is Ksh. {{$registration_fee->fee->amount}}
         </div>
         <!-- .well well-small -->
         <div class="well well-small dark">

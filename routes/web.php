@@ -102,6 +102,15 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('search/test', 'LabController@search');
     Route::get('search/prescription', 'ChemistController@search');
 
+    /**
+     * preference routes
+     */
+    Route::get('preferences', 'PreferencesController@index');
+    Route::post('preferences/add', 'PreferencesController@add');
+    Route::get('preferences/all', 'PreferencesController@all');
+    Route::get('preferences/service-fee', 'PreferencesController@serviceFee');
+    Route::post('preferences/edit', 'PreferencesController@edit');
+
 });
 
 

@@ -217,3 +217,7 @@ Vue Modal
     pointer-events: none;
     opacity: 0.4;
 }
+.btn{
+    border-radius: 0px;
+    border: 1px solid;
+}

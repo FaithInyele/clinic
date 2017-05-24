@@ -18,6 +18,7 @@ class CreateMedicinesTable extends Migration
             $table->integer('prescription_id')->unsigned();
             $table->integer('chemist_resource_id')->unsigned();
             $table->string('alternatative')->nullable();
+            $table->integer('amount')->nullable();
             $table->string('status');  //issued or external(client to buy prescription outside and return receipt for refund)
             $table->timestamps();
 

@@ -8,6 +8,7 @@ use App\SpecialCase;
 use Illuminate\Support\Facades\Response;
 use App\Ticket;
 use Illuminate\Support\Facades\DB;
+use App\Preference;
 
 class ClientsController extends Controller
 {
@@ -37,8 +38,10 @@ class ClientsController extends Controller
         $rightbar = 'client';
         $total_clients = count(Clients::all());
         $active_tickets = count(Ticket::where('status', 'open')->get());
+        $registration_fee = Preference::where('name', 'Registration Fee')->first();
+        //dd($registration_fee);
 
-        return view('clients.add', compact('rightbar', 'title', 'total_clients', 'active_tickets'));
+        return view('clients.add', compact('rightbar', 'title', 'total_clients', 'active_tickets', 'registration_fee'));
     }
 
     /**
