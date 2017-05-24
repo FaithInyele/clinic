@@ -4,19 +4,28 @@ these changes are designed to tweak the metis css so as to allign the site with 
  */
 div#wrap.bg-dark.dk{
     background-color: #F5F5F5 !important;
-    color: #53CDF6 !important;
+    color: #149ED2 !important;
 }
 nav.navbar.navbar-inverse.navbar-static-top{
     background-color: #F5F5F5 !important
 }
+.btn-custom{
+    color: white !important;
+}
+.btn-logout{
+    color: white !important;
+}
+.btn-logout:hover{
+    color: #149ED2;
+}
 a{
-    color: #53CDF6 !important;
+    color: #149ED2 !important;
 }
 a:hover{
     color: red !important;
 }
 div.collapse.navbar-collapse.navbar-ex1-collapse{
-    border-color: #53CDF6;
+    border-color: #149ED2;
 }
 .bg-blue.dker{
     background-color: #444444!important;
@@ -27,14 +36,14 @@ div.collapse.navbar-collapse.navbar-ex1-collapse{
 }
 div.panel-heading{
     text-align: center;
-    background-color: #53CDF6 !important;
+    background-color: #149ED2 !important;
 }
 button.btn.btn-primary{
-    background-color: #53CDF6 !important;
+    background-color: #149ED2 !important;
 }
 label{
     text-align: left !important;
-    color: #53CDF6;
+    color: #149ED2;
 }
 .row{
     margin-right: 15px;
@@ -69,7 +78,7 @@ form wizard styles
 .f1-progress-line { position: absolute;
     top: 0; left: 0;
     height: 1px;
-    background: #53CDF6; }
+    background: #149ED2; }
 
 .f1-step {
     position: relative;
@@ -84,22 +93,22 @@ form wizard styles
 }
 .f1-step.activated .f1-step-icon {
     background: #fff;
-    border: 1px solid #53CDF6;
-    color: #53CDF6;
+    border: 1px solid #149ED2;
+    color: #149ED2;
     line-height: 38px;
 }
 .f1-step.active .f1-step-icon {
     width: 48px;
     height: 48px;
     margin-top: 0;
-    background: #53CDF6;
+    background: #149ED2;
     font-size: 22px;
     line-height: 48px;
 }
 
 .f1-step p { color: #ccc; }
-.f1-step.activated p { color: #53CDF6; }
-.f1-step.active p { color: #53CDF6; }
+.f1-step.activated p { color: #149ED2; }
+.f1-step.active p { color: #149ED2; }
 
 .f1 fieldset { display: none; text-align: left; }
 
@@ -183,7 +192,7 @@ Vue Modal
 
 
 .pullquote-left{
-    border-left:5px solid #53CDF6;
+    border-left:5px solid #149ED2;
     margin-top: 20px;
     background-color: #F5F5F5;
 }
@@ -220,4 +229,29 @@ Vue Modal
 .btn{
     border-radius: 0px;
     border: 1px solid;
+}
+#left{
+    background-color: #F5F5F5 !important;
+}
+.bg-dark .dker{
+    background-color: #F5F5F5 !important;
+}
+.bg-dark {
+    background-color: #F5F5F5 !important;
+}
+#menu li a {
+    box-shadow: none !important;
+}
+.head{
+    text-shadow: none !important;
+}
+span.link-title{
+    text-shadow: none;
+}
+li.nav-header{
+    background-color: #149ED2 !important;
+}
+input{
+    border-radius: 0px !important;
+    border: 1px solid #149ED2 !important;
 }

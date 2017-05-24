@@ -14662,18 +14662,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var relation = this;
             this.buttonText = 'Searching...';
             console.log(base_url + '/tickets/search?term=' + this.searchTerm);
-            axios.get(base_url + '/tickets/search?term=' + this.searchTerm).then(function (response) {
-                console.log(response.data);
-                if (response.data.length == 0) {
-                    relation.noResults = true;
-                } else {
-                    relation.noResults = false;
-                }
-                relation.results = response.data;
-                relation.buttonText = '';
-            }.bind(this)).catch(function (error) {
-                console.log(error);
-            });
+            if (this.searchTerm.length >= 1) {
+                axios.get(base_url + '/tickets/search?term=' + this.searchTerm).then(function (response) {
+                    console.log(response.data);
+                    if (response.data.length == 0) {
+                        relation.noResults = true;
+                    } else {
+                        relation.noResults = false;
+                    }
+                    relation.results = response.data;
+                    relation.buttonText = '';
+                }.bind(this)).catch(function (error) {
+                    console.log(error);
+                });
+            }
         }, 500)
     }
 };
@@ -41159,14 +41161,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
     }, [_c('a', {
-      staticClass: "pull-right btn btn-sm btn-success",
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
       on: {
         "click": function($event) {
           _vm.openFeeModal(preference)
         }
       }
     }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-      staticClass: "pull-right btn btn-sm btn-success",
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
       staticStyle: {
         "margin-right": "10px"
       }

@@ -50,20 +50,21 @@
                 var relation=this;
                 this.buttonText = 'Searching...'
                 console.log(base_url+'/tickets/search?term='+this.searchTerm);
-                axios.get(base_url+'/tickets/search?term='+this.searchTerm)
-                    .then(function (response) {
-                        console.log(response.data);
-                        if (response.data.length == 0){
-                            relation.noResults = true;
-                        }else {
-                            relation.noResults = false;
-                        }
-                        relation.results = (response.data);
-                        relation.buttonText = ''
-                    }.bind(this)).catch(function (error) {
-                    console.log(error);
-                });
-
+                if (this.searchTerm.length >= 1){
+                    axios.get(base_url+'/tickets/search?term='+this.searchTerm)
+                        .then(function (response) {
+                            console.log(response.data);
+                            if (response.data.length == 0){
+                                relation.noResults = true;
+                            }else {
+                                relation.noResults = false;
+                            }
+                            relation.results = (response.data);
+                            relation.buttonText = ''
+                        }.bind(this)).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             }, 500)
         }
     }

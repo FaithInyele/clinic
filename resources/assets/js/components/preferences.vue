@@ -23,8 +23,8 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        <a class="pull-right btn btn-sm btn-success" @click="openFeeModal(preference)">Edit</a>
-                        <a class="pull-right btn btn-sm btn-success" style="margin-right: 10px">Open</a>
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="openFeeModal(preference)">Edit</a>
+                        <a class="pull-right btn btn-sm btn-success btn-custom" style="margin-right: 10px">Open</a>
                     </div>
                 </div>
                 <br>

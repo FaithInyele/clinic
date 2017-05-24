@@ -30,7 +30,7 @@
                         </a>
                     </div>
                     <div class="btn-group">
-                        <a data-placement="bottom" data-original-title="Pending" data-toggle="tooltip"
+                        {{--<a data-placement="bottom" data-original-title="Pending" data-toggle="tooltip"
                            class="btn btn-default btn-sm">
                             <i class="fa fa-envelope"></i>
                             <span class="label label-warning">5</span>
@@ -44,14 +44,14 @@
                            class="btn btn-default btn-sm"
                            href="#helpModal">
                             <i class="fa fa-question"></i>
-                        </a>
+                        </a>--}}
                     </div>
                     <div class="btn-group">
                         <a href="{{ url('/logout') }}" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom"
                            class="btn btn-metis-1 btn-sm"
                            onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();" style="background-color: red;color: white;font-weight: 700">
-                            <i class="fa fa-power-off"></i>
+                            <i class="fa fa-power-off btn-logout">Log Out</i>
                         </a>
 
                         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
@@ -101,7 +101,7 @@
 
     <header class="head">
         <div class="search-bar">
-            <form class="main-search" action="">
+            {{--<form class="main-search" action="">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Live Search ...">
                     <span class="input-group-btn">
@@ -110,11 +110,11 @@
                                                 </button>
                                             </span>
                 </div>
-            </form>
+            </form>--}}
             <!-- /.main-search -->                                </div>
         <!-- /.search-bar -->
         <div class="main-bar">
-            <h3 style="color: #53CDF6">
+            <h3 style="color: #149ED2">
                 {{ $title }}
             </h3>
         </div>

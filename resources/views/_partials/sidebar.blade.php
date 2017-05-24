@@ -10,7 +10,7 @@
             </a>
 
             <div class="media-body">
-                <h5 class="media-heading">{{ Auth::user()->first_name .' , '. Auth::user()->last_name }}</h5>
+                <h5 class="media-heading" style="color: #3EBBDD">{{ Auth::user()->first_name .' , '. Auth::user()->last_name }}</h5>
                 <ul class="list-unstyled user-info">
                     <li><a href="">{{ Auth::user()->role }}</a></li>
                     <li>Last Access : <br>
