@@ -12,12 +12,25 @@
 
             <div class="form-group">
                 <label for="gender" class="col-md-4 control-label">Client Name</label><br>
-
                 <div class="row">
-
                     <input type="hidden" name="client_id" class="form-control" value="{{ $data['client_id'] }}">
                     <input type="text" name="client_name" class="form-control" disabled value="{{ $data['client_fname'] }}">
                 </div>
+            </div>
+            <div class="row">
+                <hr>
+                <h6>Physical Conditions Check</h6>
+            </div>
+            @foreach($nurse_station_resources as $resource)
+                <div class="form-group">
+                    <label for="gender" class="col-md-4 control-label">{{$resource->resource_name}}</label><br>
+                    <div class="row">
+                        <input type="text" name="resource['{{$resource->id}}']" class="form-control" required value="">
+                    </div>
+                </div>
+            @endforeach
+            <div class="row">
+                <hr>
             </div>
 
             <!--assigned to-->

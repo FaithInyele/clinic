@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ChemistController extends Controller
 {
-
     /**
      * get all details about a specified ticket -->relevant data to a chemist.
      *
@@ -37,9 +36,9 @@ class ChemistController extends Controller
             $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
         }
 
+
         return Response::json($ticket);
     }
-
     public function closePrescription(Request $request){
         //close prescription (doctor's part)
         DB::table('prescriptions')
@@ -56,7 +55,6 @@ class ChemistController extends Controller
 
         return Response::json(array('success'=>'success'));
     }
-
     /**
      * function called by doctor, to submit final
      *
@@ -81,7 +79,6 @@ class ChemistController extends Controller
 
         return Response::json(array('success'=>'success'));
     }
-
     public function updatePrescription(Request $request){
         DB::table('medicines')
             ->where('id', $request->id)

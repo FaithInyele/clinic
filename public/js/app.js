@@ -11375,6 +11375,8 @@ Vue.component('chemistresource', __webpack_require__(97));
 
 Vue.component('preferences', __webpack_require__(102));
 
+Vue.component('nurseresource', __webpack_require__(159));
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -51413,6 +51415,489 @@ module.exports = function(module) {
 __webpack_require__(19);
 module.exports = __webpack_require__(20);
 
+
+/***/ }),
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.allPreferences();
+    },
+    data: function data() {
+        return {
+            modal: false,
+            preference_name: '',
+            preference_description: '',
+            preferences: [],
+            saveButton: 'save',
+            serviceFee: false,
+            editPreference: [],
+            editButton: 'Edit'
+        };
+    },
+    methods: {
+        allPreferences: function allPreferences() {
+            var inheritance = this;
+            axios.get(base_url + '/resources/nurse-station/all').then(function (response) {
+                inheritance.preferences = response.data;
+            }.bind(this));
+        },
+        saveEdit: function saveEdit() {
+            var inheritance = this;
+            inheritance.editButton = 'Updating';
+            axios.post(base_url + '/preferences/edit', inheritance.editPreference).then(function (response) {
+                //console.log(response.data);
+                inheritance.allPreferences();
+                inheritance.editButton = 'Edit';
+            }.bind(this));
+        },
+        closeEdit: function closeEdit() {
+            var inheritance = this;
+            inheritance.serviceFee = false;
+        },
+        addPreference: function addPreference() {
+            var inheritance = this;
+            inheritance.modal = true;
+        },
+        openFeeModal: function openFeeModal(preference) {
+            var inheritance = this;
+            inheritance.editPreference = preference;
+        },
+        closeAddPreference: function closeAddPreference() {
+            var inheritance = this;
+            inheritance.modal = false;
+            inheritance.preference_name = '';
+            inheritance.preference_description = '';
+        },
+        savePreference: function savePreference(preference) {
+            var inheritance = this;
+            //console.log(preference.name);
+            inheritance.saveButton = 'Saving...';
+            console.log(base_url + '/preferences/add');
+            axios.post(base_url + '/resources/nurse-station/new', { resource_name: inheritance.preference_name, resource_description: inheritance.preference_description }).then(function (response) {
+                inheritance.preferences.push(response.data);
+                inheritance.saveButton = 'Save';
+                inheritance.allPreferences();
+            }.bind(this));
+        }
+
+    }
+};
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(2)(
+  /* script */
+  __webpack_require__(158),
+  /* template */
+  __webpack_require__(160),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/nurseStation.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] nurseStation.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9281d782", Component.options)
+  } else {
+    hotAPI.reload("data-v-9281d782", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 160 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-8"
+  }, [_c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.addPreference
+    }
+  }, [_vm._v("Add New Nurse Station Resource")]), _vm._v(" "), _c('h5', [_vm._v("Nurse Station Resource(s)")]), _vm._v(" "), _vm._l((_vm.preferences), function(preference) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #53CDF6"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Resource Name:")]), _vm._v("\n                    " + _vm._s(preference.resource_name) + "\n                    "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                        last edited on:" + _vm._s(preference.updated_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                    " + _vm._s(preference.resource_description) + "\n                ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('a', {
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      on: {
+        "click": function($event) {
+          _vm.openFeeModal(preference)
+        }
+      }
+    }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      }
+    }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
+  })], 2), _vm._v(" "), (_vm.modal) ? _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Add New Preference")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Preference Name:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.preference_name),
+      expression: "preference_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.preference_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.preference_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Preference Description:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.preference_description),
+      expression: "preference_description"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.preference_description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.preference_description = $event.target.value
+      }
+    }
+  })])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.savePreference
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.saveButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    on: {
+      "click": _vm.closeAddPreference
+    }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e(), _vm._v(" "), (_vm.serviceFee) ? _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Edit Preference")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Preference Name:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editPreference.name),
+      expression: "editPreference.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editPreference.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editPreference.name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Preference Description:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editPreference.description),
+      expression: "editPreference.description"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editPreference.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editPreference.description = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("Service Fee:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editPreference.amount),
+      expression: "editPreference.amount"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editPreference.amount)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editPreference.amount = $event.target.value
+      }
+    }
+  })])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-success",
+    on: {
+      "click": _vm.saveEdit
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.editButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    on: {
+      "click": _vm.closeEdit
+    }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e()], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9281d782", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

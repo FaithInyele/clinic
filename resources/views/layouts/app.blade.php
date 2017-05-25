@@ -32,7 +32,7 @@
     <div id="app">
         <div class="bg-dark dk" id="wrap">
             @include('_partials.header')
-            @include('_partials.sidebar')
+            @include('_partials.sidebarv2')
         <div id="content">
             <div class="outer">
                 <div class="inner bg-light lter">

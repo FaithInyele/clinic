@@ -17,6 +17,8 @@ use App\Medicine;
 use Illuminate\Support\Facades\DB;
 use App\LabResource;
 use App\ChemistResource;
+use App\GeneralConditionResource;
+use App\GeneralCondition;
 
 class TicketController extends Controller
 {
@@ -59,7 +61,8 @@ class TicketController extends Controller
         $rightbar = 'ticket';
         $data = $request->all();
         $available_doctors = User::where('role', 'Nurse/Doctor')->get();
-        return view('ticket.start', compact('rightbar', 'title', 'data', 'available_doctors'));
+        $nurse_station_resources = GeneralConditionResource::all();
+        return view('ticket.start', compact('rightbar', 'title', 'data', 'available_doctors', 'nurse_station_resources'));
     }
 
     /**
@@ -85,6 +88,18 @@ class TicketController extends Controller
             'level'=>0,
             'description'=>'Ticket Created'));
         $progress->save();
+
+        //add general checkup results
+        foreach ($request->resource as $key =>$resource){
+            //dd();
+            $check_ups = new GeneralCondition(array(
+                'nurse_station_resource_id'=>preg_replace('/\D/', '', $key),
+                'ticket_id'=>$ticket->id,
+                'result'=>$resource
+            ));
+            $check_ups->save();
+        }
+
 
         //return success message to page
         return redirect()->action('TicketController@add_form')

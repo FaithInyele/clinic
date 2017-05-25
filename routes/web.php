@@ -96,6 +96,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/chemist', 'ChemistResourceController@index');
     Route::get('resources/chemist/all', 'ChemistResourceController@all');
     Route::post('resources/chemist/new', 'ChemistResourceController@addNew');
+    //nurse station routes
+    Route::get('resources/nurse-station', 'NurseStationController@index');
+    Route::get('resources/nurse-station/all', 'NurseStationController@all');
+    Route::post('resources/nurse-station/new', 'NurseStationController@addNew');
 
 
 
@@ -110,6 +114,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('preferences/all', 'PreferencesController@all');
     Route::get('preferences/service-fee', 'PreferencesController@serviceFee');
     Route::post('preferences/edit', 'PreferencesController@edit');
+
 
 });
 

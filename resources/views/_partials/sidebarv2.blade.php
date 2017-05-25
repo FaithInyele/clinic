@@ -29,23 +29,23 @@
             </a>
         </li>
         @if(Auth::user()->role == 'Admin')
-        <li @if(isset($rightbar)) @if($rightbar=='user')class="active" @endif @endif>
-            <a href="javascript:;">
-                <i class="fa fa-user "></i>
-                <span class="link-title">Users</span>
-                <span class="fa arrow"></span>
-            </a>
-            <ul class="collapse">
-                <li>
-                    <a href="{{url('users/view')}}">
-                        <i class="fa fa-list"></i>&nbsp; List All </a>
-                </li>
-                <li class="active">
-                    <a href="{{url('users/add')}}">
-                        <i class="fa fa-plus-square"></i>&nbsp; Add New User </a>
-                </li>
-            </ul>
-        </li>
+            <li @if(isset($rightbar)) @if($rightbar=='user')class="active" @endif @endif>
+                <a href="javascript:;">
+                    <i class="fa fa-user "></i>
+                    <span class="link-title">Users</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="collapse">
+                    <li>
+                        <a href="{{url('users/view')}}">
+                            <i class="fa fa-list"></i>&nbsp; List All </a>
+                    </li>
+                    <li class="active">
+                        <a href="{{url('users/add')}}">
+                            <i class="fa fa-plus-square"></i>&nbsp; Add New User </a>
+                    </li>
+                </ul>
+            </li>
         @endif
         <li @if(isset($rightbar)) @if($rightbar=='client')class="active" @endif @endif>
             <a href="javascript:;">
@@ -59,10 +59,10 @@
                         <i class="fa fa-list"></i>&nbsp; List All </a>
                 </li>
                 @if(Auth::user()->role == 'Receptionist')
-                <li>
-                    <a href="{{url('clients/add')}}">
-                        <i class="fa fa-plus-square"></i>&nbsp; Add New Client </a>
-                </li>
+                    <li>
+                        <a href="{{url('clients/add')}}">
+                            <i class="fa fa-plus-square"></i>&nbsp; Add New Client </a>
+                    </li>
                 @endif
             </ul>
         </li>
@@ -85,6 +85,10 @@
                     <a href="{{url('tickets/add')}}">
                         <i class="fa fa-plus-square"></i>&nbsp; Create New Ticket </a>
                 </li>
+                <li>
+                    <a href="{{url('tickets/payments')}}">
+                        <i class="fa fa-plus-square"></i>&nbsp; Payments </a>
+                </li>
             </ul>
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='resources')class="active" @endif @endif>
@@ -101,6 +105,10 @@
                 <li>
                     <a href="{{url('resources/lab')}}">
                         <i class="fa fa-list"></i>&nbsp; Lab Resources</a>
+                </li>
+                <li>
+                    <a href="{{url('resources/nurse-station')}}">
+                        <i class="fa fa-list"></i>&nbsp; Nurse Station</a>
                 </li>
             </ul>
         </li>

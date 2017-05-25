@@ -37,6 +37,8 @@ Vue.component('chemistresource', require('./components/chemistResource.vue'));
 
 Vue.component('preferences', require('./components/preferences.vue'));
 
+Vue.component('nurseresource', require('./components/nurseStation.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

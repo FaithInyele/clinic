@@ -52,13 +52,15 @@ class ClientsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'reg_number' => 'unique:clients',
-        ]);
+        if (($request->reg_number)){
+            $this->validate($request, [
+                'reg_number' => 'unique:clients',
+            ]);
+        }
         //save user to db
         $client = new Clients($request->all());
         $client->save();
-
+        //dd($request->all());
         //return success message to page
         return redirect()->action('ClientsController@create')
             ->with('status', $request->first_name.' Successfully Registered to the System.')
