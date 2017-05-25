@@ -51529,45 +51529,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -51619,6 +51580,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.modal = false;
             inheritance.preference_name = '';
             inheritance.preference_description = '';
+        },
+        activate: function activate(preference) {
+            var inheritance = this;
+            var status = preference.status == 1 ? 0 : 1;
+            console.log(base_url + '/resources/nurse-station/update?id=' + preference.id + '&status=' + status);
+            axios.get(base_url + '/resources/nurse-station/update?id=' + preference.id + '&status=' + status).then(function (response) {
+                inheritance.allPreferences();
+            });
         },
         savePreference: function savePreference(preference) {
             var inheritance = this;
@@ -51694,33 +51663,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "row"
-    }, [_c('label', [_vm._v(" Resource Name:")]), _vm._v("\n                    " + _vm._s(preference.resource_name) + "\n                    "), _c('i', {
+    }, [_c('label', [_vm._v(" Resource Name:")]), _vm._v("\n                        " + _vm._s(preference.resource_name) + "\n                        "), _c('i', {
       staticClass: "pull-right"
-    }, [_vm._v("\n                        last edited on:" + _vm._s(preference.updated_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                            last edited on:" + _vm._s(preference.updated_at) + "\n                        ")])]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._v("\n                    " + _vm._s(preference.resource_description) + "\n                ")]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                        " + _vm._s(preference.resource_description) + "\n                    ")]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_c('a', {
-      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+    }, [(preference.status == 1) ? _c('a', {
+      staticClass: "pull-right btn btn-sm btn-warning  btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      },
       on: {
         "click": function($event) {
-          _vm.openFeeModal(preference)
+          _vm.activate(preference)
         }
       }
-    }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    }, [_vm._v("Deactivate")]) : _vm._e(), _vm._v(" "), (preference.status != 1) ? _c('a', {
       staticClass: "pull-right btn btn-sm btn-success btn-custom",
       staticStyle: {
         "margin-right": "10px"
+      },
+      on: {
+        "click": function($event) {
+          _vm.activate(preference)
+        }
       }
-    }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
+    }, [_vm._v("Activate")]) : _vm._e()])]), _vm._v(" "), _c('br')])
   })], 2), _vm._v(" "), (_vm.modal) ? _c('transition', {
     attrs: {
       "name": "modal"
@@ -51789,107 +51766,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.savePreference
     }
-  }, [_vm._v("\n                                " + _vm._s(_vm.saveButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("\n                                    " + _vm._s(_vm.saveButton) + "\n                                ")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-warning",
     on: {
       "click": _vm.closeAddPreference
     }
-  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e(), _vm._v(" "), (_vm.serviceFee) ? _c('transition', {
-    attrs: {
-      "name": "modal"
-    }
-  }, [_c('div', {
-    staticClass: "modal-mask"
-  }, [_c('div', {
-    staticClass: "modal-wrapper"
-  }, [_c('div', {
-    staticClass: "modal-container",
-    staticStyle: {
-      "width": "50% !important"
-    }
-  }, [_c('div', {
-    staticClass: "modal-header"
-  }, [_vm._t("header", [_c('label', [_vm._v("Edit Preference")])])], 2), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_vm._t("body", [_c('div', {
-    staticClass: "form-group"
-  }, [_c('h6', [_vm._v("Preference Name:")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.editPreference.name),
-      expression: "editPreference.name"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    },
-    domProps: {
-      "value": (_vm.editPreference.name)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.editPreference.name = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('h6', [_vm._v("Preference Description:")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.editPreference.description),
-      expression: "editPreference.description"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    },
-    domProps: {
-      "value": (_vm.editPreference.description)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.editPreference.description = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('h6', [_vm._v("Service Fee:")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.editPreference.amount),
-      expression: "editPreference.amount"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    },
-    domProps: {
-      "value": (_vm.editPreference.amount)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.editPreference.amount = $event.target.value
-      }
-    }
-  })])])], 2), _vm._v(" "), _c('div', {
-    staticClass: "modal-footer"
-  }, [_vm._t("footer", [_c('button', {
-    staticClass: "btn btn-success",
-    on: {
-      "click": _vm.saveEdit
-    }
-  }, [_vm._v("\n                                " + _vm._s(_vm.editButton) + "\n                            ")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-warning",
-    on: {
-      "click": _vm.closeEdit
-    }
-  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e()], 1)
+  }, [_vm._v("\n                                    Cancel\n                                ")])])], 2)])])])]) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

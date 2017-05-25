@@ -27,4 +27,10 @@ class NurseStationController extends Controller
 
         return Response::json($resource);
     }
+    public function update(Request $request){
+        $resource = GeneralConditionResource::findorFail($request->id);
+        $resource->update(['status'=>$request->status]);
+
+        return Response::json(array('status'=>'success'));
+    }
 }

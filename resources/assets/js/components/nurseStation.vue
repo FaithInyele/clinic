@@ -18,8 +18,11 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
+<!--
                         <a class="pull-right btn btn-sm btn-success btn-custom" @click="openFeeModal(preference)">Edit</a>
-                        <a class="pull-right btn btn-sm btn-success btn-custom" style="margin-right: 10px">Open</a>
+-->
+                        <a class="pull-right btn btn-sm btn-warning  btn-custom" @click="activate(preference)" v-if="preference.status == 1" style="margin-right: 10px">Deactivate</a>
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="activate(preference)" v-if="preference.status != 1" style="margin-right: 10px">Activate</a>
                     </div>
                 </div>
                 <br>
@@ -56,48 +59,6 @@
                                     {{saveButton}}
                                 </button>
                                 <button class="btn btn-warning" @click="closeAddPreference">
-                                    Cancel
-                                </button>
-                            </slot>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>
-        <transition name="modal" v-if="serviceFee">
-            <div class="modal-mask">
-                <div class="modal-wrapper">
-                    <div class="modal-container" style="width: 50% !important">
-
-                        <div class="modal-header">
-                            <slot name="header">
-                                <label>Edit Preference</label>
-                            </slot>
-                        </div>
-
-                        <div class="modal-body">
-                            <slot name="body">
-                                <div class="form-group">
-                                    <h6>Preference Name:</h6>
-                                    <input type="text" class="form-control" v-model="editPreference.name">
-                                </div>
-                                <div class="form-group">
-                                    <h6>Preference Description:</h6>
-                                    <input type="text" class="form-control" v-model="editPreference.description">
-                                </div>
-                                <div class="form-group">
-                                    <h6>Service Fee:</h6>
-                                    <input type="text" class="form-control" v-model="editPreference.amount">
-                                </div>
-                            </slot>
-                        </div>
-
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <button class="btn btn-success" @click="saveEdit">
-                                    {{editButton}}
-                                </button>
-                                <button class="btn btn-warning" @click="closeEdit">
                                     Cancel
                                 </button>
                             </slot>
@@ -163,6 +124,15 @@
                 inheritance.modal = false;
                 inheritance.preference_name = '';
                 inheritance.preference_description = '';
+            },
+            activate: function (preference) {
+                var inheritance = this;
+                var status = preference.status == 1 ? 0 : 1;
+                console.log(base_url+'/resources/nurse-station/update?id='+preference.id+'&status='+status);
+                axios.get(base_url+'/resources/nurse-station/update?id='+preference.id+'&status='+status)
+                    .then(function (response) {
+                        inheritance.allPreferences();
+                    })
             },
             savePreference: function (preference) {
                 var inheritance = this;

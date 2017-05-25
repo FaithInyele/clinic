@@ -100,6 +100,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/nurse-station', 'NurseStationController@index');
     Route::get('resources/nurse-station/all', 'NurseStationController@all');
     Route::post('resources/nurse-station/new', 'NurseStationController@addNew');
+    Route::get('resources/nurse-station/update', 'NurseStationController@update');
 
 
 
