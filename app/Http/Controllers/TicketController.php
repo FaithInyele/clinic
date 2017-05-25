@@ -153,6 +153,12 @@ class TicketController extends Controller
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
+        $ticket['pre_examination'] = GeneralCondition::where('ticket_id', $ticket_id)->get();
+        if ($ticket['pre_examination']){
+            foreach ($ticket['pre_examination'] as $examination){
+                $examination['details'] = GeneralConditionResource::findorFail($examination->nurse_station_resource_id);
+            }
+        }
         //get lab technician assigned lab test
         if ($ticket['lab_datas'] != null || !empty($ticket['lab_datas'])){
             $ticket['lab_technician'] = User::findorFail($ticket['lab_datas']->assigned_to);
@@ -268,9 +274,11 @@ class TicketController extends Controller
             //save lab tests
             $test = explode(',', $request->tests);
             foreach ($test as $item){
+                $test_details = LabResource::findorFail($item);
                 $data = new Test(array(
                     'lab_id'=>$startLab->id,
-                    'lab_resource_id'=>$item
+                    'lab_resource_id'=>$item,
+                    'amount'=>$test_details->unit_price
                 ));
                 $data->save();
             }
@@ -283,9 +291,11 @@ class TicketController extends Controller
             if (!empty($request->tests)) {
                 $test = explode(',', $request->tests);
                 foreach ($test as $item) {
+                    $test_details = LabResource::findorFail($item);
                     $data = new Test(array(
                         'lab_id' => $request->labdatas_id,
-                        'lab_resource_id' => $item
+                        'lab_resource_id' => $item,
+                        'amount'=>$test_details->unit_price
                     ));
                     $data->save();
                 }
@@ -301,7 +311,7 @@ class TicketController extends Controller
         //update lab datas table
         DB::table('lab_datas')
             ->where('id', $request->labdatas_id)
-            ->update(['status'=>0]);
+            ->update(['status'=>-1]);
 
         //update progress
         $progress = new Progress(array(

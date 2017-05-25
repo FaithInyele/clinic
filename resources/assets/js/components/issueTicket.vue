@@ -122,6 +122,7 @@
                                         <div class="row" style="max-height: 400px;overflow-y: scroll">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
+                                                <li><a data-toggle="tab" href="#pre-examination">Pre-Examination</a></li>
                                                 <li><a data-toggle="tab" href="#special"> Special medical condition(s)</a></li>
                                                 <li><a data-toggle="tab" href="#history"> History</a></li>
                                             </ul>
@@ -164,7 +165,7 @@
                                                                     </div>
 
                                                                     <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
-                                                                            <input-tag placeholder="Add Symptoms"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>
+                                                                            <input-tag placeholder="Add Symptoms" class="input-sm"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>
                                                                     </div>
                                                                         <hr style="margin: 0px">
                                                                         <div v-show="recommendAction">
@@ -180,17 +181,17 @@
                                                                                     {{currentTicket.lab_technician.first_name}}
                                                                                 </h5>
 
-                                                                                <select class="form-control" v-if="!currentTicket.lab_technician" v-model="selectedLabTech">
+                                                                                <select class="form-control input-sm" v-if="!currentTicket.lab_technician" v-model="selectedLabTech">
                                                                                     <option selected disabled value="" >-Select a Lab Technician to Assign-</option>
                                                                                     <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
                                                                                 </select>
                                                                                 <div>
-                                                                                    Input Required Lab Tests:<br>
                                                                                     <b style="font-size: 10px">
                                                                                         <div class="form-group completed" v-if="currentTicket.progress">
                                                                                             <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                         </div>                                                                                    </b>
                                                                                 </div>
+                                                                                Search Required Lab Tests:<br>
                                                                                 <input type="text" class="form-control input-sm" v-model="searchTest">
                                                                                 <div class="alert alert-warning" v-show="noResults">
                                                                                     No results found.
@@ -214,7 +215,7 @@
                                                                                         <hr style="margin: 5px !important;">
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
+                                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2 || test_tags == ''}">
                                                                                     <button class="btn btn-sm btn-primary pull-right" @click="sendLab">{{sendtoLab}}</button>
                                                                                 </div>
                                                                             </div>
@@ -322,11 +323,34 @@
                                                     </div><!--end .accordion-->
                                                 </div>
 
+                                                <div id="pre-examination" class="tab-pane fade">
+                                                    <h5>Pre-Examination Results</h5>
+                                                    <div class="row" v-if="currentTicket.pre_examination">
+                                                        <div v-for="examination in currentTicket.pre_examination">
+                                                            <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6;margin-top: 10px">
+                                                                <div class="row">
+                                                                    <label> Examination:</label>
+                                                                    {{examination.details.resource_name}}
+                                                                    <i class="pull-right">
+                                                                        Performed on:{{examination.updated_at}}
+                                                                    </i>
+                                                                </div>
+                                                                <hr style="margin: 5px">
+                                                                <div class="row">
+                                                                    Result: {{examination.result}}
+                                                                </div>
+                                                                <hr style="margin: 5px">
+                                                            </div>
+                                                            <label></label>
+                                                            <i class="pull-right"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div id="history" class="tab-pane fade">
                                                     <h1>History</h1>
                                                 </div>
                                                 <div id="special" class="tab-pane fade">
-                                                    <h1>History</h1>
+                                                    <h1>Special Medical Conditions</h1>
                                                 </div>
                                             </div>
                                         </div>
@@ -338,7 +362,7 @@
                         <div class="modal-footer">
                             <slot name="footer">
 
-                                <button class="modal-default-button" @click="closeTicket">
+                                <button class="btn btn-sm btn-warning" @click="closeTicket">
                                     Close
                                 </button>
                             </slot>

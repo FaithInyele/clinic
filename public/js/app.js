@@ -13566,6 +13566,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -14078,6 +14102,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeAddModal: function closeAddModal() {
             var inheritance = this;
+            inheritance.newResource = [];
             inheritance.resourceAddModal = false;
         },
         allResources: function allResources() {
@@ -40438,6 +40463,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Ticket")])]), _vm._v(" "), _c('li', [_c('a', {
     attrs: {
       "data-toggle": "tab",
+      "href": "#pre-examination"
+    }
+  }, [_vm._v("Pre-Examination")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
       "href": "#special"
     }
   }, [_vm._v(" Special medical condition(s)")])]), _vm._v(" "), _c('li', [_c('a', {
@@ -40547,6 +40577,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       completed: _vm.currentTicket.progress.level >= 2
     }
   }, [_c('input-tag', {
+    staticClass: "input-sm",
     attrs: {
       "placeholder": "Add Symptoms",
       "on-change": _vm.saveSymptoms,
@@ -40595,7 +40626,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       value: (_vm.selectedLabTech),
       expression: "selectedLabTech"
     }],
-    staticClass: "form-control",
+    staticClass: "form-control input-sm",
     on: {
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -40619,7 +40650,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": labTechnician.id
       }
     }, [_vm._v(_vm._s(labTechnician.first_name))])
-  })], 2) : _vm._e(), _vm._v(" "), _c('div', [_vm._v("\n                                                                                Input Required Lab Tests:"), _c('br'), _vm._v(" "), _c('b', {
+  })], 2) : _vm._e(), _vm._v(" "), _c('div', [_c('b', {
     staticStyle: {
       "font-size": "10px"
     }
@@ -40632,7 +40663,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "on-change": _vm.saveLab,
       "tags": _vm.test_tags
     }
-  })], 1) : _vm._e()])]), _vm._v(" "), _c('input', {
+  })], 1) : _vm._e()])]), _vm._v("\n                                                                            Search Required Lab Tests:"), _c('br'), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -40710,7 +40741,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
     staticClass: "form-group",
     class: {
-      completed: _vm.currentTicket.progress.level >= 2
+      completed: _vm.currentTicket.progress.level >= 2 || _vm.test_tags == ''
     }
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary pull-right",
@@ -40976,6 +41007,38 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2)])])]), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
+      "id": "pre-examination"
+    }
+  }, [_c('h5', [_vm._v("Pre-Examination Results")]), _vm._v(" "), (_vm.currentTicket.pre_examination) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.pre_examination), function(examination) {
+    return _c('div', [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #53CDF6",
+        "margin-top": "10px"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Examination:")]), _vm._v("\n                                                                " + _vm._s(examination.details.resource_name) + "\n                                                                "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                                                                    Performed on:" + _vm._s(examination.updated_at) + "\n                                                                ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                                                                Result: " + _vm._s(examination.result) + "\n                                                            ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    })]), _vm._v(" "), _c('label'), _vm._v(" "), _c('i', {
+      staticClass: "pull-right"
+    })])
+  })) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
       "id": "history"
     }
   }, [_c('h1', [_vm._v("History")])]), _vm._v(" "), _c('div', {
@@ -40983,10 +41046,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "special"
     }
-  }, [_c('h1', [_vm._v("History")])])])])])])])], 2), _vm._v(" "), _c('div', {
+  }, [_c('h1', [_vm._v("Special Medical Conditions")])])])])])])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
-    staticClass: "modal-default-button",
+    staticClass: "btn btn-sm btn-warning",
     on: {
       "click": _vm.closeTicket
     }

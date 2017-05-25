@@ -197,6 +197,7 @@
             },
             closeAddModal: function () {
                 var inheritance = this;
+                inheritance.newResource = [];
                 inheritance.resourceAddModal = false;
             },
             allResources: function () {
