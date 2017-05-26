@@ -13592,6 +13592,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -40797,7 +40835,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.prescribeMedication
     }
-  }, [_vm._v("Prescribe Medication")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Prescribe Medication")]), _vm._v("  |\n                                                                            "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("Admit Client")])]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -40952,7 +40997,110 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "font-size": "12px"
     }
-  }, [_vm._v("\n                                                                            Under Heavy Construction\n                                                                        ")])])]), _vm._v(" "), _c('div', {
+  }, [_c('label', [_vm._v("\n                                                                                Prescription\n                                                                                "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                                    Input a single prescription, then press enter before inputting another\n                                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.classLoad
+    }
+  }, [_c('input-tag', {
+    attrs: {
+      "on-change": _vm.saveP,
+      "tags": _vm.prescription_tags
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchPrescription),
+      expression: "searchPrescription"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchPrescription)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchPrescription = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noPrescriptionResults),
+      expression: "noPrescriptionResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                                No results found.\n                                                                            ")]), _vm._v(" "), _vm._l((_vm.prescriptionResults), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.resource_name) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.unit_price) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.addPrescription(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.removePrescription(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group pull-right"
+  }, [_c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+    },
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",

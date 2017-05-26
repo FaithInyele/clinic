@@ -171,7 +171,8 @@
                                                                         <div v-show="recommendAction">
                                                                             <div class="">
                                                                                 <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a> |
-                                                                                <a style="font-size: 10px " @click="prescribeMedication">Prescribe Medication</a>
+                                                                                <a style="font-size: 10px " @click="prescribeMedication">Prescribe Medication</a>  |
+                                                                                <a style="font-size: 10px " @click="">Admit Client</a>
                                                                             </div>
                                                                             <div class="row" v-show="chooseLab" style="font-size: 12px">
                                                                                 <div>
@@ -220,7 +221,44 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row" v-show="chooseMed" style="font-size: 12px">
-                                                                                Under Heavy Construction
+                                                                                <label>
+                                                                                    Prescription
+                                                                                    <b style="font-size: 10px">
+                                                                                        Input a single prescription, then press enter before inputting another
+                                                                                    </b>
+                                                                                </label>
+
+                                                                                <div v-if="currentTicket.progress" :class="{completed: classLoad}">
+                                                                                    <input-tag :on-change="saveP" :tags="prescription_tags"></input-tag>
+                                                                                </div>
+
+                                                                                <input type="text" class="form-control input-sm" v-model="searchPrescription">
+
+                                                                                <div class="alert alert-warning" v-show="noPrescriptionResults">
+                                                                                    No results found.
+                                                                                </div>
+                                                                                <div class="row" v-for="result in prescriptionResults">
+                                                                                    <div class="row">
+                                                                                        <div class="col-sm-4">
+                                                                                            <label>Name</label><br>
+                                                                                            {{result.resource_name}}
+                                                                                        </div>
+                                                                                        <div class="col-sm-4">
+                                                                                            <label>Unit Price</label><br>
+                                                                                            {{result.unit_price}}
+                                                                                        </div>
+                                                                                        <div class="col-sm-2" style="padding-top: 10px">
+                                                                                            <button v-if="result" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addPrescription(result)">Add</button>
+                                                                                            <button v-if="result" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removePrescription(result)">Remove</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="row">
+                                                                                        <hr style="margin: 5px !important;">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group pull-right" v-if="currentTicket.progress">
+                                                                                    <button :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
 
