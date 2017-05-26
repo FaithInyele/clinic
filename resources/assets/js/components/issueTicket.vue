@@ -207,8 +207,8 @@
                                                                                             {{result.unit_price}}
                                                                                         </div>
                                                                                         <div class="col-sm-2" style="padding-top: 10px">
-                                                                                            <button v-if="result" v-show="result.status==false" class="btn btn-sm btn-success" @click="addTest(result)">Add</button>
-                                                                                            <button v-if="result" v-show="result.status==true" class="btn btn-sm btn-danger" @click="removeTest(result)">Remove</button>
+                                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addTest(result)">Add</button>
+                                                                                            <button v-if="result" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removeTest(result)">Remove</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">

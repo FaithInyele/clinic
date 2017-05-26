@@ -60,6 +60,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/query/startlab', 'TicketController@startLab');
     Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
+    //payments
+    Route::get('tickets/payments', 'PaymentController@index');
+    Route::get('tickets/payments/pending', 'PaymentController@pending');
+    Route::post('tickets/payments/pay-lab', 'PaymentController@payLab');
 
 
 

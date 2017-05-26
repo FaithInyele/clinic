@@ -9,4 +9,8 @@ class LabData extends Model
 
     protected $fillable = array('ticket_id', 'assigned_to', 'status');
 
+    public function ticket(){
+        return $this->belongsTo('App\Ticket', 'ticket_id');
+    }
+
 }

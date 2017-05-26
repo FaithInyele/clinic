@@ -31,7 +31,7 @@ class ProgressController extends Controller
                 'clients.first_name as c_fname',
                 'clients.other_names as c_othernames')
             //->where('lab_datas.assigned_to', '=', 7)
-            //->where('lab_datas.status', '=', 0)
+            ->where('lab_datas.status', '=', 0)
             ->get();
 
         return Response::json($atLab);
