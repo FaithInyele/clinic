@@ -267,7 +267,7 @@
                                                                     Done
                                                                 </b>
                                                             </a>
-                                                            <div id="accordion-4" class="accordion-section-content">
+                                                            <div id="accordion-4" :class="{'accordion-section-content':classLoad, completed:currentTicket.progress.level != 3}" v-if="currentTicket.progress" >
                                                                 <label>
                                                                     Prescription
                                                                     <b style="font-size: 10px">
@@ -606,11 +606,12 @@
                 var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
                 console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
                 axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
-                    .then(function () {
+                    .then(function (response) {
                         inheritance.status = 'Prescription(s) Successfully Saved';
                         inheritance.statusSuccess = true;
                         inheritance.statusError = false;
                         inheritance.savePrescription = "Save";
+                        inheritance.currentTicket.prescription = response.data;
                         //inheritance.openTicket(inheritance.currentTicket.id);
                     }.bind(this))
                     .catch(function (error) {

@@ -329,7 +329,7 @@ class TicketController extends Controller
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>2,
-                'status'=>0
+                'status'=>-1
             ));
             $prescription->save();
             //save requested medications
@@ -342,6 +342,7 @@ class TicketController extends Controller
                 ));
                 $data->save();
             }
+            return Response::json($prescription);
         }else{
             $toDelete = Medicine::where('prescription_id', $request->prescription_id)->delete();
             //save medication
@@ -357,7 +358,8 @@ class TicketController extends Controller
                 }
             }
         }
-        return Response::json(array('success'=>'success'));
+        $prescription = Prescription::findorFail($request->prescription_id);
+        return Response::json($prescription);
 
     }
 }

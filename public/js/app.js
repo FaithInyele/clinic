@@ -13761,11 +13761,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.savePrescription = "Saving...";
             var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
             console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
-            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function () {
+            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function (response) {
                 inheritance.status = 'Prescription(s) Successfully Saved';
                 inheritance.statusSuccess = true;
                 inheritance.statusError = false;
                 inheritance.savePrescription = "Save";
+                inheritance.currentTicket.prescription = response.data;
                 //inheritance.openTicket(inheritance.currentTicket.id);
             }.bind(this)).catch(function (error) {
                 inheritance.status = 'There was an Error while Processing your Request';
@@ -41411,8 +41412,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "padding-left": "3px",
       "padding-right": "3px"
     }
-  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "accordion-section-content",
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      'accordion-section-content': _vm.classLoad, completed: _vm.currentTicket.progress.level != 3
+    },
     attrs: {
       "id": "accordion-4"
     }
@@ -41515,7 +41518,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2)])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
       "id": "pre-examination"
