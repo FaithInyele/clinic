@@ -24,7 +24,7 @@ class LabController extends Controller
     public function openTicket($ticket_id){
         //dd('elm');
         $ticket = Ticket::findorFail($ticket_id);
-        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->get();
+        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_data'] = LabData::where('ticket_id', $ticket_id)->first();
         $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();

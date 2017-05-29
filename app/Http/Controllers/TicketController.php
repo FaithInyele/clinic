@@ -131,7 +131,7 @@ class TicketController extends Controller
         //add all relevant data to each ticket
         foreach ($ticket as $item){
             $item['client'] = Clients::findorFail($item->client_id);
-            $item['progress'] = Progress::where('ticket_id', $item->id)->first();
+            $item['progress'] = Progress::where('ticket_id', $item->id)->latest()->first();
             array_push($active, $item);
         }
 

@@ -1,62 +1,6 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>New Clients (Issued Ticket Stage)</b></div>
-
-                <div class="panel-body myTicket">
-                    <table class="table table-striped table-bordered dt-responsive" id="dataTable"
-                           cellspacing="0" width="100%" style="font-size: 10px">
-                        <thead>
-                        <tr>
-                            <th>Client</th>
-                            <th>Progress</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a @click="openTicket">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Lab Clients (Issued Lab Ticket)</b></div>
-
-                <div class="panel-body myTicket">
-                    You are logged in!
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Chemist Clients(Issued Chemist Ticket)</b></div>
-
-                <div class="panel-body myTicket">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>My List</strong> <br>
@@ -64,26 +8,32 @@
             </div>
 
             <div class="row">
-                <table class="table table-striped table-bordered dt-responsive" id=""
-                       cellspacing="0" width="100%" style="font-size: 10px">
-                    <thead>
-                    <tr>
-                        <th>Client</th>
-                        <th>Progress</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody v-for="allActive in allActives">
-                    <tr>
-                        <td>{{ allActive.client.first_name}}</td>
-                        <td v-if="allActive.progress">{{ allActive.progress.description}}</td>
-                        <td v-if="!allActive.progress">--</td>
-                        <td><a @click="openTicket(allActive.id)">Open</a> </td>
-                    </tr>
-
-                    </tbody>
-                </table>
+                <div class="row" v-for="allActive in allActives">
+                    <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                        <div class="row">
+                            <label> Client Name:</label>
+                            {{ allActive.client.first_name}}, {{allActive.client.other_names}}
+                            <i class="pull-right">
+                                last updated on:
+                            </i>
+                        </div>
+                        <hr style="margin: 5px">
+                        <div class="row">
+                            Details:{{ allActive.progress.description}}
+                        </div>
+                        <hr style="margin: 5px">
+                        <div class="row">
+                            <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
+                        </div>
+                    </div>
+                    <br>
+                </div>
             </div>
+
+        </div>
+        <div class="col-lg-4">
+            <h5>My Statistics</h5>
+
         </div>
 
         <transition name="modal">
