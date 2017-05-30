@@ -12782,42 +12782,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -12837,7 +12801,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             statusError: false,
             statusSuccess: false,
             classLoad: true,
-            statusWarn: false
+            statusWarn: false,
+            amountPaid: '',
+            payment_method: ''
         };
     },
     methods: {
@@ -12908,14 +12874,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.reverseStatus();
             inheritance.status = "Closing up Prescription...";
-            console.log(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id);
-            axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id).then(function (response) {
-                inheritance.status = 'Prescription Closed Successfully';
-                inheritance.statusSuccess = true;
-            }).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
+            //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
+            if (inheritance.amountPaid != inheritance.currentClient.total) {
+                inheritance.status = 'Amount to be Paid should be exact as Total owed';
                 inheritance.statusError = true;
-            });
+            } else {
+                axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
+                    inheritance.status = 'Prescription Closed Successfully';
+                    inheritance.statusSuccess = true;
+                }).catch(function (error) {
+                    inheritance.status = 'There was an Error while Processing your Request';
+                    inheritance.statusError = true;
+                });
+            }
         }
 
     }
@@ -42226,47 +42197,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_c('div', {
-    staticClass: "panel panel-default"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "panel-body myTicket"
-  }, [_c('table', {
-    staticClass: "table table-striped table-bordered dt-responsive",
-    staticStyle: {
-      "font-size": "10px"
-    },
-    attrs: {
-      "id": "dataTable",
-      "cellspacing": "0",
-      "width": "100%"
-    }
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
-    on: {
-      "click": function($event) {}
-    }
-  }, [_vm._v("Open")])])]), _vm._v(" "), _vm._m(2), _vm._v(" "), _vm._m(3), _vm._v(" "), _vm._m(4)])])])]), _vm._v(" "), _vm._m(5), _vm._v(" "), _vm._m(6)]), _vm._v(" "), _c('div', {
-    staticClass: "col-lg-4"
-  }, [_vm._m(7), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('table', {
-    staticClass: "table table-striped table-bordered dt-responsive",
-    staticStyle: {
-      "font-size": "10px"
-    },
-    attrs: {
-      "id": "",
-      "cellspacing": "0",
-      "width": "100%"
-    }
-  }, [_vm._m(8), _vm._v(" "), _vm._l((_vm.allClients), function(client) {
-    return _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(client.c_fname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.created_at))]), _vm._v(" "), _c('td', [_c('a', {
+  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.allClients), function(client) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #53CDF6"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                        " + _vm._s(client.c_fname) + ", " + _vm._s(client.c_othernames) + "\n                        "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                            Ticket created on:" + _vm._s(client.created_at) + "\n                        ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                        Details:\n                    ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('a', {
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      },
       on: {
         "click": function($event) {
           _vm.currentTicket(client.ticket_id)
         }
       }
-    }, [_vm._v("Open")])])])])
-  })], 2)])]), _vm._v(" "), _c('transition', {
+    }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
+  })], 2), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-4"
+  }), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
     }
@@ -42377,7 +42346,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "progress"
     }
-  }, _vm._l((_vm.currentClient.medicine), function(medicine) {
+  }, [_vm._l((_vm.currentClient.medicine), function(medicine) {
     return _c('div', [_c('hr'), _vm._v(" "), _c('div', {
       class: {
         row: _vm.ro, successful: medicine.status == 'issued' || medicine.status == 'external'
@@ -42390,28 +42359,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "col-md-5"
     }, [_vm._v(_vm._s(medicine.details.resource_name))]), _vm._v(" "), _c('div', {
       staticClass: "col-md-5"
-    }, [_c('input', {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: (medicine.alternatative),
-        expression: "medicine.alternatative"
-      }],
-      staticClass: "form-control sm",
-      attrs: {
-        "type": "text",
-        "placeholder": "Alternative, if any"
-      },
-      domProps: {
-        "value": (medicine.alternatative)
-      },
-      on: {
-        "input": function($event) {
-          if ($event.target.composing) { return; }
-          medicine.alternatative = $event.target.value
-        }
-      }
-    })]), _vm._v(" "), _c('div', {
+    }, [_c('b', [_vm._v("Unit Price:")]), _vm._v("   " + _vm._s(medicine.details.unit_price) + "\n")]), _vm._v(" "), _c('div', {
       staticClass: "col-md-2"
     }, [_c('div', {
       staticClass: "dropdown"
@@ -42423,7 +42371,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "data-toggle": "dropdown"
       }
-    }, [_vm._v("Confirm\n                                                                        "), _c('span', {
+    }, [_vm._v("Confirm\n                                                                            "), _c('span', {
       staticClass: "caret"
     })]), _vm._v(" "), _c('ul', {
       staticClass: "dropdown-menu"
@@ -42436,79 +42384,111 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Affirm " + _vm._s(medicine.medicine))])]), _vm._v(" "), _c('li', [_c('a', {
       on: {
         "click": function($event) {
-          _vm.confirm(medicine, 'alternative')
-        }
-      }
-    }, [_vm._v("Affirm Alternative")])]), _vm._v(" "), _c('li', [_c('a', {
-      on: {
-        "click": function($event) {
           _vm.confirm(medicine, 'external')
         }
       }
     }, [_vm._v("Affirm External Purchase")])])])])])])])])
-  })), _vm._v(" "), _c('div', {
-    staticClass: "tab-pane fade",
-    attrs: {
-      "id": "history"
+  }), _vm._v(" "), _c('hr', {
+    staticStyle: {
+      "margin": "10px",
+      "border": "2px solid #149ED2"
     }
-  }, [_c('h1', [_vm._v("History")])])])])])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "modal-footer"
-  }, [_vm._t("footer", [(_vm.currentClient.progress) ? _c('button', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('label', [_vm._v("Total To Pay:")]), _c('i', {
+    staticClass: "pull-right"
+  }, [_vm._v(_vm._s(_vm.currentClient.total))]), _vm._v(" "), _c('h6', [_vm._v("Client should make 100% payment before proceeding...")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.amountPaid),
+      expression: "amountPaid"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "number",
+      "placeholder": "Amount Paid"
+    },
+    domProps: {
+      "value": (_vm.amountPaid)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.amountPaid = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.payment_method),
+      expression: "payment_method"
+    }],
+    staticClass: "input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.payment_method = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "",
+      "selected": "",
+      "disabled": ""
+    }
+  }, [_vm._v("-Select Payment Method-")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cash"
+    }
+  }, [_vm._v("Cash")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Cheque"
+    }
+  }, [_vm._v("Cheque")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Mobile Money"
+    }
+  }, [_vm._v("Mobile Money")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "Other"
+    }
+  }, [_vm._v("Other")])])]), _vm._v(" "), (_vm.currentClient.progress) ? _c('button', {
     class: {
       btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentClient.progress.level > 4
     },
     on: {
       "click": _vm.closeMedication
     }
-  }, [_vm._v("Finish")]) : _vm._e(), _vm._v(" "), _c('button', {
+  }, [_vm._v("Pay and Close")]) : _vm._e()])], 2), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "history"
+    }
+  }, [_c('h1', [_vm._v("History")])])])])])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
     class: {
       'btn btn-danger': _vm.classLoad, 'pull-right': _vm.classLoad
     },
     on: {
       "click": _vm.closeTicket
     }
-  }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
+  }, [_vm._v("\n                                    Close\n                                ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "panel-heading"
-  }, [_c('b', [_vm._v("New Clients (Issued Ticket Stage)")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Client")]), _vm._v(" "), _c('th', [_vm._v("Progress")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
-    attrs: {
-      "href": ""
-    }
-  }, [_vm._v("Open")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
-    attrs: {
-      "href": ""
-    }
-  }, [_vm._v("Open")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('tr', [_c('td', [_vm._v("Makamu")]), _vm._v(" "), _c('td', [_vm._v("Issues Ticket")]), _vm._v(" "), _c('td', [_c('a', {
-    attrs: {
-      "href": ""
-    }
-  }, [_vm._v("Open")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_c('b', [_vm._v("Lab Clients (Issued Lab Ticket)")])]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body myTicket"
-  }, [_vm._v("\n                You are logged in!\n            ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "panel panel-default"
-  }, [_c('div', {
-    staticClass: "panel-heading"
-  }, [_c('b', [_vm._v("Chemist Clients(Issued Chemist Ticket)")])]), _vm._v(" "), _c('div', {
-    staticClass: "panel-body myTicket"
-  }, [_vm._v("\n                You are logged in!\n            ")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "alert alert-info"
   }, [_c('button', {
@@ -42517,9 +42497,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "data-dismiss": "alert"
     }
-  }, [_vm._v("×")]), _vm._v(" "), _c('strong', [_vm._v("My List")]), _vm._v(" "), _c('br'), _vm._v("\n            It is Highly recommended you follow the list as is."), _c('br')])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Client")]), _vm._v(" "), _c('th', [_vm._v("Progress")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
+  }, [_vm._v("×")]), _vm._v(" "), _c('strong', [_vm._v("My List")]), _vm._v(" "), _c('br'), _vm._v("\n                It is Highly recommended you follow the list as is."), _c('br')])
 }]}
 module.exports.render._withStripped = true
 if (false) {

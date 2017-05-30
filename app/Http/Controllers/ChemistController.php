@@ -14,6 +14,7 @@ use App\Medicine;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Payment;
 
 class ChemistController extends Controller
 {
@@ -32,6 +33,7 @@ class ChemistController extends Controller
         $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
         $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
+        $ticket['total'] = $total = Medicine::where('prescription_id', $ticket['prescription']->id)->where('status','issued')->sum('amount');
         foreach ($ticket['medicine'] as $medicine){
             $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
         }
@@ -44,6 +46,15 @@ class ChemistController extends Controller
         DB::table('prescriptions')
             ->where('id', $request->prescription_id)
             ->update(['status'=>2]);
+
+        //make payment
+        $payment = new Payment(array(
+            'ticket_id'=>$request->ticket_id,
+            'type'=>'at Chemist',
+            'amount'=>$request->amount,
+            'payment_method'=>$request->payment_method
+        ));
+        $payment->save();
 
         //update progress
         $progress = new Progress(array(
@@ -66,7 +77,7 @@ class ChemistController extends Controller
         //close prescription (doctor's part)
         DB::table('prescriptions')
             ->where('id', $prescription_id)
-            ->update(['status'=>1]);
+            ->update(['status'=>-1]);
 
         //dd('huh');
         //update progress
@@ -83,6 +94,9 @@ class ChemistController extends Controller
         DB::table('medicines')
             ->where('id', $request->id)
             ->update(['status'=>$request->status, 'alternatative'=>$request->alternatative]);
+        $total = Medicine::where('prescription_id', $request->prescription_id)->where('status','issued')->sum('amount');
+
+        return Response::json(array('total'=>$total));
     }
     public function search(Request $request){
         //dd('huh');

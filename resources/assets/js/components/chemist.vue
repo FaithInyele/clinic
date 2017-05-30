@@ -1,90 +1,34 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>New Clients (Issued Ticket Stage)</b></div>
-
-                <div class="panel-body myTicket">
-                    <table class="table table-striped table-bordered dt-responsive" id="dataTable"
-                           cellspacing="0" width="100%" style="font-size: 10px">
-                        <thead>
-                        <tr>
-                            <th>Client</th>
-                            <th>Progress</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a @click="">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-                        <tr>
-                            <td>Makamu</td>
-                            <td>Issues Ticket</td>
-                            <td><a href="">Open</a> </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Lab Clients (Issued Lab Ticket)</b></div>
-
-                <div class="panel-body myTicket">
-                    You are logged in!
-                </div>
-            </div>
-
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Chemist Clients(Issued Chemist Ticket)</b></div>
-
-                <div class="panel-body myTicket">
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>My List</strong> <br>
                 It is Highly recommended you follow the list as is.<br>
             </div>
-
-            <div class="row">
-                <table class="table table-striped table-bordered dt-responsive" id=""
-                       cellspacing="0" width="100%" style="font-size: 10px">
-                    <thead>
-                    <tr>
-                        <th>Client</th>
-                        <th>Progress</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody v-for="client in allClients">
-                    <tr>
-                        <td>{{ client.c_fname}}</td>
-                        <td>{{ client.created_at}}</td>
-                        <!-- <td v-if="allActive.progress">{{ allActive.progress.description}}</td>
-                         <td v-if="!allActive.progress">&#45;&#45;</td>-->
-                        <td><a @click="currentTicket(client.ticket_id)">Open</a> </td>
-                    </tr>
-
-                    </tbody>
-                </table>
+            <div class="row" v-for="client in allClients">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                    <div class="row">
+                        <label> Client Name:</label>
+                        {{ client.c_fname}}, {{ client.c_othernames}}
+                        <i class="pull-right">
+                            Ticket created on:{{ client.created_at}}
+                        </i>
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        Details:
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="currentTicket(client.ticket_id)" style="margin-right: 10px">Open</a>
+                    </div>
+                </div>
+                <br>
             </div>
+        </div>
+        <div class="col-lg-4">
+
         </div>
 
         <transition name="modal">
@@ -134,7 +78,10 @@
                                                             <div>
                                                                 <div class="col-md-5">{{medicine.details.resource_name}}</div>
                                                                 <div class="col-md-5">
+                                                                    <b>Unit Price:</b>   {{medicine.details.unit_price}}
+<!--
                                                                     <input type="text" class="form-control sm" placeholder="Alternative, if any" v-model="medicine.alternatative">
+-->
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="dropdown">
@@ -142,13 +89,31 @@
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
                                                                             <li><a @click="confirm(medicine, 'affirm')">Affirm {{medicine.medicine}}</a></li>
-                                                                            <li><a @click="confirm(medicine, 'alternative')">Affirm Alternative</a></li>
+                                                                            <!--<li><a @click="confirm(medicine, 'alternative')">Affirm Alternative</a></li>-->
                                                                             <li><a @click="confirm(medicine, 'external')">Affirm External Purchase</a></li>
                                                                         </ul>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <hr style="margin: 10px; border: 2px solid #149ED2">
+                                                    <div class="row">
+                                                        <label>Total To Pay:</label><i class="pull-right">{{currentClient.total}}</i>
+                                                        <h6>Client should make 100% payment before proceeding...</h6>
+                                                        <div class="form-group">
+                                                            <input type="number" class="form-control input-sm" placeholder="Amount Paid" v-model="amountPaid">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select class="input-sm" v-model="payment_method">
+                                                                <option value="" selected disabled>-Select Payment Method-</option>
+                                                                <option value="Cash">Cash</option>
+                                                                <option value="Cheque">Cheque</option>
+                                                                <option value="Mobile Money">Mobile Money</option>
+                                                                <option value="Other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                        <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4}" @click="closeMedication">Pay and Close</button>
                                                     </div>
                                                 </div>
 
@@ -164,7 +129,6 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4}" @click="closeMedication">Finish</button>
                                 <button :class="{'btn btn-danger':classLoad, 'pull-right':classLoad}" @click="closeTicket">
                                     Close
                                 </button>
@@ -196,7 +160,9 @@
                 statusError: false,
                 statusSuccess: false,
                 classLoad: true,
-                statusWarn: false
+                statusWarn: false,
+                amountPaid: '',
+                payment_method:''
             }
         },
         methods:{
@@ -273,16 +239,25 @@
                 var inheritance = this;
                 inheritance.reverseStatus();
                 inheritance.status = "Closing up Prescription...";
-                console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
-                axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id)
-                    .then(function (response) {
-                        inheritance.status = 'Prescription Closed Successfully';
-                        inheritance.statusSuccess = true;
-                    })
-                    .catch(function (error) {
-                        inheritance.status = 'There was an Error while Processing your Request';
-                        inheritance.statusError = true;
-                    });
+                //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
+                if (inheritance.amountPaid != inheritance.currentClient.total){
+                    inheritance.status = 'Amount to be Paid should be exact as Total owed';
+                    inheritance.statusError = true;
+                }else {
+                    axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+
+                        '&prescription_id='+inheritance.currentClient.prescription.id+
+                        '&amount='+inheritance.currentClient.total+
+                        '&payment_method='+inheritance.payment_method)
+                        .then(function (response) {
+                            inheritance.status = 'Prescription Closed Successfully';
+                            inheritance.statusSuccess = true;
+                        })
+                        .catch(function (error) {
+                            inheritance.status = 'There was an Error while Processing your Request';
+                            inheritance.statusError = true;
+                        });
+                }
+
             }
 
         }

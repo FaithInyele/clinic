@@ -335,10 +335,12 @@ class TicketController extends Controller
             //save requested medications
             $medication = explode(',', $request->med);
             foreach ($medication as $item){
+                $medicine_resource = ChemistResource::findorFail($item);
                 $data = new Medicine(array(
                     'prescription_id'=>$prescription->id,
                     'chemist_resource_id'=>$item,
-                    'status'=>'pending'
+                    'status'=>'pending',
+                    'amount'=>$medicine_resource->unit_price
                 ));
                 $data->save();
             }

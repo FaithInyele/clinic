@@ -53,6 +53,12 @@ class LabController extends Controller
         return Response::json($data);
     }
 
+    /**
+     * mwthod called by lab tech to finish tests and submit back to doctor
+     * @param $lab_id
+     * @param Request $request
+     * @return mixed
+     */
     public function finishTest($lab_id, Request $request){
         //dd($lab_id);
         DB::table('lab_datas')
@@ -69,6 +75,12 @@ class LabController extends Controller
 
         return Response::json(array('success'=>'success'));
     }
+
+    /**
+     * method to searh for lab tests //vue api
+     * @param Request $request
+     * @return mixed
+     */
     public function search(Request $request){
         $results = LabResource::where('resource_name', 'LIKE', '%'.$request->q.'%')
             ->orwhere('description', 'LIKE', '%'.$request->q.'%')
