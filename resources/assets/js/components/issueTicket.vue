@@ -343,7 +343,17 @@
                                                     <h1>Special Medical Conditions</h1>
                                                 </div>
                                                 <div id="consult" class="tab-pane fade">
-                                                    <h1>Consultation</h1>
+                                                    <label>Consult with another Doctor, concerning the Client</label>
+                                                    <h6>Select Doctor</h6>
+                                                    <select class="input-sm">
+                                                        <option value="">-Select Doctor-</option>
+                                                        <option value="">Doc 1</option>
+                                                        <option value="">Doc 2</option>
+                                                    </select>
+                                                    <button class="btn btn-sm">Proceed</button>
+                                                    <div class="row" style="margin: 10px">
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

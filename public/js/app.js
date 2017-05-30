@@ -13502,6 +13502,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -41545,7 +41555,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "consult"
     }
-  }, [_c('h1', [_vm._v("Consultation")])])])])])])])], 2), _vm._v(" "), _c('div', {
+  }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('h6', [_vm._v("Select Doctor")]), _vm._v(" "), _c('select', {
+    staticClass: "input-sm"
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Doc 1")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Doc 2")])]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm"
+  }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin": "10px"
+    }
+  })])])])])])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "btn btn-sm btn-warning",
