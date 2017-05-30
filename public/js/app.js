@@ -13512,6 +13512,108 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -41574,9 +41676,188 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
-      "margin": "10px"
+      "margin": "0px",
+      "padding-top": "10px"
     }
-  })])])])])])])], 2), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "row chat-window",
+    staticStyle: {
+      "margin": "0px"
+    },
+    attrs: {
+      "id": "chat_window_1"
+    }
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-12"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-body msg_container_base"
+  }, [_c('div', {
+    staticClass: "row msg_container base_sent"
+  }, [_c('div', {
+    staticClass: "col-md-10 col-xs-10"
+  }, [_c('div', {
+    staticClass: "messages msg_sent"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row msg_container base_receive"
+  }, [_c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-10 col-xs-10"
+  }, [_c('div', {
+    staticClass: "messages msg_receive"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row msg_container base_receive"
+  }, [_c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-10 col-md-10"
+  }, [_c('div', {
+    staticClass: "messages msg_receive"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row msg_container base_sent"
+  }, [_c('div', {
+    staticClass: "col-xs-10 col-md-10"
+  }, [_c('div', {
+    staticClass: "messages msg_sent"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "row msg_container base_receive"
+  }, [_c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-10 col-md-10"
+  }, [_c('div', {
+    staticClass: "messages msg_receive"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row msg_container base_sent"
+  }, [_c('div', {
+    staticClass: "col-md-10 col-xs-10 "
+  }, [_c('div', {
+    staticClass: "messages msg_sent"
+  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
+    attrs: {
+      "datetime": "2009-11-13T20:00"
+    }
+  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-2 col-xs-2 avatar"
+  }, [_c('img', {
+    staticClass: " img-responsive ",
+    attrs: {
+      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+    }
+  })])])]), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    staticClass: "form-control input-sm chat_input",
+    attrs: {
+      "id": "btn-input",
+      "type": "text",
+      "placeholder": "Write your message here..."
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-primary btn-sm",
+    attrs: {
+      "id": "btn-chat"
+    }
+  }, [_vm._v("Send")])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "btn-group dropup"
+  }, [_c('button', {
+    staticClass: "btn btn-default dropdown-toggle",
+    attrs: {
+      "type": "button",
+      "data-toggle": "dropdown"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-cog"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "sr-only"
+  }, [_vm._v("Toggle Dropdown")])]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#",
+      "id": "new_chat"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-plus"
+  }), _vm._v(" Novo")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-list"
+  }), _vm._v(" Ver outras")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-remove"
+  }), _vm._v(" Fechar Tudo")])]), _vm._v(" "), _c('li', {
+    staticClass: "divider"
+  }), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-eye-close"
+  }), _vm._v(" Invisivel")])])])])])])])])])])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "btn btn-sm btn-warning",
