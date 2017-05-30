@@ -13497,6 +13497,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -13673,6 +13678,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.ticketModal = false;
             inheritance.status = 'No Operation';
             inheritance.currentTicket = [];
+            inheritance.allActiveMethod();
         },
         //list all active tickets, that belong to the logged in user
         allActiveMethod: function allActiveMethod() {
@@ -40689,9 +40695,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, _vm._l((_vm.allActives), function(allActive) {
+  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.allActives), function(allActive) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -40702,15 +40706,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "row"
-    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                        " + _vm._s(allActive.client.first_name) + ", " + _vm._s(allActive.client.other_names) + "\n                        "), _c('i', {
+    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(allActive.client.first_name) + ", " + _vm._s(allActive.client.other_names) + "\n                    "), _c('i', {
       staticClass: "pull-right"
-    }, [_vm._v("\n                            last updated on:\n                        ")])]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                        last updated on: " + _vm._s(allActive.progress.updated_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._v("\n                        Details:" + _vm._s(allActive.progress.description) + "\n                    ")]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                    Details:" + _vm._s(allActive.progress.description) + "\n                ")]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
@@ -40727,7 +40731,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
-  }))]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('transition', {
+  })], 2), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
     }
@@ -40844,7 +40848,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "tab",
       "href": "#history"
     }
-  }, [_vm._v(" History")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(" History")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#consult"
+    }
+  }, [_vm._v(" Consult")])])]), _vm._v(" "), _c('div', {
     staticClass: "row tab-content"
   }, [_c('div', {
     staticClass: "tab-pane fade in active",
@@ -41096,7 +41105,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.addTest(result)
         }
       }
-    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
       directives: [{
         name: "show",
         rawName: "v-show",
@@ -41194,7 +41203,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticStyle: {
         "padding-top": "10px"
       }
-    }, [(result) ? _c('button', {
+    }, [(result && _vm.currentTicket.progress) ? _c('button', {
       directives: [{
         name: "show",
         rawName: "v-show",
@@ -41209,7 +41218,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.addPrescription(result)
         }
       }
-    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
       directives: [{
         name: "show",
         rawName: "v-show",
@@ -41231,9 +41240,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "margin": "5px !important"
       }
     })])])
-  }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+  }), _vm._v(" "), _c('div', {
     staticClass: "form-group pull-right"
-  }, [_c('button', {
+  }, [(_vm.currentTicket.progress) ? _c('button', {
     class: {
       btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
     },
@@ -41242,7 +41251,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2)])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",
@@ -41478,9 +41487,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "margin": "5px !important"
       }
     })])])
-  }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+  }), _vm._v(" "), _c('div', {
     staticClass: "form-group pull-right"
-  }, [_c('button', {
+  }, [(_vm.currentTicket.progress) ? _c('button', {
     class: {
       btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 4
     },
@@ -41489,7 +41498,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))])]) : _vm._e()], 2) : _vm._e()])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2) : _vm._e()])])]), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
       "id": "pre-examination"
@@ -41531,7 +41540,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "special"
     }
-  }, [_c('h1', [_vm._v("Special Medical Conditions")])])])])])])])], 2), _vm._v(" "), _c('div', {
+  }, [_c('h1', [_vm._v("Special Medical Conditions")])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "consult"
+    }
+  }, [_c('h1', [_vm._v("Consultation")])])])])])])])], 2), _vm._v(" "), _c('div', {
     staticClass: "modal-footer"
   }, [_vm._t("footer", [_c('button', {
     staticClass: "btn btn-sm btn-warning",
@@ -41549,6 +41563,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-dismiss": "alert"
     }
   }, [_vm._v("×")]), _vm._v(" "), _c('strong', [_vm._v("My List")]), _vm._v(" "), _c('br'), _vm._v("\n            It is Highly recommended you follow the list as is."), _c('br')])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('label', [_vm._v("My Clients")]), _vm._v(" "), _c('input', {
+    staticClass: "input-sm pull-right",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search Client..."
+    }
+  })])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-lg-4"

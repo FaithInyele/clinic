@@ -25,20 +25,15 @@ class ChemistController extends Controller
      * @return mixed
      */
     public function currentTicket($ticket_id){
-        //dd('huh');
         $ticket = Ticket::findorFail($ticket_id);
         $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
         $ticket['client'] = Clients::findorFail($ticket->client_id);
-        $ticket['lab_data'] = LabData::where('ticket_id', $ticket_id)->first();
-        $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
         $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
         $ticket['total'] = $total = Medicine::where('prescription_id', $ticket['prescription']->id)->where('status','issued')->sum('amount');
         foreach ($ticket['medicine'] as $medicine){
             $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
         }
-
-
         return Response::json($ticket);
     }
     public function closePrescription(Request $request){
@@ -77,7 +72,7 @@ class ChemistController extends Controller
         //close prescription (doctor's part)
         DB::table('prescriptions')
             ->where('id', $prescription_id)
-            ->update(['status'=>-1]);
+            ->update(['status'=>1]);
 
         //dd('huh');
         //update progress

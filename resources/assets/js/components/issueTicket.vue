@@ -6,30 +6,31 @@
                 <strong>My List</strong> <br>
                 It is Highly recommended you follow the list as is.<br>
             </div>
-
             <div class="row">
-                <div class="row" v-for="allActive in allActives">
-                    <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
-                        <div class="row">
-                            <label> Client Name:</label>
-                            {{ allActive.client.first_name}}, {{allActive.client.other_names}}
-                            <i class="pull-right">
-                                last updated on:
-                            </i>
-                        </div>
-                        <hr style="margin: 5px">
-                        <div class="row">
-                            Details:{{ allActive.progress.description}}
-                        </div>
-                        <hr style="margin: 5px">
-                        <div class="row">
-                            <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
-                        </div>
-                    </div>
-                    <br>
-                </div>
+                <label>My Clients</label>
+                <input type="text" placeholder="Search Client..." class="input-sm pull-right">
             </div>
-
+            <hr>
+            <div class="row" v-for="allActive in allActives">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                    <div class="row">
+                        <label> Client Name:</label>
+                        {{ allActive.client.first_name}}, {{allActive.client.other_names}}
+                        <i class="pull-right">
+                            last updated on: {{allActive.progress.updated_at}}
+                        </i>
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        Details:{{ allActive.progress.description}}
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
+                    </div>
+                </div>
+                <br>
+            </div>
         </div>
         <div class="col-lg-4">
             <h5>My Statistics</h5>
@@ -75,6 +76,7 @@
                                                 <li><a data-toggle="tab" href="#pre-examination">Pre-Examination</a></li>
                                                 <li><a data-toggle="tab" href="#special"> Special medical condition(s)</a></li>
                                                 <li><a data-toggle="tab" href="#history"> History</a></li>
+                                                <li><a data-toggle="tab" href="#consult"> Consult</a></li>
                                             </ul>
 
                                             <div class="row tab-content" >
@@ -159,7 +161,7 @@
                                                                                         </div>
                                                                                         <div class="col-sm-2" style="padding-top: 10px">
                                                                                             <button v-if="result && currentTicket.progress" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addTest(result)">Add</button>
-                                                                                            <button v-if="result" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removeTest(result)">Remove</button>
+                                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removeTest(result)">Remove</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">
@@ -198,16 +200,16 @@
                                                                                             {{result.unit_price}}
                                                                                         </div>
                                                                                         <div class="col-sm-2" style="padding-top: 10px">
-                                                                                            <button v-if="result" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addPrescription(result)">Add</button>
-                                                                                            <button v-if="result" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removePrescription(result)">Remove</button>
+                                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addPrescription(result)">Add</button>
+                                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removePrescription(result)">Remove</button>
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="row">
                                                                                         <hr style="margin: 5px !important;">
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group pull-right" v-if="currentTicket.progress">
-                                                                                    <button :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
+                                                                                <div class="form-group pull-right">
+                                                                                    <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -303,8 +305,8 @@
                                                                         <hr style="margin: 5px !important;">
                                                                     </div>
                                                                 </div>
-                                                                    <div class="form-group pull-right" v-if="currentTicket.progress">
-                                                                        <button :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 4}" @click="submitP()">{{toChemist}}</button>
+                                                                    <div class="form-group pull-right">
+                                                                        <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 4}" @click="submitP()">{{toChemist}}</button>
                                                                     </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
@@ -339,6 +341,9 @@
                                                 </div>
                                                 <div id="special" class="tab-pane fade">
                                                     <h1>Special Medical Conditions</h1>
+                                                </div>
+                                                <div id="consult" class="tab-pane fade">
+                                                    <h1>Consultation</h1>
                                                 </div>
                                             </div>
                                         </div>
@@ -542,6 +547,7 @@
                 inheritance.ticketModal=false;
                 inheritance.status = 'No Operation';
                 inheritance.currentTicket = [];
+                inheritance.allActiveMethod();
             },
             //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {

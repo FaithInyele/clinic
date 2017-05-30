@@ -120,21 +120,26 @@ class TicketController extends Controller
     }
 
     /**
-     * get all my active tickets to display in myTickets()
+     * get all my active tickets to display in myTickets() //for given doc
      *
      * @return mixed
      */
     public function allActive(){
         //get all tickets for current user
-        $ticket = Ticket::where('status', 'open')->get();
+        $ticket = Ticket::where('status', 'open')->where('assigned_to', Auth::user()->id)->get();
         $active = array();
         //add all relevant data to each ticket
         foreach ($ticket as $item){
             $item['client'] = Clients::findorFail($item->client_id);
             $item['progress'] = Progress::where('ticket_id', $item->id)->latest()->first();
-            array_push($active, $item);
+            if ($item['progress']->level == 0 || $item['progress']->level == 1 || $item['progress']->level == 3){
+                array_push($active, $item);
+            }
         }
 
+        usort($active, function ($a, $b){
+           return $a['progress']['updated_at'] <=> $b['progress']['updated_at'];
+        });
         return Response::json($active);
     }
 
@@ -329,7 +334,7 @@ class TicketController extends Controller
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>2,
-                'status'=>-1
+                'status'=>1
             ));
             $prescription->save();
             //save requested medications
@@ -351,10 +356,12 @@ class TicketController extends Controller
             if (!empty($request->med)) {
                 $medication = explode(',', $request->med);
                 foreach ($medication as $item) {
+                    $medicine_resource = ChemistResource::findorFail($item);
                     $data = new Medicine(array(
                         'prescription_id' => $request->prescription_id,
                         'chemist_resource_id' => $item,
-                        'status' => 'pending'
+                        'status' => 'pending',
+                        'amount'=>$medicine_resource->unit_price
                     ));
                     $data->save();
                 }
