@@ -60,6 +60,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/query/startlab', 'TicketController@startLab');
     Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
+    Route::get('tickets/my-tickets/all/doctors', 'TicketController@activeDoc');
     //payments
     Route::get('tickets/payments', 'PaymentController@index');
     Route::get('tickets/payments/pending', 'PaymentController@pending');
@@ -119,6 +120,12 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('preferences/all', 'PreferencesController@all');
     Route::get('preferences/service-fee', 'PreferencesController@serviceFee');
     Route::post('preferences/edit', 'PreferencesController@edit');
+
+    /**
+     * chat routes
+     */
+    Route::get('chat/start', 'ChatController@start');
+    Route::post('chat/newmessage', 'ChatController@newMessage');
 
 
 });

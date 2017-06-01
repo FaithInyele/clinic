@@ -345,96 +345,37 @@
                                                 <div id="consult" class="tab-pane fade">
                                                     <label>Consult with another Doctor, concerning the Client</label>
                                                     <h6>Select Doctor</h6>
-                                                    <select class="input-sm">
+                                                    <select class="input-sm" v-model="chat_doctor">
                                                         <option value="">-Select Doctor-</option>
-                                                        <option value="">Doc 1</option>
-                                                        <option value="">Doc 2</option>
+                                                        <option v-if="allDocs" v-for="doc in allDocs" :value="doc.id">{{doc.last_name}} , {{doc.first_name}}</option>
                                                     </select>
-                                                    <button class="btn btn-sm">Proceed</button>
+                                                    <button class="btn btn-sm" @click="startChat">Proceed</button>
                                                     <div class="row" style="margin: 0px;padding-top: 10px">
                                                             <div class="row chat-window" id="chat_window_1" style="margin: 0px">
                                                                 <div class="col-xs-12 col-md-12">
                                                                     <div class="panel panel-default">
                                                                         <div class="panel-body msg_container_base">
-                                                                            <div class="row msg_container base_sent">
-                                                                                <div class="col-md-10 col-xs-10">
-                                                                                    <div class="messages msg_sent">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-2 col-xs-2 avatar">
-                                                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row msg_container base_receive">
-                                                                                <div class="col-md-2 col-xs-2 avatar">
+                                                                            <div v-if="currentChat" v-for="chat in currentChat.messages" :class="{row: classLoad, 'msg_container':classLoad, 'base_sent':chat.me == 'yes', 'base_receive':chat.me == 'no'}">
+                                                                                <div class="col-md-2 col-xs-2 avatar" v-if="chat.me == 'no'">
                                                                                     <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
                                                                                 </div>
                                                                                 <div class="col-md-10 col-xs-10">
-                                                                                    <div class="messages msg_receive">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
+                                                                                    <div :class="{'messages':classLoad, 'msg_sent':chat.me == 'yes', 'msg_receive':chat.me == 'no'}">
+                                                                                        <p>{{chat.message}}</p>
+                                                                                        <time datetime="2009-11-13T20:00">{{chat.user.first_name}} • {{chat.created_at}}</time>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="row msg_container base_receive">
-                                                                                <div class="col-md-2 col-xs-2 avatar">
-                                                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                                                                </div>
-                                                                                <div class="col-xs-10 col-md-10">
-                                                                                    <div class="messages msg_receive">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row msg_container base_sent">
-                                                                                <div class="col-xs-10 col-md-10">
-                                                                                    <div class="messages msg_sent">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-2 col-xs-2 avatar">
-                                                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row msg_container base_receive">
-                                                                                <div class="col-md-2 col-xs-2 avatar">
-                                                                                    <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
-                                                                                </div>
-                                                                                <div class="col-xs-10 col-md-10">
-                                                                                    <div class="messages msg_receive">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row msg_container base_sent">
-                                                                                <div class="col-md-10 col-xs-10 ">
-                                                                                    <div class="messages msg_sent">
-                                                                                        <p>that mongodb thing looks good, huh?
-                                                                                            tiny master db, and huge document store</p>
-                                                                                        <time datetime="2009-11-13T20:00">Timothy • 51 min</time>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-md-2 col-xs-2 avatar">
+                                                                                <div class="col-md-2 col-xs-2 avatar" v-if="chat.me == 'yes'">
                                                                                     <img src="http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg" class=" img-responsive ">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="panel-footer">
                                                                             <div class="input-group">
-                                                                                <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                                                                                <input type="text" class="form-control input-sm chat_input" v-model="chatMessage" placeholder="Write your message here..." />
                                                                                 <span class="input-group-btn">
-                        <button class="btn btn-primary btn-sm" id="btn-chat">Send</button>
-                        </span>
+                                                                                    <button class="btn btn-primary btn-sm" @click="sendMessage">Send</button>
+                                                                                </span>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -522,7 +463,11 @@
                 prescriptionResults: [],
                 noResults:false,
                 searchPrescription: '',
-                noPrescriptionResults: false
+                noPrescriptionResults: false,
+                allDocs: [],
+                chat_doctor: '',
+                currentChat: [],
+                chatMessage: ''
             }
         },
         watch: {
@@ -542,6 +487,13 @@
               inheritance.test_tagsId.push(result.id);
               inheritance.saveLab();
               inheritance.findTests();
+            },
+            activeDocs: function () {
+              var inheritance=this;
+              axios.get(base_url+'/tickets/my-tickets/all/doctors')
+                  .then(function (response) {
+                      inheritance.allDocs = response.data;
+                  }.bind(this));
             },
             removeTest: function (result) {
                 var inheritance = this;
@@ -623,6 +575,7 @@
                 axios.get(base_url+'/tickets/my-tickets/'+ticketid)
                     .then(function (response) {
                         inheritance.currentTicket = response.data;
+                        inheritance.activeDocs();
                         inheritance.labtechs();
                         inheritance.modalLoading = false;
                         if(response.data.progress.description == 'Client at Lab'){
@@ -799,6 +752,24 @@
                         inheritance.status = 'There was an Error while Processing your Request';
                         inheritance.statusError = true;
                     });
+            },
+            startChat: function () {
+                var inheritance = this;
+                axios.get(base_url+'/chat/start?ticket_id='+inheritance.currentTicket.id+'&consultant_id='+inheritance.chat_doctor)
+                    .then(function (response) {
+                        console.log(response.data.messages[0]);
+                        inheritance.currentChat = response.data;
+                        console.log('huh');
+                    }.bind(this));
+                //console.log(inheritance.chat_doctor);
+            },
+            sendMessage: function () {
+                var inheritance = this;
+                //console.log(inheritance.chatMessage);
+                axios.post(base_url+'/chat/newmessage', {consultant_id: inheritance.currentChat.id,message: inheritance.chatMessage})
+                    .then(function (response) {
+                        inheritance.currentChat.messages.push(response.data);
+                    }.bind(this))
             }
         }
     }

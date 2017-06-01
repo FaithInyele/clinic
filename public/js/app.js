@@ -13555,65 +13555,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -13657,7 +13598,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             prescriptionResults: [],
             noResults: false,
             searchPrescription: '',
-            noPrescriptionResults: false
+            noPrescriptionResults: false,
+            allDocs: [],
+            chat_doctor: '',
+            currentChat: [],
+            chatMessage: ''
         };
     },
     watch: {
@@ -13677,6 +13622,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.test_tagsId.push(result.id);
             inheritance.saveLab();
             inheritance.findTests();
+        },
+        activeDocs: function activeDocs() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all/doctors').then(function (response) {
+                inheritance.allDocs = response.data;
+            }.bind(this));
         },
         removeTest: function removeTest(result) {
             var inheritance = this;
@@ -13753,6 +13704,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.modalLoading = true;
             axios.get(base_url + '/tickets/my-tickets/' + ticketid).then(function (response) {
                 inheritance.currentTicket = response.data;
+                inheritance.activeDocs();
                 inheritance.labtechs();
                 inheritance.modalLoading = false;
                 if (response.data.progress.description == 'Client at Lab') {
@@ -13918,6 +13870,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.status = 'There was an Error while Processing your Request';
                 inheritance.statusError = true;
             });
+        },
+        startChat: function startChat() {
+            var inheritance = this;
+            axios.get(base_url + '/chat/start?ticket_id=' + inheritance.currentTicket.id + '&consultant_id=' + inheritance.chat_doctor).then(function (response) {
+                console.log(response.data.messages[0]);
+                inheritance.currentChat = response.data;
+                console.log('huh');
+            }.bind(this));
+            //console.log(inheritance.chat_doctor);
+        },
+        sendMessage: function sendMessage() {
+            var inheritance = this;
+            //console.log(inheritance.chatMessage);
+            axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage }).then(function (response) {
+                inheritance.currentChat.messages.push(response.data);
+            }.bind(this));
         }
     }
 };
@@ -41658,21 +41626,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "consult"
     }
   }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('h6', [_vm._v("Select Doctor")]), _vm._v(" "), _c('select', {
-    staticClass: "input-sm"
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chat_doctor),
+      expression: "chat_doctor"
+    }],
+    staticClass: "input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.chat_doctor = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
   }, [_c('option', {
     attrs: {
       "value": ""
     }
-  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": ""
+  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _vm._l((_vm.allDocs), function(doc) {
+    return (_vm.allDocs) ? _c('option', {
+      domProps: {
+        "value": doc.id
+      }
+    }, [_vm._v(_vm._s(doc.last_name) + " , " + _vm._s(doc.first_name))]) : _vm._e()
+  })], 2), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm",
+    on: {
+      "click": _vm.startChat
     }
-  }, [_vm._v("Doc 1")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": ""
-    }
-  }, [_vm._v("Doc 2")])]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-sm"
   }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
@@ -41693,125 +41679,67 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "panel panel-default"
   }, [_c('div', {
     staticClass: "panel-body msg_container_base"
-  }, [_c('div', {
-    staticClass: "row msg_container base_sent"
-  }, [_c('div', {
-    staticClass: "col-md-10 col-xs-10"
-  }, [_c('div', {
-    staticClass: "messages msg_sent"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "row msg_container base_receive"
-  }, [_c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-10 col-xs-10"
-  }, [_c('div', {
-    staticClass: "messages msg_receive"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row msg_container base_receive"
-  }, [_c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-10 col-md-10"
-  }, [_c('div', {
-    staticClass: "messages msg_receive"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row msg_container base_sent"
-  }, [_c('div', {
-    staticClass: "col-xs-10 col-md-10"
-  }, [_c('div', {
-    staticClass: "messages msg_sent"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "row msg_container base_receive"
-  }, [_c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-10 col-md-10"
-  }, [_c('div', {
-    staticClass: "messages msg_receive"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "row msg_container base_sent"
-  }, [_c('div', {
-    staticClass: "col-md-10 col-xs-10 "
-  }, [_c('div', {
-    staticClass: "messages msg_sent"
-  }, [_c('p', [_vm._v("that mongodb thing looks good, huh?\n                                                                                        tiny master db, and huge document store")]), _vm._v(" "), _c('time', {
-    attrs: {
-      "datetime": "2009-11-13T20:00"
-    }
-  }, [_vm._v("Timothy • 51 min")])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-2 col-xs-2 avatar"
-  }, [_c('img', {
-    staticClass: " img-responsive ",
-    attrs: {
-      "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
-    }
-  })])])]), _vm._v(" "), _c('div', {
+  }, _vm._l((_vm.currentChat.messages), function(chat) {
+    return (_vm.currentChat) ? _c('div', {
+      class: {
+        row: _vm.classLoad, 'msg_container': _vm.classLoad, 'base_sent': chat.me == 'yes', 'base_receive': chat.me == 'no'
+      }
+    }, [(chat.me == 'no') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "col-md-10 col-xs-10"
+    }, [_c('div', {
+      class: {
+        'messages': _vm.classLoad, 'msg_sent': chat.me == 'yes', 'msg_receive': chat.me == 'no'
+      }
+    }, [_c('p', [_vm._v(_vm._s(chat.message))]), _vm._v(" "), _c('time', {
+      attrs: {
+        "datetime": "2009-11-13T20:00"
+      }
+    }, [_vm._v(_vm._s(chat.user.first_name) + " • " + _vm._s(chat.created_at))])])]), _vm._v(" "), (chat.me == 'yes') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e()]) : _vm._e()
+  })), _vm._v(" "), _c('div', {
     staticClass: "panel-footer"
   }, [_c('div', {
     staticClass: "input-group"
   }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chatMessage),
+      expression: "chatMessage"
+    }],
     staticClass: "form-control input-sm chat_input",
     attrs: {
-      "id": "btn-input",
       "type": "text",
       "placeholder": "Write your message here..."
+    },
+    domProps: {
+      "value": (_vm.chatMessage)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.chatMessage = $event.target.value
+      }
     }
   }), _vm._v(" "), _c('span', {
     staticClass: "input-group-btn"
   }, [_c('button', {
     staticClass: "btn btn-primary btn-sm",
-    attrs: {
-      "id": "btn-chat"
+    on: {
+      "click": _vm.sendMessage
     }
   }, [_vm._v("Send")])])])])])])]), _vm._v(" "), _c('div', {
     staticClass: "btn-group dropup"

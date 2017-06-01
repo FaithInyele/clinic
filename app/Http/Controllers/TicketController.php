@@ -255,6 +255,7 @@ class TicketController extends Controller
      * @return mixed
      */
     public function activeDoc(){
+        //dd('huh');
         $docs = User::where('role', 'Nurse/Doctor')->get();
 
         return Response::json($docs);

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    //
+    protected $fillable = array('consultant_id', 'from', 'message');
 }
