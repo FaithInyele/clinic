@@ -766,7 +766,7 @@
             sendMessage: function () {
                 var inheritance = this;
                 //console.log(inheritance.chatMessage);
-                axios.post(base_url+'/chat/newmessage', {consultant_id: inheritance.currentChat.id,message: inheritance.chatMessage})
+                axios.post(base_url+'/chat/newmessage', {consultant_id: inheritance.currentChat.id,message: inheritance.chatMessage, message_to:inheritance.currentChat.originator.id})
                     .then(function (response) {
                         inheritance.currentChat.messages.push(response.data);
                     }.bind(this))

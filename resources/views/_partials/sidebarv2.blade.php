@@ -82,6 +82,10 @@
                         <i class="fa fa-list"></i>&nbsp; My Tickets (All)</a>
                 </li>
                 <li>
+                    <a href="{{url('tickets/consultations')}}">
+                        <i class="fa fa-list"></i>&nbsp; Requested Consultations</a>
+                </li>
+                <li>
                     <a href="{{url('tickets/add')}}">
                         <i class="fa fa-plus-square"></i>&nbsp; Create New Ticket </a>
                 </li>

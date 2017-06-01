@@ -41,6 +41,8 @@ Vue.component('nurseresource', require('./components/nurseStation.vue'));
 
 Vue.component('payments', require('./components/payments.vue'));
 
+Vue.component('sidebar', require('./components/sidebar.vue'));
+
 const app = new Vue({
     el: '#app',
     data: {

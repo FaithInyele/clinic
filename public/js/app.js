@@ -11379,6 +11379,8 @@ Vue.component('nurseresource', __webpack_require__(104));
 
 Vue.component('payments', __webpack_require__(105));
 
+Vue.component('sidebar', __webpack_require__(165));
+
 var app = new Vue({
   el: '#app',
   data: {
@@ -13883,7 +13885,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sendMessage: function sendMessage() {
             var inheritance = this;
             //console.log(inheritance.chatMessage);
-            axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage }).then(function (response) {
+            axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage, message_to: inheritance.currentChat.originator.id }).then(function (response) {
                 inheritance.currentChat.messages.push(response.data);
             }.bind(this));
         }
@@ -52339,6 +52341,195 @@ module.exports = function(module) {
 __webpack_require__(19);
 module.exports = __webpack_require__(20);
 
+
+/***/ }),
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.consults();
+    },
+    data: function data() {
+        return {
+            modal: false,
+            newMessages: []
+        };
+    },
+    methods: {
+        closeModal: function closeModal() {
+            var inheritance = this;
+            inheritance.modal = false;
+        },
+        openModal: function openModal() {
+            var inheritance = this;
+            inheritance.modal = true;
+        },
+        consults: function consults() {
+            var inheritance = this;
+            axios.get(base_url + '/chat/unread').then(function (response) {
+                inheritance.newMessages = response.data;
+                console.log(response.data);
+            }.bind(this));
+        }
+    }
+};
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(164),
+  /* template */
+  __webpack_require__(166),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/sidebar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] sidebar.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-64bb3424", Component.options)
+  } else {
+    hotAPI.reload("data-v-64bb3424", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.newMessages), function(ticket) {
+    return (_vm.newMessages) ? _c('div', [_vm._v("\n            Client Name: \n        ")]) : _vm._e()
+  })), _vm._v(" "), (_vm.modal) ? _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Add New Preference")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_vm._t("body")], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-warning",
+    on: {
+      "click": _vm.closeModal
+    }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e()], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-64bb3424", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

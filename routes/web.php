@@ -66,7 +66,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/payments/pending', 'PaymentController@pending');
     Route::post('tickets/payments/pay-lab', 'PaymentController@payLab');
 
-
+    /**
+     * consultation routes
+     */
+    Route::get('tickets/consultations', 'ChatController@index');
 
     /**
      * Progress routes
@@ -125,6 +128,7 @@ Route::group(['middleware' => 'logIn'], function () {
      * chat routes
      */
     Route::get('chat/start', 'ChatController@start');
+    Route::get('chat/unread', 'ChatController@unread');
     Route::post('chat/newmessage', 'ChatController@newMessage');
 
 
