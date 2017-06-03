@@ -99,9 +99,9 @@
         <!-- /.navbar -->
     </template>
 
-    <header class="head">
+{{--    <header class="head">
         <div class="search-bar">
-            {{--<form class="main-search" action="">
+            --}}{{--<form class="main-search" action="">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Live Search ...">
                     <span class="input-group-btn">
@@ -110,7 +110,7 @@
                                                 </button>
                                             </span>
                 </div>
-            </form>--}}
+            </form>--}}{{--
             <!-- /.main-search -->                                </div>
         <!-- /.search-bar -->
         <div class="main-bar">
@@ -119,7 +119,7 @@
             </h3>
         </div>
         <!-- /.main-bar -->
-    </header>
+    </header>--}}
     <!-- /.head -->
 </div>
 <!-- /#top -->

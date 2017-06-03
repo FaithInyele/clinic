@@ -12,7 +12,7 @@
             </div>
             <hr>
             <div class="row" v-for="allActive in allActives">
-                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A">
                     <div class="row">
                         <label> Client Name:</label>
                         {{ allActive.client.first_name}}, {{allActive.client.other_names}}
@@ -34,7 +34,7 @@
         </div>
         <div class="col-lg-4">
             <h5>My Statistics</h5>
-
+            <sidebar></sidebar>
         </div>
 
         <transition name="modal">
@@ -421,9 +421,11 @@
 </template>
 
 <script>
-    import InputTag from 'vue-input-tag'
+    import InputTag from 'vue-input-tag';
+    import { EventBus } from '../app';
 
     export default {
+        props:'openTicket',
         mounted: function() {
             console.log('Component mounted.');
             this.allActiveMethod();

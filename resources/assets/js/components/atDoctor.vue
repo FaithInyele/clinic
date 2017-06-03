@@ -1,20 +1,44 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
-        <div class="row">
-            <h6>Consultations</h6>
-            <div v-if="newMessages" v-for="ticket in newMessages">
-                <b style="color: green;">From:</b> <b style="font-size: 9px">{{ticket.message_from.first_name}}, {{ticket.message_from.last_name}}<b class="pull-right">{{ticket.created_at}}</b></b><br>
-                <label>Message:</label> {{ticket.message}}<br>
-                <div class="row">
-                    <a class="pull-right btn btn-sm btn-success form-control" @click="openTicket(ticket.ticket.original.id, ticket.consult.id)" style="margin-right: 10px">Open</a>
+        <div class="col-lg-8">
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>My List</strong> <br>
+                It is Highly recommended you follow the list as is.<br>
+            </div>
+            <div class="row">
+                <label>My Clients</label>
+                <input type="text" placeholder="Search Client..." class="input-sm pull-right">
+            </div>
+            <hr>
+            <div class="row" v-for="allActive in allActives">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A">
+                    <div class="row">
+                        <label> Client Name:</label>
+                        {{ allActive.client.first_name}}, {{allActive.client.other_names}}
+                        <i class="pull-right">
+                            last updated on: {{allActive.progress.updated_at}}
+                        </i>
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        Details:{{ allActive.progress.description}}
+                    </div>
+                    <hr style="margin: 5px">
+                    <div class="row">
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
+                    </div>
                 </div>
-                <div class="row">
-                    <hr style="margin: 2px">
-                </div>
+                <br>
             </div>
         </div>
+        <div class="col-lg-4">
+            <h5>My Statistics</h5>
+            <sidebar></sidebar>
+        </div>
+
         <transition name="modal">
-            <div class="modal-mask" v-show="modal">
+            <div class="modal-mask" v-show="ticketModal">
                 <div class="modal-wrapper">
                     <div class="modal-container">
 
@@ -43,20 +67,12 @@
                                                 <input type="hidden" v-model="currentTicket.id" id="hiddenTicketId">
                                             </h5>
                                         </div>
-
                                     </div>
                                     <div class="col-md-8">
-                                        <div class="row" style="max-height: 400px;overflow-y: scroll">
-                                            <ul class="nav nav-tabs">
-                                                <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
-                                                <li><a data-toggle="tab" href="#pre-examination">Pre-Examination</a></li>
-                                                <li><a data-toggle="tab" href="#special"> Special medical condition(s)</a></li>
-                                                <li><a data-toggle="tab" href="#history"> History</a></li>
-                                                <li><a data-toggle="tab" href="#consult"> Consult</a></li>
-                                            </ul>
-
-                                            <div class="row tab-content" >
-                                                <div id="progress" class="tab-pane fade in active">
+                                        <ul class="accordion-tabs-minimal">
+                                            <li class="tab-header-and-content">
+                                                <a href="#" class="tab-link is-active">Ticket</a>
+                                                <div class="tab-content">
                                                     <h6>Progress </h6>
                                                     <div class="accordion">
                                                         <!--first accordion-->
@@ -93,9 +109,7 @@
                                                                     </div>
 
                                                                     <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2}">
-<!--
                                                                         <input-tag placeholder="Add Symptoms" class="input-sm"  :on-change="saveSymptoms" :tags="currentTicket.tags"></input-tag>
--->
                                                                     </div>
                                                                     <hr style="margin: 0px">
                                                                     <div v-show="recommendAction">
@@ -119,9 +133,7 @@
                                                                             <div>
                                                                                 <b style="font-size: 10px">
                                                                                     <div class="form-group completed" v-if="currentTicket.progress">
-<!--
                                                                                         <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
--->
                                                                                     </div>                                                                                    </b>
                                                                             </div>
                                                                             Search Required Lab Tests:<br>
@@ -161,9 +173,7 @@
                                                                             </label>
 
                                                                             <div v-if="currentTicket.progress" :class="{completed: classLoad}">
-<!--
                                                                                 <input-tag :on-change="saveP" :tags="prescription_tags"></input-tag>
--->
                                                                             </div>
 
                                                                             <input type="text" class="form-control input-sm" v-model="searchPrescription">
@@ -260,9 +270,7 @@
                                                                 </label>
 
                                                                 <div v-if="currentTicket.progress" :class="{completed: classLoad}">
-<!--
                                                                     <input-tag :on-change="saveP" :tags="prescription_tags"></input-tag>
--->
                                                                 </div>
 
                                                                 <input type="text" class="form-control input-sm" v-model="searchPrescription">
@@ -294,10 +302,11 @@
                                                                 </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
-                                                    </div><!--end .accordion-->
-                                                </div>
-
-                                                <div id="pre-examination" class="tab-pane fade">
+                                                    </div><!--end .accordion-->                                                </div>
+                                            </li>
+                                            <li class="tab-header-and-content">
+                                                <a href="#" class="tab-link">Pre-examination</a>
+                                                <div class="tab-content">
                                                     <h5>Pre-Examination Results</h5>
                                                     <div class="row" v-if="currentTicket.pre_examination">
                                                         <div v-for="examination in currentTicket.pre_examination">
@@ -318,15 +327,23 @@
                                                             <label></label>
                                                             <i class="pull-right"></i>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                </div>
+                                            </li>
+                                            <li class="tab-header-and-content">
+                                                <a href="#" class="tab-link">Special Medical Conditions</a>
+                                                <div class="tab-content">
+                                                    <h6>Special Medical Conditions</h6>
                                                 </div>
-                                                <div id="history" class="tab-pane fade">
-                                                    <h1>History</h1>
+                                            </li>
+                                            <li class="tab-header-and-content">
+                                                <a href="#" class="tab-link">History</a>
+                                                <div class="tab-content">
+                                                    <h6>History</h6>
                                                 </div>
-                                                <div id="special" class="tab-pane fade">
-                                                    <h1>Special Medical Conditions</h1>
-                                                </div>
-                                                <div id="consult" class="tab-pane fade">
+                                            </li>
+                                            <li class="tab-header-and-content">
+                                                <a href="#" class="tab-link">Consultation</a>
+                                                <div class="tab-content">
                                                     <label>Consult with another Doctor, concerning the Client</label>
                                                     <h6>Select Doctor</h6>
                                                     <select class="input-sm" v-model="chat_doctor">
@@ -380,10 +397,10 @@
                                                             </ul>
                                                         </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    </div>                                                </div>
+                                            </li>
+                                        </ul>
+
                                     </div>
                                 </div>
                             </slot>
@@ -408,14 +425,16 @@
     import InputTag from 'vue-input-tag';
 
     export default {
+        props:'openTicket',
         mounted: function() {
-            console.log('Component mounted.huh');
-            this.consults();
+            console.log('Component mounted.');
+            this.allActiveMethod();
         },
+        components:{InputTag},
         data: function () {
             return{
-                modal: false,
-                newMessages: [],
+                ticketModal: false,
+                allActives: [],
                 currentTicket: [],
                 atDoctorButton: 'Save Symptoms',
                 toChemist: 'Submit to Chemist',
@@ -453,19 +472,17 @@
                 chatMessage: ''
             }
         },
+        watch: {
+            searchTest: function () {
+                this.results = [];
+                this.findTests();
+            },
+            searchPrescription: function () {
+                this.prescriptionResults = [];
+                this.findPrescription();
+            }
+        },
         methods:{
-            allMessages: function (consult_id) {
-                var inheritance = this;
-                console.log(base_url+'/chat/allmessages?consult_id='+consult_id);
-              axios.get(base_url+'/chat/allmessages?consult_id='+consult_id)
-                  .then(function (response) {
-                    inheritance.currentChat = response.data;
-                  }.bind(this));
-            },
-            closeModal: function () {
-                var inheritance = this;
-                inheritance.modal = false
-            },
             addTest: function (result) {
                 var inheritance = this;
                 inheritance.test_tags.push(result.resource_name);
@@ -554,9 +571,9 @@
                     });
             },
             //open a specific ticket, for docs/nurses
-            openTicket: function (ticketid, consult_id) {
+            openTicket: function (ticketid) {
                 var inheritance = this;
-                inheritance.modal = true;
+                inheritance.modalLoading = true;
                 axios.get(base_url+'/tickets/my-tickets/'+ticketid)
                     .then(function (response) {
                         inheritance.currentTicket = response.data;
@@ -569,8 +586,7 @@
                         }
                         inheritance.updateTestTags();
                         inheritance.updatePrescriptionTags();
-                        inheritance.allMessages(consult_id);
-                        //setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
+                        setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
                     }.bind(this))
                     .catch(function (error) {
                         inheritance.status = 'There was an Error while Processing your Request';
@@ -595,8 +611,10 @@
             //close the above opened ticket.
             closeTicket: function () {
                 var inheritance=this;
-                inheritance.modal=false;
+                inheritance.ticketModal=false;
                 inheritance.status = 'No Operation';
+                inheritance.currentTicket = [];
+                inheritance.allActiveMethod();
             },
             //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {
@@ -618,17 +636,125 @@
                 inheritance.statusWarn = false;
             },
             //for doctor. save client's symptoms
-            saveSymptoms: function () {},
-            recommendLab: function () {},
-            prescribeMedication: function () {},
+            saveSymptoms: function () {
+                var inheritance=this;
+                console.log(inheritance.tagsArray);
+                inheritance.revertStatus();
+                inheritance.atDoctorButton = 'Saving...';
+                inheritance.status = 'Saving Symptoms...';
+                // var symptom = $('#sympt').val();
+                //console.log(symptom);
+                var hticket_id = $('#hiddenTicketId').val();
+                console.log(hticket_id);
+                //inheritance.symptoms = symptom;
+                axios.get(base_url+'/tickets/my-tickets/save/symptoms?ticket_id='+hticket_id+'&status=pending&symptoms='+inheritance.currentTicket.tags)
+                    .then(function (response) {
+                        console.log(response);
+                        inheritance.recommendAction = true;
+                        inheritance.atDoctorButton = 'Save Symptoms';
+                        inheritance.status = 'Symptoms Successfully Saved';
+                        inheritance.statusSuccess = true;
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
+            recommendLab: function () {
+                var inheritance=this;
+                inheritance.chooseLab=true;
+                inheritance.chooseMed=false;
+            },
+            prescribeMedication: function () {
+                var inheritance = this;
+                inheritance.chooseLab=false;
+                inheritance.chooseMed=true;
+            },
             //save the prescriptions given
-            saveP: function () {},
+            saveP: function () {
+                var inheritance = this;
+                inheritance.revertStatus();
+                inheritance.status = 'Saving Prescription(s)';
+                inheritance.savePrescription = "Saving...";
+                var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
+                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
+                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
+                    .then(function (response) {
+                        inheritance.status = 'Prescription(s) Successfully Saved';
+                        inheritance.statusSuccess = true;
+                        inheritance.statusError = false;
+                        inheritance.savePrescription = "Save";
+                        inheritance.currentTicket.prescription = response.data;
+                        //inheritance.openTicket(inheritance.currentTicket.id);
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
             //save all prescriptions and close chapter
-            submitP: function () {},
+            submitP: function () {
+                var inheritance = this;
+                inheritance.revertStatus();
+                inheritance.status = 'Submitting Prescription(s)';
+                inheritance.toChemist = 'Submitting';
+                console.log(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id);
+                axios.get(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id)
+                    .then(function (response) {
+                        inheritance.status = 'Prescription(s) Successfully Submitted';
+                        inheritance.statusSuccess =true;
+                        //inheritance.openTicket(inheritance.currentTicket.id);
+                        inheritance.toChemist = 'Submit to Chemist';
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
             //start a lab ticket.
-            saveLab: function () {},
+            saveLab: function () {
+                var inheritance = this;
+                inheritance.revertStatus();
+                var ticket_id = inheritance.currentTicket.id;
+                var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
+                //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
+                //inheritance.sendtoLab = 'Saving Lab Test(s)...';
+                inheritance.status = 'Saving Tests...';
+                var tests = $('#tests').val();
+                console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
+                axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
+                    .then(function (response) {
+                        inheritance.currentTicket.lab_datas = response.data;
+                        inheritance.status = 'Tests Successfully Saved';
+                        inheritance.statusSuccess = true;
+                        //inheritance.sendtoLab = 'Sent';
+                        //inheritance.openTicket(ticket_id);
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
             //send client to lab
-            sendLab: function () {},
+            sendLab: function () {
+                var inheritance = this;
+                inheritance.revertStatus();
+                inheritance.status = 'Sending Client data to Lab...';
+                inheritance.sendtoLab = 'Sending...';
+                //console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
+                //inheritance.saveLab();
+                axios.get(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id)
+                    .then(function (response) {
+                        inheritance.currentTicket.progress = response.data;
+                        inheritance.sendtoLab = 'Send Client to Lab';
+                        inheritance.status = 'Data Successfully Send to Lab';
+                        inheritance.statusSuccess = true;
+                    }.bind(this))
+                    .catch(function (error) {
+                        inheritance.status = 'There was an Error while Processing your Request';
+                        inheritance.statusError = true;
+                    });
+            },
             startChat: function () {
                 var inheritance = this;
                 axios.get(base_url+'/chat/start?ticket_id='+inheritance.currentTicket.id+'&consultant_id='+inheritance.chat_doctor)
@@ -646,17 +772,6 @@
                     .then(function (response) {
                         inheritance.currentChat.messages.push(response.data);
                     }.bind(this))
-            },
-            consults: function () {
-                var inheritance = this;
-                axios.get(base_url+'/chat/unread')
-                    .then(function (response) {
-                        inheritance.newMessages = response.data;
-                        console.log(response.data);
-                    }.bind(this))
-            },
-            open: function (ticket) {
-                EventBus.$emit('openT', ticket);
             }
         }
     }

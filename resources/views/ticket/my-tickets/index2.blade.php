@@ -8,7 +8,7 @@
 
     @if(Auth::user()->role == 'Nurse/Doctor')
         <!--nurse/doctor components-->
-        <issuedticket></issuedticket>
+        <atdoctor></atdoctor>
     @endif
 
     @if(Auth::user()->role == 'Lab Technician')

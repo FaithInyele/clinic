@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 128);
+/******/ 	return __webpack_require__(__webpack_require__.s = 134);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10377,7 +10377,7 @@ module.exports = function normalizeComponent (
 "use strict";
 
 
-var bind = __webpack_require__(14);
+var bind = __webpack_require__(16);
 
 /*global toString:true*/
 
@@ -10691,7 +10691,7 @@ if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var normalizeHeaderName = __webpack_require__(36);
+var normalizeHeaderName = __webpack_require__(37);
 
 var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 var DEFAULT_CONTENT_TYPE = {
@@ -10708,10 +10708,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(12);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(10);
+    adapter = __webpack_require__(12);
   }
   return adapter;
 }
@@ -11012,16 +11012,135 @@ process.umask = function() { return 0; };
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(129)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(40),
+  /* template */
+  __webpack_require__(123),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/node_modules/vue-input-tag/src/InputTag.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] InputTag.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76cb1f12", Component.options)
+  } else {
+    hotAPI.reload("data-v-76cb1f12", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(56);
+
+__webpack_require__(60);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+Vue.component('example', __webpack_require__(98));
+
+Vue.component('ticket_start', __webpack_require__(112));
+
+Vue.component('ticket', __webpack_require__(111));
+
+Vue.component('chemist', __webpack_require__(101));
+
+Vue.component('issuedticket', __webpack_require__(103));
+
+Vue.component('atdoctor', __webpack_require__(99));
+
+Vue.component('atlab', __webpack_require__(100));
+
+Vue.component('listusers', __webpack_require__(106));
+
+Vue.component('listclients', __webpack_require__(105));
+
+Vue.component('labresource', __webpack_require__(104));
+
+Vue.component('chemistresource', __webpack_require__(102));
+
+Vue.component('preferences', __webpack_require__(109));
+
+Vue.component('nurseresource', __webpack_require__(107));
+
+Vue.component('payments', __webpack_require__(108));
+
+Vue.component('sidebar', __webpack_require__(110));
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    clientEdit: false,
+    startTicket: false
+  }
+});
+
+//other js files
+
+__webpack_require__(57);
+
+//require('../sass/custom/tags/bootstrap-tagsinput');
+
+__webpack_require__(97);
+
+__webpack_require__(61);
+
+__webpack_require__(62);
+
+__webpack_require__(59);
+
+__webpack_require__(58);
+
+__webpack_require__(63);
+
+//require('../sass/custom/form-wizard/jquery.backstretch');
+
+//require('../sass/custom/form-wizard/scripts');
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(2);
-var settle = __webpack_require__(28);
-var buildURL = __webpack_require__(31);
-var parseHeaders = __webpack_require__(37);
-var isURLSameOrigin = __webpack_require__(35);
-var createError = __webpack_require__(13);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(30);
+var settle = __webpack_require__(29);
+var buildURL = __webpack_require__(32);
+var parseHeaders = __webpack_require__(38);
+var isURLSameOrigin = __webpack_require__(36);
+var createError = __webpack_require__(15);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -11117,7 +11236,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(33);
+      var cookies = __webpack_require__(34);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -11194,7 +11313,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11220,7 +11339,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11232,13 +11351,13 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(27);
+var enhanceError = __webpack_require__(28);
 
 /**
  * Create an Error with the specified message, config, error code, and response.
@@ -11256,7 +11375,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11274,7 +11393,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -11284,7 +11403,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -11295,18 +11414,18 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(77)
-  , defined = __webpack_require__(15);
+var IObject = __webpack_require__(80)
+  , defined = __webpack_require__(17);
 module.exports = function(it){
   return IObject(defined(it));
 };
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var g;
@@ -11333,106 +11452,27 @@ module.exports = g;
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(53);
-
-__webpack_require__(57);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example', __webpack_require__(96));
-
-Vue.component('ticket_start', __webpack_require__(108));
-
-Vue.component('ticket', __webpack_require__(107));
-
-Vue.component('chemist', __webpack_require__(98));
-
-Vue.component('issuedticket', __webpack_require__(100));
-
-Vue.component('atlab', __webpack_require__(97));
-
-Vue.component('listusers', __webpack_require__(103));
-
-Vue.component('listclients', __webpack_require__(102));
-
-Vue.component('labresource', __webpack_require__(101));
-
-Vue.component('chemistresource', __webpack_require__(99));
-
-Vue.component('preferences', __webpack_require__(106));
-
-Vue.component('nurseresource', __webpack_require__(104));
-
-Vue.component('payments', __webpack_require__(105));
-
-Vue.component('sidebar', __webpack_require__(165));
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    clientEdit: false,
-    startTicket: false
-  }
-});
-
-//other js files
-
-__webpack_require__(54);
-
-//require('../sass/custom/tags/bootstrap-tagsinput');
-
-__webpack_require__(94);
-
-__webpack_require__(58);
-
-__webpack_require__(59);
-
-__webpack_require__(56);
-
-__webpack_require__(55);
-
-__webpack_require__(60);
-
-//require('../sass/custom/form-wizard/jquery.backstretch');
-
-//require('../sass/custom/form-wizard/scripts');
-
-/***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(22);
+module.exports = __webpack_require__(23);
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var bind = __webpack_require__(14);
-var Axios = __webpack_require__(24);
+var bind = __webpack_require__(16);
+var Axios = __webpack_require__(25);
 var defaults = __webpack_require__(4);
 
 /**
@@ -11466,15 +11506,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(11);
-axios.CancelToken = __webpack_require__(23);
-axios.isCancel = __webpack_require__(12);
+axios.Cancel = __webpack_require__(13);
+axios.CancelToken = __webpack_require__(24);
+axios.isCancel = __webpack_require__(14);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(38);
+axios.spread = __webpack_require__(39);
 
 module.exports = axios;
 
@@ -11483,13 +11523,13 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(11);
+var Cancel = __webpack_require__(13);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -11547,7 +11587,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11555,10 +11595,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(4);
 var utils = __webpack_require__(2);
-var InterceptorManager = __webpack_require__(25);
-var dispatchRequest = __webpack_require__(26);
-var isAbsoluteURL = __webpack_require__(34);
-var combineURLs = __webpack_require__(32);
+var InterceptorManager = __webpack_require__(26);
+var dispatchRequest = __webpack_require__(27);
+var isAbsoluteURL = __webpack_require__(35);
+var combineURLs = __webpack_require__(33);
 
 /**
  * Create a new instance of Axios
@@ -11639,7 +11679,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11698,15 +11738,15 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(2);
-var transformData = __webpack_require__(29);
-var isCancel = __webpack_require__(12);
+var transformData = __webpack_require__(30);
+var isCancel = __webpack_require__(14);
 var defaults = __webpack_require__(4);
 
 /**
@@ -11784,7 +11824,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11810,13 +11850,13 @@ module.exports = function enhanceError(error, config, code, response) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(13);
+var createError = __webpack_require__(15);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -11842,7 +11882,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11869,7 +11909,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11912,7 +11952,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11987,7 +12027,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12006,7 +12046,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12066,7 +12106,7 @@ module.exports = (
 
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12087,7 +12127,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12162,7 +12202,7 @@ module.exports = (
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12181,7 +12221,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12225,7 +12265,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12259,7 +12299,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12269,11 +12309,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _stringify = __webpack_require__(61);
+var _stringify = __webpack_require__(64);
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
-var _keys = __webpack_require__(62);
+var _keys = __webpack_require__(65);
 
 var _keys2 = _interopRequireDefault(_keys);
 
@@ -12366,53 +12406,6 @@ exports.default = {
 };
 
 /***/ }),
-/* 40 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-};
-
-/***/ }),
 /* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -12452,186 +12445,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
         console.log('Component mounted.');
-        this.clientsAtLab();
-    },
-    data: function data() {
-        return {
-            ticketModal: false,
-            modalLoading: true,
-            clients: [],
-            currentClient: [],
-            saveButton: 'Save',
-            resultsButton: 'Send Results',
-            baseUrl: base_url,
-            status: 'No Operation',
-            statusError: false,
-            statusSuccess: false,
-            classLoad: true,
-            statusWarn: false
-        };
-    },
-    methods: {
-        //close modal
-        closeTicket: function closeTicket() {
-            var inheritance = this;
-            inheritance.currentClient = [];
-            inheritance.ticketModal = false;
-        },
-        //open modal
-        openTicket: function openTicket() {
-            var inheritance = this;
-            inheritance.ticketModal = true;
-        },
-        //revert all status
-        revertStatus: function revertStatus() {
-            var inheritance = this;
-            inheritance.statusError = false;
-            inheritance.statusSuccess = false;
-            inheritance.statusWarn = false;
-        },
-        //get all clients for lab
-        clientsAtLab: function clientsAtLab() {
-            var inheritance = this;
-            axios.get(base_url + '/progress/atlab').then(function (response) {
-                inheritance.clients = response.data;
-            }.bind(this)).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
-                inheritance.statusError = true;
-            });
-        },
-        //close lab test and submit the results
-        submitResults: function submitResults(data) {
-            var inheritance = this;
-            inheritance.revertStatus();
-            inheritance.resultsButton = 'Sending Results';
-            inheritance.status = 'Sending Results to Doctor';
-            inheritance.saveResults(data);
-            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id);
-            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id).then(function () {
-                inheritance.resultsButton = 'Send Results';
-                inheritance.status = 'Results Successfully Submitted';
-                inheritance.statusSuccess = true;
-                inheritance.currentClient.progress.level = 3;
-            }.bind(this)).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
-                inheritance.statusError = true;
-            });
-        },
-        //open a given ticket
-        currentTicket: function currentTicket(ticket_id) {
-            var inheritance = this;
-            console.log(ticket_id);
-            axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
-                inheritance.currentClient = response.data;
-                inheritance.modalLoading = false;
-                inheritance.ticketModal = true;
-            }.bind(this)).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
-                inheritance.statusError = true;
-            });
-        },
-        //save results
-        saveResults: function saveResults(data) {
-            var inheritance = this;
-            inheritance.revertStatus();
-            inheritance.status = 'Saving Results...';
-            inheritance.saveButton = 'Saving...';
-            axios.post(base_url + '/atlab/test/update', data).then(function (response) {
-                inheritance.status = 'Result(s) successfully Saved';
-                inheritance.statusSuccess = true;
-                inheritance.saveButton = 'Save';
-            }.bind(this)).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
-                inheritance.statusError = true;
-            });
-        }
     }
 };
 
@@ -12640,500 +12457,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    mounted: function mounted() {
-        console.log('Component mounted.');
-        this.clientsAtChemist();
-    },
-    data: function data() {
-        return {
-            ticketModal: false,
-            allClients: [],
-            currentClient: [],
-            modalLoading: true,
-            status: 'No Operation',
-            baseUrl: base_url,
-            buttonInstance: ['button'],
-            ro: true,
-            statusError: false,
-            statusSuccess: false,
-            classLoad: true,
-            statusWarn: false,
-            amountPaid: '',
-            payment_method: ''
-        };
-    },
-    methods: {
-        clientsAtChemist: function clientsAtChemist() {
-            var inheritance = this;
-            axios.get(base_url + '/progress/atchemist').then(function (response) {
-                inheritance.allClients = response.data;
-            }.bind(this));
-        },
-        currentTicket: function currentTicket(ticket_id) {
-            var inheritance = this;
-            axios(base_url + '/atchemist/view/' + ticket_id).then(function (response) {
-                inheritance.currentClient = response.data;
-                inheritance.modalLoading = false;
-                inheritance.ticketModal = true;
-            }.bind(this));
-        },
-        closeTicket: function closeTicket() {
-            var inheritance = this;
-            inheritance.currentClient = [];
-            inheritance.ticketModal = false;
-        },
-        //reverse status
-        reverseStatus: function reverseStatus() {
-            var inheritance = this;
-            inheritance.statusSuccess = false;
-            inheritance.statusWarn = false;
-            inheritance.statusError = false;
-        },
-        confirm: function confirm(medicine, other) {
-            var inheritance = this;
-            inheritance.reverseStatus();
-            inheritance.status = 'Updating Prescription...';
-            var ticket_id = inheritance.currentClient.id;
-            var wah = false;
-            if (other == 'affirm') {
-                wah = true;
-                medicine.alternatative = null;
-                medicine.status = 'issued';
-            } else if (other == 'alternative') {
-                if (medicine.alternatative == null) {
-                    inheritance.status = 'Alternative Medication is Empty!';
-                    inheritance.statusError = true;
-                } else {
-                    medicine.status = 'issued';
-                    wah = true;
-                }
-            } else if (other == 'external') {
-                wah = true;
-                medicine.alternatative = null;
-                medicine.status = 'external';
-            }
-            if (wah == true) {
-                axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
-                    inheritance.currentTicket(ticket_id);
-                    inheritance.status = 'Prescription Successfully Updated';
-                    inheritance.statusSuccess = true;
-                }.bind(this)).catch(function (error) {
-                    inheritance.status = 'There was an Error while Processing your Request';
-                    inheritance.statusError = true;
-                });
-            }
-        },
-        alternative: function alternative(medicine) {
-            console.log(medicine.medicine);
-        },
-        closeMedication: function closeMedication() {
-            var inheritance = this;
-            inheritance.reverseStatus();
-            inheritance.status = "Closing up Prescription...";
-            //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
-            if (inheritance.amountPaid != inheritance.currentClient.total) {
-                inheritance.status = 'Amount to be Paid should be exact as Total owed';
-                inheritance.statusError = true;
-            } else {
-                axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
-                    inheritance.status = 'Prescription Closed Successfully';
-                    inheritance.statusSuccess = true;
-                }).catch(function (error) {
-                    inheritance.status = 'There was an Error while Processing your Request';
-                    inheritance.statusError = true;
-                });
-            }
-        }
-
-    }
-};
-
-/***/ }),
-/* 43 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    mounted: function mounted() {
-        console.log('Component mounted.');
-        this.allResources();
-    },
-    data: function data() {
-        return {
-            resources: [],
-            resourceAddModal: false,
-            newResource: [],
-            saveButton: 'Save',
-            afterSaveButton: false,
-            classLoad: true
-        };
-    },
-    methods: {
-        openAddModal: function openAddModal() {
-            var inheritance = this;
-            inheritance.resourceAddModal = true;
-            inheritance.afterSaveButton = false;
-        },
-        closeAddModal: function closeAddModal() {
-            var inheritance = this;
-            inheritance.resourceAddModal = false;
-        },
-        allResources: function allResources() {
-            var inheritance = this;
-            axios.get(base_url + '/resources/chemist/all').then(function (response) {
-                inheritance.resources = response.data;
-            }.bind(this));
-            setTimeout(function () {
-                $("#vueTable").DataTable();
-            }, 500);
-        },
-        saveResource: function saveResource() {
-            var inheritance = this;
-            inheritance.saveButton = 'Saving...';
-            console.log(inheritance.newResource);
-            axios.post(base_url + '/resources/chemist/new', { resource_name: inheritance.newResource.resource_name,
-                description: inheritance.newResource.description,
-                unit_price: inheritance.newResource.unit_price }).then(function (response) {
-                console.log(response.data);
-                inheritance.saveButton = 'Saved';
-                inheritance.afterSaveButton = true;
-                inheritance.allResources();
-            }.bind(this));
-        }
-    }
-};
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 44 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(95);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_input_tag__);
 //
 //
@@ -13557,10 +12882,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = {
+    props: 'openTicket',
     mounted: function mounted() {
         console.log('Component mounted.');
         this.allActiveMethod();
@@ -13894,7 +13221,1492 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.clientsAtLab();
+    },
+    data: function data() {
+        return {
+            ticketModal: false,
+            modalLoading: true,
+            clients: [],
+            currentClient: [],
+            saveButton: 'Save',
+            resultsButton: 'Send Results',
+            baseUrl: base_url,
+            status: 'No Operation',
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false
+        };
+    },
+    methods: {
+        //close modal
+        closeTicket: function closeTicket() {
+            var inheritance = this;
+            inheritance.currentClient = [];
+            inheritance.ticketModal = false;
+        },
+        //open modal
+        openTicket: function openTicket() {
+            var inheritance = this;
+            inheritance.ticketModal = true;
+        },
+        //revert all status
+        revertStatus: function revertStatus() {
+            var inheritance = this;
+            inheritance.statusError = false;
+            inheritance.statusSuccess = false;
+            inheritance.statusWarn = false;
+        },
+        //get all clients for lab
+        clientsAtLab: function clientsAtLab() {
+            var inheritance = this;
+            axios.get(base_url + '/progress/atlab').then(function (response) {
+                inheritance.clients = response.data;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //close lab test and submit the results
+        submitResults: function submitResults(data) {
+            var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.resultsButton = 'Sending Results';
+            inheritance.status = 'Sending Results to Doctor';
+            inheritance.saveResults(data);
+            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id);
+            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id).then(function () {
+                inheritance.resultsButton = 'Send Results';
+                inheritance.status = 'Results Successfully Submitted';
+                inheritance.statusSuccess = true;
+                inheritance.currentClient.progress.level = 3;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //open a given ticket
+        currentTicket: function currentTicket(ticket_id) {
+            var inheritance = this;
+            console.log(ticket_id);
+            axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
+                inheritance.currentClient = response.data;
+                inheritance.modalLoading = false;
+                inheritance.ticketModal = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //save results
+        saveResults: function saveResults(data) {
+            var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.status = 'Saving Results...';
+            inheritance.saveButton = 'Saving...';
+            axios.post(base_url + '/atlab/test/update', data).then(function (response) {
+                inheritance.status = 'Result(s) successfully Saved';
+                inheritance.statusSuccess = true;
+                inheritance.saveButton = 'Save';
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 44 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.clientsAtChemist();
+    },
+    data: function data() {
+        return {
+            ticketModal: false,
+            allClients: [],
+            currentClient: [],
+            modalLoading: true,
+            status: 'No Operation',
+            baseUrl: base_url,
+            buttonInstance: ['button'],
+            ro: true,
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false,
+            amountPaid: '',
+            payment_method: ''
+        };
+    },
+    methods: {
+        clientsAtChemist: function clientsAtChemist() {
+            var inheritance = this;
+            axios.get(base_url + '/progress/atchemist').then(function (response) {
+                inheritance.allClients = response.data;
+            }.bind(this));
+        },
+        currentTicket: function currentTicket(ticket_id) {
+            var inheritance = this;
+            axios(base_url + '/atchemist/view/' + ticket_id).then(function (response) {
+                inheritance.currentClient = response.data;
+                inheritance.modalLoading = false;
+                inheritance.ticketModal = true;
+            }.bind(this));
+        },
+        closeTicket: function closeTicket() {
+            var inheritance = this;
+            inheritance.currentClient = [];
+            inheritance.ticketModal = false;
+        },
+        //reverse status
+        reverseStatus: function reverseStatus() {
+            var inheritance = this;
+            inheritance.statusSuccess = false;
+            inheritance.statusWarn = false;
+            inheritance.statusError = false;
+        },
+        confirm: function confirm(medicine, other) {
+            var inheritance = this;
+            inheritance.reverseStatus();
+            inheritance.status = 'Updating Prescription...';
+            var ticket_id = inheritance.currentClient.id;
+            var wah = false;
+            if (other == 'affirm') {
+                wah = true;
+                medicine.alternatative = null;
+                medicine.status = 'issued';
+            } else if (other == 'alternative') {
+                if (medicine.alternatative == null) {
+                    inheritance.status = 'Alternative Medication is Empty!';
+                    inheritance.statusError = true;
+                } else {
+                    medicine.status = 'issued';
+                    wah = true;
+                }
+            } else if (other == 'external') {
+                wah = true;
+                medicine.alternatative = null;
+                medicine.status = 'external';
+            }
+            if (wah == true) {
+                axios.post(base_url + '/atchemist/update', medicine).then(function (response) {
+                    inheritance.currentTicket(ticket_id);
+                    inheritance.status = 'Prescription Successfully Updated';
+                    inheritance.statusSuccess = true;
+                }.bind(this)).catch(function (error) {
+                    inheritance.status = 'There was an Error while Processing your Request';
+                    inheritance.statusError = true;
+                });
+            }
+        },
+        alternative: function alternative(medicine) {
+            console.log(medicine.medicine);
+        },
+        closeMedication: function closeMedication() {
+            var inheritance = this;
+            inheritance.reverseStatus();
+            inheritance.status = "Closing up Prescription...";
+            //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
+            if (inheritance.amountPaid != inheritance.currentClient.total) {
+                inheritance.status = 'Amount to be Paid should be exact as Total owed';
+                inheritance.statusError = true;
+            } else {
+                axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
+                    inheritance.status = 'Prescription Closed Successfully';
+                    inheritance.statusSuccess = true;
+                }).catch(function (error) {
+                    inheritance.status = 'There was an Error while Processing your Request';
+                    inheritance.statusError = true;
+                });
+            }
+        }
+
+    }
+};
+
+/***/ }),
 /* 45 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.allResources();
+    },
+    data: function data() {
+        return {
+            resources: [],
+            resourceAddModal: false,
+            newResource: [],
+            saveButton: 'Save',
+            afterSaveButton: false,
+            classLoad: true
+        };
+    },
+    methods: {
+        openAddModal: function openAddModal() {
+            var inheritance = this;
+            inheritance.resourceAddModal = true;
+            inheritance.afterSaveButton = false;
+        },
+        closeAddModal: function closeAddModal() {
+            var inheritance = this;
+            inheritance.resourceAddModal = false;
+        },
+        allResources: function allResources() {
+            var inheritance = this;
+            axios.get(base_url + '/resources/chemist/all').then(function (response) {
+                inheritance.resources = response.data;
+            }.bind(this));
+            setTimeout(function () {
+                $("#vueTable").DataTable();
+            }, 500);
+        },
+        saveResource: function saveResource() {
+            var inheritance = this;
+            inheritance.saveButton = 'Saving...';
+            console.log(inheritance.newResource);
+            axios.post(base_url + '/resources/chemist/new', { resource_name: inheritance.newResource.resource_name,
+                description: inheritance.newResource.description,
+                unit_price: inheritance.newResource.unit_price }).then(function (response) {
+                console.log(response.data);
+                inheritance.saveButton = 'Saved';
+                inheritance.afterSaveButton = true;
+                inheritance.allResources();
+            }.bind(this));
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 46 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_input_tag__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__app__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    props: 'openTicket',
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.allActiveMethod();
+    },
+    components: { InputTag: __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default.a },
+    data: function data() {
+        return {
+            ticketModal: false,
+            allActives: [],
+            currentTicket: [],
+            atDoctorButton: 'Save Symptoms',
+            toChemist: 'Submit to Chemist',
+            savePrescription: 'Save',
+            sendtoLab: 'Send Client to Lab',
+            afterSymptoms: false,
+            symptoms: '',
+            tagsArray: [],
+            recommendAction: true,
+            chooseLab: false,
+            chooseMed: false,
+            labTechnicians: [],
+            selectedLabTech: '',
+            successtoLab: false,
+            modalLoading: true,
+            baseUrl: base_url,
+            status: 'No Operation',
+            test_tags: [],
+            test_tagsId: [],
+            prescription_tags: [],
+            prescription_tagsId: [],
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false,
+            searchTest: '',
+            results: [],
+            prescriptionResults: [],
+            noResults: false,
+            searchPrescription: '',
+            noPrescriptionResults: false,
+            allDocs: [],
+            chat_doctor: '',
+            currentChat: [],
+            chatMessage: ''
+        };
+    },
+    watch: {
+        searchTest: function searchTest() {
+            this.results = [];
+            this.findTests();
+        },
+        searchPrescription: function searchPrescription() {
+            this.prescriptionResults = [];
+            this.findPrescription();
+        }
+    },
+    methods: {
+        addTest: function addTest(result) {
+            var inheritance = this;
+            inheritance.test_tags.push(result.resource_name);
+            inheritance.test_tagsId.push(result.id);
+            inheritance.saveLab();
+            inheritance.findTests();
+        },
+        activeDocs: function activeDocs() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all/doctors').then(function (response) {
+                inheritance.allDocs = response.data;
+            }.bind(this));
+        },
+        removeTest: function removeTest(result) {
+            var inheritance = this;
+            var index = inheritance.test_tags.indexOf(result.resource_name);
+            this.test_tags.splice(index, 1);
+            var index2 = inheritance.test_tagsId.indexOf(result.id);
+            this.test_tagsId.splice(index, 1);
+            inheritance.saveLab();
+            inheritance.findTests();
+        },
+        addPrescription: function addPrescription(result) {
+            var inheritance = this;
+            inheritance.prescription_tags.push(result.resource_name);
+            inheritance.prescription_tagsId.push(result.id);
+            inheritance.saveP();
+            inheritance.findPrescription();
+        },
+        removePrescription: function removePrescription(result) {
+            var inheritance = this;
+            var index = inheritance.prescription_tags.indexOf(result.resource_name);
+            this.prescription_tags.splice(index, 1);
+            var index2 = inheritance.prescription_tagsId.indexOf(result.id);
+            this.prescription_tagsId.splice(index, 1);
+            inheritance.saveP();
+            inheritance.findPrescription();
+        },
+        //search thru lab tests
+        findTests: _.debounce(function () {
+            var inheritance = this;
+            var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : 'null';
+            console.log(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id);
+            if (inheritance.searchTest.length >= 1) {
+                axios.get(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id).then(function (response) {
+                    console.log(response.data);
+                    if (response.data.length == 0) {
+                        inheritance.noResults = true;
+                    } else {
+                        inheritance.noResults = false;
+                    }
+                    inheritance.results = response.data;
+                }.bind(this));
+            }
+        }, 500),
+        findPrescription: _.debounce(function () {
+            var inheritance = this;
+            console.log('huh');
+            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'null';
+            console.log(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id);
+            if (inheritance.searchPrescription.length >= 1) {
+                axios.get(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id).then(function (response) {
+                    console.log(response);
+                    if (response.data.length == 0) {
+                        inheritance.noPrescriptionResults = true;
+                    } else {
+                        inheritance.noPrescriptionResults = false;
+                    }
+                    inheritance.prescriptionResults = response.data;
+                }.bind(this));
+            }
+        }, 500),
+        //get all Active Lab Technicians
+        labtechs: function labtechs() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/query/labtechs').then(function (response) {
+                inheritance.labTechnicians = response.data;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //open a specific ticket, for docs/nurses
+        openTicket: function openTicket(ticketid) {
+            var inheritance = this;
+            inheritance.modalLoading = true;
+            axios.get(base_url + '/tickets/my-tickets/' + ticketid).then(function (response) {
+                inheritance.currentTicket = response.data;
+                inheritance.activeDocs();
+                inheritance.labtechs();
+                inheritance.modalLoading = false;
+                if (response.data.progress.description == 'Client at Lab') {
+                    inheritance.status = "Currently awaiting response from Lab";
+                    inheritance.statusWarn = true;
+                }
+                inheritance.updateTestTags();
+                inheritance.updatePrescriptionTags();
+                setTimeout(function () {
+                    $('select').tagsinput('refresh');
+                }, 500);
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+            inheritance.ticketModal = true;
+        },
+        updateTestTags: function updateTestTags() {
+            var inheritance = this;
+            if (inheritance.currentTicket.ticket_tags != null) {
+                inheritance.test_tags = inheritance.currentTicket.ticket_tags;
+                inheritance.test_tagsId = inheritance.currentTicket.test_tagsId;
+            }
+        },
+        updatePrescriptionTags: function updatePrescriptionTags() {
+            var inheritance = this;
+            if (inheritance.currentTicket.medicine_tags != null) {
+                inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+                inheritance.prescription_tagsId = inheritance.currentTicket.medicine_tagsId;
+            }
+        },
+        //close the above opened ticket.
+        closeTicket: function closeTicket() {
+            var inheritance = this;
+            inheritance.ticketModal = false;
+            inheritance.status = 'No Operation';
+            inheritance.currentTicket = [];
+            inheritance.allActiveMethod();
+        },
+        //list all active tickets, that belong to the logged in user
+        allActiveMethod: function allActiveMethod() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all-active').then(function (response) {
+                inheritance.allActives = response.data;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //revert all status during api call
+        revertStatus: function revertStatus() {
+            var inheritance = this;
+            inheritance.statusSuccess = false;
+            inheritance.statusError = false;
+            inheritance.statusWarn = false;
+        },
+        //for doctor. save client's symptoms
+        saveSymptoms: function saveSymptoms() {
+            var inheritance = this;
+            console.log(inheritance.tagsArray);
+            inheritance.revertStatus();
+            inheritance.atDoctorButton = 'Saving...';
+            inheritance.status = 'Saving Symptoms...';
+            // var symptom = $('#sympt').val();
+            //console.log(symptom);
+            var hticket_id = $('#hiddenTicketId').val();
+            console.log(hticket_id);
+            //inheritance.symptoms = symptom;
+            axios.get(base_url + '/tickets/my-tickets/save/symptoms?ticket_id=' + hticket_id + '&status=pending&symptoms=' + inheritance.currentTicket.tags).then(function (response) {
+                console.log(response);
+                inheritance.recommendAction = true;
+                inheritance.atDoctorButton = 'Save Symptoms';
+                inheritance.status = 'Symptoms Successfully Saved';
+                inheritance.statusSuccess = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        recommendLab: function recommendLab() {
+            var inheritance = this;
+            inheritance.chooseLab = true;
+            inheritance.chooseMed = false;
+        },
+        prescribeMedication: function prescribeMedication() {
+            var inheritance = this;
+            inheritance.chooseLab = false;
+            inheritance.chooseMed = true;
+        },
+        //save the prescriptions given
+        saveP: function saveP() {
+            var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.status = 'Saving Prescription(s)';
+            inheritance.savePrescription = "Saving...";
+            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
+            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
+            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function (response) {
+                inheritance.status = 'Prescription(s) Successfully Saved';
+                inheritance.statusSuccess = true;
+                inheritance.statusError = false;
+                inheritance.savePrescription = "Save";
+                inheritance.currentTicket.prescription = response.data;
+                //inheritance.openTicket(inheritance.currentTicket.id);
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //save all prescriptions and close chapter
+        submitP: function submitP() {
+            var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.status = 'Submitting Prescription(s)';
+            inheritance.toChemist = 'Submitting';
+            console.log(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id);
+            axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
+                inheritance.status = 'Prescription(s) Successfully Submitted';
+                inheritance.statusSuccess = true;
+                //inheritance.openTicket(inheritance.currentTicket.id);
+                inheritance.toChemist = 'Submit to Chemist';
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //start a lab ticket.
+        saveLab: function saveLab() {
+            var inheritance = this;
+            inheritance.revertStatus();
+            var ticket_id = inheritance.currentTicket.id;
+            var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : null;
+            //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
+            //inheritance.sendtoLab = 'Saving Lab Test(s)...';
+            inheritance.status = 'Saving Tests...';
+            var tests = $('#tests').val();
+            console.log(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.test_tagsId + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id);
+            axios.get(base_url + '/tickets/my-tickets/query/startlab?tests=' + inheritance.test_tagsId + '&technician=' + inheritance.selectedLabTech + '&ticket_id=' + inheritance.currentTicket.id + '&labdatas_id=' + labdatas_id).then(function (response) {
+                inheritance.currentTicket.lab_datas = response.data;
+                inheritance.status = 'Tests Successfully Saved';
+                inheritance.statusSuccess = true;
+                //inheritance.sendtoLab = 'Sent';
+                //inheritance.openTicket(ticket_id);
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //send client to lab
+        sendLab: function sendLab() {
+            var inheritance = this;
+            inheritance.revertStatus();
+            inheritance.status = 'Sending Client data to Lab...';
+            inheritance.sendtoLab = 'Sending...';
+            //console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
+            //inheritance.saveLab();
+            axios.get(base_url + '/tickets/my-tickets/query/sendlab?labdatas_id=' + inheritance.currentTicket.lab_datas.id + '&ticket_id=' + inheritance.currentTicket.id).then(function (response) {
+                inheritance.currentTicket.progress = response.data;
+                inheritance.sendtoLab = 'Send Client to Lab';
+                inheritance.status = 'Data Successfully Send to Lab';
+                inheritance.statusSuccess = true;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        startChat: function startChat() {
+            var inheritance = this;
+            axios.get(base_url + '/chat/start?ticket_id=' + inheritance.currentTicket.id + '&consultant_id=' + inheritance.chat_doctor).then(function (response) {
+                console.log(response.data.messages[0]);
+                inheritance.currentChat = response.data;
+                console.log('huh');
+            }.bind(this));
+            //console.log(inheritance.chat_doctor);
+        },
+        sendMessage: function sendMessage() {
+            var inheritance = this;
+            //console.log(inheritance.chatMessage);
+            axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage, message_to: inheritance.currentChat.originator.id }).then(function (response) {
+                inheritance.currentChat.messages.push(response.data);
+            }.bind(this));
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 47 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14128,7 +14940,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14309,7 +15121,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14383,7 +15195,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14536,7 +15348,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14682,7 +15494,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14880,7 +15692,665 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 51 */
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_input_tag__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.huh');
+        this.consults();
+    },
+    data: function data() {
+        return {
+            modal: false,
+            newMessages: [],
+            currentTicket: [],
+            atDoctorButton: 'Save Symptoms',
+            toChemist: 'Submit to Chemist',
+            savePrescription: 'Save',
+            sendtoLab: 'Send Client to Lab',
+            afterSymptoms: false,
+            symptoms: '',
+            tagsArray: [],
+            recommendAction: true,
+            chooseLab: false,
+            chooseMed: false,
+            labTechnicians: [],
+            selectedLabTech: '',
+            successtoLab: false,
+            modalLoading: true,
+            baseUrl: base_url,
+            status: 'No Operation',
+            test_tags: [],
+            test_tagsId: [],
+            prescription_tags: [],
+            prescription_tagsId: [],
+            statusError: false,
+            statusSuccess: false,
+            classLoad: true,
+            statusWarn: false,
+            searchTest: '',
+            results: [],
+            prescriptionResults: [],
+            noResults: false,
+            searchPrescription: '',
+            noPrescriptionResults: false,
+            allDocs: [],
+            chat_doctor: '',
+            currentChat: [],
+            chatMessage: ''
+        };
+    },
+    methods: {
+        allMessages: function allMessages(consult_id) {
+            var inheritance = this;
+            console.log(base_url + '/chat/allmessages?consult_id=' + consult_id);
+            axios.get(base_url + '/chat/allmessages?consult_id=' + consult_id).then(function (response) {
+                inheritance.currentChat = response.data;
+            }.bind(this));
+        },
+        closeModal: function closeModal() {
+            var inheritance = this;
+            inheritance.modal = false;
+        },
+        addTest: function addTest(result) {
+            var inheritance = this;
+            inheritance.test_tags.push(result.resource_name);
+            inheritance.test_tagsId.push(result.id);
+            inheritance.saveLab();
+            inheritance.findTests();
+        },
+        activeDocs: function activeDocs() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all/doctors').then(function (response) {
+                inheritance.allDocs = response.data;
+            }.bind(this));
+        },
+        removeTest: function removeTest(result) {
+            var inheritance = this;
+            var index = inheritance.test_tags.indexOf(result.resource_name);
+            this.test_tags.splice(index, 1);
+            var index2 = inheritance.test_tagsId.indexOf(result.id);
+            this.test_tagsId.splice(index, 1);
+            inheritance.saveLab();
+            inheritance.findTests();
+        },
+        addPrescription: function addPrescription(result) {
+            var inheritance = this;
+            inheritance.prescription_tags.push(result.resource_name);
+            inheritance.prescription_tagsId.push(result.id);
+            inheritance.saveP();
+            inheritance.findPrescription();
+        },
+        removePrescription: function removePrescription(result) {
+            var inheritance = this;
+            var index = inheritance.prescription_tags.indexOf(result.resource_name);
+            this.prescription_tags.splice(index, 1);
+            var index2 = inheritance.prescription_tagsId.indexOf(result.id);
+            this.prescription_tagsId.splice(index, 1);
+            inheritance.saveP();
+            inheritance.findPrescription();
+        },
+        //search thru lab tests
+        findTests: _.debounce(function () {
+            var inheritance = this;
+            var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : 'null';
+            console.log(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id);
+            if (inheritance.searchTest.length >= 1) {
+                axios.get(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id).then(function (response) {
+                    console.log(response.data);
+                    if (response.data.length == 0) {
+                        inheritance.noResults = true;
+                    } else {
+                        inheritance.noResults = false;
+                    }
+                    inheritance.results = response.data;
+                }.bind(this));
+            }
+        }, 500),
+        findPrescription: _.debounce(function () {
+            var inheritance = this;
+            console.log('huh');
+            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'null';
+            console.log(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id);
+            if (inheritance.searchPrescription.length >= 1) {
+                axios.get(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id).then(function (response) {
+                    console.log(response);
+                    if (response.data.length == 0) {
+                        inheritance.noPrescriptionResults = true;
+                    } else {
+                        inheritance.noPrescriptionResults = false;
+                    }
+                    inheritance.prescriptionResults = response.data;
+                }.bind(this));
+            }
+        }, 500),
+        //get all Active Lab Technicians
+        labtechs: function labtechs() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/query/labtechs').then(function (response) {
+                inheritance.labTechnicians = response.data;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //open a specific ticket, for docs/nurses
+        openTicket: function openTicket(ticketid, consult_id) {
+            var inheritance = this;
+            inheritance.modal = true;
+            axios.get(base_url + '/tickets/my-tickets/' + ticketid).then(function (response) {
+                inheritance.currentTicket = response.data;
+                inheritance.activeDocs();
+                inheritance.labtechs();
+                inheritance.modalLoading = false;
+                if (response.data.progress.description == 'Client at Lab') {
+                    inheritance.status = "Currently awaiting response from Lab";
+                    inheritance.statusWarn = true;
+                }
+                inheritance.updateTestTags();
+                inheritance.updatePrescriptionTags();
+                inheritance.allMessages(consult_id);
+                //setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+            inheritance.ticketModal = true;
+        },
+        updateTestTags: function updateTestTags() {
+            var inheritance = this;
+            if (inheritance.currentTicket.ticket_tags != null) {
+                inheritance.test_tags = inheritance.currentTicket.ticket_tags;
+                inheritance.test_tagsId = inheritance.currentTicket.test_tagsId;
+            }
+        },
+        updatePrescriptionTags: function updatePrescriptionTags() {
+            var inheritance = this;
+            if (inheritance.currentTicket.medicine_tags != null) {
+                inheritance.prescription_tags = inheritance.currentTicket.medicine_tags;
+                inheritance.prescription_tagsId = inheritance.currentTicket.medicine_tagsId;
+            }
+        },
+        //close the above opened ticket.
+        closeTicket: function closeTicket() {
+            var inheritance = this;
+            inheritance.modal = false;
+            inheritance.status = 'No Operation';
+        },
+        //list all active tickets, that belong to the logged in user
+        allActiveMethod: function allActiveMethod() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all-active').then(function (response) {
+                inheritance.allActives = response.data;
+            }.bind(this)).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
+        },
+        //revert all status during api call
+        revertStatus: function revertStatus() {
+            var inheritance = this;
+            inheritance.statusSuccess = false;
+            inheritance.statusError = false;
+            inheritance.statusWarn = false;
+        },
+        //for doctor. save client's symptoms
+        saveSymptoms: function saveSymptoms() {},
+        recommendLab: function recommendLab() {},
+        prescribeMedication: function prescribeMedication() {},
+        //save the prescriptions given
+        saveP: function saveP() {},
+        //save all prescriptions and close chapter
+        submitP: function submitP() {},
+        //start a lab ticket.
+        saveLab: function saveLab() {},
+        //send client to lab
+        sendLab: function sendLab() {},
+        startChat: function startChat() {
+            var inheritance = this;
+            axios.get(base_url + '/chat/start?ticket_id=' + inheritance.currentTicket.id + '&consultant_id=' + inheritance.chat_doctor).then(function (response) {
+                console.log(response.data.messages[0]);
+                inheritance.currentChat = response.data;
+                console.log('huh');
+            }.bind(this));
+            //console.log(inheritance.chat_doctor);
+        },
+        sendMessage: function sendMessage() {
+            var inheritance = this;
+            //console.log(inheritance.chatMessage);
+            axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage, message_to: inheritance.currentChat.originator.id }).then(function (response) {
+                inheritance.currentChat.messages.push(response.data);
+            }.bind(this));
+        },
+        consults: function consults() {
+            var inheritance = this;
+            axios.get(base_url + '/chat/unread').then(function (response) {
+                inheritance.newMessages = response.data;
+                console.log(response.data);
+            }.bind(this));
+        },
+        open: function open(ticket) {
+            EventBus.$emit('openT', ticket);
+        }
+    }
+};
+
+/***/ }),
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14927,7 +16397,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15003,11 +16473,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 };
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(93);
+window._ = __webpack_require__(96);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -15017,7 +16487,7 @@ window._ = __webpack_require__(93);
 
 window.$ = window.jQuery = __webpack_require__(0);
 
-__webpack_require__(63);
+__webpack_require__(66);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -15025,7 +16495,7 @@ __webpack_require__(63);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(126);
+window.Vue = __webpack_require__(132);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -15033,7 +16503,7 @@ window.Vue = __webpack_require__(126);
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(21);
+window.axios = __webpack_require__(22);
 
 window.axios.defaults.headers.common = {
   'X-CSRF-TOKEN': window.Laravel.csrfToken,
@@ -15056,7 +16526,7 @@ window.axios.defaults.headers.common = {
 // });
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {jQuery(document).ready(function () {
@@ -15086,7 +16556,7 @@ window.axios.defaults.headers.common = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16178,7 +17648,7 @@ window.axios.defaults.headers.common = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16390,7 +17860,7 @@ window.axios.defaults.headers.common = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -18268,7 +19738,7 @@ window.axios.defaults.headers.common = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -18435,7 +19905,7 @@ window.axios.defaults.headers.common = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /*!
@@ -18549,7 +20019,7 @@ window.axios.defaults.headers.common = {
 })();
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {window.fakeStorage = {
@@ -18933,19 +20403,19 @@ window.StyleSwitcher = new StyleSwitcher();
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(64), __esModule: true };
+module.exports = { "default": __webpack_require__(67), __esModule: true };
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(65), __esModule: true };
+module.exports = { "default": __webpack_require__(68), __esModule: true };
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*!
@@ -21329,7 +22799,7 @@ if (typeof jQuery === 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var core  = __webpack_require__(3)
@@ -21339,14 +22809,14 @@ module.exports = function stringify(it){ // eslint-disable-line no-unused-vars
 };
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(90);
+__webpack_require__(93);
 module.exports = __webpack_require__(3).Object.keys;
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports) {
 
 module.exports = function(it){
@@ -21355,7 +22825,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8);
@@ -21365,14 +22835,14 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // false -> Array#indexOf
 // true  -> Array#includes
-var toIObject = __webpack_require__(17)
-  , toLength  = __webpack_require__(86)
-  , toIndex   = __webpack_require__(85);
+var toIObject = __webpack_require__(19)
+  , toLength  = __webpack_require__(89)
+  , toIndex   = __webpack_require__(88);
 module.exports = function(IS_INCLUDES){
   return function($this, el, fromIndex){
     var O      = toIObject($this)
@@ -21391,7 +22861,7 @@ module.exports = function(IS_INCLUDES){
 };
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -21401,11 +22871,11 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(66);
+var aFunction = __webpack_require__(69);
 module.exports = function(fn, that, length){
   aFunction(fn);
   if(that === undefined)return fn;
@@ -21426,7 +22896,7 @@ module.exports = function(fn, that, length){
 };
 
 /***/ }),
-/* 71 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(8)
@@ -21438,7 +22908,7 @@ module.exports = function(it){
 };
 
 /***/ }),
-/* 72 */
+/* 75 */
 /***/ (function(module, exports) {
 
 // IE 8- don't enum bug keys
@@ -21447,13 +22917,13 @@ module.exports = (
 ).split(',');
 
 /***/ }),
-/* 73 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global    = __webpack_require__(7)
   , core      = __webpack_require__(3)
-  , ctx       = __webpack_require__(70)
-  , hide      = __webpack_require__(75)
+  , ctx       = __webpack_require__(73)
+  , hide      = __webpack_require__(78)
   , PROTOTYPE = 'prototype';
 
 var $export = function(type, name, source){
@@ -21513,7 +22983,7 @@ $export.R = 128; // real proto method for `library`
 module.exports = $export;
 
 /***/ }),
-/* 74 */
+/* 77 */
 /***/ (function(module, exports) {
 
 var hasOwnProperty = {}.hasOwnProperty;
@@ -21522,11 +22992,11 @@ module.exports = function(it, key){
 };
 
 /***/ }),
-/* 75 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP         = __webpack_require__(78)
-  , createDesc = __webpack_require__(82);
+var dP         = __webpack_require__(81)
+  , createDesc = __webpack_require__(85);
 module.exports = __webpack_require__(5) ? function(object, key, value){
   return dP.f(object, key, createDesc(1, value));
 } : function(object, key, value){
@@ -21535,30 +23005,30 @@ module.exports = __webpack_require__(5) ? function(object, key, value){
 };
 
 /***/ }),
-/* 76 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(5) && !__webpack_require__(6)(function(){
-  return Object.defineProperty(__webpack_require__(71)('div'), 'a', {get: function(){ return 7; }}).a != 7;
+  return Object.defineProperty(__webpack_require__(74)('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
 
 /***/ }),
-/* 77 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(69);
+var cof = __webpack_require__(72);
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
 
 /***/ }),
-/* 78 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject       = __webpack_require__(67)
-  , IE8_DOM_DEFINE = __webpack_require__(76)
-  , toPrimitive    = __webpack_require__(88)
+var anObject       = __webpack_require__(70)
+  , IE8_DOM_DEFINE = __webpack_require__(79)
+  , toPrimitive    = __webpack_require__(91)
   , dP             = Object.defineProperty;
 
 exports.f = __webpack_require__(5) ? Object.defineProperty : function defineProperty(O, P, Attributes){
@@ -21574,13 +23044,13 @@ exports.f = __webpack_require__(5) ? Object.defineProperty : function defineProp
 };
 
 /***/ }),
-/* 79 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var has          = __webpack_require__(74)
-  , toIObject    = __webpack_require__(17)
-  , arrayIndexOf = __webpack_require__(68)(false)
-  , IE_PROTO     = __webpack_require__(83)('IE_PROTO');
+var has          = __webpack_require__(77)
+  , toIObject    = __webpack_require__(19)
+  , arrayIndexOf = __webpack_require__(71)(false)
+  , IE_PROTO     = __webpack_require__(86)('IE_PROTO');
 
 module.exports = function(object, names){
   var O      = toIObject(object)
@@ -21596,23 +23066,23 @@ module.exports = function(object, names){
 };
 
 /***/ }),
-/* 80 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys       = __webpack_require__(79)
-  , enumBugKeys = __webpack_require__(72);
+var $keys       = __webpack_require__(82)
+  , enumBugKeys = __webpack_require__(75);
 
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
 
 /***/ }),
-/* 81 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(73)
+var $export = __webpack_require__(76)
   , core    = __webpack_require__(3)
   , fails   = __webpack_require__(6);
 module.exports = function(KEY, exec){
@@ -21623,7 +23093,7 @@ module.exports = function(KEY, exec){
 };
 
 /***/ }),
-/* 82 */
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports = function(bitmap, value){
@@ -21636,17 +23106,17 @@ module.exports = function(bitmap, value){
 };
 
 /***/ }),
-/* 83 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(84)('keys')
-  , uid    = __webpack_require__(89);
+var shared = __webpack_require__(87)('keys')
+  , uid    = __webpack_require__(92);
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(7)
@@ -21657,10 +23127,10 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(16)
+var toInteger = __webpack_require__(18)
   , max       = Math.max
   , min       = Math.min;
 module.exports = function(index, length){
@@ -21669,28 +23139,28 @@ module.exports = function(index, length){
 };
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(16)
+var toInteger = __webpack_require__(18)
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(15);
+var defined = __webpack_require__(17);
 module.exports = function(it){
   return Object(defined(it));
 };
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -21707,7 +23177,7 @@ module.exports = function(it, S){
 };
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports) {
 
 var id = 0
@@ -21717,28 +23187,28 @@ module.exports = function(key){
 };
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(87)
-  , $keys    = __webpack_require__(80);
+var toObject = __webpack_require__(90)
+  , $keys    = __webpack_require__(83);
 
-__webpack_require__(81)('keys', function(){
+__webpack_require__(84)('keys', function(){
   return function keys(it){
     return $keys(toObject(it));
   };
 });
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(92)();
+exports = module.exports = __webpack_require__(95)();
 exports.push([module.i, "\n.vue-input-tag-wrapper {\n  background-color: #fff;\n  border: 1px solid #ccc;\n  overflow: hidden;\n  padding-left: 4px;\n  padding-top: 4px;\n  cursor: text;\n  text-align: left;\n  -webkit-appearance: textfield;\n}\n.vue-input-tag-wrapper .input-tag {\n  background-color: #cde69c;\n  border-radius: 2px;\n  border: 1px solid #a5d24a;\n  color: #638421;\n  display: inline-block;\n  font-size: 13px;\n  font-weight: 400;\n  margin-bottom: 4px;\n  margin-right: 4px;\n  padding: 3px;\n}\n.vue-input-tag-wrapper .input-tag .remove {\n  cursor: pointer;\n  font-weight: bold;\n  color: #638421;\n}\n.vue-input-tag-wrapper .input-tag .remove:hover {\n  text-decoration: none;\n}\n.vue-input-tag-wrapper .input-tag .remove::before {\n  content: \" x\";\n}\n.vue-input-tag-wrapper .new-tag {\n  background: transparent;\n  border: 0;\n  color: #777;\n  font-size: 13px;\n  font-weight: 400;\n  margin-bottom: 6px;\n  margin-top: 1px;\n  outline: none;\n  padding: 4px;\n  padding-left: 0;\n  width: 80px;\n}\n.vue-input-tag-wrapper.read-only {\n  cursor: default;\n}\n\n", ""]);
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports) {
 
 /*
@@ -21794,7 +23264,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -38883,10 +40353,10 @@ module.exports = function() {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18), __webpack_require__(127)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20), __webpack_require__(133)(module)))
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -39241,52 +40711,14 @@ module.exports = function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(123)
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(39),
-  /* template */
-  __webpack_require__(118),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/opt/lampp/htdocs/san/node_modules/vue-input-tag/src/InputTag.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] InputTag.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-76cb1f12", Component.options)
-  } else {
-    hotAPI.reload("data-v-76cb1f12", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(40),
+  __webpack_require__(41),
   /* template */
-  __webpack_require__(116),
+  __webpack_require__(121),
   /* scopeId */
   null,
   /* cssModules */
@@ -39313,14 +40745,48 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(41),
+  __webpack_require__(42),
   /* template */
-  __webpack_require__(115),
+  __webpack_require__(126),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/atDoctor.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] atDoctor.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ba13bacc", Component.options)
+  } else {
+    hotAPI.reload("data-v-ba13bacc", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(43),
+  /* template */
+  __webpack_require__(119),
   /* scopeId */
   null,
   /* cssModules */
@@ -39347,14 +40813,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 98 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(42),
+  __webpack_require__(44),
   /* template */
-  __webpack_require__(122),
+  __webpack_require__(128),
   /* scopeId */
   null,
   /* cssModules */
@@ -39381,14 +40847,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 99 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(43),
+  __webpack_require__(45),
   /* template */
-  __webpack_require__(111),
+  __webpack_require__(115),
   /* scopeId */
   null,
   /* cssModules */
@@ -39415,14 +40881,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 100 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(44),
+  __webpack_require__(46),
   /* template */
-  __webpack_require__(117),
+  __webpack_require__(122),
   /* scopeId */
   null,
   /* cssModules */
@@ -39449,14 +40915,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 101 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(45),
+  __webpack_require__(47),
   /* template */
-  __webpack_require__(121),
+  __webpack_require__(127),
   /* scopeId */
   null,
   /* cssModules */
@@ -39483,14 +40949,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(46),
+  __webpack_require__(48),
   /* template */
-  __webpack_require__(113),
+  __webpack_require__(117),
   /* scopeId */
   null,
   /* cssModules */
@@ -39517,14 +40983,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(47),
+  __webpack_require__(49),
   /* template */
-  __webpack_require__(112),
+  __webpack_require__(116),
   /* scopeId */
   null,
   /* cssModules */
@@ -39551,14 +41017,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(48),
+  __webpack_require__(50),
   /* template */
-  __webpack_require__(119),
+  __webpack_require__(124),
   /* scopeId */
   null,
   /* cssModules */
@@ -39585,14 +41051,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(49),
+  __webpack_require__(51),
   /* template */
-  __webpack_require__(110),
+  __webpack_require__(114),
   /* scopeId */
   null,
   /* cssModules */
@@ -39619,14 +41085,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(50),
+  __webpack_require__(52),
   /* template */
-  __webpack_require__(120),
+  __webpack_require__(125),
   /* scopeId */
   null,
   /* cssModules */
@@ -39653,14 +41119,48 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(51),
+  __webpack_require__(53),
   /* template */
-  __webpack_require__(114),
+  __webpack_require__(120),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/sidebar.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] sidebar.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-64bb3424", Component.options)
+  } else {
+    hotAPI.reload("data-v-64bb3424", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(54),
+  /* template */
+  __webpack_require__(118),
   /* scopeId */
   null,
   /* cssModules */
@@ -39687,14 +41187,14 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 108 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(1)(
   /* script */
-  __webpack_require__(52),
+  __webpack_require__(55),
   /* template */
-  __webpack_require__(109),
+  __webpack_require__(113),
   /* scopeId */
   null,
   /* cssModules */
@@ -39721,7 +41221,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 109 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -39787,7 +41287,7 @@ if (false) {
 }
 
 /***/ }),
-/* 110 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -39925,7 +41425,7 @@ if (false) {
 }
 
 /***/ }),
-/* 111 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40107,7 +41607,7 @@ if (false) {
 }
 
 /***/ }),
-/* 112 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40150,7 +41650,7 @@ if (false) {
 }
 
 /***/ }),
-/* 113 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40436,7 +41936,7 @@ if (false) {
 }
 
 /***/ }),
-/* 114 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40476,7 +41976,7 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40729,7 +42229,1015 @@ if (false) {
 }
 
 /***/ }),
-/* 116 */
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('h6', [_vm._v("Consultations")]), _vm._v(" "), _vm._l((_vm.newMessages), function(ticket) {
+    return (_vm.newMessages) ? _c('div', [_c('b', {
+      staticStyle: {
+        "color": "green"
+      }
+    }, [_vm._v("From:")]), _vm._v(" "), _c('b', {
+      staticStyle: {
+        "font-size": "9px"
+      }
+    }, [_vm._v(_vm._s(ticket.message_from.first_name) + ", " + _vm._s(ticket.message_from.last_name)), _c('b', {
+      staticClass: "pull-right"
+    }, [_vm._v(_vm._s(ticket.created_at))])]), _c('br'), _vm._v(" "), _c('label', [_vm._v("Message:")]), _vm._v(" " + _vm._s(ticket.message)), _c('br'), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('a', {
+      staticClass: "pull-right btn btn-sm btn-success form-control",
+      staticStyle: {
+        "margin-right": "10px"
+      },
+      on: {
+        "click": function($event) {
+          _vm.openTicket(ticket.ticket.original.id, ticket.consult.id)
+        }
+      }
+    }, [_vm._v("Open")])]), _vm._v(" "), _vm._m(0, true)]) : _vm._e()
+  })], 2), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modal),
+      expression: "modal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container"
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
+    class: {
+      'alert-success': _vm.statusSuccess, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad, 'alert-info': _vm.statusWarn
+    },
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modalLoading),
+      expression: "modalLoading"
+    }],
+    staticClass: "modal-body",
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.baseUrl + '/images/loading.gif'
+    }
+  })]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.modalLoading),
+      expression: "!modalLoading"
+    }],
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('img', {
+    staticStyle: {
+      "width": "100%",
+      "height": "auto",
+      "border-radius": "10px"
+    },
+    attrs: {
+      "src": "https://placehold.it/140x100"
+    }
+  })]), _vm._v(" "), (_vm.currentTicket.client) ? _c('div', {
+    staticClass: "row"
+  }, [_c('h5', [_c('p', [_c('label', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.first_name) + ",  " + _vm._s(_vm.currentTicket.client.other_names))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.type))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.yob))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentTicket.id),
+      expression: "currentTicket.id"
+    }],
+    attrs: {
+      "type": "hidden",
+      "id": "hiddenTicketId"
+    },
+    domProps: {
+      "value": (_vm.currentTicket.id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentTicket.id = $event.target.value
+      }
+    }
+  })])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8"
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "max-height": "400px",
+      "overflow-y": "scroll"
+    }
+  }, [_c('ul', {
+    staticClass: "nav nav-tabs"
+  }, [_c('li', {
+    staticClass: "active"
+  }, [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#progress"
+    }
+  }, [_vm._v("Ticket")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#pre-examination"
+    }
+  }, [_vm._v("Pre-Examination")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#special"
+    }
+  }, [_vm._v(" Special medical condition(s)")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#history"
+    }
+  }, [_vm._v(" History")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "data-toggle": "tab",
+      "href": "#consult"
+    }
+  }, [_vm._v(" Consult")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row tab-content"
+  }, [_c('div', {
+    staticClass: "tab-pane fade in active",
+    attrs: {
+      "id": "progress"
+    }
+  }, [_c('h6', [_vm._v("Progress ")]), _vm._v(" "), _c('div', {
+    staticClass: "accordion"
+  }, [_c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "white"
+    },
+    attrs: {
+      "href": "#accordion-1"
+    }
+  }, [_vm._v("\n                                                                Assigned a Ticket\n                                                                "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level >= 0),
+      expression: "currentTicket.progress.level >= 0"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Done\n                                                                ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-1"
+    }
+  }, [_c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v(" This Ticket was created on: " + _vm._s(_vm.currentTicket.created_at) + ",")]), _vm._v(" "), _c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v("and assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-2"
+    }
+  }, [_vm._v("\n                                                                at Doctor/Nurse\n                                                                "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level <= 1),
+      expression: "currentTicket.progress.level <= 1"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Current...\n                                                                ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 1),
+      expression: "currentTicket.progress.level > 1"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Done\n                                                                ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-2"
+    }
+  }, [_c('div', {
+    class: {
+      'col-md-8': _vm.classLoad
+    }
+  }, [_c('div', [_vm._v("\n                                                                        Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
+    staticStyle: {
+      "font-size": "8px"
+    }
+  }, [_vm._v("\n                                                                            [Input a single symptom, then hit enter before inputting another]\n                                                                        ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.level >= 2
+    }
+  }) : _vm._e(), _vm._v(" "), _c('hr', {
+    staticStyle: {
+      "margin": "0px"
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.recommendAction),
+      expression: "recommendAction"
+    }]
+  }, [_c('div', {}, [_c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.recommendLab
+    }
+  }, [_vm._v("Recommend Lab Test(s)")]), _vm._v(" |\n                                                                            "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.prescribeMedication
+    }
+  }, [_vm._v("Prescribe Medication")]), _vm._v("  |\n                                                                            "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("Admit Client")])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseLab),
+      expression: "chooseLab"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('div', [_vm._v("\n                                                                                Select Lab Technician\n                                                                            ")]), _vm._v(" "), (_vm.currentTicket.lab_technician) ? _c('h5', [_vm._v("\n                                                                                " + _vm._s(_vm.currentTicket.lab_technician.first_name) + "\n                                                                            ")]) : _vm._e(), _vm._v(" "), (!_vm.currentTicket.lab_technician) ? _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedLabTech),
+      expression: "selectedLabTech"
+    }],
+    staticClass: "form-control input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedLabTech = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "selected": "",
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("-Select a Lab Technician to Assign-")]), _vm._v(" "), _vm._l((_vm.labTechnicians), function(labTechnician) {
+    return _c('option', {
+      domProps: {
+        "value": labTechnician.id
+      }
+    }, [_vm._v(_vm._s(labTechnician.first_name))])
+  })], 2) : _vm._e(), _vm._v(" "), _c('div', [_c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [(_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group completed"
+  }) : _vm._e()])]), _vm._v("\n                                                                            Search Required Lab Tests:"), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchTest),
+      expression: "searchTest"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchTest)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchTest = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noResults),
+      expression: "noResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                                No results found.\n                                                                            ")]), _vm._v(" "), _vm._l((_vm.results), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.resource_name) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.unit_price) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.addTest(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.removeTest(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.level >= 2 || _vm.test_tags == ''
+    }
+  }, [_c('button', {
+    staticClass: "btn btn-sm btn-primary pull-right",
+    on: {
+      "click": _vm.sendLab
+    }
+  }, [_vm._v(_vm._s(_vm.sendtoLab))])]) : _vm._e()], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseMed),
+      expression: "chooseMed"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('label', [_vm._v("\n                                                                                Prescription\n                                                                                "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                                    Input a single prescription, then press enter before inputting another\n                                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.classLoad
+    }
+  }) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchPrescription),
+      expression: "searchPrescription"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchPrescription)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchPrescription = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noPrescriptionResults),
+      expression: "noPrescriptionResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                                No results found.\n                                                                            ")]), _vm._v(" "), _vm._l((_vm.prescriptionResults), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.resource_name) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                                        " + _vm._s(result.unit_price) + "\n                                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.addPrescription(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.removePrescription(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group pull-right"
+  }, [(_vm.currentTicket.progress) ? _c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+    },
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "9px"
+    }
+  }, [_c('label', {
+    staticStyle: {
+      "font-size": "11px"
+    }
+  }, [_vm._v("Symptoms recorded:")]), _c('br'), _vm._v(" "), _vm._l((_vm.currentTicket.symptoms), function(symptom) {
+    return _c('i', [_vm._v("\n                                                                            " + _vm._s(symptom.description) + ",\n                                                                        ")])
+  })], 2)])])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-3"
+    }
+  }, [_vm._v("\n                                                                Seen a Lab Technician\n                                                                "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level < 2),
+      expression: "currentTicket.progress.level < 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Pending...\n                                                                ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level == 2),
+      expression: "currentTicket.progress.level == 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Current...\n                                                                ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 2),
+      expression: "currentTicket.progress.level > 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Done\n                                                                ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-3"
+    }
+  }, [(_vm.currentTicket.tests) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.tests), function(test) {
+    return _c('div', [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-2",
+      staticStyle: {
+        "text-align": "right"
+      }
+    }, [_c('label', [_vm._v(_vm._s(test.details.resource_name) + ":")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-8"
+    }, [(test.result) ? _c('i', [_vm._v(_vm._s(test.result))]) : _vm._e()])])])
+  })) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-4"
+    }
+  }, [_vm._v("\n                                                                Seen Chemist\n                                                                "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level < 3),
+      expression: "currentTicket.progress.level < 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Pending...\n                                                                ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level == 3),
+      expression: "currentTicket.progress.level == 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Current...\n                                                                ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 3),
+      expression: "currentTicket.progress.level > 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                    Done\n                                                                ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      'accordion-section-content': _vm.classLoad, completed: _vm.currentTicket.progress.level != 3
+    },
+    attrs: {
+      "id": "accordion-4"
+    }
+  }, [_c('label', [_vm._v("\n                                                                    Prescription\n                                                                    "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                        Input a single prescription, then press enter before inputting another\n                                                                    ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.classLoad
+    }
+  }) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchPrescription),
+      expression: "searchPrescription"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchPrescription)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchPrescription = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noPrescriptionResults),
+      expression: "noPrescriptionResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                    No results found.\n                                                                ")]), _vm._v(" "), _vm._l((_vm.prescriptionResults), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                            " + _vm._s(result.resource_name) + "\n                                                                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                            " + _vm._s(result.unit_price) + "\n                                                                        ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      staticClass: "btn btn-sm btn-success",
+      on: {
+        "click": function($event) {
+          _vm.addPrescription(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      staticClass: "btn btn-sm btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.removePrescription(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group pull-right"
+  }, [(_vm.currentTicket.progress) ? _c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 4
+    },
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2) : _vm._e()])])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "pre-examination"
+    }
+  }, [_c('h5', [_vm._v("Pre-Examination Results")]), _vm._v(" "), (_vm.currentTicket.pre_examination) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.pre_examination), function(examination) {
+    return _c('div', [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #53CDF6",
+        "margin-top": "10px"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Examination:")]), _vm._v("\n                                                                    " + _vm._s(examination.details.resource_name) + "\n                                                                    "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                                                                        Performed on:" + _vm._s(examination.updated_at) + "\n                                                                    ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                                                                    Result: " + _vm._s(examination.result) + "\n                                                                ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    })]), _vm._v(" "), _c('label'), _vm._v(" "), _c('i', {
+      staticClass: "pull-right"
+    })])
+  })) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "history"
+    }
+  }, [_c('h1', [_vm._v("History")])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "special"
+    }
+  }, [_c('h1', [_vm._v("Special Medical Conditions")])]), _vm._v(" "), _c('div', {
+    staticClass: "tab-pane fade",
+    attrs: {
+      "id": "consult"
+    }
+  }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('h6', [_vm._v("Select Doctor")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chat_doctor),
+      expression: "chat_doctor"
+    }],
+    staticClass: "input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.chat_doctor = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _vm._l((_vm.allDocs), function(doc) {
+    return (_vm.allDocs) ? _c('option', {
+      domProps: {
+        "value": doc.id
+      }
+    }, [_vm._v(_vm._s(doc.last_name) + " , " + _vm._s(doc.first_name))]) : _vm._e()
+  })], 2), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm",
+    on: {
+      "click": _vm.startChat
+    }
+  }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin": "0px",
+      "padding-top": "10px"
+    }
+  }, [_c('div', {
+    staticClass: "row chat-window",
+    staticStyle: {
+      "margin": "0px"
+    },
+    attrs: {
+      "id": "chat_window_1"
+    }
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-12"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-body msg_container_base"
+  }, _vm._l((_vm.currentChat.messages), function(chat) {
+    return (_vm.currentChat) ? _c('div', {
+      class: {
+        row: _vm.classLoad, 'msg_container': _vm.classLoad, 'base_sent': chat.me == 'yes', 'base_receive': chat.me == 'no'
+      }
+    }, [(chat.me == 'no') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "col-md-10 col-xs-10"
+    }, [_c('div', {
+      class: {
+        'messages': _vm.classLoad, 'msg_sent': chat.me == 'yes', 'msg_receive': chat.me == 'no'
+      }
+    }, [_c('p', [_vm._v(_vm._s(chat.message))]), _vm._v(" "), _c('time', {
+      attrs: {
+        "datetime": "2009-11-13T20:00"
+      }
+    }, [_vm._v(_vm._s(chat.user.first_name) + " • " + _vm._s(chat.created_at))])])]), _vm._v(" "), (chat.me == 'yes') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e()]) : _vm._e()
+  })), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chatMessage),
+      expression: "chatMessage"
+    }],
+    staticClass: "form-control input-sm chat_input",
+    attrs: {
+      "type": "text",
+      "placeholder": "Write your message here..."
+    },
+    domProps: {
+      "value": (_vm.chatMessage)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.chatMessage = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-primary btn-sm",
+    on: {
+      "click": _vm.sendMessage
+    }
+  }, [_vm._v("Send")])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "btn-group dropup"
+  }, [_c('button', {
+    staticClass: "btn btn-default dropdown-toggle",
+    attrs: {
+      "type": "button",
+      "data-toggle": "dropdown"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-cog"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "sr-only"
+  }, [_vm._v("Toggle Dropdown")])]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#",
+      "id": "new_chat"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-plus"
+  }), _vm._v(" Novo")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-list"
+  }), _vm._v(" Ver outras")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-remove"
+  }), _vm._v(" Fechar Tudo")])]), _vm._v(" "), _c('li', {
+    staticClass: "divider"
+  }), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-eye-close"
+  }), _vm._v(" Invisivel")])])])])])])])])])])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-sm btn-warning",
+    on: {
+      "click": _vm.closeTicket
+    }
+  }, [_vm._v("\n                                    Close\n                                ")])])], 2)])])])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('hr', {
+    staticStyle: {
+      "margin": "2px"
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-64bb3424", module.exports)
+  }
+}
+
+/***/ }),
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40769,7 +43277,7 @@ if (false) {
 }
 
 /***/ }),
-/* 117 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -40784,7 +43292,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row",
       staticStyle: {
         "background-color": "#f8f8f8",
-        "border": "2px solid #53CDF6"
+        "border": "2px solid #EA4A5A"
       }
     }, [_c('div', {
       staticClass: "row"
@@ -40813,7 +43321,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
-  })], 2), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('transition', {
+  })], 2), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-4"
+  }, [_c('h5', [_vm._v("My Statistics")]), _vm._v(" "), _c('sidebar')], 1), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
     }
@@ -41815,10 +44325,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": "Search Client..."
     }
   })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-lg-4"
-  }, [_c('h5', [_vm._v("My Statistics")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -41829,7 +44335,7 @@ if (false) {
 }
 
 /***/ }),
-/* 118 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -41898,7 +44404,7 @@ if (false) {
 }
 
 /***/ }),
-/* 119 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42041,7 +44547,7 @@ if (false) {
 }
 
 /***/ }),
-/* 120 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42273,7 +44779,1050 @@ if (false) {
 }
 
 /***/ }),
-/* 121 */
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-lg-8"
+  }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.allActives), function(allActive) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #EA4A5A"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(allActive.client.first_name) + ", " + _vm._s(allActive.client.other_names) + "\n                    "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                        last updated on: " + _vm._s(allActive.progress.updated_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                    Details:" + _vm._s(allActive.progress.description) + "\n                ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('a', {
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      },
+      on: {
+        "click": function($event) {
+          _vm.openTicket(allActive.id)
+        }
+      }
+    }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
+  })], 2), _vm._v(" "), _c('div', {
+    staticClass: "col-lg-4"
+  }, [_c('h5', [_vm._v("My Statistics")]), _vm._v(" "), _c('sidebar')], 1), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.ticketModal),
+      expression: "ticketModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container"
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("At Doctor/Nurse")]), _vm._v(" "), _c('label', {
+    class: {
+      'alert-success': _vm.statusSuccess, 'alert-danger': _vm.statusError, 'pull-right': _vm.classLoad, 'alert-info': _vm.statusWarn
+    },
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v("Status: " + _vm._s(_vm.status))])])], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.modalLoading),
+      expression: "modalLoading"
+    }],
+    staticClass: "modal-body",
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_c('img', {
+    attrs: {
+      "src": _vm.baseUrl + '/images/loading.gif'
+    }
+  })]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.modalLoading),
+      expression: "!modalLoading"
+    }],
+    staticClass: "modal-body"
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('img', {
+    staticStyle: {
+      "width": "100%",
+      "height": "auto",
+      "border-radius": "10px"
+    },
+    attrs: {
+      "src": "https://placehold.it/140x100"
+    }
+  })]), _vm._v(" "), (_vm.currentTicket.client) ? _c('div', {
+    staticClass: "row"
+  }, [_c('h5', [_c('p', [_c('label', [_vm._v("Client Name:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.first_name) + ",  " + _vm._s(_vm.currentTicket.client.other_names))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Client Type:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.type))]), _vm._v(" "), _c('p', [_c('label', [_vm._v("Year of Birth:")]), _vm._v(" " + _vm._s(_vm.currentTicket.client.yob))]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.currentTicket.id),
+      expression: "currentTicket.id"
+    }],
+    attrs: {
+      "type": "hidden",
+      "id": "hiddenTicketId"
+    },
+    domProps: {
+      "value": (_vm.currentTicket.id)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.currentTicket.id = $event.target.value
+      }
+    }
+  })])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8"
+  }, [_c('ul', {
+    staticClass: "accordion-tabs-minimal"
+  }, [_c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link is-active",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Ticket")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('h6', [_vm._v("Progress ")]), _vm._v(" "), _c('div', {
+    staticClass: "accordion"
+  }, [_c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "white"
+    },
+    attrs: {
+      "href": "#accordion-1"
+    }
+  }, [_vm._v("\n                                                            Assigned a Ticket\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level >= 0),
+      expression: "currentTicket.progress.level >= 0"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-1"
+    }
+  }, [_c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v(" This Ticket was created on: " + _vm._s(_vm.currentTicket.created_at) + ",")]), _vm._v(" "), _c('h6', [_c('i', {
+    staticClass: "fa fa-check"
+  }), _vm._v("and assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-2"
+    }
+  }, [_vm._v("\n                                                            at Doctor/Nurse\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level <= 1),
+      expression: "currentTicket.progress.level <= 1"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 1),
+      expression: "currentTicket.progress.level > 1"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-2"
+    }
+  }, [_c('div', {
+    class: {
+      'col-md-8': _vm.classLoad
+    }
+  }, [_c('div', [_vm._v("\n                                                                    Input Symptoms and general Observations, if any."), _c('br'), _vm._v(" "), _c('b', {
+    staticStyle: {
+      "font-size": "8px"
+    }
+  }, [_vm._v("\n                                                                        [Input a single symptom, then hit enter before inputting another]\n                                                                    ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.level >= 2
+    }
+  }, [_c('input-tag', {
+    staticClass: "input-sm",
+    attrs: {
+      "placeholder": "Add Symptoms",
+      "on-change": _vm.saveSymptoms,
+      "tags": _vm.currentTicket.tags
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c('hr', {
+    staticStyle: {
+      "margin": "0px"
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.recommendAction),
+      expression: "recommendAction"
+    }]
+  }, [_c('div', {}, [_c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.recommendLab
+    }
+  }, [_vm._v("Recommend Lab Test(s)")]), _vm._v(" |\n                                                                        "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": _vm.prescribeMedication
+    }
+  }, [_vm._v("Prescribe Medication")]), _vm._v("  |\n                                                                        "), _c('a', {
+    staticStyle: {
+      "font-size": "10px"
+    },
+    on: {
+      "click": function($event) {}
+    }
+  }, [_vm._v("Admit Client")])]), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseLab),
+      expression: "chooseLab"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('div', [_vm._v("\n                                                                            Select Lab Technician\n                                                                        ")]), _vm._v(" "), (_vm.currentTicket.lab_technician) ? _c('h5', [_vm._v("\n                                                                            " + _vm._s(_vm.currentTicket.lab_technician.first_name) + "\n                                                                        ")]) : _vm._e(), _vm._v(" "), (!_vm.currentTicket.lab_technician) ? _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.selectedLabTech),
+      expression: "selectedLabTech"
+    }],
+    staticClass: "form-control input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.selectedLabTech = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "selected": "",
+      "disabled": "",
+      "value": ""
+    }
+  }, [_vm._v("-Select a Lab Technician to Assign-")]), _vm._v(" "), _vm._l((_vm.labTechnicians), function(labTechnician) {
+    return _c('option', {
+      domProps: {
+        "value": labTechnician.id
+      }
+    }, [_vm._v(_vm._s(labTechnician.first_name))])
+  })], 2) : _vm._e(), _vm._v(" "), _c('div', [_c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [(_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group completed"
+  }, [_c('input-tag', {
+    attrs: {
+      "id": "test_tags",
+      "placeholder": "Add Tests",
+      "on-change": _vm.saveLab,
+      "tags": _vm.test_tags
+    }
+  })], 1) : _vm._e()])]), _vm._v("\n                                                                        Search Required Lab Tests:"), _c('br'), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchTest),
+      expression: "searchTest"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchTest)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchTest = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noResults),
+      expression: "noResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                            No results found.\n                                                                        ")]), _vm._v(" "), _vm._l((_vm.results), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                                    " + _vm._s(result.resource_name) + "\n                                                                                ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                                    " + _vm._s(result.unit_price) + "\n                                                                                ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.addTest(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.removeTest(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    staticClass: "form-group",
+    class: {
+      completed: _vm.currentTicket.progress.level >= 2 || _vm.test_tags == ''
+    }
+  }, [_c('button', {
+    staticClass: "btn btn-sm btn-primary pull-right",
+    on: {
+      "click": _vm.sendLab
+    }
+  }, [_vm._v(_vm._s(_vm.sendtoLab))])]) : _vm._e()], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseMed),
+      expression: "chooseMed"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('label', [_vm._v("\n                                                                            Prescription\n                                                                            "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                                Input a single prescription, then press enter before inputting another\n                                                                            ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.classLoad
+    }
+  }, [_c('input-tag', {
+    attrs: {
+      "on-change": _vm.saveP,
+      "tags": _vm.prescription_tags
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchPrescription),
+      expression: "searchPrescription"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchPrescription)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchPrescription = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noPrescriptionResults),
+      expression: "noPrescriptionResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                            No results found.\n                                                                        ")]), _vm._v(" "), _vm._l((_vm.prescriptionResults), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                                    " + _vm._s(result.resource_name) + "\n                                                                                ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                                    " + _vm._s(result.unit_price) + "\n                                                                                ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.addPrescription(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result && _vm.currentTicket.progress) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      class: {
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.removePrescription(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group pull-right"
+  }, [(_vm.currentTicket.progress) ? _c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+    },
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "9px"
+    }
+  }, [_c('label', {
+    staticStyle: {
+      "font-size": "11px"
+    }
+  }, [_vm._v("Symptoms recorded:")]), _c('br'), _vm._v(" "), _vm._l((_vm.currentTicket.symptoms), function(symptom) {
+    return _c('i', [_vm._v("\n                                                                        " + _vm._s(symptom.description) + ",\n                                                                    ")])
+  })], 2)])])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-3"
+    }
+  }, [_vm._v("\n                                                            Seen a Lab Technician\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level < 2),
+      expression: "currentTicket.progress.level < 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level == 2),
+      expression: "currentTicket.progress.level == 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 2),
+      expression: "currentTicket.progress.level > 2"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section-content",
+    attrs: {
+      "id": "accordion-3"
+    }
+  }, [(_vm.currentTicket.tests) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.tests), function(test) {
+    return _c('div', [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-md-2",
+      staticStyle: {
+        "text-align": "right"
+      }
+    }, [_c('label', [_vm._v(_vm._s(test.details.resource_name) + ":")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-md-8"
+    }, [(test.result) ? _c('i', [_vm._v(_vm._s(test.result))]) : _vm._e()])])])
+  })) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "accordion-section"
+  }, [_c('a', {
+    staticClass: "accordion-section-title",
+    attrs: {
+      "href": "#accordion-4"
+    }
+  }, [_vm._v("\n                                                            Seen Chemist\n                                                            "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level < 3),
+      expression: "currentTicket.progress.level < 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f2534e",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Pending...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level == 3),
+      expression: "currentTicket.progress.level == 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "#f6fcab",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Current...\n                                                            ")]) : _vm._e(), _vm._v(" "), (_vm.currentTicket.progress) ? _c('b', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.currentTicket.progress.level > 3),
+      expression: "currentTicket.progress.level > 3"
+    }],
+    staticClass: "pull-right",
+    staticStyle: {
+      "color": "white",
+      "background-color": "green",
+      "border-radius": "5px",
+      "margin-left": "10px",
+      "padding-left": "3px",
+      "padding-right": "3px"
+    }
+  }, [_vm._v("\n                                                                Done\n                                                            ")]) : _vm._e()]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      'accordion-section-content': _vm.classLoad, completed: _vm.currentTicket.progress.level != 3
+    },
+    attrs: {
+      "id": "accordion-4"
+    }
+  }, [_c('label', [_vm._v("\n                                                                Prescription\n                                                                "), _c('b', {
+    staticStyle: {
+      "font-size": "10px"
+    }
+  }, [_vm._v("\n                                                                    Input a single prescription, then press enter before inputting another\n                                                                ")])]), _vm._v(" "), (_vm.currentTicket.progress) ? _c('div', {
+    class: {
+      completed: _vm.classLoad
+    }
+  }, [_c('input-tag', {
+    attrs: {
+      "on-change": _vm.saveP,
+      "tags": _vm.prescription_tags
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.searchPrescription),
+      expression: "searchPrescription"
+    }],
+    staticClass: "form-control input-sm",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.searchPrescription)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.searchPrescription = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.noPrescriptionResults),
+      expression: "noPrescriptionResults"
+    }],
+    staticClass: "alert alert-warning"
+  }, [_vm._v("\n                                                                No results found.\n                                                            ")]), _vm._v(" "), _vm._l((_vm.prescriptionResults), function(result) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Name")]), _c('br'), _vm._v("\n                                                                        " + _vm._s(result.resource_name) + "\n                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-4"
+    }, [_c('label', [_vm._v("Unit Price")]), _c('br'), _vm._v("\n                                                                        " + _vm._s(result.unit_price) + "\n                                                                    ")]), _vm._v(" "), _c('div', {
+      staticClass: "col-sm-2",
+      staticStyle: {
+        "padding-top": "10px"
+      }
+    }, [(result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == false),
+        expression: "result.status==false"
+      }],
+      staticClass: "btn btn-sm btn-success",
+      on: {
+        "click": function($event) {
+          _vm.addPrescription(result)
+        }
+      }
+    }, [_vm._v("Add")]) : _vm._e(), _vm._v(" "), (result) ? _c('button', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (result.status == true),
+        expression: "result.status==true"
+      }],
+      staticClass: "btn btn-sm btn-danger",
+      on: {
+        "click": function($event) {
+          _vm.removePrescription(result)
+        }
+      }
+    }, [_vm._v("Remove")]) : _vm._e()])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px !important"
+      }
+    })])])
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group pull-right"
+  }, [(_vm.currentTicket.progress) ? _c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 4
+    },
+    on: {
+      "click": function($event) {
+        _vm.submitP()
+      }
+    }
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2) : _vm._e()])])])]), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Pre-examination")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('h5', [_vm._v("Pre-Examination Results")]), _vm._v(" "), (_vm.currentTicket.pre_examination) ? _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.currentTicket.pre_examination), function(examination) {
+    return _c('div', [_c('div', {
+      staticClass: "row",
+      staticStyle: {
+        "background-color": "#f8f8f8",
+        "border": "2px solid #53CDF6",
+        "margin-top": "10px"
+      }
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('label', [_vm._v(" Examination:")]), _vm._v("\n                                                                " + _vm._s(examination.details.resource_name) + "\n                                                                "), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v("\n                                                                    Performed on:" + _vm._s(examination.updated_at) + "\n                                                                ")])]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_vm._v("\n                                                                Result: " + _vm._s(examination.result) + "\n                                                            ")]), _vm._v(" "), _c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    })]), _vm._v(" "), _c('label'), _vm._v(" "), _c('i', {
+      staticClass: "pull-right"
+    })])
+  })) : _vm._e()])]), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Special Medical Conditions")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('h6', [_vm._v("Special Medical Conditions")])])]), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("History")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('h6', [_vm._v("History")])])]), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Consultation")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('h6', [_vm._v("Select Doctor")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chat_doctor),
+      expression: "chat_doctor"
+    }],
+    staticClass: "input-sm",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.chat_doctor = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _vm._l((_vm.allDocs), function(doc) {
+    return (_vm.allDocs) ? _c('option', {
+      domProps: {
+        "value": doc.id
+      }
+    }, [_vm._v(_vm._s(doc.last_name) + " , " + _vm._s(doc.first_name))]) : _vm._e()
+  })], 2), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-sm",
+    on: {
+      "click": _vm.startChat
+    }
+  }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin": "0px",
+      "padding-top": "10px"
+    }
+  }, [_c('div', {
+    staticClass: "row chat-window",
+    staticStyle: {
+      "margin": "0px"
+    },
+    attrs: {
+      "id": "chat_window_1"
+    }
+  }, [_c('div', {
+    staticClass: "col-xs-12 col-md-12"
+  }, [_c('div', {
+    staticClass: "panel panel-default"
+  }, [_c('div', {
+    staticClass: "panel-body msg_container_base"
+  }, _vm._l((_vm.currentChat.messages), function(chat) {
+    return (_vm.currentChat) ? _c('div', {
+      class: {
+        row: _vm.classLoad, 'msg_container': _vm.classLoad, 'base_sent': chat.me == 'yes', 'base_receive': chat.me == 'no'
+      }
+    }, [(chat.me == 'no') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e(), _vm._v(" "), _c('div', {
+      staticClass: "col-md-10 col-xs-10"
+    }, [_c('div', {
+      class: {
+        'messages': _vm.classLoad, 'msg_sent': chat.me == 'yes', 'msg_receive': chat.me == 'no'
+      }
+    }, [_c('p', [_vm._v(_vm._s(chat.message))]), _vm._v(" "), _c('time', {
+      attrs: {
+        "datetime": "2009-11-13T20:00"
+      }
+    }, [_vm._v(_vm._s(chat.user.first_name) + " • " + _vm._s(chat.created_at))])])]), _vm._v(" "), (chat.me == 'yes') ? _c('div', {
+      staticClass: "col-md-2 col-xs-2 avatar"
+    }, [_c('img', {
+      staticClass: " img-responsive ",
+      attrs: {
+        "src": "http://www.bitrebels.com/wp-content/uploads/2011/02/Original-Facebook-Geek-Profile-Avatar-1.jpg"
+      }
+    })]) : _vm._e()]) : _vm._e()
+  })), _vm._v(" "), _c('div', {
+    staticClass: "panel-footer"
+  }, [_c('div', {
+    staticClass: "input-group"
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.chatMessage),
+      expression: "chatMessage"
+    }],
+    staticClass: "form-control input-sm chat_input",
+    attrs: {
+      "type": "text",
+      "placeholder": "Write your message here..."
+    },
+    domProps: {
+      "value": (_vm.chatMessage)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.chatMessage = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('span', {
+    staticClass: "input-group-btn"
+  }, [_c('button', {
+    staticClass: "btn btn-primary btn-sm",
+    on: {
+      "click": _vm.sendMessage
+    }
+  }, [_vm._v("Send")])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "btn-group dropup"
+  }, [_c('button', {
+    staticClass: "btn btn-default dropdown-toggle",
+    attrs: {
+      "type": "button",
+      "data-toggle": "dropdown"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-cog"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "sr-only"
+  }, [_vm._v("Toggle Dropdown")])]), _vm._v(" "), _c('ul', {
+    staticClass: "dropdown-menu",
+    attrs: {
+      "role": "menu"
+    }
+  }, [_c('li', [_c('a', {
+    attrs: {
+      "href": "#",
+      "id": "new_chat"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-plus"
+  }), _vm._v(" Novo")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-list"
+  }), _vm._v(" Ver outras")])]), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-remove"
+  }), _vm._v(" Fechar Tudo")])]), _vm._v(" "), _c('li', {
+    staticClass: "divider"
+  }), _vm._v(" "), _c('li', [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('span', {
+    staticClass: "glyphicon glyphicon-eye-close"
+  }), _vm._v(" Invisivel")])])])])])])])])])])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    staticClass: "btn btn-sm btn-warning",
+    on: {
+      "click": _vm.closeTicket
+    }
+  }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert"
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('strong', [_vm._v("My List")]), _vm._v(" "), _c('br'), _vm._v("\n            It is Highly recommended you follow the list as is."), _c('br')])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('label', [_vm._v("My Clients")]), _vm._v(" "), _c('input', {
+    staticClass: "input-sm pull-right",
+    attrs: {
+      "type": "text",
+      "placeholder": "Search Client..."
+    }
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-ba13bacc", module.exports)
+  }
+}
+
+/***/ }),
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42455,7 +46004,7 @@ if (false) {
 }
 
 /***/ }),
-/* 122 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -42774,17 +46323,17 @@ if (false) {
 }
 
 /***/ }),
-/* 123 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(91);
+var content = __webpack_require__(94);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(124)("73d4d890", content, false);
+var update = __webpack_require__(130)("73d4d890", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -42800,7 +46349,7 @@ if(false) {
 }
 
 /***/ }),
-/* 124 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -42819,7 +46368,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(125)
+var listToStyles = __webpack_require__(131)
 
 /*
 type StyleObject = {
@@ -43021,7 +46570,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 125 */
+/* 131 */
 /***/ (function(module, exports) {
 
 /**
@@ -43054,7 +46603,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 126 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52304,10 +55853,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(20)))
 
 /***/ }),
-/* 127 */
+/* 133 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -52335,201 +55884,12 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 128 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(19);
-module.exports = __webpack_require__(20);
+__webpack_require__(11);
+module.exports = __webpack_require__(21);
 
-
-/***/ }),
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    mounted: function mounted() {
-        console.log('Component mounted.');
-        this.consults();
-    },
-    data: function data() {
-        return {
-            modal: false,
-            newMessages: []
-        };
-    },
-    methods: {
-        closeModal: function closeModal() {
-            var inheritance = this;
-            inheritance.modal = false;
-        },
-        openModal: function openModal() {
-            var inheritance = this;
-            inheritance.modal = true;
-        },
-        consults: function consults() {
-            var inheritance = this;
-            axios.get(base_url + '/chat/unread').then(function (response) {
-                inheritance.newMessages = response.data;
-                console.log(response.data);
-            }.bind(this));
-        }
-    }
-};
-
-/***/ }),
-/* 165 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(164),
-  /* template */
-  __webpack_require__(166),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/sidebar.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] sidebar.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-64bb3424", Component.options)
-  } else {
-    hotAPI.reload("data-v-64bb3424", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 166 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "row"
-  }, _vm._l((_vm.newMessages), function(ticket) {
-    return (_vm.newMessages) ? _c('div', [_vm._v("\n            Client Name: \n        ")]) : _vm._e()
-  })), _vm._v(" "), (_vm.modal) ? _c('transition', {
-    attrs: {
-      "name": "modal"
-    }
-  }, [_c('div', {
-    staticClass: "modal-mask"
-  }, [_c('div', {
-    staticClass: "modal-wrapper"
-  }, [_c('div', {
-    staticClass: "modal-container",
-    staticStyle: {
-      "width": "50% !important"
-    }
-  }, [_c('div', {
-    staticClass: "modal-header"
-  }, [_vm._t("header", [_c('label', [_vm._v("Add New Preference")])])], 2), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [_vm._t("body")], 2), _vm._v(" "), _c('div', {
-    staticClass: "modal-footer"
-  }, [_vm._t("footer", [_c('button', {
-    staticClass: "btn btn-warning",
-    on: {
-      "click": _vm.closeModal
-    }
-  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e()], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-64bb3424", module.exports)
-  }
-}
 
 /***/ })
 /******/ ]);

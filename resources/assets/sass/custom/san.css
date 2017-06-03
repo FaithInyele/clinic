@@ -1,31 +1,31 @@
 /**
 custom edits my Makamu E.
-these changes are designed to tweak the metis css so as to allign the site with mt theme
+these changes are designed to tweak the metis css so as to allign the site with my theme
  */
-div#wrap.bg-dark.dk{
+/*div#wrap.bg-dark.dk{
     background-color: #F5F5F5 !important;
-    color: #149ED2 !important;
+    color: white !important;
 }
 nav.navbar.navbar-inverse.navbar-static-top{
-    background-color: #F5F5F5 !important
+    background-color: #EA4A5A !important
 }
 .btn-custom{
     color: white !important;
-}
-.btn-logout{
+}*/
+/*.btn-logout{
     color: white !important;
 }
 .btn-logout:hover{
-    color: #149ED2;
+    color: #EA4A5A;
 }
 a{
-    color: #149ED2 !important;
+    color: #EA4A5A !important;
 }
 a:hover{
     color: red !important;
 }
 div.collapse.navbar-collapse.navbar-ex1-collapse{
-    border-color: #149ED2;
+    border-color: #EA4A5A;
 }
 .bg-blue.dker{
     background-color: #444444!important;
@@ -36,18 +36,30 @@ div.collapse.navbar-collapse.navbar-ex1-collapse{
 }
 div.panel-heading{
     text-align: center;
-    background-color: #149ED2 !important;
+    background-color: #EA4A5A !important;
 }
 button.btn.btn-primary{
-    background-color: #149ED2 !important;
-}
+    background-color: #EA4A5A !important;
+}*/
 label{
     text-align: left !important;
-    color: #149ED2;
+    color: #EA4A5A;
 }
 .row{
     margin-right: 15px;
     margin-left: 15px;
+}
+.bg-blue.dker{
+    background-color: #222222 !important;
+}
+div.media.user-media.bg-dark.dker{
+    background-color: #222222 !important;
+}
+div.user-wrapper.bg-dark{
+    background-color: #222222 !important;
+}
+ul#menu.bg-blue.dker{
+    background-color: #222222 !important;
 }
 /**
 form wizard styles
@@ -78,7 +90,7 @@ form wizard styles
 .f1-progress-line { position: absolute;
     top: 0; left: 0;
     height: 1px;
-    background: #149ED2; }
+    background: #EA4A5A; }
 
 .f1-step {
     position: relative;
@@ -93,22 +105,22 @@ form wizard styles
 }
 .f1-step.activated .f1-step-icon {
     background: #fff;
-    border: 1px solid #149ED2;
-    color: #149ED2;
+    border: 1px solid #EA4A5A;
+    color: #EA4A5A;
     line-height: 38px;
 }
 .f1-step.active .f1-step-icon {
     width: 48px;
     height: 48px;
     margin-top: 0;
-    background: #149ED2;
+    background: #EA4A5A;
     font-size: 22px;
     line-height: 48px;
 }
 
 .f1-step p { color: #ccc; }
-.f1-step.activated p { color: #149ED2; }
-.f1-step.active p { color: #149ED2; }
+.f1-step.activated p { color: #EA4A5A; }
+.f1-step.active p { color: #EA4A5A; }
 
 .f1 fieldset { display: none; text-align: left; }
 
@@ -192,7 +204,7 @@ Vue Modal
 
 
 .pullquote-left{
-    border-left:5px solid #149ED2;
+    border-left:5px solid #EA4A5A;
     margin-top: 20px;
     background-color: #F5F5F5;
 }
@@ -231,7 +243,7 @@ Vue Modal
     border: 1px solid;
 }
 #left{
-    background-color: #F5F5F5 !important;
+    background-color: black !important;
 }
 .bg-dark .dker{
     background-color: #F5F5F5 !important;
@@ -242,18 +254,25 @@ Vue Modal
 #menu li a {
     box-shadow: none !important;
 }
+#menu li {
+    color: red !important;
+}
 .head{
     text-shadow: none !important;
 }
 span.link-title{
     text-shadow: none;
+    color: #9d9d9d !important;
+}
+span.link-title:hover{
+    color: white !important;
 }
 li.nav-header{
-    background-color: #149ED2 !important;
+    background-color: #EA4A5A !important;
 }
 input{
     border-radius: 0px !important;
-    border: 1px solid #149ED2 !important;
+    border: 1px solid #3EBBDD !important;
 }
 
 /*
@@ -376,4 +395,77 @@ img {
     position:fixed;
     left:0px;
     bottom:0;
+}
+
+/*
+tabs
+ */
+.accordion-tabs-minimal {
+    line-height: 1.5;
+    padding: 0;
+}
+
+.accordion-tabs-minimal::after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.accordion-tabs-minimal .tab-header-and-content {
+    list-style: none;
+}
+
+@media screen and (min-width: 40em) {
+    .accordion-tabs-minimal .tab-header-and-content {
+        display: inline;
+    }
+}
+
+.accordion-tabs-minimal .tab-link {
+    border-top: 1px solid #dcdcdc;
+    color: #333;
+    display: block;
+    padding: 0.75em 1.618em;
+    text-decoration: none;
+}
+
+@media screen and (min-width: 40em) {
+    .accordion-tabs-minimal .tab-link {
+        border-top: 0;
+        display: inline-block;
+    }
+}
+
+.accordion-tabs-minimal .tab-link:hover {
+    color: #477dca;
+}
+
+.accordion-tabs-minimal .tab-link:focus {
+    outline: none;
+}
+
+.accordion-tabs-minimal .tab-link.is-active {
+    border-bottom: 0;
+}
+
+@media screen and (min-width: 40em) {
+    .accordion-tabs-minimal .tab-link.is-active {
+        border: 1px solid #dcdcdc;
+        /* border-bottom-color here needs to be set to the same color as your background to hide the top border on the content */
+        border-bottom-color: #fff;
+        margin-bottom: -1px;
+    }
+}
+
+.accordion-tabs-minimal .tab-content {
+    display: none;
+    padding: 1.5em 1.618em;
+    width: 100%;
+}
+
+@media screen and (min-width: 40em) {
+    .accordion-tabs-minimal .tab-content {
+        border-top: 1px solid #dcdcdc;
+        float: left;
+    }
 }

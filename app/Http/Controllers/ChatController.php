@@ -93,17 +93,41 @@ class ChatController extends Controller
     public function unread(){
         $unread = DB::table('messages')
             ->select('messages.*')
-            ->where('from', Auth::user()->id)
             ->orwhere('message_to', Auth::user()->id)
             ->where('read_status', 'no')
+            ->oldest()
             ->groupBy('consultant_id')
             ->get();
         if ($unread){
             foreach ($unread as $message){
                 $message->consult = Consult::findorFail($message->consultant_id);
+                $message->message_from = User::findorFail($message->from);
                 $message->ticket = app('App\Http\Controllers\TicketController')->selectedTicket(8);
             }
         }
         return Response::json($unread);
+    }
+    public function allMessages(Request $request){
+        $consult = Consult::findorFail($request->consult_id);
+        $consult['messages'] = Message::where('consultant_id', $consult->id)->get();
+        $consult['ticket'] = Ticket::findorFail($consult->ticket_id);
+        if ($consult['messages']){
+            foreach ($consult['messages'] as $message){
+                $message->user = User::findorFail($message->from);
+                if (Auth::user()->id == $message->from){
+                    $message->me = 'yes';
+                }else{
+                    $message->me = 'no';
+                }
+            }
+        }
+
+        //who am i //originator will refer to the other person in this conversation
+        if (Auth::user()->id == $consult->consultant_id){
+            $consult['originator'] = User::findorFail($consult['ticket']->assigned_to);
+        }else{
+            $consult['originator'] = User::findorFail($consult->consultant_id);
+        }
+        return Response::json($consult);
     }
 }

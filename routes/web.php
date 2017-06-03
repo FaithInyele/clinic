@@ -129,6 +129,7 @@ Route::group(['middleware' => 'logIn'], function () {
      */
     Route::get('chat/start', 'ChatController@start');
     Route::get('chat/unread', 'ChatController@unread');
+    Route::get('chat/allmessages', 'ChatController@allMessages');
     Route::post('chat/newmessage', 'ChatController@newMessage');
 
 

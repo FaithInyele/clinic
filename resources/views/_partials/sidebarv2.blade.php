@@ -25,7 +25,8 @@
 
         <li class="">
             <a href="{{url('/')}}">
-                <i class="fa fa-home"></i><span class="link-title">&nbsp;Homee</span>
+                <i class="fa fa-home"></i>
+                <span class="link-title">Home</span>
             </a>
         </li>
         @if(Auth::user()->role == 'Admin')
