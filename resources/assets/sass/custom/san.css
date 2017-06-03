@@ -230,6 +230,7 @@ Vue Modal
 }
 .successful{
     background-color: #76ff7b;
+    border-radius: 15px;
 }
 .failure{
     background-color: red;

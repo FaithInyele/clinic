@@ -77,7 +77,7 @@
                                                     <div class="accordion">
                                                         <!--first accordion-->
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title"  href="#accordion-1" style="color: white">
+                                                            <a class="accordion-section-title"  href="#accordion-1" style="color: #EA4A5A;text-shadow: none">
                                                                 Assigned a Ticket
                                                                 <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level >= 0" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Done
@@ -89,8 +89,8 @@
                                                             </div><!--end .accordion-section-content-->
                                                         </div><!--end .accordion-section-->
 
-                                                        <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-2">
+                                                        <div class="accordion-section" style="max-height: 250px; overflow-y: scroll">
+                                                            <a class="accordion-section-title" href="#accordion-2" style="color: #EA4A5A;text-shadow: none">
                                                                 at Doctor/Nurse
                                                                 <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level <= 1" style="color: white;background-color: #f6fcab;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Current...
@@ -221,7 +221,7 @@
                                                         </div><!--end .accordion-section-->
 
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-3">
+                                                            <a class="accordion-section-title" href="#accordion-3" style="color: #EA4A5A;text-shadow: none">
                                                                 Seen a Lab Technician
                                                                 <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level < 2" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Pending...
@@ -249,7 +249,7 @@
                                                             </div><!--end .accordion-section-content-->
                                                         </div>
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title" href="#accordion-4">
+                                                            <a class="accordion-section-title" href="#accordion-4" style="color: #EA4A5A;text-shadow: none">
                                                                 Seen Chemist
                                                                 <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level < 3" style="color: white;background-color: #f2534e;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
                                                                     Pending...

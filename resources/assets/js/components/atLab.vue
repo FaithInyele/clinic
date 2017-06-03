@@ -73,8 +73,7 @@
 
                                         <div class="row tab-content" v-if="currentClient">
                                             <div id="progress" :class="{'tab-pane':classLoad, 'fade in': classLoad, 'active':classLoad, completed:currentClient.progress.level >= 3}" style="min-height: 80%">
-                                                <h6>Requested Tests</h6>
-                                                {{currentClient.progress.level}}
+                                                <h6>Requested Tests: {{currentClient.progress.level}}</h6>
                                                 <div class="form-group" v-for="test in currentClient.tests">
                                                     <div class="row pullquote-left">
                                                         <div class="row" style="padding-left: 10px;padding-right: 10px;margin-bottom: 10px">

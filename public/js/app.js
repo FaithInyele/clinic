@@ -13342,7 +13342,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15353,10 +15352,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
 //
 //
 //
@@ -41357,7 +41352,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "cellspacing": "0",
       "width": "100%"
     }
-  }, [_c('thead', [_c('tr', [_c('td', [_vm._v("Description")]), _vm._v(" "), _c('td', [_vm._v("Amount")])])]), _vm._v(" "), _c('tbody', [_c('tr', [_c('td', [_vm._v("HIV")]), _vm._v(" "), _c('td', [_vm._v("100")])]), _vm._v(" "), _c('tr', [_c('td', [_vm._v("HIV")]), _vm._v(" "), _c('td', [_vm._v("100")])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("Total")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v(_vm._s(_vm.currentPayment.total))])])])])]), _vm._v(" "), _c('div', {
+  }, [_c('thead', [_c('tr', [_c('td', [_vm._v("Description")]), _vm._v(" "), _c('td', [_vm._v("Amount")])])]), _vm._v(" "), _c('tbody', [_vm._l((_vm.currentPayment.tests), function(test) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(test.details.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(test.amount))])])
+  }), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("Total")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v(_vm._s(_vm.currentPayment.total))])])])], 2)]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('h6', [_vm._v("Client should make 100% payment before proceeding...")]), _vm._v(" "), _c('select', {
     directives: [{
@@ -42141,7 +42138,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "progress"
     }
-  }, [_c('h6', [_vm._v("Requested Tests")]), _vm._v("\n                                            " + _vm._s(_vm.currentClient.progress.level) + "\n                                            "), _vm._l((_vm.currentClient.tests), function(test) {
+  }, [_c('h6', [_vm._v("Requested Tests: " + _vm._s(_vm.currentClient.progress.level))]), _vm._v(" "), _vm._l((_vm.currentClient.tests), function(test) {
     return _c('div', {
       staticClass: "form-group"
     }, [_c('div', {
@@ -44930,7 +44927,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('a', {
     staticClass: "accordion-section-title",
     staticStyle: {
-      "color": "white"
+      "color": "#EA4A5A",
+      "text-shadow": "none"
     },
     attrs: {
       "href": "#accordion-1"
@@ -44961,9 +44959,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" This Ticket was created on: " + _vm._s(_vm.currentTicket.created_at) + ",")]), _vm._v(" "), _c('h6', [_c('i', {
     staticClass: "fa fa-check"
   }), _vm._v("and assigned by "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_by.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_by.first_name))]), _vm._v("  to  "), _c('i', [_vm._v(_vm._s(_vm.currentTicket.assigned_to.last_name) + ", " + _vm._s(_vm.currentTicket.assigned_to.first_name))])])]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "accordion-section"
+    staticClass: "accordion-section",
+    staticStyle: {
+      "max-height": "250px",
+      "overflow-y": "scroll"
+    }
   }, [_c('a', {
     staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "#EA4A5A",
+      "text-shadow": "none"
+    },
     attrs: {
       "href": "#accordion-2"
     }
@@ -45331,6 +45337,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "#EA4A5A",
+      "text-shadow": "none"
+    },
     attrs: {
       "href": "#accordion-3"
     }
@@ -45404,6 +45414,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "accordion-section"
   }, [_c('a', {
     staticClass: "accordion-section-title",
+    staticStyle: {
+      "color": "#EA4A5A",
+      "text-shadow": "none"
+    },
     attrs: {
       "href": "#accordion-4"
     }

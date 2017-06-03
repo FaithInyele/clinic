@@ -46,13 +46,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>HIV</td>
-                                            <td>100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>HIV</td>
-                                            <td>100</td>
+                                        <tr v-for="test in currentPayment.tests">
+                                            <td>{{test.details.resource_name}}</td>
+                                            <td>{{test.amount}}</td>
                                         </tr>
                                         <tr>
                                             <td><b>Total</b></td>
