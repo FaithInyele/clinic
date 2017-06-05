@@ -85,6 +85,12 @@ class ChemistController extends Controller
 
         return Response::json(array('success'=>'success'));
     }
+
+    /**
+     * update prescription //bt chemist when issuing medication.
+     * @param Request $request
+     * @return mixed
+     */
     public function updatePrescription(Request $request){
         DB::table('medicines')
             ->where('id', $request->id)
@@ -93,6 +99,12 @@ class ChemistController extends Controller
 
         return Response::json(array('total'=>$total));
     }
+
+    /**
+     * search for a given medication.
+     * @param Request $request
+     * @return mixed
+     */
     public function search(Request $request){
         //dd('huh');
         $results = ChemistResource::where('resource_name', 'LIKE', '%'.$request->q.'%')

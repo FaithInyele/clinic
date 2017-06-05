@@ -92,9 +92,12 @@ class ChatController extends Controller
      */
     public function unread(){
         $unread = DB::table('messages')
-            ->select('messages.*')
-            ->orwhere('message_to', Auth::user()->id)
-            ->where('read_status', 'no')
+            ->join('consults', 'messages.consultant_id', '=', 'consults.id')
+            ->join('tickets', 'consults.ticket_id', '=', 'tickets.id')
+            ->select('messages.*', 'tickets.status as t_status', 'tickets.id as t_id')
+            ->where('messages.message_to', Auth::user()->id)
+            ->where('messages.read_status', 'no')
+            ->where('tickets.status', '=', 'open')
             ->oldest()
             ->groupBy('consultant_id')
             ->get();
@@ -102,7 +105,7 @@ class ChatController extends Controller
             foreach ($unread as $message){
                 $message->consult = Consult::findorFail($message->consultant_id);
                 $message->message_from = User::findorFail($message->from);
-                $message->ticket = app('App\Http\Controllers\TicketController')->selectedTicket(8);
+                $message->ticket = app('App\Http\Controllers\TicketController')->selectedTicket($message->t_id);
             }
         }
         return Response::json($unread);

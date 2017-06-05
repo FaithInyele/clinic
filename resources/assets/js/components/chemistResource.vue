@@ -216,8 +216,9 @@
                     unit_price: inheritance.newResource.unit_price })
                     .then(function (response) {
                         console.log(response.data);
-                        inheritance.saveButton = 'Saved';
-                        inheritance.afterSaveButton = true;
+                        inheritance.saveButton = 'Save Another';
+                        //inheritance.afterSaveButton = true;
+                        inheritance.newResource = [];
                         inheritance.allResources();
                     }.bind(this))
             }

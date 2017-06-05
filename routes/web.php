@@ -61,6 +61,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
     Route::get('tickets/my-tickets/all/doctors', 'TicketController@activeDoc');
+    Route::get('tickets/my-tickets/close/{ticket_id}', 'TicketController@closeTicket');
     //payments
     Route::get('tickets/payments', 'PaymentController@index');
     Route::get('tickets/payments/pending', 'PaymentController@pending');

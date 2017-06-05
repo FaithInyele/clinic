@@ -11,8 +11,8 @@
                 <input type="text" placeholder="Search Client..." class="input-sm pull-right">
             </div>
             <hr>
-            <div class="row" v-for="allActive in allActives">
-                <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A">
+            <div class="row" v-for="allActive in allActives" style="margin-left: 0px">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A;border-radius: 10px;margin-left: 0px">
                     <div class="row">
                         <label> Client Name:</label>
                         {{ allActive.client.first_name}}, {{allActive.client.other_names}}
@@ -27,6 +27,7 @@
                     <hr style="margin: 5px">
                     <div class="row">
                         <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
+                        <a v-show="allActive.progress.level == 5"  class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
                     </div>
                 </div>
                 <br>
@@ -68,7 +69,7 @@
                                             </h5>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8" style="max-height: 400px;overflow-y: scroll">
                                         <ul class="accordion-tabs-minimal">
                                             <li class="tab-header-and-content">
                                                 <a href="#" class="tab-link is-active">Ticket</a>
@@ -133,7 +134,7 @@
                                                                             <div>
                                                                                 <b style="font-size: 10px">
                                                                                     <div class="form-group completed" v-if="currentTicket.progress">
-                                                                                        <input-tag id="test_tags" placeholder="Add Tests"  :on-change="saveLab" :tags="test_tags"></input-tag>
+                                                                                        <input-tag id="test_tags" placeholder="Tests Added will be displayed here"  :on-change="saveLab" :tags="test_tags"></input-tag>
                                                                                     </div>                                                                                    </b>
                                                                             </div>
                                                                             Search Required Lab Tests:<br>
@@ -331,8 +332,13 @@
                                             </li>
                                             <li class="tab-header-and-content">
                                                 <a href="#" class="tab-link">Special Medical Conditions</a>
-                                                <div class="tab-content">
-                                                    <h6>Special Medical Conditions</h6>
+                                                <div class="tab-content" v-if="currentTicket.special_case">
+                                                    <h6>Special Medical Conditions<i class="pull-right">Last Updated on:{{currentTicket.special_case.updated_at}}</i> </h6>
+                                                    <div class="row pullquote-left">
+                                                        <div class="row">
+                                                            {{currentTicket.special_case.description}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </li>
                                             <li class="tab-header-and-content">
@@ -754,6 +760,14 @@
                         inheritance.status = 'There was an Error while Processing your Request';
                         inheritance.statusError = true;
                     });
+            },
+            //close a ticket completely
+            endTicket: function (ticket_id) {
+                var inheritance = this;
+                axios.get(base_url+'/tickets/my-tickets/close/'+ticket_id)
+                    .then(function (response) {
+                        inheritance.allActiveMethod();
+                    }.bind(this))
             },
             startChat: function () {
                 var inheritance = this;

@@ -2,15 +2,18 @@
     <div class="row">
         <div class="row">
             <h6>Consultations</h6>
-            <div v-if="newMessages" v-for="ticket in newMessages">
-                <b style="color: green;">From:</b> <b style="font-size: 9px">{{ticket.message_from.first_name}}, {{ticket.message_from.last_name}}<b class="pull-right">{{ticket.created_at}}</b></b><br>
-                <label>Message:</label> {{ticket.message}}<br>
-                <div class="row">
-                    <a class="pull-right btn btn-sm btn-success form-control" @click="openTicket(ticket.ticket.original.id, ticket.consult.id)" style="margin-right: 10px">Open</a>
-                </div>
-                <div class="row">
-                    <hr style="margin: 2px">
-                </div>
+            <div class="" v-if="newMessages" v-for="ticket in newMessages">
+                <a class="new-message" @click="openTicket(ticket.ticket.original.id, ticket.consult.id)">
+                    <div  class="alert alert-warning">
+                        <b style="font-size: 9px">From:   {{ticket.message_from.first_name}}, {{ticket.message_from.last_name}}<i class="pull-right">{{ticket.created_at}}</i></b><br>
+                        <div style="font-size: 10px">
+                            Client: {{ticket.ticket.original.client.first_name}}, {{ticket.ticket.original.client.other_names}}<br>
+                            <label style="font-size: 10px">Message:</label> {{ticket.message}}<br>
+                        </div>
+                        <div class="row">
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
         <transition name="modal">

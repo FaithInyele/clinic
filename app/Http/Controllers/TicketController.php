@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\SpecialCase;
 use App\Ticket;
 use Illuminate\Http\Request;
 use App\Clients;
@@ -132,7 +133,7 @@ class TicketController extends Controller
         foreach ($ticket as $item){
             $item['client'] = Clients::findorFail($item->client_id);
             $item['progress'] = Progress::where('ticket_id', $item->id)->latest()->first();
-            if ($item['progress']->level == 0 || $item['progress']->level == 1 || $item['progress']->level == 3){
+            if ($item['progress']->level == 0 || $item['progress']->level == 1 || $item['progress']->level == 3 || $item['progress']->level == 5){
                 array_push($active, $item);
             }
         }
@@ -159,6 +160,7 @@ class TicketController extends Controller
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
         $ticket['pre_examination'] = GeneralCondition::where('ticket_id', $ticket_id)->get();
+        $ticket['special_case'] = SpecialCase::where('client_id', $ticket['client']->id)->first();
         if ($ticket['pre_examination']){
             foreach ($ticket['pre_examination'] as $examination){
                 $examination['details'] = GeneralConditionResource::findorFail($examination->nurse_station_resource_id);
@@ -370,6 +372,19 @@ class TicketController extends Controller
         }
         $prescription = Prescription::findorFail($request->prescription_id);
         return Response::json($prescription);
+
+    }
+
+    /**
+     * close a given ticket completely
+     * @param $ticket_id
+     * @return mixed
+     */
+    public function closeTicket($ticket_id){
+        $ticket = Ticket::findorFail($ticket_id);
+        $ticket->update(['status'=>'closed']);
+
+        return Response::json(array('status'=>'success'));
 
     }
 }

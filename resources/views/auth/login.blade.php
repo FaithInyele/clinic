@@ -3,7 +3,7 @@
 <div class="container">
         <div class="col-md-4 col-md-offset-4" style="text-align: center">
             <h1>
-                <img src="{{url('images/logo.png')}}" style="max-height: 80px;width: auto">
+                <img src="{{url('images/logo.png')}}" style="max-height: 80px;width: auto;text-align: center;display: inline">
             </h1>
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>

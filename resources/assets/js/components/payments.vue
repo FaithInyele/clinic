@@ -1,9 +1,10 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
-            <h5>Pending Payments</h5>
+            <h3>Pending Payments</h3>
+            <hr>
             <div class="row" v-for="payment in payments">
-                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6;border-radius: 10px;margin-left: 0px">
                     <div class="row">
                         <label> Payment Location:</label>
                         {{payment.progress.description}}
@@ -125,13 +126,18 @@
             savePayment: function (payment) {
                 var inheritance = this;
                 inheritance.saveButton = 'Paying...';
-                axios.post(base_url+'/tickets/payments/pay-lab', payment)
-                    .then(function (response) {
-                        //console.log(response.data);
-                        inheritance.saveButton = 'Pay';
-                        inheritance.allPayments();
-                        //console.log(response.data);
-                    })
+                if (payment.payment_method == ''){
+
+                }else{
+                    axios.post(base_url+'/tickets/payments/pay-lab', payment)
+                        .then(function (response) {
+                            //console.log(response.data);
+                            inheritance.saveButton = 'Pay';
+                            inheritance.allPayments();
+                            inheritance.modal = false;
+                            //console.log(response.data);
+                        })
+                }
             },
         }
     }

@@ -12883,6 +12883,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13200,6 +13206,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.statusError = true;
             });
         },
+        //close a ticket completely
+        endTicket: function endTicket(ticket_id) {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/close/' + ticket_id).then(function (response) {
+                inheritance.allActiveMethod();
+            }.bind(this));
+        },
         startChat: function startChat() {
             var inheritance = this;
             axios.get(base_url + '/chat/start?ticket_id=' + inheritance.currentTicket.id + '&consultant_id=' + inheritance.chat_doctor).then(function (response) {
@@ -13417,6 +13430,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(ticket_id);
             axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
                 inheritance.currentClient = response.data;
+                if (currentClient.progress.level >= 3) {
+                    inheritance.status = 'Results Submitted Successfully';
+                    inheritance.statusWarn = true;
+                }
                 inheritance.modalLoading = false;
                 inheritance.ticketModal = true;
             }.bind(this)).catch(function (error) {
@@ -13925,8 +13942,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 description: inheritance.newResource.description,
                 unit_price: inheritance.newResource.unit_price }).then(function (response) {
                 console.log(response.data);
-                inheritance.saveButton = 'Saved';
-                inheritance.afterSaveButton = true;
+                inheritance.saveButton = 'Save Another';
+                //inheritance.afterSaveButton = true;
+                inheritance.newResource = [];
                 inheritance.allResources();
             }.bind(this));
         }
@@ -14683,6 +14701,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.status = 'There was an Error while Processing your Request';
                 inheritance.statusError = true;
             });
+        },
+        //close a ticket completely
+        endTicket: function endTicket(ticket_id) {
+            var inheritance = this;
+            axios.get(base_url + 'tickets/my-tickets/close/' + ticket_id).then(function (response) {
+                inheritance.allActiveMethod();
+            }.bind(this));
         },
         startChat: function startChat() {
             var inheritance = this;
@@ -15441,6 +15466,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15478,12 +15504,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         savePayment: function savePayment(payment) {
             var inheritance = this;
             inheritance.saveButton = 'Paying...';
-            axios.post(base_url + '/tickets/payments/pay-lab', payment).then(function (response) {
-                //console.log(response.data);
-                inheritance.saveButton = 'Pay';
-                inheritance.allPayments();
-                //console.log(response.data);
-            });
+            if (payment.payment_method == '') {} else {
+                axios.post(base_url + '/tickets/payments/pay-lab', payment).then(function (response) {
+                    //console.log(response.data);
+                    inheritance.saveButton = 'Pay';
+                    inheritance.allPayments();
+                    inheritance.modal = false;
+                    //console.log(response.data);
+                });
+            }
         }
     }
 };
@@ -15694,6 +15723,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_input_tag___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_input_tag__);
+//
+//
+//
 //
 //
 //
@@ -41290,14 +41322,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_c('h5', [_vm._v("Pending Payments")]), _vm._v(" "), _vm._l((_vm.payments), function(payment) {
+  }, [_c('h3', [_vm._v("Pending Payments")]), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.payments), function(payment) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
       staticClass: "row",
       staticStyle: {
         "background-color": "#f8f8f8",
-        "border": "2px solid #53CDF6"
+        "border": "2px solid #53CDF6",
+        "border-radius": "10px",
+        "margin-left": "0px"
       }
     }, [_c('div', {
       staticClass: "row"
@@ -41988,7 +42022,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row",
       staticStyle: {
         "background-color": "#f8f8f8",
-        "border": "2px solid #53CDF6"
+        "border": "2px solid #53CDF6",
+        "border-radius": "10px",
+        "margin-left": "0px"
       }
     }, [_c('div', {
       staticClass: "row"
@@ -42235,29 +42271,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "row"
   }, [_c('h6', [_vm._v("Consultations")]), _vm._v(" "), _vm._l((_vm.newMessages), function(ticket) {
-    return (_vm.newMessages) ? _c('div', [_c('b', {
-      staticStyle: {
-        "color": "green"
-      }
-    }, [_vm._v("From:")]), _vm._v(" "), _c('b', {
-      staticStyle: {
-        "font-size": "9px"
-      }
-    }, [_vm._v(_vm._s(ticket.message_from.first_name) + ", " + _vm._s(ticket.message_from.last_name)), _c('b', {
-      staticClass: "pull-right"
-    }, [_vm._v(_vm._s(ticket.created_at))])]), _c('br'), _vm._v(" "), _c('label', [_vm._v("Message:")]), _vm._v(" " + _vm._s(ticket.message)), _c('br'), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('a', {
-      staticClass: "pull-right btn btn-sm btn-success form-control",
-      staticStyle: {
-        "margin-right": "10px"
-      },
+    return (_vm.newMessages) ? _c('div', {}, [_c('a', {
+      staticClass: "new-message",
       on: {
         "click": function($event) {
           _vm.openTicket(ticket.ticket.original.id, ticket.consult.id)
         }
       }
-    }, [_vm._v("Open")])]), _vm._v(" "), _vm._m(0, true)]) : _vm._e()
+    }, [_c('div', {
+      staticClass: "alert alert-warning"
+    }, [_c('b', {
+      staticStyle: {
+        "font-size": "9px"
+      }
+    }, [_vm._v("From:   " + _vm._s(ticket.message_from.first_name) + ", " + _vm._s(ticket.message_from.last_name)), _c('i', {
+      staticClass: "pull-right"
+    }, [_vm._v(_vm._s(ticket.created_at))])]), _c('br'), _vm._v(" "), _c('div', {
+      staticStyle: {
+        "font-size": "10px"
+      }
+    }, [_vm._v("\n                            Client: " + _vm._s(ticket.ticket.original.client.first_name) + ", " + _vm._s(ticket.ticket.original.client.other_names)), _c('br'), _vm._v(" "), _c('label', {
+      staticStyle: {
+        "font-size": "10px"
+      }
+    }, [_vm._v("Message:")]), _vm._v(" " + _vm._s(ticket.message)), _c('br')]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    })])])]) : _vm._e()
   })], 2), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
@@ -43216,15 +43255,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.closeTicket
     }
   }, [_vm._v("\n                                    Close\n                                ")])])], 2)])])])])], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
-  }, [_c('hr', {
-    staticStyle: {
-      "margin": "2px"
-    }
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -44315,7 +44346,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "row"
-  }, [_c('label', [_vm._v("My Clients")]), _vm._v(" "), _c('input', {
+  }, [_c('label', [_vm._v("My Clientss")]), _vm._v(" "), _c('input', {
     staticClass: "input-sm pull-right",
     attrs: {
       "type": "text",
@@ -44786,12 +44817,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-lg-8"
   }, [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.allActives), function(allActive) {
     return _c('div', {
-      staticClass: "row"
+      staticClass: "row",
+      staticStyle: {
+        "margin-left": "0px"
+      }
     }, [_c('div', {
       staticClass: "row",
       staticStyle: {
         "background-color": "#f8f8f8",
-        "border": "2px solid #EA4A5A"
+        "border": "2px solid #EA4A5A",
+        "border-radius": "10px",
+        "margin-left": "0px"
       }
     }, [_c('div', {
       staticClass: "row"
@@ -44819,7 +44855,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.openTicket(allActive.id)
         }
       }
-    }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
+    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (allActive.progress.level == 5),
+        expression: "allActive.progress.level == 5"
+      }],
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      },
+      on: {
+        "click": function($event) {
+          _vm.endTicket(allActive.id)
+        }
+      }
+    }, [_vm._v("Close Ticket")])])]), _vm._v(" "), _c('br')])
   })], 2), _vm._v(" "), _c('div', {
     staticClass: "col-lg-4"
   }, [_c('h5', [_vm._v("My Statistics")]), _vm._v(" "), _c('sidebar')], 1), _vm._v(" "), _c('transition', {
@@ -44908,7 +44960,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]) : _vm._e()]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-8"
+    staticClass: "col-md-8",
+    staticStyle: {
+      "max-height": "400px",
+      "overflow-y": "scroll"
+    }
   }, [_c('ul', {
     staticClass: "accordion-tabs-minimal"
   }, [_c('li', {
@@ -45113,7 +45169,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('input-tag', {
     attrs: {
       "id": "test_tags",
-      "placeholder": "Add Tests",
+      "placeholder": "Tests Added will be displayed here",
       "on-change": _vm.saveLab,
       "tags": _vm.test_tags
     }
@@ -45618,9 +45674,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "#"
     }
-  }, [_vm._v("Special Medical Conditions")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Special Medical Conditions")]), _vm._v(" "), (_vm.currentTicket.special_case) ? _c('div', {
     staticClass: "tab-content"
-  }, [_c('h6', [_vm._v("Special Medical Conditions")])])]), _vm._v(" "), _c('li', {
+  }, [_c('h6', [_vm._v("Special Medical Conditions"), _c('i', {
+    staticClass: "pull-right"
+  }, [_vm._v("Last Updated on:" + _vm._s(_vm.currentTicket.special_case.updated_at))])]), _vm._v(" "), _c('div', {
+    staticClass: "row pullquote-left"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_vm._v("\n                                                        " + _vm._s(_vm.currentTicket.special_case.description) + "\n                                                    ")])])]) : _vm._e()]), _vm._v(" "), _c('li', {
     staticClass: "tab-header-and-content"
   }, [_c('a', {
     staticClass: "tab-link",

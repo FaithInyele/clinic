@@ -7,7 +7,7 @@
                 It is Highly recommended you follow the list as is.<br>
             </div>
             <div class="row" v-for="client in clients">
-                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
+                <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6;border-radius: 10px;margin-left: 0px">
                     <div class="row">
                         <label> Client Name:</label>
                         {{ client.c_fname}}, {{ client.c_othernames}}
@@ -194,6 +194,10 @@
                 axios.get(base_url+'/atlab/view/'+ticket_id)
                     .then(function (response) {
                         inheritance.currentClient = response.data;
+                        if (currentClient.progress.level >= 3){
+                            inheritance.status = 'Results Submitted Successfully';
+                            inheritance.statusWarn = true;
+                        }
                         inheritance.modalLoading = false;
                         inheritance.ticketModal = true;
                     }.bind(this))

@@ -7,7 +7,7 @@
                 It is Highly recommended you follow the list as is.<br>
             </div>
             <div class="row">
-                <label>My Clients</label>
+                <label>My Clientss</label>
                 <input type="text" placeholder="Search Client..." class="input-sm pull-right">
             </div>
             <hr>
@@ -754,6 +754,14 @@
                         inheritance.status = 'There was an Error while Processing your Request';
                         inheritance.statusError = true;
                     });
+            },
+            //close a ticket completely
+            endTicket: function (ticket_id) {
+                var inheritance = this;
+                axios.get(base_url+'tickets/my-tickets/close/'+ticket_id)
+                    .then(function (response) {
+                        inheritance.allActiveMethod();
+                    }.bind(this))
             },
             startChat: function () {
                 var inheritance = this;
