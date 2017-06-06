@@ -35,7 +35,7 @@
             @include('_partials.sidebarv2')
         <div id="content">
             <div class="outer">
-                <div class="inner bg-light lter">
+                <div class="inner bg-light lter" style="background-color: white !important;">
                     <div class="row" style="padding-top: 15px;">
                         @if (session('status'))
                             <div class="alert alert-success">

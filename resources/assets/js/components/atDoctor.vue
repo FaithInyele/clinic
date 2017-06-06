@@ -22,7 +22,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        Details:{{ allActive.progress.description}}
+                        Current Status:{{ allActive.progress.description}}
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
@@ -117,7 +117,7 @@
                                                                         <div class="">
                                                                             <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a> |
                                                                             <a style="font-size: 10px " @click="prescribeMedication">Prescribe Medication</a>  |
-                                                                            <a style="font-size: 10px " @click="">Admit Client</a>
+                                                                            <a style="font-size: 10px " @click="showAdmit">Admit Client</a>
                                                                         </div>
                                                                         <div class="row" v-show="chooseLab" style="font-size: 12px">
                                                                             <div>
@@ -204,6 +204,9 @@
                                                                             <div class="form-group pull-right">
                                                                                 <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
                                                                             </div>
+                                                                        </div>
+                                                                        <div class="row" v-show="chooseAdmit" style="font-size: 12px">
+                                                                            <button class="btn btn-sm" @click="admitClient">Admit Client</button>
                                                                         </div>
                                                                     </div>
 
@@ -452,6 +455,7 @@
                 recommendAction: true,
                 chooseLab: false,
                 chooseMed: false,
+                chooseAdmit: false,
                 labTechnicians: [],
                 selectedLabTech: '',
                 successtoLab: false,
@@ -670,11 +674,32 @@
                 var inheritance=this;
                 inheritance.chooseLab=true;
                 inheritance.chooseMed=false;
+                inheritance.chooseAdmit = false;
+            },
+            admitClient: function () {
+              var inheritance = this;
+              console.log(base_url+'/admit/'+inheritance.currentTicket.id);
+              axios.get(base_url+'inpatient/admit/'+inheritance.currentTicket.id)
+                  .then(function (response) {
+                      inheritance.status = 'Client Successfully Admited';
+                      inheritance.statusSuccess = true;
+                  })
+                  .catch(function (error) {
+                      inheritance.status = 'There was an Error while Processing your Request';
+                      inheritance.statusError = true;
+                  });
             },
             prescribeMedication: function () {
                 var inheritance = this;
                 inheritance.chooseLab=false;
                 inheritance.chooseMed=true;
+                inheritance.chooseAdmit = false;
+            },
+            showAdmit: function () {
+                var inheritance = this;
+                inheritance.chooseLab=false;
+                inheritance.chooseMed=false;
+                inheritance.chooseAdmit = true;
             },
             //save the prescriptions given
             saveP: function () {

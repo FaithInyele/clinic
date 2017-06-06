@@ -133,6 +133,11 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('chat/allmessages', 'ChatController@allMessages');
     Route::post('chat/newmessage', 'ChatController@newMessage');
 
+    /**
+     * inpatient routes
+     */
+    Route::get('inpatient/admit/{ticket_id}', 'InPatientController@admit');
+
 
 });
 

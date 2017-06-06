@@ -109,7 +109,8 @@
                             <option value="Receptionist">Receptionist</option>
                             <option value="Lab Technician">Lab Technician</option>
                             <option value="Chemist">Chemist</option>
-                            <option value="Nurse/Doctor">Nurse/Doctor</option>
+                            <option value="Nurse">Nurse</option>
+                            <option value="Doctor">Doctor</option>
                             <option value="Admin">Admin</option>
                         </select>
 

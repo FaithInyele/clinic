@@ -12889,6 +12889,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -12914,6 +12917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             recommendAction: true,
             chooseLab: false,
             chooseMed: false,
+            chooseAdmit: false,
             labTechnicians: [],
             selectedLabTech: '',
             successtoLab: false,
@@ -13123,11 +13127,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.chooseLab = true;
             inheritance.chooseMed = false;
+            inheritance.chooseAdmit = false;
+        },
+        admitClient: function admitClient() {
+            var inheritance = this;
+            console.log(base_url + '/admit/' + inheritance.currentTicket.id);
+            axios.get(base_url + 'inpatient/admit/' + inheritance.currentTicket.id).then(function (response) {
+                inheritance.status = 'Client Successfully Admited';
+                inheritance.statusSuccess = true;
+            }).catch(function (error) {
+                inheritance.status = 'There was an Error while Processing your Request';
+                inheritance.statusError = true;
+            });
         },
         prescribeMedication: function prescribeMedication() {
             var inheritance = this;
             inheritance.chooseLab = false;
             inheritance.chooseMed = true;
+            inheritance.chooseAdmit = false;
+        },
+        showAdmit: function showAdmit() {
+            var inheritance = this;
+            inheritance.chooseLab = false;
+            inheritance.chooseMed = false;
+            inheritance.chooseAdmit = true;
         },
         //save the prescriptions given
         saveP: function saveP() {
@@ -44839,7 +44862,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._v("\n                    Details:" + _vm._s(allActive.progress.description) + "\n                ")]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                    Current Status:" + _vm._s(allActive.progress.description) + "\n                ")]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
@@ -45116,7 +45139,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "font-size": "10px"
     },
     on: {
-      "click": function($event) {}
+      "click": _vm.showAdmit
     }
   }, [_vm._v("Admit Client")])]), _vm._v(" "), _c('div', {
     directives: [{
@@ -45376,7 +45399,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2)])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.chooseAdmit),
+      expression: "chooseAdmit"
+    }],
+    staticClass: "row",
+    staticStyle: {
+      "font-size": "12px"
+    }
+  }, [_c('button', {
+    staticClass: "btn btn-sm",
+    on: {
+      "click": _vm.admitClient
+    }
+  }, [_vm._v("Admit Client")])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",
