@@ -12889,9 +12889,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -12941,7 +12938,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             allDocs: [],
             chat_doctor: '',
             currentChat: [],
-            chatMessage: ''
+            chatMessage: '',
+            admitButton: 'Admit Client'
         };
     },
     watch: {
@@ -13129,16 +13127,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.chooseMed = false;
             inheritance.chooseAdmit = false;
         },
-        admitClient: function admitClient() {
+        admitClient: function admitClient(ticket_id) {
             var inheritance = this;
-            console.log(base_url + '/admit/' + inheritance.currentTicket.id);
-            axios.get(base_url + 'inpatient/admit/' + inheritance.currentTicket.id).then(function (response) {
-                inheritance.status = 'Client Successfully Admited';
-                inheritance.statusSuccess = true;
-            }).catch(function (error) {
-                inheritance.status = 'There was an Error while Processing your Request';
-                inheritance.statusError = true;
-            });
+            console.log(ticket_id);
+            inheritance.admitButton = 'Admitting...';
+            console.log(base_url + '/admit/' + ticket_id);
+            axios.get(base_url + '/inpatient/admit/' + ticket_id).then(function (response) {
+                inheritance.admitButton = 'Admitted';
+            }).catch(function (error) {});
         },
         prescribeMedication: function prescribeMedication() {
             var inheritance = this;
@@ -13450,13 +13446,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //open a given ticket
         currentTicket: function currentTicket(ticket_id) {
             var inheritance = this;
-            console.log(ticket_id);
+            inheritance.revertStatus();
+            inheritance.modalLoading = true;
+            console.log(base_url + '/atlab/view/' + ticket_id);
             axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
+                console.log('doneeee');
                 inheritance.currentClient = response.data;
-                if (currentClient.progress.level >= 3) {
+                /*if (currentClient.progress.level >= 3){
                     inheritance.status = 'Results Submitted Successfully';
                     inheritance.statusWarn = true;
-                }
+                }*/
                 inheritance.modalLoading = false;
                 inheritance.ticketModal = true;
             }.bind(this)).catch(function (error) {
@@ -43110,41 +43109,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "consult"
     }
-  }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('h6', [_vm._v("Select Doctor")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.chat_doctor),
-      expression: "chat_doctor"
-    }],
-    staticClass: "input-sm",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.chat_doctor = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": ""
-    }
-  }, [_vm._v("-Select Doctor-")]), _vm._v(" "), _vm._l((_vm.allDocs), function(doc) {
-    return (_vm.allDocs) ? _c('option', {
-      domProps: {
-        "value": doc.id
-      }
-    }, [_vm._v(_vm._s(doc.last_name) + " , " + _vm._s(doc.first_name))]) : _vm._e()
-  })], 2), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-sm",
-    on: {
-      "click": _vm.startChat
-    }
-  }, [_vm._v("Proceed")]), _vm._v(" "), _c('div', {
+  }, [_c('label', [_vm._v("Consult with another Doctor, concerning the Client")]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
       "margin": "0px",
@@ -44875,6 +44840,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
+          _vm.admitClient(allActive.id)
+        }
+      }
+    }, [_vm._v(_vm._s(_vm.admitButton))]), _vm._v(" "), _c('a', {
+      staticClass: "pull-right btn btn-sm btn-success btn-custom",
+      staticStyle: {
+        "margin-right": "10px"
+      },
+      on: {
+        "click": function($event) {
           _vm.openTicket(allActive.id)
         }
       }
@@ -45134,14 +45109,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.prescribeMedication
     }
-  }, [_vm._v("Prescribe Medication")]), _vm._v("  |\n                                                                        "), _c('a', {
-    staticStyle: {
-      "font-size": "10px"
-    },
-    on: {
-      "click": _vm.showAdmit
-    }
-  }, [_vm._v("Admit Client")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Prescribe Medication")]), _vm._v("  |\n                                                                    ")]), _vm._v(" "), _c('div', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -45399,23 +45367,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.submitP()
       }
     }
-  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.chooseAdmit),
-      expression: "chooseAdmit"
-    }],
-    staticClass: "row",
-    staticStyle: {
-      "font-size": "12px"
-    }
-  }, [_c('button', {
-    staticClass: "btn btn-sm",
-    on: {
-      "click": _vm.admitClient
-    }
-  }, [_vm._v("Admit Client")])])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.toChemist))]) : _vm._e()])], 2)])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h6', [_c('b', [_c('u', [_vm._v("Previous Instance Summary:")])])]), _vm._v(" "), _c('div', {
     staticClass: "row",

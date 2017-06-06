@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\InPatient;
 use App\SpecialCase;
 use App\Ticket;
 use Illuminate\Http\Request;
@@ -133,8 +134,11 @@ class TicketController extends Controller
         foreach ($ticket as $item){
             $item['client'] = Clients::findorFail($item->client_id);
             $item['progress'] = Progress::where('ticket_id', $item->id)->latest()->first();
-            if ($item['progress']->level == 0 || $item['progress']->level == 1 || $item['progress']->level == 3 || $item['progress']->level == 5){
-                array_push($active, $item);
+            $item['inPatient'] = InPatient::where('ticket_id', $item->id)->first();
+            if ($item['inPatient'] == null){
+                if ($item['progress']->level == 0 || $item['progress']->level == 1 || $item['progress']->level == 3 || $item['progress']->level == 5){
+                    array_push($active, $item);
+                }
             }
         }
 

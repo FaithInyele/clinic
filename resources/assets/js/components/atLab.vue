@@ -190,14 +190,17 @@
             //open a given ticket
             currentTicket: function (ticket_id) {
                 var inheritance = this;
-                console.log(ticket_id);
+                inheritance.revertStatus();
+                inheritance.modalLoading = true;
+                console.log(base_url+'/atlab/view/'+ticket_id);
                 axios.get(base_url+'/atlab/view/'+ticket_id)
                     .then(function (response) {
+                        console.log('doneeee');
                         inheritance.currentClient = response.data;
-                        if (currentClient.progress.level >= 3){
+                        /*if (currentClient.progress.level >= 3){
                             inheritance.status = 'Results Submitted Successfully';
                             inheritance.statusWarn = true;
-                        }
+                        }*/
                         inheritance.modalLoading = false;
                         inheritance.ticketModal = true;
                     }.bind(this))

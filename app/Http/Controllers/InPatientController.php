@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\InPatient;
 use Illuminate\Http\Request;
 use App\Progress;
+use Illuminate\Support\Facades\Auth;
 
 class InPatientController extends Controller
 {

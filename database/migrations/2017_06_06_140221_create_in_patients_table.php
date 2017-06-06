@@ -16,7 +16,7 @@ class CreateInPatientsTable extends Migration
         Schema::create('in_patients', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
-            $table->integer('assigned_to')->unsigned();
+            $table->integer('assigned_to')->unsigned()->nullable();
             $table->timestamps();
 
             //create table relationships

@@ -26,6 +26,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="admitClient(allActive.id)" style="margin-right: 10px">{{admitButton}}</a>
                         <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
                         <a v-show="allActive.progress.level == 5"  class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
                     </div>
@@ -117,7 +118,6 @@
                                                                         <div class="">
                                                                             <a style="font-size: 10px" @click="recommendLab">Recommend Lab Test(s)</a> |
                                                                             <a style="font-size: 10px " @click="prescribeMedication">Prescribe Medication</a>  |
-                                                                            <a style="font-size: 10px " @click="showAdmit">Admit Client</a>
                                                                         </div>
                                                                         <div class="row" v-show="chooseLab" style="font-size: 12px">
                                                                             <div>
@@ -204,9 +204,6 @@
                                                                             <div class="form-group pull-right">
                                                                                 <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row" v-show="chooseAdmit" style="font-size: 12px">
-                                                                            <button class="btn btn-sm" @click="admitClient">Admit Client</button>
                                                                         </div>
                                                                     </div>
 
@@ -479,7 +476,8 @@
                 allDocs: [],
                 chat_doctor: '',
                 currentChat: [],
-                chatMessage: ''
+                chatMessage: '',
+                admitButton: 'Admit Client'
             }
         },
         watch: {
@@ -676,17 +674,17 @@
                 inheritance.chooseMed=false;
                 inheritance.chooseAdmit = false;
             },
-            admitClient: function () {
+            admitClient: function (ticket_id) {
               var inheritance = this;
-              console.log(base_url+'/admit/'+inheritance.currentTicket.id);
-              axios.get(base_url+'inpatient/admit/'+inheritance.currentTicket.id)
+              console.log(ticket_id);
+              inheritance.admitButton = 'Admitting...';
+              console.log(base_url+'/admit/'+ticket_id);
+              axios.get(base_url+'/inpatient/admit/'+ticket_id)
                   .then(function (response) {
-                      inheritance.status = 'Client Successfully Admited';
-                      inheritance.statusSuccess = true;
+                        inheritance.admitButton = 'Admitted';
                   })
                   .catch(function (error) {
-                      inheritance.status = 'There was an Error while Processing your Request';
-                      inheritance.statusError = true;
+
                   });
             },
             prescribeMedication: function () {

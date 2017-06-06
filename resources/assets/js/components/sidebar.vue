@@ -331,12 +331,12 @@
                                                 </div>
                                                 <div id="consult" class="tab-pane fade">
                                                     <label>Consult with another Doctor, concerning the Client</label>
-                                                    <h6>Select Doctor</h6>
+                                                    <!--<h6>Select Doctor</h6>
                                                     <select class="input-sm" v-model="chat_doctor">
                                                         <option value="">-Select Doctor-</option>
                                                         <option v-if="allDocs" v-for="doc in allDocs" :value="doc.id">{{doc.last_name}} , {{doc.first_name}}</option>
                                                     </select>
-                                                    <button class="btn btn-sm" @click="startChat">Proceed</button>
+                                                    <button class="btn btn-sm" @click="startChat">Proceed</button>-->
                                                     <div class="row" style="margin: 0px;padding-top: 10px">
                                                         <div class="row chat-window" id="chat_window_1" style="margin: 0px">
                                                             <div class="col-xs-12 col-md-12">
