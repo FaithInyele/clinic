@@ -149,6 +149,30 @@ class TicketController extends Controller
     }
 
     /**
+     * method that gets all clients who were admitted as inpatients //by the current doctor
+     * @return mixed
+     */
+    public function inPatient(){
+        //get all tickets for current user
+        $ticket = Ticket::where('status', 'open')->where('assigned_to', Auth::user()->id)->get();
+        $active = array();
+        //add all relevant data to each ticket
+        foreach ($ticket as $item){
+            $item['client'] = Clients::findorFail($item->client_id);
+            $item['progress'] = Progress::where('ticket_id', $item->id)->latest()->first();
+            $item['inPatient'] = InPatient::where('ticket_id', $item->id)->first();
+            if ($item['inPatient'] != null){
+                array_push($active, $item);
+            }
+        }
+
+        usort($active, function ($a, $b){
+            return $a['progress']['updated_at'] <=> $b['progress']['updated_at'];
+        });
+        return Response::json($active);
+    }
+
+    /**
      * retrieve all details associated with a particular ticket in allActive()
      *
      * @param $ticket_id
@@ -165,6 +189,7 @@ class TicketController extends Controller
         $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
         $ticket['pre_examination'] = GeneralCondition::where('ticket_id', $ticket_id)->get();
         $ticket['special_case'] = SpecialCase::where('client_id', $ticket['client']->id)->first();
+        $ticket['inPatient'] = InPatient::where('ticket_id', $ticket_id)->first();
         if ($ticket['pre_examination']){
             foreach ($ticket['pre_examination'] as $examination){
                 $examination['details'] = GeneralConditionResource::findorFail($examination->nurse_station_resource_id);

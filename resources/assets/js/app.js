@@ -9,6 +9,15 @@ require('./bootstrap');
 
 require('../sass/custom/jquery-steps/jquery.steps');
 
+import VueRouter from 'vue-router';
+
+const router = new VueRouter({
+    routes: [
+        { path: '/', component: require('./components/inpatient.vue') },
+        { path: '/AddServices', component: require('./components/ticket_start.vue') }
+    ]
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -45,13 +54,17 @@ Vue.component('payments', require('./components/payments.vue'));
 
 Vue.component('sidebar', require('./components/sidebar.vue'));
 
+Vue.component('inpatient', require('./components/inpatient.vue'));
 const app = new Vue({
+    router,
     el: '#app',
     data: {
         clientEdit: false,
         startTicket: false
     }
 });
+
+
 
 //other js files
 

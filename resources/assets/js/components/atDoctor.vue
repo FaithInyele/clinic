@@ -6,33 +6,53 @@
                 <strong>My List</strong> <br>
                 It is Highly recommended you follow the list as is.<br>
             </div>
-            <div class="row">
-                <label>My Clients</label>
-                <input type="text" placeholder="Search Client..." class="input-sm pull-right">
-            </div>
-            <hr>
-            <div class="row" v-for="allActive in allActives" style="margin-left: 0px">
-                <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A;border-radius: 10px;margin-left: 0px">
-                    <div class="row">
-                        <label> Client Name:</label>
-                        {{ allActive.client.first_name}}, {{allActive.client.other_names}}
-                        <i class="pull-right">
-                            last updated on: {{allActive.progress.updated_at}}
-                        </i>
+            <ul class="accordion-tabs-minimal">
+                <li class="tab-header-and-content">
+                    <a href="#" class="tab-link is-active">Out Patient(s)</a>
+                    <div class="tab-content">
+                        <div class="row">
+                            <label>My Out-Patient Clients</label>
+                            <input type="text" placeholder="Search Client..." class="input-sm pull-right">
+                        </div>
+                        <hr>
+                        <div class="row" v-for="allActive in allActives" style="margin-left: 0px">
+                            <div class="row" style="background-color: #f8f8f8;border: 2px solid #EA4A5A;border-radius: 10px;margin-left: 0px">
+                                <div class="row">
+                                    <label> Client Name:</label>
+                                    {{ allActive.client.first_name}}, {{allActive.client.other_names}}
+                                    <i class="pull-right">
+                                        last updated on: {{allActive.progress.updated_at}}
+                                    </i>
+                                </div>
+                                <hr style="margin: 5px">
+                                <div class="row">
+                                    Current Status:{{ allActive.progress.description}}
+                                </div>
+                                <hr style="margin: 5px">
+                                <div class="row">
+                                    <a class="pull-right btn btn-sm btn-success btn-custom" @click="admitClient(allActive.id)" style="margin-right: 10px">{{admitButton}}</a>
+                                    <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
+                                    <a v-show="allActive.progress.level == 5"  class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
                     </div>
-                    <hr style="margin: 5px">
-                    <div class="row">
-                        Current Status:{{ allActive.progress.description}}
+                </li>
+                <li class="tab-header-and-content">
+                    <a href="#" class="tab-link">In Patient(s)</a>
+                    <div class="tab-content">
+                        <div class="row">
+                            <label>My In-Patient Clients</label>
+                            <input type="text" placeholder="Search Client..." class="input-sm pull-right">
+                        </div>
+                        <hr>
+                        <inpatient></inpatient>
                     </div>
-                    <hr style="margin: 5px">
-                    <div class="row">
-                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="admitClient(allActive.id)" style="margin-right: 10px">{{admitButton}}</a>
-                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
-                        <a v-show="allActive.progress.level == 5"  class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
-                    </div>
-                </div>
-                <br>
-            </div>
+                </li>
+
+            </ul>
+
         </div>
         <div class="col-lg-4">
             <h5>My Statistics</h5>

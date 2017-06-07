@@ -137,6 +137,7 @@ Route::group(['middleware' => 'logIn'], function () {
      * inpatient routes
      */
     Route::get('inpatient/admit/{ticket_id}', 'InPatientController@admit');
+    Route::get('inpatient/all', 'TicketController@inPatient');
 
 
 });

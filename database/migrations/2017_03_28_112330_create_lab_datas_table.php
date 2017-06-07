@@ -18,6 +18,7 @@ class CreateLabDatasTable extends Migration
             $table->integer('ticket_id')->unsigned();
             $table->integer('assigned_to')->unsigned();
             $table->string('status'); //-1 for pending payments 0 for finished payments 1 for finished tests(submitted)
+            $table->integer('type');
             $table->timestamps();
 
             //create table relationships
