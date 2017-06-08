@@ -15945,6 +15945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15971,6 +15972,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //close modal
         closeTicket: function closeTicket() {
             var inheritance = this;
+            inheritance.clientsAtLab();
             inheritance.currentClient = [];
             inheritance.ticketModal = false;
         },
@@ -16003,12 +16005,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.resultsButton = 'Sending Results';
             inheritance.status = 'Sending Results to Doctor';
             inheritance.saveResults(data);
-            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id);
-            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.lab_data.id + '?ticket_id=' + inheritance.currentClient.id).then(function () {
+            console.log(base_url + '/atlab/lab/update/' + inheritance.currentClient.id + '?ticket_id=' + inheritance.currentClient.ticket.id);
+            axios.get(base_url + '/atlab/lab/update/' + inheritance.currentClient.id + '?ticket_id=' + inheritance.currentClient.ticket.id).then(function (response) {
+                console.log(response.data);
                 inheritance.resultsButton = 'Send Results';
                 inheritance.status = 'Results Successfully Submitted';
                 inheritance.statusSuccess = true;
                 inheritance.currentClient.progress.level = 3;
+                inheritance.closeTicket();
             }.bind(this)).catch(function (error) {
                 inheritance.status = 'There was an Error while Processing your Request';
                 inheritance.statusError = true;
@@ -16021,12 +16025,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.modalLoading = true;
             console.log(base_url + '/atlab/view/' + ticket_id);
             axios.get(base_url + '/atlab/view/' + ticket_id).then(function (response) {
-                console.log('doneeee');
+                console.log(response.data);
                 inheritance.currentClient = response.data;
-                /*if (currentClient.progress.level >= 3){
-                    inheritance.status = 'Results Submitted Successfully';
-                    inheritance.statusWarn = true;
-                }*/
                 inheritance.modalLoading = false;
                 inheritance.ticketModal = true;
             }.bind(this)).catch(function (error) {
@@ -16851,6 +16851,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -17152,7 +17157,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.revertStatus();
             var ticket_id = inheritance.currentTicket.id;
-            var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : null;
+            var labdatas_id = inheritance.currentTicket.lab_datas.id != undefined ? inheritance.currentTicket.lab_datas.id : null;
             //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
             //inheritance.sendtoLab = 'Saving Lab Test(s)...';
             inheritance.status = 'Saving Tests...';
@@ -45258,7 +45263,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "row"
-    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(client.c_fname) + ", " + _vm._s(client.c_othernames) + "\n                    "), _c('i', {
+    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(client.id) + "\n                    " + _vm._s(client.c_fname) + ", " + _vm._s(client.c_othernames) + "\n                    "), _c('i', {
       staticClass: "pull-right"
     }, [_vm._v("\n                        Ticket created on:" + _vm._s(client.created_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
       staticStyle: {
@@ -45279,7 +45284,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.currentTicket(client.ticket_id)
+          _vm.currentTicket(client.id)
         }
       }
     }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
@@ -45396,7 +45401,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row tab-content"
   }, [_c('div', {
     class: {
-      'tab-pane': _vm.classLoad, 'fade in': _vm.classLoad, 'active': _vm.classLoad, completed: _vm.currentClient.progress.level >= 3
+      'tab-pane': _vm.classLoad, 'fade in': _vm.classLoad, 'active': _vm.classLoad, completed: _vm.currentClient.progress.level >= 3 && _vm.currentClient.progress.level <= 6
     },
     staticStyle: {
       "min-height": "80%"
@@ -49301,7 +49306,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "#accordion-lab"
     }
-  }, [_vm._v("\n                                                            Lab Tests Done\n                                                        ")]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+  }, [_vm._v("\n                                                            Lab Tests Doneee\n                                                        ")]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-lab"
@@ -49311,9 +49316,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "row"
     }, [_c('div', {
       staticStyle: {
-        "font-size": "8px"
+        "font-size": "10px"
       }
-    }, [_vm._v(_vm._s(tests.created_at))])])
+    }, [_vm._v(_vm._s(tests.created_at))]), _vm._v(" "), _vm._l((tests.tests), function(test) {
+      return _c('div', {
+        staticClass: "row",
+        staticStyle: {
+          "font-size": "11px"
+        }
+      }, [_vm._v("\n                                                                    " + _vm._s(test.details.resource_name) + " : " + _vm._s(test.result) + "\n                                                                ")])
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    })])], 2)
   })) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "accordion-section"
   }, [_c('a', {

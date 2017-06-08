@@ -69,8 +69,8 @@
                                                             </a>
                                                             <div id="accordion-lab" class="accordion-section-content" v-if="currentTicket.assigned_by">
                                                                 <div class="row" v-for="(tests, index) in currentTicket.lab_datas">
-                                                                    <div style="font-size: 8px">{{tests.created_at}}</div>
-                                                                    <div class="row" v-for="test in tests.tests" style="font-size: 9px;">
+                                                                    <div style="font-size: 10px">{{tests.created_at}}</div>
+                                                                    <div class="row" v-for="test in tests.tests" style="font-size: 11px;">
                                                                         {{test.details.resource_name}} : {{test.result}}
                                                                     </div>
                                                                     <div class="row">
@@ -619,7 +619,7 @@
                 var inheritance = this;
                 inheritance.revertStatus();
                 var ticket_id = inheritance.currentTicket.id;
-                var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : null;
+                var labdatas_id = inheritance.currentTicket.lab_datas.id !=undefined ? inheritance.currentTicket.lab_datas.id : null;
                 //inheritance.selectedLabTech = inheritance.selectedLabTech != '' ? inheritance.selectedLabTech:inheritance.currentTicket.lab_technician.id;
                 //inheritance.sendtoLab = 'Saving Lab Test(s)...';
                 inheritance.status = 'Saving Tests...';

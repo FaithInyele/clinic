@@ -17,24 +17,24 @@ class LabController extends Controller
 {
     /**
      * retrieve all data related to a given ticket, -->for lab view
-     *
+     * its actualy lab datas id not ticket id as mentioned
      * @param $ticket_id
      * @return mixed
      */
     public function openTicket($ticket_id){
         //dd('elm');
-        $ticket = Ticket::findorFail($ticket_id);
-        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
-        $ticket['client'] = Clients::findorFail($ticket->client_id);
-        $ticket['lab_data'] = LabData::where('ticket_id', $ticket_id)->first();
-        $ticket['tests'] = Test::where('lab_id', $ticket['lab_data']->id)->get();
-        if ($ticket['tests']){
-            foreach ($ticket['tests'] as $test){
+        $data= LabData::findorFail($ticket_id);
+        $data['ticket'] = Ticket::findorFail($data->ticket_id);
+        $data['progress'] = Progress::where('ticket_id', $data['ticket']->id)->latest()->first();
+        $data['client'] = Clients::findorFail($data['ticket']->client_id);
+        $data['tests'] = Test::where('lab_id', $ticket_id)->get();
+        if ($data['tests']){
+            foreach ($data['tests'] as $test){
                 $test['details'] = LabResource::findorFail($test->lab_resource_id);
             }
         }
 
-        return Response::json($ticket);
+        return Response::json($data);
     }
 
     /**
@@ -61,19 +61,29 @@ class LabController extends Controller
      */
     public function finishTest($lab_id, Request $request){
         //dd($lab_id);
+        $labtest = LabData::findorFail($lab_id);
         DB::table('lab_datas')
             ->where('id', $lab_id)
-            ->update(['status'=> 1]);
+            ->update(['status'=>1]);
+        if ($labtest->type == 0){
+            //update progress
+            $progress = new Progress(array(
+                'ticket_id'=>$request->ticket_id,
+                'user_id'=>Auth::user()->id,
+                'level'=>3,
+                'description'=>'Results Available'));
+            $progress->save();
+        }else{
+            //update progress
+            $progress = new Progress(array(
+                'ticket_id'=>$request->ticket_id,
+                'user_id'=>Auth::user()->id,
+                'level'=>7,
+                'description'=>'Inpatient Results Available'));
+            $progress->save();
+        }
 
-        //update progress
-        $progress = new Progress(array(
-            'ticket_id'=>$request->ticket_id,
-            'user_id'=>Auth::user()->id,
-            'level'=>3,
-            'description'=>'Results Available'));
-        $progress->save();
-
-        return Response::json(array('success'=>'success'));
+        return Response::json($labtest);
     }
 
     /**

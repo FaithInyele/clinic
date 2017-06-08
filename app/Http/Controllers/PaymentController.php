@@ -23,21 +23,18 @@ class PaymentController extends Controller
     }
 
     public function pending(){
-        $pending = DB::table('tickets')
-            ->join('lab_datas', 'tickets.id', '=', 'lab_datas.ticket_id')
-            ->select('tickets.*')
-            ->where('lab_datas.status', -1)
-            ->get();
+        $pending = LabData::where('status', -1)->get();
         if ($pending){
-            foreach ($pending as $ticket){
-                $ticket->progress = Progress::where('ticket_id', $ticket->id)->latest()->first();
-                $ticket->client = Clients::findorFail($ticket->client_id);
-                $ticket->lab_datas = LabData::where('ticket_id', $ticket->id)->first();
-                if ($ticket->lab_datas){
-                    $ticket->tests = Test::where('lab_id', $ticket->lab_datas->id)->get();
-                    $ticket->total = Test::where('lab_id', $ticket->lab_datas->id)->sum('amount');
-                    if ($ticket->tests){
-                        foreach ($ticket->tests as $test){
+            foreach ($pending as $item){
+                $item->ticket = Ticket::findorFail($item->ticket_id);
+                $item->progress = Progress::where('ticket_id', $item->ticket->id)->latest()->first();
+                $item->client = Clients::findorFail($item->ticket->client_id);
+                $item->lab_datas = LabData::where('ticket_id', $item->ticket->id)->first();
+                if ($item->lab_datas){
+                    $item->tests = Test::where('lab_id', $item->id)->get();
+                    $item->total = Test::where('lab_id', $item->id)->sum('amount');
+                    if ($item->tests){
+                        foreach ($item->tests as $test){
                             $test->details = LabResource::findorFail($test->lab_resource_id);
                         }
                     }
@@ -51,7 +48,7 @@ class PaymentController extends Controller
     public function payLab(Request $request){
         //make payment
         $payment = new Payment(array(
-            'ticket_id'=>$request->id,
+            'ticket_id'=>$request->ticket['id'],
             'type'=>$request->progress['description'],
             'amount'=>$request->total,
             'payment_method'=>$request->payment_method
@@ -59,7 +56,7 @@ class PaymentController extends Controller
         $payment->save();
 
         //update lab_datas
-        $lab_datas = LabData::findorFail($request->lab_datas['id']);
+        $lab_datas = LabData::findorFail($request->id);
         $lab_datas->update(['status'=>0]);
 
         return Response::json($request->lab_datas['id']);

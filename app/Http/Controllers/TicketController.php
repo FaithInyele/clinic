@@ -399,24 +399,44 @@ class TicketController extends Controller
     }
     public function startLabInpatient(Request $request){
         //start Lab Ticket
-        $startLab = new LabData(array(
-            'ticket_id'=>$request->ticket_id,
-            'assigned_to'=>$request->technician,
-            'status'=>-1
-        ));
-        $startLab->save();
-
-        //save lab tests
-        $test = explode(',', $request->tests);
-        foreach ($test as $item){
-            $test_details = LabResource::findorFail($item);
-            $data = new Test(array(
-                'lab_id'=>$startLab->id,
-                'lab_resource_id'=>$item,
-                'amount'=>$test_details->unit_price
+        if($request->labdatas_id == 'null'){
+            $startLab = new LabData(array(
+                'ticket_id'=>$request->ticket_id,
+                'assigned_to'=>$request->technician,
+                'status'=>-1,
+                'type'=>1
             ));
-            $data->save();
+            $startLab->save();
+
+            //save lab tests
+            $test = explode(',', $request->tests);
+            foreach ($test as $item){
+                $test_details = LabResource::findorFail($item);
+                $data = new Test(array(
+                    'lab_id'=>$startLab->id,
+                    'lab_resource_id'=>$item,
+                    'amount'=>$test_details->unit_price
+                ));
+                $data->save();
+            }
+        }else{
+            $toDelete = Test::where('lab_id', $request->labdatas_id)->delete();
+            //save lab tests
+            if (!empty($request->tests)) {
+                $test = explode(',', $request->tests);
+                foreach ($test as $item) {
+                    $test_details = LabResource::findorFail($item);
+                    $data = new Test(array(
+                        'lab_id' => $request->labdatas_id,
+                        'lab_resource_id' => $item,
+                        'amount'=>$test_details->unit_price
+                    ));
+                    $data->save();
+                }
+            }
+            $startLab = LabData::findorFail($request->labdatas_id);
         }
+
 
         return Response::json($startLab);
     }

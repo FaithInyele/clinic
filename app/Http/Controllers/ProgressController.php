@@ -28,7 +28,7 @@ class ProgressController extends Controller
             ->join('clients', 'tickets.client_id', '=', 'clients.id')
             ->join('users', 'tickets.assigned_to', '=', 'users.id')
             ->select('lab_datas.*',
-                'clients.first_name as c_fname',
+                'clients.first_name as c_fnameee',
                 'clients.other_names as c_othernames')
             //->where('lab_datas.assigned_to', '=', 7)
             ->where('lab_datas.status', '=', 0)

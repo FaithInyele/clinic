@@ -10,6 +10,7 @@
                 <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6;border-radius: 10px;margin-left: 0px">
                     <div class="row">
                         <label> Client Name:</label>
+                        {{client.id}}
                         {{ client.c_fname}}, {{ client.c_othernames}}
                         <i class="pull-right">
                             Ticket created on:{{ client.created_at}}
@@ -21,7 +22,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="currentTicket(client.ticket_id)" style="margin-right: 10px">Open</a>
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="currentTicket(client.id)" style="margin-right: 10px">Open</a>
                     </div>
                 </div>
                 <br>
@@ -72,7 +73,7 @@
                                         </ul>
 
                                         <div class="row tab-content" v-if="currentClient">
-                                            <div id="progress" :class="{'tab-pane':classLoad, 'fade in': classLoad, 'active':classLoad, completed:currentClient.progress.level >= 3}" style="min-height: 80%">
+                                            <div id="progress" :class="{'tab-pane':classLoad, 'fade in': classLoad, 'active':classLoad, completed:currentClient.progress.level >= 3 && currentClient.progress.level <= 6}" style="min-height: 80%">
                                                 <h6>Requested Tests: {{currentClient.progress.level}}</h6>
                                                 <div class="form-group" v-for="test in currentClient.tests">
                                                     <div class="row pullquote-left">
@@ -140,6 +141,7 @@
             //close modal
             closeTicket: function () {
                 var inheritance = this;
+                inheritance.clientsAtLab();
                 inheritance.currentClient = [];
                 inheritance.ticketModal = false;
             },
@@ -174,13 +176,15 @@
                 inheritance.resultsButton = 'Sending Results';
                 inheritance.status = 'Sending Results to Doctor';
                 inheritance.saveResults(data);
-                console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id);
-                axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.lab_data.id+'?ticket_id='+inheritance.currentClient.id)
-                    .then(function () {
+                console.log(base_url+'/atlab/lab/update/'+inheritance.currentClient.id+'?ticket_id='+inheritance.currentClient.ticket.id);
+                axios.get(base_url+'/atlab/lab/update/'+inheritance.currentClient.id+'?ticket_id='+inheritance.currentClient.ticket.id)
+                    .then(function (response) {
+                        console.log(response.data);
                         inheritance.resultsButton = 'Send Results';
                         inheritance.status = 'Results Successfully Submitted';
                         inheritance.statusSuccess = true;
                         inheritance.currentClient.progress.level = 3;
+                        inheritance.closeTicket();
                     }.bind(this))
                     .catch(function (error) {
                         inheritance.status = 'There was an Error while Processing your Request';
@@ -195,12 +199,8 @@
                 console.log(base_url+'/atlab/view/'+ticket_id);
                 axios.get(base_url+'/atlab/view/'+ticket_id)
                     .then(function (response) {
-                        console.log('doneeee');
+                        console.log(response.data);
                         inheritance.currentClient = response.data;
-                        /*if (currentClient.progress.level >= 3){
-                            inheritance.status = 'Results Submitted Successfully';
-                            inheritance.statusWarn = true;
-                        }*/
                         inheritance.modalLoading = false;
                         inheritance.ticketModal = true;
                     }.bind(this))
