@@ -145,6 +145,10 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('inpatient/all', 'TicketController@inPatient');
 
 
+    //reports
+    Route::get('doc', 'ReportsController@doctor');
+
+
 });
 
 

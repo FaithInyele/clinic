@@ -1,44 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-                <div class="col-lg-12">
-                    <p>
-                        <button id="show-modal" @click="clientEdit = true">Show Modal</button>
-                        <example v-show="clientEdit" @close="clientEdit = false">
-
-                        </example>
-                    </p>
-                </div>
-
-
-
-    <!-- /#right -->
-<!-- #helpModal -->
-<div id="helpModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Modal title</h4>
+    <ul class="stats_box">
+        <li>
+            <div class="sparkline bar_week"></div>
+            <div class="stat_text">
+                <strong>2.345</strong>Weekly Visit
+                <span class="percent down"> <i class="fa fa-caret-down"></i> -16%</span>
             </div>
-            <div class="modal-body">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+        </li>
+        <li>
+            <div class="sparkline line_day"></div>
+            <div class="stat_text">
+                <strong>165</strong>Daily Visit
+                <span class="percent up"> <i class="fa fa-caret-up"></i> +23%</span>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </li>
+        <li>
+            <div class="sparkline pie_week"></div>
+            <div class="stat_text">
+                <strong>$2 345.00</strong>Weekly Sale
+                <span class="percent"> 0%</span>
             </div>
-        </div>
-        <!-- /.modal-content -->
+        </li>
+        <li>
+            <div class="sparkline stacked_month"></div>
+            <div class="stat_text">
+                <strong>$678.00</strong>Monthly Sale
+                <span class="percent down"> <i class="fa fa-caret-down"></i> -10%</span>
+            </div>
+        </li>
+    </ul>
+    <div class="row">
+        <hr>
     </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-<!-- /#helpModal -->
-
+    <div class="row">
+        
+    </div>
 @endsection
