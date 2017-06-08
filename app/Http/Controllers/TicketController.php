@@ -241,6 +241,60 @@ class TicketController extends Controller
         return Response::json($ticket);
     }
 
+    public function selectedTicketInpatient($ticket_id){
+        $ticket = Ticket::findorFail($ticket_id);
+        $ticket['assigned_by'] = User::findorFail($ticket->issued_by);
+        $ticket['assigned_to'] = User::findorFail($ticket->assigned_to);
+        $ticket['progress'] = Progress::where('ticket_id', $ticket_id)->latest()->first();
+        $ticket['client'] = Clients::findorFail($ticket->client_id);
+        $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->get();
+        $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
+        $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
+        $ticket['pre_examination'] = GeneralCondition::where('ticket_id', $ticket_id)->get();
+        $ticket['special_case'] = SpecialCase::where('client_id', $ticket['client']->id)->first();
+        $ticket['inPatient'] = InPatient::where('ticket_id', $ticket_id)->first();
+        if ($ticket['pre_examination']){
+            foreach ($ticket['pre_examination'] as $examination){
+                $examination['details'] = GeneralConditionResource::findorFail($examination->nurse_station_resource_id);
+            }
+        }
+        //implode symptom as tags
+        if ($ticket['symptoms'] != null){
+            $tags = array();
+            foreach ($ticket['symptoms'] as $symptom){
+                $tags[] = $symptom->description;
+            }
+            $ticket['tags'] = $tags;
+        }
+        //implode test description as tags
+        if ($ticket['lab_datas'] != null){
+            foreach ($ticket['lab_datas'] as $lab_data){
+                $lab_data['tests'] = Test::where('lab_id', $lab_data->id)->get();
+                foreach ($lab_data['tests'] as $test){
+                    //dd($test->lab_resource_id);
+                    $test['details'] = LabResource::findorFail($test->lab_resource_id);
+
+                }
+            }
+        }
+        //implode prescription as tags
+        /*if ($ticket['prescription'] != null){
+            $ticket['med'] = 'huh';
+            $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
+            $p_tags = array();
+            $p_id = array();
+            foreach ($ticket['medicine'] as $medicine){
+                $medicine_details = ChemistResource::findorFail($medicine->chemist_resource_id);
+                $medicine['details'] = $medicine_details;
+                $p_tags[] = $medicine_details->resource_name;
+                $p_id[] = $medicine_details->id;
+            }
+            $ticket['medicine_tags'] = $p_tags;
+            $ticket['medicine_tagsId'] = $p_id;
+        }*/
+        return Response::json($ticket);
+    }
+
     /**
      * formally (Doc/Nurse) receive a client. and save symptoms described
      *
@@ -343,6 +397,29 @@ class TicketController extends Controller
 
         //ya ..yaya...too tired to write json response. ill just capture http response code. ...zzzz
     }
+    public function startLabInpatient(Request $request){
+        //start Lab Ticket
+        $startLab = new LabData(array(
+            'ticket_id'=>$request->ticket_id,
+            'assigned_to'=>$request->technician,
+            'status'=>-1
+        ));
+        $startLab->save();
+
+        //save lab tests
+        $test = explode(',', $request->tests);
+        foreach ($test as $item){
+            $test_details = LabResource::findorFail($item);
+            $data = new Test(array(
+                'lab_id'=>$startLab->id,
+                'lab_resource_id'=>$item,
+                'amount'=>$test_details->unit_price
+            ));
+            $data->save();
+        }
+
+        return Response::json($startLab);
+    }
 
     public function sendLab(Request $request){
         //update lab datas table
@@ -356,6 +433,18 @@ class TicketController extends Controller
             'user_id'=>Auth::user()->id,
             'level'=>2,
             'description'=>'Client at Lab'));
+        $progress->save();
+        $progress = Progress::where('ticket_id', $request->ticket_id)->latest()->first();
+        return Response::json($progress);
+    }
+
+    public function sendLabInpatient(Request $request){
+        //update progress
+        $progress = new Progress(array(
+            'ticket_id'=>$request->ticket_id,
+            'user_id'=>Auth::user()->id,
+            'level'=>7,
+            'description'=>'Inpatient at Lab'));
         $progress->save();
         $progress = Progress::where('ticket_id', $request->ticket_id)->latest()->first();
         return Response::json($progress);

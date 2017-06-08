@@ -64,17 +64,30 @@
                                                     <div class="accordion">
                                                         <!--first accordion-->
                                                         <div class="accordion-section">
-                                                            <a class="accordion-section-title"  href="#accordion-1" style="color: #EA4A5A;text-shadow: none">
-                                                                Assigned a Ticket
-                                                                <b class="pull-right" v-if="currentTicket.progress" v-show="currentTicket.progress.level >= 0" style="color: white;background-color: green;border-radius: 5px;margin-left: 10px;padding-left: 3px;padding-right: 3px">
-                                                                    Done
-                                                                </b>
+                                                            <a class="accordion-section-title"  href="#accordion-lab" style="color: #EA4A5A;text-shadow: none">
+                                                                Lab Tests Doneee
                                                             </a>
-                                                            <div id="accordion-1" class="accordion-section-content" v-if="currentTicket.assigned_by">
-                                                                <h6><i class="fa fa-check"></i> This Ticket was created on: {{currentTicket.created_at}},</h6>
-                                                                <h6><i class="fa fa-check"></i>and assigned by <i>{{currentTicket.assigned_by.last_name}}, {{currentTicket.assigned_by.first_name}}</i>  to  <i>{{currentTicket.assigned_to.last_name}}, {{currentTicket.assigned_to.first_name}}</i></h6>
+                                                            <div id="accordion-lab" class="accordion-section-content" v-if="currentTicket.assigned_by">
+                                                                <div class="row" v-for="(tests, index) in currentTicket.lab_datas">
+                                                                    <div style="font-size: 8px">{{tests.created_at}}</div>
+                                                                    <div class="row" v-for="test in tests.tests" style="font-size: 9px;">
+                                                                        {{test.details.resource_name}} : {{test.result}}
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <hr style="margin: 5px">
+                                                                    </div>
+                                                                </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div>
+
+                                                        <div class="accordion-section">
+                                                            <a class="accordion-section-title"  href="#accordion-med" style="color: #EA4A5A;text-shadow: none">
+                                                                Medications Given
+                                                            </a>
+                                                            <div id="accordion-med" class="accordion-section-content" v-if="currentTicket.assigned_by">
+                                                            </div><!--end .accordion-section-content-->
+                                                        </div>
+
                                                         <div class="row" style="margin-bottom: 10px">
                                                             <hr>
                                                             <div class="row">
@@ -85,11 +98,7 @@
                                                                 <div>
                                                                     Select Lab Technician
                                                                 </div>
-                                                                <h5 v-if="currentTicket.lab_technician">
-                                                                    {{currentTicket.lab_technician.first_name}}
-                                                                </h5>
-
-                                                                <select class="form-control input-sm" v-if="!currentTicket.lab_technician" v-model="selectedLabTech">
+                                                                <select class="form-control input-sm" v-model="selectedLabTech">
                                                                     <option selected disabled value="" >-Select a Lab Technician to Assign-</option>
                                                                     <option v-for="labTechnician in labTechnicians" :value="labTechnician.id">{{labTechnician.first_name}}</option>
                                                                 </select>
@@ -123,7 +132,7 @@
                                                                         <hr style="margin: 5px !important;">
                                                                     </div>
                                                                 </div>
-                                                                <div class="form-group" v-if="currentTicket.progress" :class="{completed: currentTicket.progress.level >= 2 || test_tags == ''}">
+                                                                <div class="form-group" v-if="currentTicket.progress" :class="{}">
                                                                     <button class="btn btn-sm btn-primary pull-right" @click="sendLab">{{sendtoLab}}</button>
                                                                 </div>
                                                             </div>
@@ -447,7 +456,7 @@
             openTicket: function (ticketid) {
                 var inheritance = this;
                 inheritance.modalLoading = true;
-                axios.get(base_url+'/tickets/my-tickets/'+ticketid)
+                axios.get(base_url+'/tickets/my-tickets/in-patient/'+ticketid)
                     .then(function (response) {
                         inheritance.currentTicket = response.data;
                         inheritance.activeDocs();
@@ -457,8 +466,8 @@
                             inheritance.status = "Currently awaiting response from Lab";
                             inheritance.statusWarn = true;
                         }
-                        inheritance.updateTestTags();
-                        inheritance.updatePrescriptionTags();
+                        /*inheritance.updateTestTags();
+                        inheritance.updatePrescriptionTags();*/
                         setTimeout(function() { $('select').tagsinput('refresh'); }, 500);
                     }.bind(this))
                     .catch(function (error) {
@@ -616,7 +625,7 @@
                 inheritance.status = 'Saving Tests...';
                 var tests = $('#tests').val();
                 console.log(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id);
-                axios.get(base_url+'/tickets/my-tickets/query/startlab?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
+                axios.get(base_url+'/tickets/my-tickets/query/startlab/in-patient?tests='+inheritance.test_tagsId+'&technician='+inheritance.selectedLabTech+'&ticket_id='+inheritance.currentTicket.id+'&labdatas_id='+labdatas_id)
                     .then(function (response) {
                         inheritance.currentTicket.lab_datas = response.data;
                         inheritance.status = 'Tests Successfully Saved';
@@ -637,7 +646,7 @@
                 inheritance.sendtoLab = 'Sending...';
                 //console.log(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id);
                 //inheritance.saveLab();
-                axios.get(base_url+'/tickets/my-tickets/query/sendlab?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id)
+                axios.get(base_url+'/tickets/my-tickets/query/sendlab/in-patient?labdatas_id='+inheritance.currentTicket.lab_datas.id+'&ticket_id='+inheritance.currentTicket.id)
                     .then(function (response) {
                         inheritance.currentTicket.progress = response.data;
                         inheritance.sendtoLab = 'Send Client to Lab';

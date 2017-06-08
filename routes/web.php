@@ -55,10 +55,13 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets', 'TicketController@myTickets');
     Route::get('tickets/my-tickets/all-active', 'TicketController@allActive');
     Route::get('tickets/my-tickets/{ticket_id}', 'TicketController@selectedTicket');
+    Route::get('tickets/my-tickets/in-patient/{ticket_id}', 'TicketController@selectedTicketInpatient');
     Route::get('tickets/my-tickets/save/symptoms', 'TicketController@saveSymptoms');
     Route::get('tickets/my-tickets/query/labtechs', 'TicketController@activeLabTechnicians');
     Route::get('tickets/my-tickets/query/startlab', 'TicketController@startLab');
+    Route::get('tickets/my-tickets/query/startlab/in-patient', 'TicketController@startLabInpatient');
     Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
+    Route::get('tickets/my-tickets/query/sendlab/in-patient', 'TicketController@sendLabInpatient');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
     Route::get('tickets/my-tickets/all/doctors', 'TicketController@activeDoc');
     Route::get('tickets/my-tickets/close/{ticket_id}', 'TicketController@closeTicket');
