@@ -15,8 +15,6 @@ class ProgressController extends Controller
     public function atDoctor(){
 
     }
-
-
     /**
      * get all active tickets, currently awaiting lab tests and results.
      *

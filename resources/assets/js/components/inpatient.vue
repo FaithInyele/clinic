@@ -65,7 +65,7 @@
                                                         <!--first accordion-->
                                                         <div class="accordion-section">
                                                             <a class="accordion-section-title"  href="#accordion-lab" style="color: #EA4A5A;text-shadow: none">
-                                                                Lab Tests Doneee
+                                                                Lab Tests Done
                                                             </a>
                                                             <div id="accordion-lab" class="accordion-section-content" v-if="currentTicket.assigned_by">
                                                                 <div class="row" v-for="(tests, index) in currentTicket.lab_datas">
@@ -164,8 +164,8 @@
                                                                             {{result.unit_price}}
                                                                         </div>
                                                                         <div class="col-sm-2" style="padding-top: 10px">
-                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad, completed: currentTicket.progress.level >= 2}" @click="addPrescription(result)">Add</button>
-                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad, completed: currentTicket.progress.level >= 2}" @click="removePrescription(result)">Remove</button>
+                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==false" :class="{btn:classLoad, 'btn-sm':classLoad, 'btn-success':classLoad}" @click="addPrescription(result)">Add</button>
+                                                                            <button v-if="result && currentTicket.progress" v-show="result.status==true" :class="{btn:classLoad, 'btn-sm':classLoad,  'btn-danger':classLoad}" @click="removePrescription(result)">Remove</button>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
@@ -173,7 +173,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group pull-right">
-                                                                    <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad, completed:currentTicket.progress.level >= 2}" @click="submitP()">{{toChemist}}</button>
+                                                                    <button v-if="currentTicket.progress" :class="{btn: classLoad, 'btn-primary':classLoad, 'btn-sm': classLoad}" @click="submitP()">{{toChemist}}</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -407,7 +407,7 @@
             //search thru lab tests
             findTests: _.debounce(function () {
                 var inheritance= this;
-                var labdatas_id = inheritance.currentTicket.lab_datas !=null ? inheritance.currentTicket.lab_datas.id : 'null';
+                var labdatas_id = inheritance.currentTicket.lab_datas.id !=undefined ? inheritance.currentTicket.lab_datas.id : 'null';
                 console.log(base_url+'/search/test?q='+inheritance.searchTest+'&labdatas_id='+labdatas_id);
                 if (inheritance.searchTest.length >=1){
                     axios.get(base_url+'/search/test?q='+inheritance.searchTest+'&labdatas_id='+labdatas_id)
@@ -425,7 +425,7 @@
             findPrescription: _.debounce(function () {
                 var inheritance = this;
                 console.log('huh');
-                var prescription_id = inheritance.currentTicket.prescription !=null ? inheritance.currentTicket.prescription.id : 'null';
+                var prescription_id = inheritance.currentTicket.prescription.id !=undefined ? inheritance.currentTicket.prescription.id : 'null';
                 console.log(base_url+'/search/prescription?q='+inheritance.searchPrescription+'&prescription_id='+prescription_id);
                 if (inheritance.searchPrescription.length >=1){
                     axios.get(base_url+'/search/prescription?q='+inheritance.searchPrescription+'&prescription_id='+prescription_id)
@@ -579,10 +579,11 @@
                 inheritance.revertStatus();
                 inheritance.status = 'Saving Prescription(s)';
                 inheritance.savePrescription = "Saving...";
-                var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
-                console.log(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
-                axios.get(base_url+'/tickets/my-tickets/query/startchemist?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
+                var prescription_id = inheritance.currentTicket.prescription.id != undefined ? inheritance.currentTicket.prescription.id : 'none';
+                console.log(base_url+'/tickets/my-tickets/query/startchemist/in-patient?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id);
+                axios.get(base_url+'/tickets/my-tickets/query/startchemist/in-patient?med='+inheritance.prescription_tagsId+'&ticket_id='+inheritance.currentTicket.id+'&prescription_id='+prescription_id)
                     .then(function (response) {
+                        console.log(response.data);
                         inheritance.status = 'Prescription(s) Successfully Saved';
                         inheritance.statusSuccess = true;
                         inheritance.statusError = false;
@@ -601,8 +602,8 @@
                 inheritance.revertStatus();
                 inheritance.status = 'Submitting Prescription(s)';
                 inheritance.toChemist = 'Submitting';
-                console.log(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id);
-                axios.get(base_url+'/atchemist/submit/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id)
+                console.log(base_url+'/atchemist/submit/in-patient/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id);
+                axios.get(base_url+'/atchemist/submit/in-patient/'+inheritance.currentTicket.prescription.id+'?ticket_id='+inheritance.currentTicket.id)
                     .then(function (response) {
                         inheritance.status = 'Prescription(s) Successfully Submitted';
                         inheritance.statusSuccess =true;

@@ -249,7 +249,7 @@ class TicketController extends Controller
         $ticket['client'] = Clients::findorFail($ticket->client_id);
         $ticket['lab_datas'] = LabData::where('ticket_id', $ticket_id)->get();
         $ticket['symptoms'] = Symptom::where('ticket_id', $ticket_id)->get();
-        $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->first();
+        $ticket['prescription'] = Prescription::where('ticket_id', $ticket_id)->get();
         $ticket['pre_examination'] = GeneralCondition::where('ticket_id', $ticket_id)->get();
         $ticket['special_case'] = SpecialCase::where('client_id', $ticket['client']->id)->first();
         $ticket['inPatient'] = InPatient::where('ticket_id', $ticket_id)->first();
@@ -278,20 +278,15 @@ class TicketController extends Controller
             }
         }
         //implode prescription as tags
-        /*if ($ticket['prescription'] != null){
+        if ($ticket['prescription'] != null){
             $ticket['med'] = 'huh';
-            $ticket['medicine'] = Medicine::where('prescription_id', $ticket['prescription']->id)->get();
-            $p_tags = array();
-            $p_id = array();
-            foreach ($ticket['medicine'] as $medicine){
-                $medicine_details = ChemistResource::findorFail($medicine->chemist_resource_id);
-                $medicine['details'] = $medicine_details;
-                $p_tags[] = $medicine_details->resource_name;
-                $p_id[] = $medicine_details->id;
+            foreach ($ticket['prescription'] as $data){
+                $ticket['medicine'] = Medicine::where('prescription_id', $data->id)->get();
+                foreach ($ticket['medicine'] as $medicine){
+                    $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
+                }
             }
-            $ticket['medicine_tags'] = $p_tags;
-            $ticket['medicine_tagsId'] = $p_id;
-        }*/
+        }
         return Response::json($ticket);
     }
 
@@ -475,7 +470,8 @@ class TicketController extends Controller
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
                 'assigned_to'=>2,
-                'status'=>1
+                'status'=>1,
+                'type'=>0
             ));
             $prescription->save();
             //save requested medications
@@ -507,10 +503,52 @@ class TicketController extends Controller
                     $data->save();
                 }
             }
+            $prescription = Prescription::findorFail($request->prescription_id);
+            return Response::json($prescription);
         }
-        $prescription = Prescription::findorFail($request->prescription_id);
-        return Response::json($prescription);
+    }
 
+    public function startChemistInpatient(Request $request){
+        if ($request->prescription_id == 'none'){
+            $prescription = new Prescription(array(
+                'ticket_id'=>$request->ticket_id,
+                'assigned_to'=>2,
+                'status'=>1,
+                'type'=>1
+            ));
+            $prescription->save();
+            //save requested medications
+            $medication = explode(',', $request->med);
+            foreach ($medication as $item){
+                $medicine_resource = ChemistResource::findorFail($item);
+                $data = new Medicine(array(
+                    'prescription_id'=>$prescription->id,
+                    'chemist_resource_id'=>$item,
+                    'status'=>'pending',
+                    'amount'=>$medicine_resource->unit_price
+                ));
+                $data->save();
+            }
+            return Response::json($prescription);
+        }else{
+            $toDelete = Medicine::where('prescription_id', $request->prescription_id)->delete();
+            //save medication
+            if (!empty($request->med)) {
+                $medication = explode(',', $request->med);
+                foreach ($medication as $item) {
+                    $medicine_resource = ChemistResource::findorFail($item);
+                    $data = new Medicine(array(
+                        'prescription_id' => $request->prescription_id,
+                        'chemist_resource_id' => $item,
+                        'status' => 'pending',
+                        'amount'=>$medicine_resource->unit_price
+                    ));
+                    $data->save();
+                }
+            }
+            $prescription = Prescription::findorFail($request->prescription_id);
+            return Response::json($prescription);
+        }
     }
 
     /**

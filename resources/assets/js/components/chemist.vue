@@ -21,7 +21,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="currentTicket(client.ticket_id)" style="margin-right: 10px">Open</a>
+                        <a class="pull-right btn btn-sm btn-success btn-custom" @click="currentTicket(client.id)" style="margin-right: 10px">Open</a>
                     </div>
                 </div>
                 <br>
@@ -85,7 +85,7 @@
                                                                 </div>
                                                                 <div class="col-md-2">
                                                                     <div class="dropdown">
-                                                                        <button :class="{btn: classLoad, 'btn-sm': classLoad, 'btn-primary': classLoad, 'dropdown-toggle':classLoad, completed: currentClient.progress.level > 4}" type="button" data-toggle="dropdown">Confirm
+                                                                        <button :class="{btn: classLoad, 'btn-sm': classLoad, 'btn-primary': classLoad, 'dropdown-toggle':classLoad, completed: currentClient.progress.level > 4 && currentClient.progress.level <= 6 }" type="button" data-toggle="dropdown">Confirm
                                                                             <span class="caret"></span></button>
                                                                         <ul class="dropdown-menu">
                                                                             <li><a @click="confirm(medicine, 'affirm')">Affirm {{medicine.medicine}}</a></li>
@@ -113,7 +113,7 @@
                                                                 <option value="Other">Other</option>
                                                             </select>
                                                         </div>
-                                                        <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4}" @click="closeMedication">Pay and Close</button>
+                                                        <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4 && currentClient.progress.level <= 6}" @click="closeMedication">Pay and Close</button>
                                                     </div>
                                                 </div>
 
@@ -244,8 +244,12 @@
                     inheritance.status = 'Amount to be Paid should be exact as Total owed';
                     inheritance.statusError = true;
                 }else {
-                    axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+
-                        '&prescription_id='+inheritance.currentClient.prescription.id+
+                    console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.ticket.id+
+                        '&prescription_id='+inheritance.currentClient.id+
+                        '&amount='+inheritance.currentClient.total+
+                        '&payment_method='+inheritance.payment_method);
+                    axios.get(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.ticket.id+
+                        '&prescription_id='+inheritance.currentClient.id+
                         '&amount='+inheritance.currentClient.total+
                         '&payment_method='+inheritance.payment_method)
                         .then(function (response) {

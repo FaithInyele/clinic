@@ -63,6 +63,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('tickets/my-tickets/query/sendlab', 'TicketController@sendLab');
     Route::get('tickets/my-tickets/query/sendlab/in-patient', 'TicketController@sendLabInpatient');
     Route::get('tickets/my-tickets/query/startchemist', 'TicketController@startChemist');
+    Route::get('tickets/my-tickets/query/startchemist/in-patient', 'TicketController@startChemistInpatient');
     Route::get('tickets/my-tickets/all/doctors', 'TicketController@activeDoc');
     Route::get('tickets/my-tickets/close/{ticket_id}', 'TicketController@closeTicket');
     //payments
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'logIn'], function () {
      */
     Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
     Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
+    Route::get('atchemist/submit/in-patient/{prescription_id}', 'ChemistController@submitPrescriptionInpatient');
     Route::get('atchemist/close', 'ChemistController@closePrescription');
     Route::post('atchemist/update', 'ChemistController@updatePrescription');
 

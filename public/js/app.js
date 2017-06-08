@@ -16298,7 +16298,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.status = 'Amount to be Paid should be exact as Total owed';
                 inheritance.statusError = true;
             } else {
-                axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.id + '&prescription_id=' + inheritance.currentClient.prescription.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
+                console.log(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.ticket.id + '&prescription_id=' + inheritance.currentClient.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method);
+                axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.ticket.id + '&prescription_id=' + inheritance.currentClient.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
                     inheritance.status = 'Prescription Closed Successfully';
                     inheritance.statusSuccess = true;
                 }).catch(function (error) {
@@ -16961,7 +16962,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //search thru lab tests
         findTests: _.debounce(function () {
             var inheritance = this;
-            var labdatas_id = inheritance.currentTicket.lab_datas != null ? inheritance.currentTicket.lab_datas.id : 'null';
+            var labdatas_id = inheritance.currentTicket.lab_datas.id != undefined ? inheritance.currentTicket.lab_datas.id : 'null';
             console.log(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id);
             if (inheritance.searchTest.length >= 1) {
                 axios.get(base_url + '/search/test?q=' + inheritance.searchTest + '&labdatas_id=' + labdatas_id).then(function (response) {
@@ -16978,7 +16979,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         findPrescription: _.debounce(function () {
             var inheritance = this;
             console.log('huh');
-            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'null';
+            var prescription_id = inheritance.currentTicket.prescription.id != undefined ? inheritance.currentTicket.prescription.id : 'null';
             console.log(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id);
             if (inheritance.searchPrescription.length >= 1) {
                 axios.get(base_url + '/search/prescription?q=' + inheritance.searchPrescription + '&prescription_id=' + prescription_id).then(function (response) {
@@ -17121,9 +17122,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.revertStatus();
             inheritance.status = 'Saving Prescription(s)';
             inheritance.savePrescription = "Saving...";
-            var prescription_id = inheritance.currentTicket.prescription != null ? inheritance.currentTicket.prescription.id : 'none';
-            console.log(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
-            axios.get(base_url + '/tickets/my-tickets/query/startchemist?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function (response) {
+            var prescription_id = inheritance.currentTicket.prescription.id != undefined ? inheritance.currentTicket.prescription.id : 'none';
+            console.log(base_url + '/tickets/my-tickets/query/startchemist/in-patient?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id);
+            axios.get(base_url + '/tickets/my-tickets/query/startchemist/in-patient?med=' + inheritance.prescription_tagsId + '&ticket_id=' + inheritance.currentTicket.id + '&prescription_id=' + prescription_id).then(function (response) {
+                console.log(response.data);
                 inheritance.status = 'Prescription(s) Successfully Saved';
                 inheritance.statusSuccess = true;
                 inheritance.statusError = false;
@@ -17141,8 +17143,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.revertStatus();
             inheritance.status = 'Submitting Prescription(s)';
             inheritance.toChemist = 'Submitting';
-            console.log(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id);
-            axios.get(base_url + '/atchemist/submit/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
+            console.log(base_url + '/atchemist/submit/in-patient/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id);
+            axios.get(base_url + '/atchemist/submit/in-patient/' + inheritance.currentTicket.prescription.id + '?ticket_id=' + inheritance.currentTicket.id).then(function (response) {
                 inheritance.status = 'Prescription(s) Successfully Submitted';
                 inheritance.statusSuccess = true;
                 //inheritance.openTicket(inheritance.currentTicket.id);
@@ -49306,7 +49308,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "href": "#accordion-lab"
     }
-  }, [_vm._v("\n                                                            Lab Tests Doneee\n                                                        ")]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
+  }, [_vm._v("\n                                                            Lab Tests Done\n                                                        ")]), _vm._v(" "), (_vm.currentTicket.assigned_by) ? _c('div', {
     staticClass: "accordion-section-content",
     attrs: {
       "id": "accordion-lab"
@@ -49587,7 +49589,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         expression: "result.status==false"
       }],
       class: {
-        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-success': _vm.classLoad
       },
       on: {
         "click": function($event) {
@@ -49602,7 +49604,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         expression: "result.status==true"
       }],
       class: {
-        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-danger': _vm.classLoad
       },
       on: {
         "click": function($event) {
@@ -49620,7 +49622,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group pull-right"
   }, [(_vm.currentTicket.progress) ? _c('button', {
     class: {
-      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad, completed: _vm.currentTicket.progress.level >= 2
+      btn: _vm.classLoad, 'btn-primary': _vm.classLoad, 'btn-sm': _vm.classLoad
     },
     on: {
       "click": function($event) {
@@ -50096,7 +50098,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.currentTicket(client.ticket_id)
+          _vm.currentTicket(client.id)
         }
       }
     }, [_vm._v("Open")])])]), _vm._v(" "), _c('br')])
@@ -50232,7 +50234,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "dropdown"
     }, [_c('button', {
       class: {
-        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-primary': _vm.classLoad, 'dropdown-toggle': _vm.classLoad, completed: _vm.currentClient.progress.level > 4
+        btn: _vm.classLoad, 'btn-sm': _vm.classLoad, 'btn-primary': _vm.classLoad, 'dropdown-toggle': _vm.classLoad, completed: _vm.currentClient.progress.level > 4 && _vm.currentClient.progress.level <= 6
       },
       attrs: {
         "type": "button",
@@ -50335,7 +50337,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Other")])])]), _vm._v(" "), (_vm.currentClient.progress) ? _c('button', {
     class: {
-      btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentClient.progress.level > 4
+      btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.currentClient.progress.level > 4 && _vm.currentClient.progress.level <= 6
     },
     on: {
       "click": _vm.closeMedication
