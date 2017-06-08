@@ -16857,6 +16857,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49350,7 +49359,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "accordion-med"
     }
-  }) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, _vm._l((_vm.currentTicket.prescription), function(med, index) {
+    return _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticStyle: {
+        "font-size": "10px"
+      }
+    }, [_vm._v(_vm._s(med.created_at))]), _vm._v(" "), _vm._l((med.medicine), function(data) {
+      return _c('div', {
+        staticClass: "row",
+        staticStyle: {
+          "font-size": "11px"
+        }
+      }, [_vm._v("\n                                                                    " + _vm._s(data.details.resource_name) + " : " + _vm._s(data.status) + "\n                                                                ")])
+    }), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('hr', {
+      staticStyle: {
+        "margin": "5px"
+      }
+    })])], 2)
+  })) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "row",
     staticStyle: {
       "margin-bottom": "10px"

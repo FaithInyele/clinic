@@ -281,8 +281,8 @@ class TicketController extends Controller
         if ($ticket['prescription'] != null){
             $ticket['med'] = 'huh';
             foreach ($ticket['prescription'] as $data){
-                $ticket['medicine'] = Medicine::where('prescription_id', $data->id)->get();
-                foreach ($ticket['medicine'] as $medicine){
+                $data['medicine'] = Medicine::where('prescription_id', $data->id)->get();
+                foreach ($data['medicine'] as $medicine){
                     $medicine['details'] = ChemistResource::findorFail($medicine->chemist_resource_id);
                 }
             }

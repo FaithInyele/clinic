@@ -85,6 +85,15 @@
                                                                 Medications Given
                                                             </a>
                                                             <div id="accordion-med" class="accordion-section-content" v-if="currentTicket.assigned_by">
+                                                                <div class="row" v-for="(med, index) in currentTicket.prescription">
+                                                                    <div style="font-size: 10px">{{med.created_at}}</div>
+                                                                    <div class="row" v-for="data in med.medicine" style="font-size: 11px;">
+                                                                        {{data.details.resource_name}} : {{data.status}}
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <hr style="margin: 5px">
+                                                                    </div>
+                                                                </div>
                                                             </div><!--end .accordion-section-content-->
                                                         </div>
 
