@@ -185,6 +185,7 @@
             },
             closeTicket: function () {
                 var inheritance =this;
+                inheritance.clientsAtChemist();
                 inheritance.currentClient = [];
                 inheritance.ticketModal=false;
             },

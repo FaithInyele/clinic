@@ -11078,6 +11078,8 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
 Vue.component('example', __webpack_require__(102));
 
+Vue.component('home', __webpack_require__(175));
+
 Vue.component('ticket_start', __webpack_require__(21));
 
 Vue.component('ticket', __webpack_require__(115));
@@ -15705,6 +15707,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             console.log(base_url + '/admit/' + ticket_id);
             axios.get(base_url + '/inpatient/admit/' + ticket_id).then(function (response) {
                 inheritance.admitButton = 'Admitted';
+                inheritance.allActiveMethod();
             }).catch(function (error) {});
         },
         prescribeMedication: function prescribeMedication() {
@@ -16242,6 +16245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeTicket: function closeTicket() {
             var inheritance = this;
+            inheritance.clientsAtChemist();
             inheritance.currentClient = [];
             inheritance.ticketModal = false;
         },
@@ -60420,6 +60424,183 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(24);
 
+
+/***/ }),
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    }
+};
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(174),
+  /* template */
+  __webpack_require__(176),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/home.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] home.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-548689c7", Component.options)
+  } else {
+    hotAPI.reload("data-v-548689c7", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 176 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('ul', {
+    staticClass: "stats_box"
+  }, [_c('li', [_c('div', {
+    staticClass: "sparkline bar_week"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "stat_text"
+  }, [_c('strong', [_vm._v("2.345")]), _vm._v("Weekly Visit\n                "), _c('span', {
+    staticClass: "percent down"
+  }, [_c('i', {
+    staticClass: "fa fa-caret-down"
+  }), _vm._v(" -16%")])])]), _vm._v(" "), _c('li', [_c('div', {
+    staticClass: "sparkline line_day"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "stat_text"
+  }, [_c('strong', [_vm._v("165")]), _vm._v("Daily Visit\n                "), _c('span', {
+    staticClass: "percent up"
+  }, [_c('i', {
+    staticClass: "fa fa-caret-up"
+  }), _vm._v(" +23%")])])]), _vm._v(" "), _c('li', [_c('div', {
+    staticClass: "sparkline pie_week"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "stat_text"
+  }, [_c('strong', [_vm._v("$2 345.00")]), _vm._v("Weekly Sale\n                "), _c('span', {
+    staticClass: "percent"
+  }, [_vm._v(" 0%")])])]), _vm._v(" "), _c('li', [_c('div', {
+    staticClass: "sparkline stacked_month"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "stat_text"
+  }, [_c('strong', [_vm._v("$678.00")]), _vm._v("Monthly Sale\n                "), _c('span', {
+    staticClass: "percent down"
+  }, [_c('i', {
+    staticClass: "fa fa-caret-down"
+  }), _vm._v(" -10%")])])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('hr')]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-548689c7", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

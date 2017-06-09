@@ -26,6 +26,8 @@ const router = new VueRouter({
 
 Vue.component('example', require('./components/Example.vue'));
 
+Vue.component('home', require('./components/home.vue'));
+
 Vue.component('ticket_start', require('./components/ticket_start.vue'));
 
 Vue.component('ticket', require('./components/ticket.vue'));

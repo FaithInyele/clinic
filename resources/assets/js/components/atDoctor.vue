@@ -702,6 +702,7 @@
               axios.get(base_url+'/inpatient/admit/'+ticket_id)
                   .then(function (response) {
                         inheritance.admitButton = 'Admitted';
+                        inheritance.allActiveMethod();
                   })
                   .catch(function (error) {
 
