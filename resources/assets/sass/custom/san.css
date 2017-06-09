@@ -475,3 +475,6 @@ tabs
     color: green !important;
     cursor: pointer;
 }
+.sparkline{
+    min-width: 20px !important;
+}

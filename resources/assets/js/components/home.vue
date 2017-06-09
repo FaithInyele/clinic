@@ -4,29 +4,25 @@
             <li>
                 <div class="sparkline bar_week"></div>
                 <div class="stat_text">
-                    <strong>2.345</strong>Weekly Visit
-                    <span class="percent down"> <i class="fa fa-caret-down"></i> -16%</span>
+                    <strong><i class="fa fa-user"></i> {{counts.total_tickets}}</strong>Total tickets attended to
                 </div>
             </li>
             <li>
                 <div class="sparkline line_day"></div>
                 <div class="stat_text">
-                    <strong>165</strong>Daily Visit
-                    <span class="percent up"> <i class="fa fa-caret-up"></i> +23%</span>
+                    <strong><i class="fa fa-calendar"></i> {{counts.created_today}}</strong>My Today's total Tickets
                 </div>
             </li>
             <li>
                 <div class="sparkline pie_week"></div>
                 <div class="stat_text">
-                    <strong>$2 345.00</strong>Weekly Sale
-                    <span class="percent"> 0%</span>
+                    <strong>{{counts.active_tickets}}</strong>My Active Tickets
                 </div>
             </li>
             <li>
                 <div class="sparkline stacked_month"></div>
                 <div class="stat_text">
-                    <strong>$678.00</strong>Monthly Sale
-                    <span class="percent down"> <i class="fa fa-caret-down"></i> -10%</span>
+                    <strong>{{counts.active_inpatient}} - {{counts.active_outpatient}}</strong>My (Inpatient - Outpatient)
                 </div>
             </li>
         </ul>
@@ -34,14 +30,36 @@
             <hr>
         </div>
         <div class="row">
+            <div class="col-md-8">
 
+            </div>
+            <div class="col-md-4">
+                <label>My Consultations</label>
+                <sidebar></sidebar>
+            </div>
         </div>
     </div>
 </template>
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            this.getCounts();
+        },
+        data: function () {
+            return {
+                counts: []
+            }
+        },
+        methods:{
+            getCounts: function () {
+                var inheritance= this;
+                axios.get(base_url+'/reports/doctor')
+                    .then(function (response) {
+                        console.log(response.data);
+                        inheritance.counts = response.data;
+                    })
+            }
         }
     }
 </script>

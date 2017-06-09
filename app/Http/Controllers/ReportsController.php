@@ -38,4 +38,8 @@ class ReportsController extends Controller
 
         return Response::json($report);
     }
+
+    public function doctor7(){
+        
+    }
 }
