@@ -29,15 +29,6 @@
         <div class="row">
             <hr>
         </div>
-        <div class="row">
-            <div class="col-md-8">
-
-            </div>
-            <div class="col-md-4">
-                <label>My Consultations</label>
-                <sidebar></sidebar>
-            </div>
-        </div>
     </div>
 </template>
 <script>

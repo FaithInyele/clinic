@@ -39,6 +39,33 @@ class ReportsController extends Controller
         return Response::json($report);
     }
 
+    public function ticketHistory(){
+        $user = Auth::user();
+        $dates = array();
+        array_push($dates, date('Y-M-d'));
+        array_push($dates, date('Y-M-d', strtotime('-1 days')));
+        array_push($dates, date('Y-M-d', strtotime('-2 days')));
+        array_push($dates, date('Y-M-d', strtotime('-3 days')));
+        array_push($dates, date('Y-M-d', strtotime('-4 days')));
+        array_push($dates, date('Y-M-d', strtotime('-5 days')));
+        array_push($dates, date('Y-M-d', strtotime('-6 days')));
+        $ticket_count = array();
+        foreach ($dates as $data){
+            $year= date('Y', strtotime($data));
+            $month= date('m', strtotime($data));
+            $day= date('d', strtotime($data));
+            $current_date = Carbon::createFromDate($year, $month, $day, null);
+            $tickets = Ticket::where('assigned_to', $user->id)
+                ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
+                ->count();
+            array_push($ticket_count, $tickets);
+
+        }
+
+        return Response::json(array('dates'=>$dates, 'counts'=>$ticket_count));
+    }
+
     public function doctor7(){
         
     }

@@ -69,6 +69,51 @@
     <script src="{{url('assets/js/scripts.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-print-1.2.4/r-2.1.1/datatables.min.js"></script>
+    <!--highCharts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script>
+        var url=base_url+'/reports/ticket-history';
+        $.getJSON(url,
+            function(data1) {
+                /** Declare options after success callback. */
+                console.log(data1);
+                var options = {
+                    chart: {
+                        renderTo: 'test',
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'My Tickets, for the Past 7 dayss'
+                    },
+
+                    subtitle: {
+                        text: ''
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'Number of Tickets'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    xAxis: {
+                        categories: data1.dates
+                    },
+
+                    series: [{
+                        name: 'Ticket Counts',
+                        data: data1.counts
+                    }]
+                }
+                var chart = new Highcharts.Chart(options);
+            });
+    </script>
     <script>
         //dataTables
         $(document).ready(function () {

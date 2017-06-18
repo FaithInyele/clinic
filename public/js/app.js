@@ -14042,15 +14042,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -42929,13 +42920,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "sparkline stacked_month"
   }), _vm._v(" "), _c('div', {
     staticClass: "stat_text"
-  }, [_c('strong', [_vm._v(_vm._s(_vm.counts.active_inpatient) + " - " + _vm._s(_vm.counts.active_outpatient))]), _vm._v("My (Inpatient - Outpatient)\n            ")])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-8"
-  }), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4"
-  }, [_c('label', [_vm._v("My Consultations")]), _vm._v(" "), _c('sidebar')], 1)])])
+  }, [_c('strong', [_vm._v(_vm._s(_vm.counts.active_inpatient) + " - " + _vm._s(_vm.counts.active_outpatient))]), _vm._v("My (Inpatient - Outpatient)\n            ")])])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "row"

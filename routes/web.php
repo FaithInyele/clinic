@@ -148,6 +148,7 @@ Route::group(['middleware' => 'logIn'], function () {
     //reports
     Route::get('doc', 'ReportsController@doctor');
     Route::get('reports/doctor', 'ReportsController@doctor');
+    Route::get('reports/ticket-history', 'ReportsController@ticketHistory');
 
 
 });
