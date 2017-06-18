@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\InPatient;
+use App\LabData;
+use App\Prescription;
 use App\Ticket;
 use App\User;
 use Carbon\Carbon;
@@ -55,12 +57,30 @@ class ReportsController extends Controller
             $month= date('m', strtotime($data));
             $day= date('d', strtotime($data));
             $current_date = Carbon::createFromDate($year, $month, $day, null);
-            $tickets = Ticket::where('assigned_to', $user->id)
-                ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
-                ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
-                ->count();
-            array_push($ticket_count, $tickets);
+            if ($user->role == 'Admin'){
 
+            }else if ($user->role == 'Receptionist'){
+                $tickets = Ticket::where('issued_by', $user->id)
+                    ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
+                    ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
+                    ->count();
+            }else if ($user->role== 'Nurse/Doctor'){
+                $tickets = Ticket::where('assigned_to', $user->id)
+                    ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
+                    ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
+                    ->count();
+            }else if ($user->role== 'Chemist'){
+                $tickets = Prescription::where('assigned_to', $user->id)
+                    ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
+                    ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
+                    ->count();
+            }else if ($user->role== 'Lab Technician'){
+                $tickets = LabData::where('assigned_to', $user->id)
+                    ->where('created_at', '>=', $current_date->startOfDay()->toDateTimeString())
+                    ->where('created_at', '<=', $current_date->endOfDay()->toDateTimeString())
+                    ->count();
+            }
+            array_push($ticket_count, $tickets);
         }
 
         return Response::json(array('dates'=>$dates, 'counts'=>$ticket_count));
