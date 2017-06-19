@@ -11150,6 +11150,8 @@ Vue.component('payments', __webpack_require__(110));
 Vue.component('sidebar', __webpack_require__(112));
 
 Vue.component('inpatient', __webpack_require__(104));
+
+Vue.component('r_tickets', __webpack_require__(174));
 var app = new Vue({
   el: '#app',
   data: {
@@ -58102,6 +58104,181 @@ module.exports = function(module) {
 __webpack_require__(11);
 module.exports = __webpack_require__(21);
 
+
+/***/ }),
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    mounted: function mounted() {
+        console.log('Component mounted.');
+        this.activeTickets();
+    },
+    data: function data() {
+        return {
+            tickets: []
+        };
+    },
+    methods: {
+        activeTickets: function activeTickets() {
+            var inheritance = this;
+            axios.get(base_url + '/tickets/my-tickets/all/r_patient').then(function (response) {
+                inheritance.tickets = response.data;
+                setTimeout(function () {
+                    $("#vueTable").DataTable();
+                }, 500);
+            });
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(173),
+  /* template */
+  __webpack_require__(175),
+  /* styles */
+  null,
+  /* scopeId */
+  null,
+  /* moduleIdentifier (server only) */
+  null
+)
+Component.options.__file = "/opt/lampp/htdocs/san/resources/assets/js/components/r_tickets.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] r_tickets.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-714459e2", Component.options)
+  } else {
+    hotAPI.reload("data-v-714459e2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 175 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_vm._m(0), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "vueTable",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.tickets), function(ticket) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(ticket.client.first_name) + ", " + _vm._s(ticket.client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ticket.doctor.first_name) + ", " + _vm._s(ticket.client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ticket.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ticket.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(ticket.updated_at))])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('h4', [_vm._v("My Tickets")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('hr')])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Client Names")]), _vm._v(" "), _c('th', [_vm._v("Assigned Doctor")]), _vm._v(" "), _c('th', [_vm._v("Last Activity")]), _vm._v(" "), _c('th', [_vm._v("Created At")]), _vm._v(" "), _c('th', [_vm._v("Last Updated At")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-714459e2", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

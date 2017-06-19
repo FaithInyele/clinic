@@ -3,7 +3,7 @@
 @section('content')
     @if(Auth::user()->role == 'Receptionist')
         <!--receptionist components-->
-        <ticket_start></ticket_start>
+        <r_tickets></r_tickets>
     @endif
 
     @if(Auth::user()->role == 'Nurse/Doctor')

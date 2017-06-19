@@ -82,18 +82,22 @@
                     <a href="{{url('tickets/my-tickets')}}">
                         <i class="fa fa-list"></i>&nbsp; My Tickets (All)</a>
                 </li>
-                <li>
-                    <a href="{{url('tickets/consultations')}}">
-                        <i class="fa fa-list"></i>&nbsp; Requested Consultations</a>
-                </li>
-                <li>
-                    <a href="{{url('tickets/add')}}">
-                        <i class="fa fa-plus-square"></i>&nbsp; Create New Ticket </a>
-                </li>
-                <li>
-                    <a href="{{url('tickets/payments')}}">
-                        <i class="fa fa-plus-square"></i>&nbsp; Payments </a>
-                </li>
+                @if(Auth::user()->role == 'Nurse/Doctor' || Auth::user()->role == 'Doctor' )
+                    <li>
+                        <a href="{{url('tickets/consultations')}}">
+                            <i class="fa fa-list"></i>&nbsp; Requested Consultations</a>
+                    </li>
+                @endif
+                @if(Auth::user()->role == 'Receptionist')
+                    <li>
+                        <a href="{{url('tickets/add')}}">
+                            <i class="fa fa-plus-square"></i>&nbsp; Create New Ticket </a>
+                    </li>
+                    <li>
+                        <a href="{{url('tickets/payments')}}">
+                            <i class="fa fa-plus-square"></i>&nbsp; Payments </a>
+                    </li>
+                @endif
             </ul>
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='resources')class="active" @endif @endif>
@@ -103,15 +107,19 @@
                 <span class="fa arrow"></span>
             </a>
             <ul class="collapse">
+                @if(Auth::user()->role == 'Chemist')
                 <li>
                     <a href="{{url('resources/chemist')}}">
                         <i class="fa fa-list"></i> Chemist Resources</a>
                 </li>
-                <li>
+                @endif
+                @if(Auth::user()->role == 'Lab Technician')
+                    <li>
                     <a href="{{url('resources/lab')}}">
                         <i class="fa fa-list"></i>&nbsp; Lab Resources</a>
-                </li>
-                <li>
+                    </li>
+                @endif
+                        <li>
                     <a href="{{url('resources/nurse-station')}}">
                         <i class="fa fa-list"></i>&nbsp; Nurse Station</a>
                 </li>

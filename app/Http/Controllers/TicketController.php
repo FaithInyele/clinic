@@ -563,4 +563,13 @@ class TicketController extends Controller
         return Response::json(array('status'=>'success'));
 
     }
+    public function rTickets(){
+        $tickets = Ticket::where('issued_by', Auth::user()->id)->where('status', 'open')->get();
+        foreach ($tickets as $ticket){
+            $ticket['client'] = Clients::findorFail($ticket->client_id);
+            $ticket['doctor'] = User::findorFail($ticket->assigned_to);
+        }
+
+        return Response::json($tickets);
+    }
 }

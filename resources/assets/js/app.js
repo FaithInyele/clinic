@@ -48,6 +48,8 @@ Vue.component('payments', require('./components/payments.vue'));
 Vue.component('sidebar', require('./components/sidebar.vue'));
 
 Vue.component('inpatient', require('./components/inpatient.vue'));
+
+Vue.component('r_tickets', require('./components/r_tickets.vue'));
 const app = new Vue({
     el: '#app',
     data: {

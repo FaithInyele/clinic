@@ -24,4 +24,8 @@ class Ticket extends Model
     public function doctor(){
         return $this->hasOne('App\User', 'assigned_to');
     }
+
+    public function client(){
+        return $this->hasOne('App\Client', 'client_id');
+    }
 }
