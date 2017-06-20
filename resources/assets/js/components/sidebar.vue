@@ -468,7 +468,7 @@
             },
             closeModal: function () {
                 var inheritance = this;
-                inheritance.modal = false
+                inheritance.modal = false;
             },
             addTest: function (result) {
                 var inheritance = this;
@@ -601,6 +601,7 @@
                 var inheritance=this;
                 inheritance.modal=false;
                 inheritance.status = 'No Operation';
+                inheritance.consults();
             },
             //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {
@@ -649,6 +650,7 @@
                 axios.post(base_url+'/chat/newmessage', {consultant_id: inheritance.currentChat.id,message: inheritance.chatMessage, message_to:inheritance.currentChat.originator.id})
                     .then(function (response) {
                         inheritance.currentChat.messages.push(response.data);
+                        inheritance.chatMessage = '';
                     }.bind(this))
             },
             consults: function () {

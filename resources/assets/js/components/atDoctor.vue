@@ -32,7 +32,7 @@
                                 <div class="row">
                                     <a class="pull-right btn btn-sm btn-success btn-custom" @click="admitClient(allActive.id)" style="margin-right: 10px">{{admitButton}}</a>
                                     <a class="pull-right btn btn-sm btn-success btn-custom" @click="openTicket(allActive.id)" style="margin-right: 10px">Open</a>
-                                    <a v-show="allActive.progress.level == 5"  class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
+                                    <a class="pull-right btn btn-sm btn-success btn-custom" @click="endTicket(allActive.id)" style="margin-right: 10px">Close Ticket</a>
                                 </div>
                             </div>
                             <br>
@@ -639,10 +639,12 @@
             //close the above opened ticket.
             closeTicket: function () {
                 var inheritance=this;
-                inheritance.ticketModal=false;
-                inheritance.status = 'No Operation';
-                inheritance.currentTicket = [];
-                inheritance.allActiveMethod();
+                if (confirm('Are you sure you want to close Current Ticket?')){
+                    inheritance.ticketModal=false;
+                    inheritance.status = 'No Operation';
+                    inheritance.currentTicket = [];
+                    inheritance.allActiveMethod();
+                }
             },
             //list all active tickets, that belong to the logged in user
             allActiveMethod: function () {
@@ -808,10 +810,13 @@
             //close a ticket completely
             endTicket: function (ticket_id) {
                 var inheritance = this;
-                axios.get(base_url+'/tickets/my-tickets/close/'+ticket_id)
-                    .then(function (response) {
-                        inheritance.allActiveMethod();
-                    }.bind(this))
+                if (confirm('Are you sure to close Ticket?')){
+                    axios.get(base_url+'/tickets/my-tickets/close/'+ticket_id)
+                        .then(function (response) {
+                            inheritance.allActiveMethod();
+                        }.bind(this))
+
+                }
             },
             startChat: function () {
                 var inheritance = this;

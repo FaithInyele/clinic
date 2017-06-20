@@ -77,6 +77,13 @@ class ChatController extends Controller
      * @return mixed
      */
     public function newMessage(Request $request){
+        //mark all as read
+        $old_messages = Message::where('consultant_id', $request->consultant_id)->get();
+        if ($old_messages){
+            foreach ($old_messages as $message){
+                Message::findorFail($message->id)->update(['read_status'=>'yes']);
+            }
+        }
         $request['from'] = Auth::user()->id;
         $request['read_status'] = 'no';
         $message = new Message($request->all());
