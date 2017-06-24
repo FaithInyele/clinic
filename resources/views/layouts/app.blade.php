@@ -85,7 +85,7 @@
                         type: 'line'
                     },
                     title: {
-                        text: 'My Tickets, for the Past 7 dayss'
+                        text: 'My Tickets, for the Past 7 days'
                     },
 
                     subtitle: {

@@ -1,8 +1,9 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
-            <button class="btn btn-success" @click="addPreference">Add New Nurse Station Resource</button>
+            <button class="btn btn-success" @click="addPreference"><i class="fa fa-plus"> Add New Nurse Station Resource</i></button>
             <h5>Nurse Station Resource(s)</h5>
+            <hr>
             <div class="row" v-for="preference in preferences">
                 <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
                     <div class="row">

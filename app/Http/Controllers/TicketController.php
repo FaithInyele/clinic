@@ -26,6 +26,23 @@ class TicketController extends Controller
 {
 
     /**
+     * return view for all tickets -->by admin
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(){
+        $title = 'iHospital | Create New Ticket';
+        $rightbar = 'ticket';
+        $tickets = Ticket::all();
+        foreach ($tickets as $ticket){
+            $ticket['doctor'] = User::findorFail($ticket->assigned_to);
+            $ticket['client'] = Clients::findorFail($ticket->client_id);
+            $ticket['reception'] = User::findorFail($ticket->issued_by);
+        }
+
+        return view('ticket.index', compact('tickets', 'title', 'rightbar'));
+    }
+
+    /**
      * display form where a user searches for client, to start a ticket for.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

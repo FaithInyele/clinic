@@ -74,14 +74,18 @@
                 <span class="fa arrow"></span>
             </a>
             <ul class="collapse">
+                @if(Auth::user()->role == 'Admin')
                 <li>
                     <a href="{{url('tickets')}}">
                         <i class="fa fa-list"></i>&nbsp; List All</a>
                 </li>
+                @endif
+                @if(Auth::user()->role != 'Admin')
                 <li>
                     <a href="{{url('tickets/my-tickets')}}">
                         <i class="fa fa-list"></i>&nbsp; My Tickets (All)</a>
                 </li>
+                @endif
                 @if(Auth::user()->role == 'Nurse/Doctor' || Auth::user()->role == 'Doctor' )
                     <li>
                         <a href="{{url('tickets/consultations')}}">
@@ -102,7 +106,7 @@
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='resources')class="active" @endif @endif>
             <a href="javascript:;">
-                <i class="fa fa-user "></i>
+                <i class="fa fa-bars "></i>
                 <span class="link-title">Resources</span>
                 <span class="fa arrow"></span>
             </a>
@@ -110,36 +114,53 @@
                 @if(Auth::user()->role == 'Chemist')
                 <li>
                     <a href="{{url('resources/chemist')}}">
-                        <i class="fa fa-list"></i> Chemist Resources</a>
+                        <i class="fa fa-medkit"></i> Chemist Resources</a>
                 </li>
                 @endif
                 @if(Auth::user()->role == 'Lab Technician')
                     <li>
                     <a href="{{url('resources/lab')}}">
-                        <i class="fa fa-list"></i>&nbsp; Lab Resources</a>
+                        <i class="fa fa-thermometer"></i>&nbsp; Lab Resources</a>
                     </li>
                 @endif
                         <li>
                     <a href="{{url('resources/nurse-station')}}">
-                        <i class="fa fa-list"></i>&nbsp; Nurse Station</a>
+                        <i class="fa fa-stethoscope"></i>&nbsp; Nurse Station</a>
                 </li>
             </ul>
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='preferences')class="active" @endif @endif>
             <a href="javascript:;">
-                <i class="fa fa-user "></i>
+                <i class="fa fa-cog "></i>
                 <span class="link-title">Preferences</span>
                 <span class="fa arrow"></span>
             </a>
             <ul class="collapse">
-                <li>
-                    <a href="{{url('preferences')}}">
-                        <i class="fa fa-list"></i> Preferences</a>
-                </li>
-                <li>
-                    <a href="{{url('preferences/service-fees')}}">
-                        <i class="fa fa-list"></i>&nbsp; Service Fees</a>
-                </li>
+                @if(Auth::user()->role == 'Admin')
+                    <li>
+                        <a href="{{url('preferences')}}">
+                            <i class="fa fa-sliders"></i> Preferences</a>
+                    </li>
+                    <li>
+                        <a href="{{url('preferences/service-fees')}}">
+                            <i class="fa fa-money"></i>&nbsp; Service Fees</a>
+                    </li>
+                @endif
+            </ul>
+        </li>
+        <li @if(isset($rightbar)) @if($rightbar=='payments')class="active" @endif @endif>
+            <a href="javascript:;">
+                <i class="fa fa-money "></i>
+                <span class="link-title">Payments</span>
+                <span class="fa arrow"></span>
+            </a>
+            <ul class="collapse">
+                @if(Auth::user()->role == 'Admin')
+                    <li>
+                        <a href="{{url('payments')}}">
+                            <i class="fa fa-money"></i> Show All</a>
+                    </li>
+                @endif
             </ul>
         </li>
     </ul>

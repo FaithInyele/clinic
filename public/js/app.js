@@ -16099,6 +16099,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -17230,7 +17231,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post(base_url + '/chat/newmessage', { consultant_id: inheritance.currentChat.id, message: inheritance.chatMessage, message_to: inheritance.currentChat.originator.id }).then(function (response) {
                 inheritance.currentChat.messages.push(response.data);
                 inheritance.chatMessage = '';
+                inheritance.notification();
             }.bind(this));
+        },
+        notification: function notification() {
+            window.Notification.requestPermission(function (permission) {
+                if (permission == 'granted') {
+                    var notify = new window.Notification('huh', {
+                        body: 'wtf!'
+                    });
+                    /*notify.onclick = function() {
+                        window.focus();
+                        $scope.showChat();
+                    };
+                    notify.onclose = function() {
+                        $scope.pageTitleNotificator.off();
+                    };
+                    var timmer = setInterval(function() {
+                        notify && notify.close();
+                        typeof timmer !== 'undefined' && window.clearInterval(timmer);
+                    }, 10000);*/
+                }
+            });
         },
         consults: function consults() {
             var inheritance = this;
@@ -43015,23 +43037,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "sparkline bar_week"
   }), _vm._v(" "), _c('div', {
     staticClass: "stat_text"
-  }, [_c('strong', [_c('i', {
+  }, [_c('strong', {
+    staticStyle: {
+      "font-size": "80px"
+    }
+  }, [_c('i', {
     staticClass: "fa fa-user"
   }), _vm._v(" " + _vm._s(_vm.counts.total_tickets))]), _vm._v("Total tickets attended to\n            ")])]), _vm._v(" "), _c('li', [_c('div', {
     staticClass: "sparkline line_day"
   }), _vm._v(" "), _c('div', {
     staticClass: "stat_text"
-  }, [_c('strong', [_c('i', {
+  }, [_c('strong', {
+    staticStyle: {
+      "font-size": "80px"
+    }
+  }, [_c('i', {
     staticClass: "fa fa-calendar"
   }), _vm._v(" " + _vm._s(_vm.counts.created_today))]), _vm._v("My Today's total Tickets\n            ")])]), _vm._v(" "), _c('li', [_c('div', {
     staticClass: "sparkline pie_week"
   }), _vm._v(" "), _c('div', {
     staticClass: "stat_text"
-  }, [_c('strong', [_vm._v(_vm._s(_vm.counts.active_tickets))]), _vm._v("My Active Tickets\n            ")])]), _vm._v(" "), _c('li', [_c('div', {
+  }, [_c('strong', {
+    staticStyle: {
+      "font-size": "80px"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-calendar"
+  }), _vm._v(_vm._s(_vm.counts.active_tickets))]), _vm._v("My Active Tickets\n            ")])]), _vm._v(" "), _c('li', [_c('div', {
     staticClass: "sparkline stacked_month"
   }), _vm._v(" "), _c('div', {
     staticClass: "stat_text"
-  }, [_c('strong', [_vm._v(_vm._s(_vm.counts.active_inpatient) + " - " + _vm._s(_vm.counts.active_outpatient))]), _vm._v("My (Inpatient - Outpatient)\n            ")])])]), _vm._v(" "), _vm._m(0)])
+  }, [_c('strong', {
+    staticStyle: {
+      "font-size": "80px"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-calendar"
+  }), _vm._v(_vm._s(_vm.counts.active_inpatient) + "-" + _vm._s(_vm.counts.active_outpatient))]), _vm._v("My (Inpatient - Outpatient)\n            ")])])]), _vm._v(" "), _vm._m(0)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "row"
@@ -45487,7 +45529,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.addPreference
     }
-  }, [_vm._v("Add New Nurse Station Resource")]), _vm._v(" "), _c('h5', [_vm._v("Nurse Station Resource(s)")]), _vm._v(" "), _vm._l((_vm.preferences), function(preference) {
+  }, [_c('i', {
+    staticClass: "fa fa-plus"
+  }, [_vm._v(" Add New Nurse Station Resource")])]), _vm._v(" "), _c('h5', [_vm._v("Nurse Station Resource(s)")]), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.preferences), function(preference) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {

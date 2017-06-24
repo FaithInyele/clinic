@@ -651,7 +651,28 @@
                     .then(function (response) {
                         inheritance.currentChat.messages.push(response.data);
                         inheritance.chatMessage = '';
+                        inheritance.notification();
                     }.bind(this))
+            },
+            notification: function () {
+                window.Notification.requestPermission(function (permission) {
+                    if (permission == 'granted') {
+                        var notify = new window.Notification('huh', {
+                            body: 'wtf!'
+                        });
+                        /*notify.onclick = function() {
+                            window.focus();
+                            $scope.showChat();
+                        };
+                        notify.onclose = function() {
+                            $scope.pageTitleNotificator.off();
+                        };
+                        var timmer = setInterval(function() {
+                            notify && notify.close();
+                            typeof timmer !== 'undefined' && window.clearInterval(timmer);
+                        }, 10000);*/
+                    }
+                });
             },
             consults: function () {
                 var inheritance = this;
