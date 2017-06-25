@@ -12542,6 +12542,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -45788,7 +45792,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Tickets")]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
-  }, [_c('h6', [_vm._v("History")])])]), _vm._v(" "), _c('li', {
+  }, [_c('div', {
+    staticClass: "row raisedbox"
+  }, [_c('div', {
+    staticStyle: {
+      "min-width": "310px",
+      "max-width": "800px",
+      "height": "400px",
+      "margin": "0 auto"
+    },
+    attrs: {
+      "id": "ticket-trend"
+    }
+  })])])]), _vm._v(" "), _c('li', {
     staticClass: "tab-header-and-content"
   }, [_c('a', {
     staticClass: "tab-link",
@@ -45797,7 +45813,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Payment")]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
-  }, [_c('h6', [_vm._v("History")])])]), _vm._v(" "), _c('li', {
+  }, [_c('div', {
+    staticClass: "row raisedbox"
+  }, [_c('div', {
+    staticStyle: {
+      "min-width": "310px",
+      "max-width": "800px",
+      "height": "400px",
+      "margin": "0 auto"
+    },
+    attrs: {
+      "id": "payment-trend"
+    }
+  })])])]), _vm._v(" "), _c('li', {
     staticClass: "tab-header-and-content"
   }, [_c('a', {
     staticClass: "tab-link",

@@ -36,13 +36,17 @@
                     <li class="tab-header-and-content">
                         <a href="#" class="tab-link is-active">Tickets</a>
                         <div class="tab-content">
-                            <h6>History</h6>
+                            <div class="row raisedbox">
+                                <div id="ticket-trend" style="min-width: 310px;max-width: 800px;height: 400px;margin: 0 auto"></div>
+                            </div>
                         </div>
                     </li>
                     <li class="tab-header-and-content">
                         <a href="#" class="tab-link">Payment</a>
                         <div class="tab-content">
-                            <h6>History</h6>
+                            <div class="row raisedbox">
+                                <div id="payment-trend" style="min-width: 310px;max-width: 800px;height: 400px;margin: 0 auto"></div>
+                            </div>
                         </div>
                     </li>
                     <li class="tab-header-and-content">

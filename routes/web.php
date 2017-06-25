@@ -150,12 +150,15 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('doc', 'ReportsController@doctor');
     Route::get('reports/doctor', 'ReportsController@doctor');
     Route::get('reports/ticket-history', 'ReportsController@ticketHistory');
+    Route::get('reports/admin', 'ReportsController@admin');
+    Route::get('reports/ticket-trend', 'ReportsController@ticketTrend');
+    Route::get('reports/payment-trend', 'ReportsController@paymentTrend');
+    Route::get('reports/test-trend', 'ReportsController@testTrend');
 
     //socket
     Route::get('bridge', 'ReportsController@bridge');
 
     //admin
-    Route::get('reports/admin', 'ReportsController@admin');
 
 
 });

@@ -158,4 +158,194 @@ class ReportsController extends Controller
         return Response::json($data);
 
     }
+
+    public function ticketTrend(Request $request){
+        $year = $request->year;
+
+        if($year ==null){
+            $year = date('Y');
+        }
+        //$facilitydata = Facility::findorfail($id);
+        $tickets = Ticket::all();
+        $jan = 0;$feb=0;$mar=0;$apr=0;$may=0;$jun=0;
+        $jul=0;$aug=0;$sep=0;$oct=0;$nov=0;$dec=0;
+
+
+        $startdate = date('Y-M-d', strtotime($year.'-01-01'));
+        $enddate = date('Y-M-d', strtotime($year.'-12-31'));
+        //dd($enddate);
+        foreach($tickets as $value) {
+            $dated = $value->created_at;
+            $thedate = date('M', strtotime($dated));
+            $theyear = date('Y', strtotime($dated));
+            if ($theyear == $year) {
+                if ($thedate == 'Jan') {
+                    $jan++;
+                }
+                if ($thedate == 'Feb') {
+                    $feb++;
+                }
+                if ($thedate == 'Mar') {
+                    $mar++;
+                }
+                if ($thedate == 'Apr') {
+                    $apr++;
+                }
+                if ($thedate == 'May') {
+                    $may++;
+                }
+                if ($thedate == 'Jun') {
+                    $jun++;
+                }
+                if ($thedate == 'Jul') {
+                    $jul++;
+                }
+                if ($thedate == 'Aug') {
+                    $aug++;
+                }
+                if ($thedate == 'Sep') {
+                    $sep++;
+                }
+                if ($thedate == 'Oct') {
+                    $oct++;
+                }
+                if ($thedate == 'Nov') {
+                    $nov++;
+                }
+                if ($thedate == 'Dec') {
+                    $dec++;
+                }
+            }
+
+        }
+        $stat =array();
+
+        array_push($stat, 'Jan');
+        array_push($stat, 'Feb');
+        array_push($stat, 'Mar');
+        array_push($stat, 'Apr');
+        array_push($stat, 'May');
+        array_push($stat, 'Jun');
+        array_push($stat, 'Jul');
+        array_push($stat, 'Aug');
+        array_push($stat, 'Sep');
+        array_push($stat, 'Oct');
+        array_push($stat, 'Nov');
+        array_push($stat, 'Dec');
+
+        $values = array();
+        array_push($values, $jan);
+        array_push($values, $feb);
+        array_push($values, $mar);
+        array_push($values, $apr);
+        array_push($values, $may);
+        array_push($values, $jun);
+        array_push($values, $jul);
+        array_push($values, $aug);
+        array_push($values, $sep);
+        array_push($values, $oct);
+        array_push($values, $nov);
+        array_push($values, $dec);
+
+
+        return Response::json(array('dates'=>$stat, 'values'=>$values));
+    }
+    public function paymentTrend(Request $request){
+        $year = $request->year;
+
+        if($year ==null){
+            $year = date('Y');
+        }
+        //$facilitydata = Facility::findorfail($id);
+        $tickets = Payment::all();
+        $jan = 0;$feb=0;$mar=0;$apr=0;$may=0;$jun=0;
+        $jul=0;$aug=0;$sep=0;$oct=0;$nov=0;$dec=0;
+
+
+        $startdate = date('Y-M-d', strtotime($year.'-01-01'));
+        $enddate = date('Y-M-d', strtotime($year.'-12-31'));
+        //dd($enddate);
+        foreach($tickets as $value) {
+            $dated = $value->created_at;
+            $thedate = date('M', strtotime($dated));
+            $theyear = date('Y', strtotime($dated));
+            if ($theyear == $year) {
+                if ($thedate == 'Jan') {
+                    $jan = $jan+ $value->amount;
+                }
+                if ($thedate == 'Feb') {
+                    $feb = $feb + $value->amount;
+                }
+                if ($thedate == 'Mar') {
+                    $mar = $mar + $value->amount;
+                }
+                if ($thedate == 'Apr') {
+                    $apr = $apr + $value->amount;
+                }
+                if ($thedate == 'May') {
+                    $may = $may + $value->amount;
+                }
+                if ($thedate == 'Jun') {
+                    $jun = $jun + $value->amount;
+                }
+                if ($thedate == 'Jul') {
+                    $jul = $jul + $value->amount;
+                }
+                if ($thedate == 'Aug') {
+                    $aug = $aug + $value->amount;
+                }
+                if ($thedate == 'Sep') {
+                    $sep = $sep + $value->amount;
+                }
+                if ($thedate == 'Oct') {
+                    $oct = $oct + $value->amount;
+                }
+                if ($thedate == 'Nov') {
+                    $nov = $nov+ $value->amount;
+                }
+                if ($thedate == 'Dec') {
+                    $dec = $dec + $value->amount;
+                }
+            }
+
+        }
+        $stat =array();
+
+        array_push($stat, 'Jan');
+        array_push($stat, 'Feb');
+        array_push($stat, 'Mar');
+        array_push($stat, 'Apr');
+        array_push($stat, 'May');
+        array_push($stat, 'Jun');
+        array_push($stat, 'Jul');
+        array_push($stat, 'Aug');
+        array_push($stat, 'Sep');
+        array_push($stat, 'Oct');
+        array_push($stat, 'Nov');
+        array_push($stat, 'Dec');
+
+        $values = array();
+        array_push($values, $jan);
+        array_push($values, $feb);
+        array_push($values, $mar);
+        array_push($values, $apr);
+        array_push($values, $may);
+        array_push($values, $jun);
+        array_push($values, $jul);
+        array_push($values, $aug);
+        array_push($values, $sep);
+        array_push($values, $oct);
+        array_push($values, $nov);
+        array_push($values, $dec);
+
+
+        return Response::json(array('dates'=>$stat, 'values'=>$values));
+    }
+    public function testTrend(){
+        $tests = DB::table('tests')
+            ->select('tests.*')
+            ->groupBy('tests.lab_resource_id')
+            ->count();
+        dd($tests);
+    }
 }

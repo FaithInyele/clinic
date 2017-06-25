@@ -74,8 +74,8 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
     <script>
-        var url=base_url+'/reports/ticket-history';
-        $.getJSON(url,
+        var url1=base_url+'/reports/ticket-history';
+        $.getJSON(url1,
             function(data1) {
                 /** Declare options after success callback. */
                 console.log(data1);
@@ -109,6 +109,86 @@
                     series: [{
                         name: 'Ticket Counts',
                         data: data1.counts
+                    }]
+                }
+                var chart = new Highcharts.Chart(options);
+            });
+
+        var url2=base_url+'/reports/ticket-trend';
+        $.getJSON(url2,
+            function(data1) {
+                /** Declare options after success callback. */
+                console.log(data1);
+                var options = {
+                    chart: {
+                        renderTo: 'ticket-trend',
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Ticket Trends'
+                    },
+
+                    subtitle: {
+                        text: ''
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'Number of Tickets'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    xAxis: {
+                        categories: data1.dates
+                    },
+
+                    series: [{
+                        name: 'Ticket Counts',
+                        data: data1.values
+                    }]
+                }
+                var chart = new Highcharts.Chart(options);
+            });
+
+        var url3=base_url+'/reports/payment-trend';
+        $.getJSON(url3,
+            function(data1) {
+                /** Declare options after success callback. */
+                console.log(data1);
+                var options = {
+                    chart: {
+                        renderTo: 'payment-trend',
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Payment Trends'
+                    },
+
+                    subtitle: {
+                        text: ''
+                    },
+
+                    yAxis: {
+                        title: {
+                            text: 'Amount Collected'
+                        }
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle'
+                    },
+                    xAxis: {
+                        categories: data1.dates
+                    },
+
+                    series: [{
+                        name: 'Amount',
+                        data: data1.values
                     }]
                 }
                 var chart = new Highcharts.Chart(options);
