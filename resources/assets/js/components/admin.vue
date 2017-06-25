@@ -52,13 +52,47 @@
                     <li class="tab-header-and-content">
                         <a href="#" class="tab-link">Lab-Tests</a>
                         <div class="tab-content">
-                            <h6>History</h6>
+                            <table class="table table-striped table-bordered dt-responsive" id="vueTable"
+                                   cellspacing="0" width="100%" style="font-size: 10px">
+                                <thead>
+                                <tr>
+                                    <th>Test Id</th>
+                                    <th>Test name</th>
+                                    <th>test Counts</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="test in counts.tests_trend">
+                                    <td>{{ test.lab_resource_id}}</td>
+                                    <td>{{ test.resource_name}}</td>
+                                    <td>{{ test.total}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </li>
                     <li class="tab-header-and-content">
                         <a href="#" class="tab-link">Medication</a>
                         <div class="tab-content">
-                            <h6>History</h6>
+                            <table class="table table-striped table-bordered dt-responsive" id="vueTable2"
+                                   cellspacing="0" width="100%" style="font-size: 10px">
+                                <thead>
+                                <tr>
+                                    <th>Test Id</th>
+                                    <th>Medication name</th>
+                                    <th>Issued Counts</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="test in counts.med_trend">
+                                    <td>{{ test.chemist_resource_id}}</td>
+                                    <td>{{ test.resource_name}}</td>
+                                    <td>{{ test.total}}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </li>
                 </ul>
@@ -95,6 +129,9 @@
                     .then(function (response) {
                         console.log(response.data);
                         inheritance.counts = response.data;
+                        setTimeout(function() { $("#vueTable").DataTable(); }, 500);
+                        setTimeout(function() { $("#vueTable2").DataTable(); }, 500);
+
                     })
             }
         }

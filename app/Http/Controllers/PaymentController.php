@@ -22,6 +22,18 @@ class PaymentController extends Controller
         return view('ticket.payment.index', compact('title', 'rightbar'));
     }
 
+    public function report(){
+        $title = 'iHospital | Ticket Payments';
+        $rightbar = 'payment';
+        $payments = Payment::all();
+        foreach ($payments as $payment){
+            $payment['ticket'] = Ticket::findorFail($payment->ticket_id);
+            $payment['client'] = Clients::findorFail($payment['ticket']->client_id);
+        }
+
+        return view('ticket.payment.report', compact('title', 'rightbar', 'payments'));
+    }
+
     public function pending(){
         $pending = LabData::where('status', -1)->get();
         if ($pending){

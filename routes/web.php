@@ -154,6 +154,8 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('reports/ticket-trend', 'ReportsController@ticketTrend');
     Route::get('reports/payment-trend', 'ReportsController@paymentTrend');
     Route::get('reports/test-trend', 'ReportsController@testTrend');
+    Route::get('reports/med-trend', 'ReportsController@medTrend');
+    Route::get('payments', 'PaymentController@report');
 
     //socket
     Route::get('bridge', 'ReportsController@bridge');

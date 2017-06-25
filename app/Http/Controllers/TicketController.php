@@ -79,7 +79,7 @@ class TicketController extends Controller
         $title = 'iHospital | Assign Ticket';
         $rightbar = 'ticket';
         $data = $request->all();
-        $available_doctors = User::where('role', 'Nurse/Doctor')->get();
+        $available_doctors = User::where('role', 'Doctor')->get();
         $nurse_station_resources = GeneralConditionResource::where('status', 1)->get();
         return view('ticket.start', compact('rightbar', 'title', 'data', 'available_doctors', 'nurse_station_resources'));
     }

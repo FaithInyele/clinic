@@ -12467,7 +12467,41 @@ exports.default = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12565,10 +12599,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get(base_url + '/reports/admin').then(function (response) {
                 console.log(response.data);
                 inheritance.counts = response.data;
+                setTimeout(function () {
+                    $("#vueTable").DataTable();
+                }, 500);
+                setTimeout(function () {
+                    $("#vueTable2").DataTable();
+                }, 500);
             });
         }
     }
 };
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
 /* 42 */
@@ -45747,7 +45788,53 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("  View")])])])]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "row"
-  }, [_vm._m(1), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "col-md-8"
+  }, [_c('ul', {
+    staticClass: "accordion-tabs-minimal"
+  }, [_vm._m(1), _vm._v(" "), _vm._m(2), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Lab-Tests")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "vueTable",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(3), _vm._v(" "), _c('tbody', _vm._l((_vm.counts.tests_trend), function(test) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(test.lab_resource_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(test.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(test.total))])])
+  }))])])]), _vm._v(" "), _c('li', {
+    staticClass: "tab-header-and-content"
+  }, [_c('a', {
+    staticClass: "tab-link",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Medication")]), _vm._v(" "), _c('div', {
+    staticClass: "tab-content"
+  }, [_c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "id": "vueTable2",
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_vm._m(4), _vm._v(" "), _c('tbody', _vm._l((_vm.counts.med_trend), function(test) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(test.chemist_resource_id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(test.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(test.total))])])
+  }))])])])])]), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
   }, [_c('h5', [_vm._v("Today's Statistics")]), _vm._v(" "), _c('hr'), _vm._v(" "), _c('div', {
     staticClass: "row"
@@ -45779,11 +45866,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('label', [_vm._v("Trends")]), _vm._v(" "), _c('hr')])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "col-md-8"
-  }, [_c('ul', {
-    staticClass: "accordion-tabs-minimal"
-  }, [_c('li', {
+  return _c('li', {
     staticClass: "tab-header-and-content"
   }, [_c('a', {
     staticClass: "tab-link is-active",
@@ -45804,7 +45887,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "ticket-trend"
     }
-  })])])]), _vm._v(" "), _c('li', {
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', {
     staticClass: "tab-header-and-content"
   }, [_c('a', {
     staticClass: "tab-link",
@@ -45825,25 +45910,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "payment-trend"
     }
-  })])])]), _vm._v(" "), _c('li', {
-    staticClass: "tab-header-and-content"
-  }, [_c('a', {
-    staticClass: "tab-link",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Lab-Tests")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-content"
-  }, [_c('h6', [_vm._v("History")])])]), _vm._v(" "), _c('li', {
-    staticClass: "tab-header-and-content"
-  }, [_c('a', {
-    staticClass: "tab-link",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Medication")]), _vm._v(" "), _c('div', {
-    staticClass: "tab-content"
-  }, [_c('h6', [_vm._v("History")])])])])])
+  })])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Test Id")]), _vm._v(" "), _c('th', [_vm._v("Test name")]), _vm._v(" "), _c('th', [_vm._v("test Counts")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Test Id")]), _vm._v(" "), _c('th', [_vm._v("Medication name")]), _vm._v(" "), _c('th', [_vm._v("Issued Counts")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

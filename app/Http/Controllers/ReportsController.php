@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\InPatient;
 use App\LabData;
+use App\LabResource;
 use App\Medicine;
 use App\Payment;
 use App\Prescription;
@@ -127,7 +128,7 @@ class ReportsController extends Controller
         $tickets_created = Ticket::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
             ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
             ->count();
-        $admissions_today = InPatient::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+        $admissions_today = InPatient::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
             ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
             ->count();
         $discharges_today = DB::table('in_patients')
@@ -136,24 +137,40 @@ class ReportsController extends Controller
             ->where('tickets.updated_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
             ->where('tickets.status', 'closed')
             ->count();
-        $labdata = LabData::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+        $labdata = LabData::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
                 ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
                 ->count();
-        $tests = Test::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+        $tests = Test::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
                 ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
                 ->count();
 
-        $prescriptions = Prescription::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+        $prescriptions = Prescription::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
                 ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
                 ->count();
-        $medicine = Medicine::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+        $medicine = Medicine::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
                 ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
                 ->count();
+
+        $tests_trend = DB::table('tests')
+            ->join('lab_resources', 'tests.lab_resource_id', '=', 'lab_resources.id')
+            ->select('tests.lab_resource_id', 'lab_resources.resource_name',DB::raw('count(*) as total'))
+            ->groupBy('tests.lab_resource_id')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $med_trend = DB::table('medicines')
+            ->join('chemist_resources', 'medicines.chemist_resource_id', '=', 'chemist_resources.id')
+            ->select('medicines.chemist_resource_id', 'chemist_resources.resource_name',DB::raw('count(*) as total'))
+            ->groupBy('medicines.chemist_resource_id')
+            ->orderBy('total', 'desc')
+            ->get();
+
 
 
         $data = array('users'=>$users, 'all_tickets'=>$all_tickets, 'active_tickets'=>$active_tickets, 'total_payments'=>$total_payments,
                 'tickets_created'=>$tickets_created, 'admissions_today'=>$admissions_today, 'discharges_today'=>$discharges_today,
-                'labdata'=>$labdata, 'tests'=>$tests, 'prescriptions'=>$prescriptions,'medicine'=>$medicine);
+                'labdata'=>$labdata, 'tests'=>$tests, 'prescriptions'=>$prescriptions,'medicine'=>$medicine,
+                'tests_trend'=>$tests_trend, 'med_trend'=>$med_trend);
 
         return Response::json($data);
 
@@ -343,9 +360,22 @@ class ReportsController extends Controller
     }
     public function testTrend(){
         $tests = DB::table('tests')
-            ->select('tests.*')
+            ->join('lab_resources', 'tests.lab_resource_id', '=', 'lab_resources.id')
+            ->select('tests.lab_resource_id', 'lab_resources.resource_name',DB::raw('count(*) as total'))
             ->groupBy('tests.lab_resource_id')
-            ->count();
-        dd($tests);
+            ->orderBy('total', 'desc')
+            ->get();
+
+        return Response::json($tests);
+    }
+    public function medTrend(){
+        $med = DB::table('medicines')
+            ->join('chemist_resources', 'medicines.chemist_resource_id', '=', 'chemist_resources.id')
+            ->select('medicines.chemist_resource_id', 'chemist_resources.resource_name',DB::raw('count(*) as total'))
+            ->groupBy('medicines.chemist_resource_id')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        return Response::json($med);
     }
 }
