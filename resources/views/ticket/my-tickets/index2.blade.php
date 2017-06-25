@@ -6,7 +6,7 @@
         <r_tickets></r_tickets>
     @endif
 
-    @if(Auth::user()->role == 'Nurse/Doctor')
+    @if(Auth::user()->role == 'Doctor')
         <!--nurse/doctor components-->
         <atdoctor></atdoctor>
     @endif

@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\InPatient;
 use App\LabData;
+use App\Medicine;
+use App\Payment;
 use App\Prescription;
+use App\Test;
 use App\Ticket;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Vinkla\Pusher\Facades\Pusher;
 
@@ -111,11 +115,47 @@ class ReportsController extends Controller
         dd('haha');
     }
     public function admin(){
+        $today = date('y-m-d');
+        $carbon_today = Carbon::createFromDate(date('Y', strtotime($today)), date('m', strtotime($today)), date('d', strtotime($today)) );
         $current_user = Auth::user();
         $users = User::count();
         $all_tickets = Ticket::count();
         $active_tickets = Ticket::where('status', 'open')->count();
-        //dd($users);
+        $total_payments = Payment::sum('amount');
+
+        //today
+        $tickets_created = Ticket::where('created_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
+            ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+            ->count();
+        $admissions_today = InPatient::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+            ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+            ->count();
+        $discharges_today = DB::table('in_patients')
+            ->join('tickets', 'in_patients.ticket_id', 'tickets.id')
+            ->where('tickets.updated_at', '>=', $carbon_today->startOfDay()->toDateTimeString())
+            ->where('tickets.updated_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+            ->where('tickets.status', 'closed')
+            ->count();
+        $labdata = LabData::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+                ->count();
+        $tests = Test::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+                ->count();
+
+        $prescriptions = Prescription::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+                ->count();
+        $medicine = Medicine::where('created_at', $carbon_today->startOfDay()->toDateTimeString())
+                ->where('created_at', '<=', $carbon_today->endOfDay()->toDateTimeString())
+                ->count();
+
+
+        $data = array('users'=>$users, 'all_tickets'=>$all_tickets, 'active_tickets'=>$active_tickets, 'total_payments'=>$total_payments,
+                'tickets_created'=>$tickets_created, 'admissions_today'=>$admissions_today, 'discharges_today'=>$discharges_today,
+                'labdata'=>$labdata, 'tests'=>$tests, 'prescriptions'=>$prescriptions,'medicine'=>$medicine);
+
+        return Response::json($data);
 
     }
 }

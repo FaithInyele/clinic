@@ -155,7 +155,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('bridge', 'ReportsController@bridge');
 
     //admin
-    Route::get('admin', 'ReportsController@admin');
+    Route::get('reports/admin', 'ReportsController@admin');
 
 
 });

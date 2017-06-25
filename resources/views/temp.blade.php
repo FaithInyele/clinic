@@ -19,7 +19,7 @@
     </div>
     @else
         <div class="row">
-            <h1>Huh</h1>
+            <admin></admin>
         </div>
     @endif
 @endsection
