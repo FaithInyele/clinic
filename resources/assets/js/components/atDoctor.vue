@@ -1,6 +1,26 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
+            <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+                <label class="pull-left" style="font-size: 20px">
+                    My Tickets
+                </label>
+                <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer" @click="helpOn()"></i>
+            </div>
+            <div class="row">
+                <div class="row alert alert-info" v-show="help">
+                    <button type="button" class="close" @click="helpOff()">&times;</button>
+                    <header>Help information</header>
+                    <p>
+                    <ol>
+                        <li>This Page displays all the Clients currently assigned to you</li>
+                        <li>They are divided into two groups; Inpatient (<i>those who have been admitted to the facility under your authority thus they are under your monitoring</i>) and Outpatients (<i>those who are undergoing outpatient treatment and assigned to you</i>)</li>
+                        <li>You can close a Ticket by clicking the close button. This will immediately stop also all the pending activities</li>
+                        <li>Clicking on the open button will display the ticket details and all the relevant operations you can perform on the ticket; you cal also monitor the progress</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>My List</strong> <br>
@@ -497,7 +517,8 @@
                 chat_doctor: '',
                 currentChat: [],
                 chatMessage: '',
-                admitButton: 'Admit Client'
+                admitButton: 'Admit Client',
+                help: false
             }
         },
         watch: {
@@ -511,6 +532,14 @@
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             addTest: function (result) {
                 var inheritance = this;
                 inheritance.test_tags.push(result.resource_name);

@@ -1,5 +1,24 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div>
+        <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+            <label class="pull-left" style="font-size: 20px">
+                Lab Resources
+            </label>
+            <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer" @click="helpOn()"></i>
+        </div>
+        <div class="row">
+            <div class="row alert alert-info" v-show="help">
+                <button type="button" class="close" @click="helpOff()">&times;</button>
+                <header>Help information</header>
+                <p>
+                <ol>
+                    <li>Lab Resources are the tests that can be performed at the given facility's Laboratories</li>
+                    <li>This Page displays all the Lb Resources</li>
+                    <li>The resources can be Edited by Clicking on the edit button.</li>
+                </ol>
+                </p>
+            </div>
+        </div>
         <div class="form-group">
             <button class="btn btn-sm btn-primary" @click="openAddModal">Add New Lab Resource</button>
         </div>
@@ -160,10 +179,19 @@
                 afterSaveButton: false,
                 classLoad: true,
                 editResource: [],
-                editButton: 'Update'
+                editButton: 'Update',
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             openAddModal: function () {
                 var inheritance= this;
                 inheritance.resourceAddModal = true;

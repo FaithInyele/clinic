@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use App\ChemistResource;
 use App\Ticket;
@@ -29,6 +30,7 @@ class ChemistController extends Controller
         $data['ticket'] = Ticket::findorFail($data->ticket_id);
         $data['progress'] = Progress::where('ticket_id', $data['ticket']->id)->latest()->first();
         $data['client'] = Clients::findorFail($data['ticket']->client_id);
+        $data['doctor'] = User::findorFail($data['ticket']->assigned_to);
         $data['medicine'] = Medicine::where('prescription_id', $ticket_id)->get();
         $data['total'] = $total = Medicine::where('prescription_id', $ticket_id)->where('status','issued')->sum('amount');
         foreach ($data['medicine'] as $medicine){

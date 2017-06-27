@@ -1,6 +1,24 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
+            <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+                <label class="pull-left" style="font-size: 20px">
+                    My Tickets
+                </label>
+                <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer" @click="helpOn()"></i>
+            </div>
+            <div class="row">
+                <div class="row alert alert-info" v-show="help">
+                    <button type="button" class="close" @click="helpOff()">&times;</button>
+                    <header>Help information</header>
+                    <p>
+                    <ol>
+                        <li>This Page displays all the Clients currently assigned to you</li>
+                        <li>You can attend to a client by clicking on the open button besides their names; from where you can find details about all the requested Prescriptions and proceed accordingly</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>My List</strong> <br>
@@ -17,7 +35,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        Details:
+                        Details: Prescriptions requested are ; {{client.tests}}
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
@@ -48,6 +66,44 @@
 
                         <div class="modal-body" v-if="currentClient.client">
                             <slot name="body">
+                                <div class="row" id="printable" style="text-align: center">
+                                    <h1 style="text-align: center">iHospital</h1>
+                                    <h4 style="text-align: center">Payment Receipt</h4>
+                                    <div class="row" style="text-align: left">
+                                        <div class="row" style="text-align: right">
+                                            Ticket Number: #{{currentClient.ticket.id}}<br>
+                                            Ticket created on: {{currentClient.ticket.created_at}}<br>
+                                            Doctor in-charge: {{currentClient.doctor.first_name}}, {{currentClient.doctor.last_name}}<br>
+                                        </div>
+                                        <div class="row">
+                                            Client Name: {{currentClient.client.first_name}}, {{currentClient.client.other_names}}<br>
+                                        </div>
+
+                                    </div>
+                                    <table class="table table-striped table-bordered dt-responsive"
+                                           cellspacing="0" width="100%" style="font-size: 10px">
+                                        <thead>
+                                        <tr>
+                                            <td>Description</td>
+                                            <td>Amount</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-if="currentClient.medicine" v-for="test in currentClient.medicine">
+                                            <!--<td>{{medicine.id}}</td>
+                                            <td>{{medicine.id}}</td>-->
+                                        </tr>
+                                        <tr>
+                                            <td><b>Total</b></td>
+                                            <td><b>{{currentClient.total}}</b></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="row" style="text-align: left">
+                                        Amount Paid: {{currentClient.total}}<br>
+                                        Payment Method: {{payment_method}}
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="row">
@@ -67,7 +123,6 @@
                                         <div class="row" style="max-height: 400px;overflow-y: scroll">
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a data-toggle="tab" href="#progress">Ticket</a></li>
-                                                <li><a data-toggle="tab" href="#history"> History</a></li>
                                             </ul>
 
                                             <div class="row tab-content" >
@@ -113,7 +168,10 @@
                                                                 <option value="Other">Other</option>
                                                             </select>
                                                         </div>
-                                                        <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4 && currentClient.progress.level <= 6}" @click="closeMedication">Pay and Close</button>
+                                                        <button v-if="currentClient.progress" :class="{btn: classLoad, 'btn-success': classLoad, completed: currentClient.progress.level > 4 && currentClient.progress.level <= 6}" @click="closeMedication">Pay</button>
+                                                        <button v-if="printButton" class="btn btn-warning" onclick="printdata('printable')">
+                                                            Print Receipt
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -162,10 +220,20 @@
                 classLoad: true,
                 statusWarn: false,
                 amountPaid: '',
-                payment_method:''
+                payment_method:'',
+                printButton:false,
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             clientsAtChemist: function () {
                 var inheritance =this;
                 axios.get(base_url+'/progress/atchemist')
@@ -177,6 +245,7 @@
                 var inheritance=this;
                 axios(base_url+'/atchemist/view/'+ticket_id)
                     .then(function (response) {
+                        console.log(response.data);
                         inheritance.currentClient = response.data;
                         inheritance.modalLoading = false;
                         inheritance.ticketModal=true;
@@ -188,6 +257,7 @@
                 inheritance.clientsAtChemist();
                 inheritance.currentClient = [];
                 inheritance.ticketModal=false;
+                inheritance.printButton =false;
             },
             //reverse status
             reverseStatus: function () {
@@ -239,7 +309,7 @@
             closeMedication: function () {
                 var inheritance = this;
                 inheritance.reverseStatus();
-                inheritance.status = "Closing up Prescription...";
+                inheritance.status = "Paying up Prescription...";
                 //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
                 if (inheritance.amountPaid != inheritance.currentClient.total){
                     inheritance.status = 'Amount to be Paid should be exact as Total owed';
@@ -254,8 +324,9 @@
                         '&amount='+inheritance.currentClient.total+
                         '&payment_method='+inheritance.payment_method)
                         .then(function (response) {
-                            inheritance.status = 'Prescription Closed Successfully';
+                            inheritance.status = 'Prescription Paid Successfully';
                             inheritance.statusSuccess = true;
+                            inheritance.printButton = true;
                         })
                         .catch(function (error) {
                             inheritance.status = 'There was an Error while Processing your Request';

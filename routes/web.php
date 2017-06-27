@@ -112,6 +112,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/chemist', 'ChemistResourceController@index');
     Route::get('resources/chemist/all', 'ChemistResourceController@all');
     Route::post('resources/chemist/new', 'ChemistResourceController@addNew');
+    Route::post('resources/chemist/edit', 'ChemistResourceController@edit');
     //nurse station routes
     Route::get('resources/nurse-station', 'NurseStationController@index');
     Route::get('resources/nurse-station/all', 'NurseStationController@all');

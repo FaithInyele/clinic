@@ -35,5 +35,11 @@ class ChemistResourceController extends Controller
 
         return Response::json($resource);
     }
+    public function edit(Request $request){
+        $resource = ChemistResource::findorFail($request->resource_id);
+        $resource->update($request->all());
+
+        return Response::json($resource);
+    }
 
 }

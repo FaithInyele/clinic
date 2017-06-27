@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\ChemistResource;
 use App\LabResource;
+use App\Medicine;
 use App\Test;
 use Illuminate\Http\Request;
 use App\LabData;
@@ -66,6 +68,18 @@ class ProgressController extends Controller
             //->where('lab_datas.assigned_to', '=', 7)
             ->where('prescriptions.status', '=', 1)
             ->get();
+        foreach ($atChemist as $data){
+            $tests_details = Medicine::where('prescription_id', $data->id)->get();
+            //dd($tests_details);
+            $tests = array();
+            //dd($ticket['tests']);
+            foreach ($tests_details as $test){
+                //dd($test->lab_resource_id);
+                $test_details = ChemistResource::findorFail($test->chemist_resource_id);
+                $tests[] = $test_details->resource_name;
+            }
+            $data->tests = implode(',', $tests);
+        }
 
         return Response::json($atChemist);
 

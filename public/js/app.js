@@ -13069,6 +13069,26 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13119,7 +13139,8 @@ exports.default = {
             chat_doctor: '',
             currentChat: [],
             chatMessage: '',
-            admitButton: 'Admit Client'
+            admitButton: 'Admit Client',
+            help: false
         };
     },
     watch: {
@@ -13133,6 +13154,14 @@ exports.default = {
         }
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         addTest: function addTest(result) {
             var inheritance = this;
             inheritance.test_tags.push(result.resource_name);
@@ -13814,6 +13843,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -13835,10 +13922,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             classLoad: true,
             statusWarn: false,
             amountPaid: '',
-            payment_method: ''
+            payment_method: '',
+            printButton: false,
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         clientsAtChemist: function clientsAtChemist() {
             var inheritance = this;
             axios.get(base_url + '/progress/atchemist').then(function (response) {
@@ -13848,6 +13945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         currentTicket: function currentTicket(ticket_id) {
             var inheritance = this;
             axios(base_url + '/atchemist/view/' + ticket_id).then(function (response) {
+                console.log(response.data);
                 inheritance.currentClient = response.data;
                 inheritance.modalLoading = false;
                 inheritance.ticketModal = true;
@@ -13858,6 +13956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.clientsAtChemist();
             inheritance.currentClient = [];
             inheritance.ticketModal = false;
+            inheritance.printButton = false;
         },
         //reverse status
         reverseStatus: function reverseStatus() {
@@ -13906,7 +14005,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         closeMedication: function closeMedication() {
             var inheritance = this;
             inheritance.reverseStatus();
-            inheritance.status = "Closing up Prescription...";
+            inheritance.status = "Paying up Prescription...";
             //console.log(base_url+'/atchemist/close?ticket_id='+inheritance.currentClient.id+'&prescription_id='+inheritance.currentClient.prescription.id);
             if (inheritance.amountPaid != inheritance.currentClient.total) {
                 inheritance.status = 'Amount to be Paid should be exact as Total owed';
@@ -13914,8 +14013,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else {
                 console.log(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.ticket.id + '&prescription_id=' + inheritance.currentClient.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method);
                 axios.get(base_url + '/atchemist/close?ticket_id=' + inheritance.currentClient.ticket.id + '&prescription_id=' + inheritance.currentClient.id + '&amount=' + inheritance.currentClient.total + '&payment_method=' + inheritance.payment_method).then(function (response) {
-                    inheritance.status = 'Prescription Closed Successfully';
+                    inheritance.status = 'Prescription Paid Successfully';
                     inheritance.statusSuccess = true;
+                    inheritance.printButton = true;
                 }).catch(function (error) {
                     inheritance.status = 'There was an Error while Processing your Request';
                     inheritance.statusError = true;
@@ -14094,19 +14194,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -14117,13 +14204,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             resources: [],
             resourceAddModal: false,
+            resourceEditModal: false,
             newResource: [],
             saveButton: 'Save',
             afterSaveButton: false,
-            classLoad: true
+            classLoad: true,
+            editResource: [],
+            help: false,
+            editButton: 'Update'
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         openAddModal: function openAddModal() {
             var inheritance = this;
             inheritance.resourceAddModal = true;
@@ -14133,6 +14232,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var inheritance = this;
             inheritance.resourceAddModal = false;
         },
+        openEditModal: function openEditModal(resource) {
+            var inheritance = this;
+            inheritance.editResource = resource;
+            inheritance.resourceEditModal = true;
+            //inheritance.afterSaveButton = false;
+        },
+        closeEditModal: function closeEditModal() {
+            var inheritance = this;
+            inheritance.resourceEditModal = false;
+        },
         allResources: function allResources() {
             var inheritance = this;
             axios.get(base_url + '/resources/chemist/all').then(function (response) {
@@ -14141,6 +14250,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             setTimeout(function () {
                 $("#vueTable").DataTable();
             }, 500);
+        },
+        editResources: function editResources() {
+            var inheritance = this;
+            inheritance.saveButton = 'Updating...';
+            console.log(inheritance.newResource);
+            axios.post(base_url + '/resources/chemist/edit', { resource_name: inheritance.editResource.resource_name,
+                description: inheritance.editResource.description,
+                unit_price: inheritance.editResource.unit_price,
+                resource_id: inheritance.editResource.id }).then(function (response) {
+                console.log(response.data);
+                inheritance.allResources();
+                inheritance.resourceEditModal = false;
+            }.bind(this));
         },
         saveResource: function saveResource() {
             var inheritance = this;
@@ -15835,6 +15957,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15851,10 +15992,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             afterSaveButton: false,
             classLoad: true,
             editResource: [],
-            editButton: 'Update'
+            editButton: 'Update',
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         openAddModal: function openAddModal() {
             var inheritance = this;
             inheritance.resourceAddModal = true;
@@ -42844,13 +42994,56 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n            Chemist Resources\n        ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary",
     on: {
       "click": _vm.openAddModal
     }
-  }, [_vm._v("Add New Lab Resource")])]), _vm._v(" "), _c('table', {
+  }, [_vm._v("Add New Chemist Resource")])]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-bordered dt-responsive",
     staticStyle: {
       "font-size": "10px"
@@ -42860,19 +43053,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "cellspacing": "0",
       "width": "100%"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.resources), function(resource) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.resources), function(resource) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(resource.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.description))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.unit_price))]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-success",
       on: {
         "click": function($event) {
-          _vm.viewClient(_vm.client)
-        }
-      }
-    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-success",
-      on: {
-        "click": function($event) {
-          _vm.editClient(_vm.client)
+          _vm.openEditModal(resource)
         }
       }
     }, [_vm._v("Edit")])])])
@@ -43008,8 +43194,142 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.closeAddModal()
       }
     }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.resourceEditModal),
+      expression: "resourceEditModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Edit Medicine")])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-body",
+    staticStyle: {
+      "max-height": "350px",
+      "overflow-y": "scroll"
+    }
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Name")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.resource_name),
+      expression: "editResource.resource_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editResource.resource_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.resource_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Description")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.description),
+      expression: "editResource.description"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      "value": (_vm.editResource.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.description = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Unit Price")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.unit_price),
+      expression: "editResource.unit_price"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number"
+    },
+    domProps: {
+      "value": (_vm.editResource.unit_price)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.unit_price = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })])])])], 2), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-success': _vm.classLoad, completed: _vm.afterSaveButton
+    },
+    on: {
+      "click": function($event) {
+        _vm.editResources()
+      }
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.editButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    on: {
+      "click": function($event) {
+        _vm.closeEditModal()
+      }
+    }
   }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("Chemist Resources are the medications that are available the facility")]), _vm._v(" "), _c('li', [_vm._v("This Page displays all the Chemist Resources")]), _vm._v(" "), _c('li', [_vm._v("The resources can be Edited by Clicking on the edit button.")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Medicine Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Unit Price")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true
@@ -46484,7 +46804,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_vm._m(0), _vm._v(" "), _c('ul', {
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                My Tickets\n            ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('ul', {
     staticClass: "accordion-tabs-minimal"
   }, [_c('li', {
     staticClass: "tab-header-and-content"
@@ -46495,7 +46858,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Out Patient(s)")]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
-  }, [_vm._m(1), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.allActives), function(allActive) {
+  }, [_vm._m(2), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.allActives), function(allActive) {
     return _c('div', {
       staticClass: "row",
       staticStyle: {
@@ -46565,7 +46928,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("In Patient(s)")]), _vm._v(" "), _c('div', {
     staticClass: "tab-content"
-  }, [_vm._m(2), _vm._v(" "), _c('hr'), _vm._v(" "), _c('inpatient')], 1)])])]), _vm._v(" "), _c('div', {
+  }, [_vm._m(3), _vm._v(" "), _c('hr'), _vm._v(" "), _c('inpatient')], 1)])])]), _vm._v(" "), _c('div', {
     staticClass: "col-lg-4"
   }, [_c('h5', [_vm._v("My Statistics")]), _vm._v(" "), _c('sidebar')], 1), _vm._v(" "), _c('transition', {
     attrs: {
@@ -47555,6 +47918,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Clients currently assigned to you")]), _vm._v(" "), _c('li', [_vm._v("They are divided into two groups; Inpatient ("), _c('i', [_vm._v("those who have been admitted to the facility under your authority thus they are under your monitoring")]), _vm._v(") and Outpatients ("), _c('i', [_vm._v("those who are undergoing outpatient treatment and assigned to you")]), _vm._v(")")]), _vm._v(" "), _c('li', [_vm._v("You can close a Ticket by clicking the close button. This will immediately stop also all the pending activities")]), _vm._v(" "), _c('li', [_vm._v("Clicking on the open button will display the ticket details and all the relevant operations you can perform on the ticket; you cal also monitor the progress")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "alert alert-info"
   }, [_c('button', {
@@ -48362,6 +48727,49 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n            Lab Resources\n        ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('button', {
     staticClass: "btn btn-sm btn-primary",
@@ -48378,7 +48786,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "cellspacing": "0",
       "width": "100%"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.resources), function(resource) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.resources), function(resource) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(resource.resource_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.description))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(resource.unit_price))]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-success",
       on: {
@@ -48655,6 +49063,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("Lab Resources are the tests that can be performed at the given facility's Laboratories")]), _vm._v(" "), _c('li', [_vm._v("This Page displays all the Lb Resources")]), _vm._v(" "), _c('li', [_vm._v("The resources can be Edited by Clicking on the edit button.")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Test Name")]), _vm._v(" "), _c('th', [_vm._v("Description")]), _vm._v(" "), _c('th', [_vm._v("Unit Price")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true
@@ -48674,7 +49084,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.allClients), function(client) {
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                    My Tickets\n                ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._l((_vm.allClients), function(client) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -48693,7 +49146,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._v("\n                        Details:\n                    ")]), _vm._v(" "), _c('hr', {
+    }, [_vm._v("\n                        Details: Prescriptions requested are ; " + _vm._s(client.tests) + "\n                    ")]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
@@ -48755,6 +49208,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), (_vm.currentClient.client) ? _c('div', {
     staticClass: "modal-body"
   }, [_vm._t("body", [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "text-align": "center"
+    },
+    attrs: {
+      "id": "printable"
+    }
+  }, [_c('h1', {
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_vm._v("iHospital")]), _vm._v(" "), _c('h4', {
+    staticStyle: {
+      "text-align": "center"
+    }
+  }, [_vm._v("Payment Receipt")]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "text-align": "left"
+    }
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "text-align": "right"
+    }
+  }, [_vm._v("\n                                            Ticket Number: #" + _vm._s(_vm.currentClient.ticket.id)), _c('br'), _vm._v("\n                                            Ticket created on: " + _vm._s(_vm.currentClient.ticket.created_at)), _c('br'), _vm._v("\n                                            Doctor in-charge: " + _vm._s(_vm.currentClient.doctor.first_name) + ", " + _vm._s(_vm.currentClient.doctor.last_name)), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_vm._v("\n                                            Client Name: " + _vm._s(_vm.currentClient.client.first_name) + ", " + _vm._s(_vm.currentClient.client.other_names)), _c('br')])]), _vm._v(" "), _c('table', {
+    staticClass: "table table-striped table-bordered dt-responsive",
+    staticStyle: {
+      "font-size": "10px"
+    },
+    attrs: {
+      "cellspacing": "0",
+      "width": "100%"
+    }
+  }, [_c('thead', [_c('tr', [_c('td', [_vm._v("Description")]), _vm._v(" "), _c('td', [_vm._v("Amount")])])]), _vm._v(" "), _c('tbody', [_vm._l((_vm.currentClient.medicine), function(test) {
+    return (_vm.currentClient.medicine) ? _c('tr') : _vm._e()
+  }), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("Total")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v(_vm._s(_vm.currentClient.total))])])])], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "text-align": "left"
+    }
+  }, [_vm._v("\n                                        Amount Paid: " + _vm._s(_vm.currentClient.total)), _c('br'), _vm._v("\n                                        Payment Method: " + _vm._s(_vm.payment_method) + "\n                                    ")])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-md-4"
@@ -48808,12 +49305,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data-toggle": "tab",
       "href": "#progress"
     }
-  }, [_vm._v("Ticket")])]), _vm._v(" "), _c('li', [_c('a', {
-    attrs: {
-      "data-toggle": "tab",
-      "href": "#history"
-    }
-  }, [_vm._v(" History")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Ticket")])])]), _vm._v(" "), _c('div', {
     staticClass: "row tab-content"
   }, [_c('div', {
     staticClass: "tab-pane fade in active",
@@ -48950,7 +49442,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.closeMedication
     }
-  }, [_vm._v("Pay and Close")]) : _vm._e()])], 2), _vm._v(" "), _c('div', {
+  }, [_vm._v("Pay")]) : _vm._e(), _vm._v(" "), (_vm.printButton) ? _c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "onclick": "printdata('printable')"
+    }
+  }, [_vm._v("\n                                                            Print Receipt\n                                                        ")]) : _vm._e()])], 2), _vm._v(" "), _c('div', {
     staticClass: "tab-pane fade",
     attrs: {
       "id": "history"
@@ -48966,6 +49463,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                    Close\n                                ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Clients currently assigned to you")]), _vm._v(" "), _c('li', [_vm._v("You can attend to a client by clicking on the open button besides their names; from where you can find details about all the requested Prescriptions and proceed accordingly")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "alert alert-info"
   }, [_c('button', {
