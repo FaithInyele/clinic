@@ -1,6 +1,24 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
+            <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+                <label class="pull-left" style="font-size: 20px">
+                    My Tickets
+                </label>
+                <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer" @click="helpOn()"></i>
+            </div>
+            <div class="row">
+                <div class="row alert alert-info" v-show="help">
+                    <button type="button" class="close" @click="helpOff()">&times;</button>
+                    <header>Help information</header>
+                    <p>
+                    <ol>
+                        <li>This Page displays all the Clients currently assigned to you</li>
+                        <li>You can attend to a client by clicking on the open button besides their names; from where you can find details about all the requested Tests and proceed accordingly</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>My List</strong> <br>
@@ -133,10 +151,19 @@
                 statusError: false,
                 statusSuccess: false,
                 classLoad: true,
-                statusWarn: false
+                statusWarn: false,
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             //close modal
             closeTicket: function () {
                 var inheritance = this;
@@ -192,6 +219,7 @@
             },
             //open a given ticket
             currentTicket: function (ticket_id) {
+                console.log(ticket_id);
                 var inheritance = this;
                 inheritance.revertStatus();
                 inheritance.modalLoading = true;

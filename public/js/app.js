@@ -13588,6 +13588,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -13607,10 +13625,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             statusError: false,
             statusSuccess: false,
             classLoad: true,
-            statusWarn: false
+            statusWarn: false,
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         //close modal
         closeTicket: function closeTicket() {
             var inheritance = this;
@@ -13662,6 +13689,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         //open a given ticket
         currentTicket: function currentTicket(ticket_id) {
+            console.log(ticket_id);
             var inheritance = this;
             inheritance.revertStatus();
             inheritance.modalLoading = true;
@@ -17463,6 +17491,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -17510,10 +17557,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             chat_doctor: '',
             currentChat: [],
             chatMessage: '',
-            inpatient: []
+            inpatient: [],
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         allMessages: function allMessages(consult_id) {
             var inheritance = this;
             console.log(base_url + '/chat/allmessages?consult_id=' + consult_id);
@@ -44000,7 +44056,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_vm._m(0), _vm._v(" "), _vm._l((_vm.clients), function(client) {
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                My Tickets\n            ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _vm._m(1), _vm._v(" "), _vm._l((_vm.clients), function(client) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -44228,6 +44327,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                Close\n                            ")])])], 2)])])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Clients currently assigned to you")]), _vm._v(" "), _c('li', [_vm._v("You can attend to a client by clicking on the open button besides their names; from where you can find details about all the requested Tests and proceed accordingly")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "alert alert-info"
   }, [_c('button', {
@@ -44254,8 +44355,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "row"
   }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                Consultations\n            ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
     staticClass: "row"
-  }, [_c('label', [_vm._v("Consultations")]), _vm._v(" "), _vm._l((_vm.newMessages), function(ticket) {
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, _vm._l((_vm.newMessages), function(ticket) {
     return (_vm.newMessages) ? _c('div', {}, [_c('a', {
       staticClass: "new-message",
       on: {
@@ -44282,7 +44426,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Message:")]), _vm._v(" " + _vm._s(ticket.message)), _c('br')]), _vm._v(" "), _c('div', {
       staticClass: "row"
     })])])]) : _vm._e()
-  })], 2), _vm._v(" "), _c('transition', {
+  })), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
     }
@@ -45206,7 +45350,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.closeTicket
     }
   }, [_vm._v("\n                                    Close\n                                ")])])], 2)])])])])], 1)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Pending Consultation messages,between you and other Doctors")]), _vm._v(" "), _c('li', [_vm._v("Consultations module is whereby Doctors can share their clients Data and request assistance in terms of recommendations between each other")]), _vm._v(" "), _c('li', [_vm._v("By, Clicking on a message, it will open the containing Ticket of which replies can be made too.")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

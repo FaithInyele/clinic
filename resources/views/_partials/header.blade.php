@@ -63,7 +63,7 @@
                            class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
                             <i class="fa fa-bars"></i>
                         </a>
-                        
+
                     </div>
 
                 </div>

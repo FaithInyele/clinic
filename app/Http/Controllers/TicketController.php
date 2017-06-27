@@ -486,7 +486,7 @@ class TicketController extends Controller
         if ($request->prescription_id == 'none'){
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
-                'assigned_to'=>2,
+                'assigned_to'=>8,
                 'status'=>1,
                 'type'=>0
             ));
@@ -529,7 +529,7 @@ class TicketController extends Controller
         if ($request->prescription_id == 'none'){
             $prescription = new Prescription(array(
                 'ticket_id'=>$request->ticket_id,
-                'assigned_to'=>2,
+                'assigned_to'=>8,
                 'status'=>1,
                 'type'=>1
             ));

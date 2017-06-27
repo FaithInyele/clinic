@@ -1,7 +1,26 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
+        <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+            <label class="pull-left" style="font-size: 20px">
+                Consultations
+            </label>
+            <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer"
+               @click="helpOn()"></i>
+        </div>
         <div class="row">
-            <label>Consultations</label>
+            <div class="row alert alert-info" v-show="help">
+                <button type="button" class="close" @click="helpOff()">&times;</button>
+                <header>Help information</header>
+                <p>
+                <ol>
+                    <li>This Page displays all the Pending Consultation messages,between you and other Doctors</li>
+                    <li>Consultations module is whereby Doctors can share their clients Data and request assistance in terms of recommendations between each other</li>
+                    <li>By, Clicking on a message, it will open the containing Ticket of which replies can be made too.</li>
+                </ol>
+                </p>
+            </div>
+        </div>
+        <div class="row">
             <div class="" v-if="newMessages" v-for="ticket in newMessages">
                 <a class="new-message" @click="openTicket(ticket.ticket.original.id, ticket.consult.id)">
                     <div  class="alert alert-warning">
@@ -454,10 +473,19 @@
                 chat_doctor: '',
                 currentChat: [],
                 chatMessage: '',
-                inpatient: []
+                inpatient: [],
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             allMessages: function (consult_id) {
                 var inheritance = this;
                 console.log(base_url+'/chat/allmessages?consult_id='+consult_id);

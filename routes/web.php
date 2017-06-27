@@ -91,24 +91,22 @@ Route::group(['middleware' => 'logIn'], function () {
     /**
      * atLab routes.
      */
-    Route::group(['middleware' => 'lab'], function () {
 
         Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
         Route::post('atlab/test/update', 'LabController@updateTest');
         Route::get('atlab/lab/update/{lab_id}', 'LabController@finishTest');
-    });
 
     /**
      * atChemist routes
      */
-    Route::group(['middleware' => 'chem'], function () {
+
 
         Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
         Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
         Route::get('atchemist/submit/in-patient/{prescription_id}', 'ChemistController@submitPrescriptionInpatient');
         Route::get('atchemist/close', 'ChemistController@closePrescription');
         Route::post('atchemist/update', 'ChemistController@updatePrescription');
-    });
+
 
     /**
      * resources routes
