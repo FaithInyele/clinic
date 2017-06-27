@@ -19,100 +19,14 @@
                 <td>{{ resource.description}}</td>
                 <td>{{ resource.unit_price}}</td>
                 <td>
-                    <a class="btn btn-success" @click="viewClient(client)">Open</a>
-                    <a class="btn btn-success" @click="editClient(client)">Edit</a>
+                    <a class="btn btn-success" @click="openEditModal(resource)">
+                        <i class="fa fa-edit">Edit</i>
+                    </a>
                 </td>
             </tr>
 
             </tbody>
         </table>
-
-        <!--<transition name="modal">
-            <div class="modal-mask" v-show="clientModal">
-                <div class="modal-wrapper">
-                    <div class="modal-container" v-if="currentClient.id" style="width: 50% !important">
-
-                        <div class="modal-header">
-                            <slot name="header">
-                                <label>
-                                    {{currentClient.first_name}}, {{currentClient.other_names}}
-                                </label>
-                                <h6 class="pull-right">
-                                    last updated on: {{currentClient.updated_at}}
-                                </h6>
-                            </slot>
-                        </div>
-
-                        <div class="modal-body" style="max-height: 350px; overflow-y: scroll">
-                            <slot name="body">
-                                <hr>
-                                <label>Personal Information</label>
-                                <div class="form-group">
-                                    <h6>First Name:</h6>
-                                    <input type="text" v-model="currentClient.first_name" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Other Name(s):</h6>
-                                    <input type="text" v-model="currentClient.other_names" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Date of Birth:</h6>
-                                    <input type="text" v-model="currentClient.yob" class="form-control">
-                                </div>
-                                <hr>
-                                <label>Contact Information</label>
-
-                                <div class="form-group">
-                                    <h6>Phone Number:</h6>
-                                    <input type="text" v-model="currentClient.phone" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Email Address:</h6>
-                                    <input type="text" v-model="currentClient.email" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Physical Address:</h6>
-                                    <input type="text" v-model="currentClient.address" class="form-control">
-                                </div>
-                                <hr>
-                                <label>Next-of-Keen Information</label>
-
-                                <div class="form-group">
-                                    <h6>Keen Type:</h6>
-                                    <input type="text" v-model="currentClient.keen_type" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Keen Name:</h6>
-                                    <input type="text" v-model="currentClient.keen_name" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <h6>Keen Contacts:</h6>
-                                    <input type="text" v-model="currentClient.keen_contact" class="form-control">
-                                </div>
-
-                            </slot>
-                        </div>
-
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <button class="btn btn-success" @click="editClient(currentClient)">
-                                    {{updateButton}}
-                                </button>
-                                <button class="btn btn-danger" @click="closeModal()">
-                                    Cancel
-                                </button>
-                            </slot>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </transition>-->
 
         <transition name="modal">
             <div class="modal-mask" v-show="resourceAddModal">
@@ -170,6 +84,63 @@
                 </div>
             </div>
         </transition>
+
+        <transition name="modal">
+            <div class="modal-mask" v-show="resourceEditModal">
+                <div class="modal-wrapper">
+                    <div class="modal-container" style="width: 50% !important">
+
+                        <div class="modal-header">
+                            <slot name="header">
+                                <label>Edit Lab Resource</label>
+                            </slot>
+                        </div>
+
+                        <div class="modal-body" style="max-height: 350px; overflow-y: scroll" v-if="editResource">
+                            <slot name="body">
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Resource Name</label>
+                                    </div>
+                                    <div class="col-md-8" style="margin-bottom: 10px">
+                                        <input type="text" v-model="editResource.resource_name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Resource Description</label>
+                                    </div>
+                                    <div class="col-md-8" style="margin-bottom: 10px">
+                                        <textarea v-model="editResource.description" class="form-control">
+
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                        <label>Resource Unit Price</label>
+                                    </div>
+                                    <div class="col-md-8" style="margin-bottom: 10px">
+                                        <input type="number" v-model="editResource.unit_price" class="form-control">
+                                    </div>
+                                </div>
+                            </slot>
+                        </div>
+
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                <button :class="{btn: classLoad, 'btn-success':classLoad}" @click="editResources()">
+                                    {{editButton}}
+                                </button>
+                                <button class="btn btn-danger" @click="closeEditModal()">
+                                    Cancel
+                                </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -183,10 +154,13 @@
             return{
                 resources: [],
                 resourceAddModal: false,
+                resourceEditModal: false,
                 newResource: [],
                 saveButton: 'Save',
                 afterSaveButton: false,
-                classLoad: true
+                classLoad: true,
+                editResource: [],
+                editButton: 'Update'
             }
         },
         methods:{
@@ -195,10 +169,21 @@
                 inheritance.resourceAddModal = true;
                 inheritance.afterSaveButton = false;
             },
+            openEditModal: function (resource) {
+                var inheritance= this;
+                inheritance.editResource = resource;
+                inheritance.resourceEditModal = true;
+                //inheritance.afterSaveButton = false;
+            },
             closeAddModal: function () {
                 var inheritance = this;
                 inheritance.newResource = [];
                 inheritance.resourceAddModal = false;
+            },
+            closeEditModal: function () {
+                var inheritance = this;
+                inheritance.editResource = [];
+                inheritance.resourceEditModal = false;
             },
             allResources: function () {
                 var inheritance = this;
@@ -221,6 +206,21 @@
                         inheritance.afterSaveButton = true;
                         inheritance.allResources();
                   }.bind(this))
+            },
+            editResources: function () {
+                var inheritance = this;
+                inheritance.editButton = 'Editing...';
+                //console.log(inheritance.newResource);
+                axios.post(base_url+'/resources/lab/edit', {resource_name: inheritance.editResource.resource_name,
+                    description: inheritance.editResource.description,
+                    unit_price: inheritance.editResource.unit_price,
+                    resource_id: inheritance.editResource.id})
+                    .then(function (response) {
+                        console.log(response.data);
+                        //inheritance.saveButton = 'Saved';
+                        inheritance.allResources();
+                        inheritance.closeEditModal();
+                    }.bind(this))
             }
         }
     }

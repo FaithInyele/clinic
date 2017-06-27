@@ -13,7 +13,9 @@
             <th>Amount</th>
             <th>Payment Method</th>
             <th>Dated</th>
+{{--
             <th>Action</th>
+--}}
         </tr>
         </thead>
         <tbody>
@@ -25,7 +27,9 @@
                 <td>{{$ticket->amount}}</td>
                 <td>{{$ticket->payment_method}}</td>
                 <td>{{$ticket->created_at}}</td>
-                <td><a href="" class="btn btn-info"><i class="fa fa-print">Print</i></a></td>
+{{--
+                <td><a href="{{url('payments/view/'.$ticket->id)}}" class="btn btn-info"><i class="fa fa-print">Print</i></a></td>
+--}}
 
             </tr>
         @endforeach

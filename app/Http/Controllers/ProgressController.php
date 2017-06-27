@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\LabResource;
+use App\Test;
 use Illuminate\Http\Request;
 use App\LabData;
 use Illuminate\Support\Facades\Auth;
@@ -26,11 +28,23 @@ class ProgressController extends Controller
             ->join('clients', 'tickets.client_id', '=', 'clients.id')
             ->join('users', 'tickets.assigned_to', '=', 'users.id')
             ->select('lab_datas.*',
-                'clients.first_name as c_fnameee',
+                'clients.first_name as c_fname',
                 'clients.other_names as c_othernames')
             //->where('lab_datas.assigned_to', '=', 7)
             ->where('lab_datas.status', '=', 0)
             ->get();
+        foreach ($atLab as $data){
+            $tests_details = Test::where('lab_id', $data->id)->get();
+            //dd($tests_details);
+            $tests = array();
+            //dd($ticket['tests']);
+            foreach ($tests_details as $test){
+                //dd($test->lab_resource_id);
+                $test_details = LabResource::findorFail($test->lab_resource_id);
+                $tests[] = $test_details->resource_name;
+            }
+            $data->tests = implode(',', $tests);
+        }
 
         return Response::json($atLab);
     }

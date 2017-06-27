@@ -10,7 +10,6 @@
                 <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6;border-radius: 10px;margin-left: 0px">
                     <div class="row">
                         <label> Client Name:</label>
-                        {{client.id}}
                         {{ client.c_fname}}, {{ client.c_othernames}}
                         <i class="pull-right">
                             Ticket created on:{{ client.created_at}}
@@ -18,7 +17,7 @@
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">
-                        Details:
+                        <label>Details</label> Tests requested are; {{client.tests}}
                     </div>
                     <hr style="margin: 5px">
                     <div class="row">

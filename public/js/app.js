@@ -13559,7 +13559,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15836,35 +15835,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -15875,10 +15845,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             resources: [],
             resourceAddModal: false,
+            resourceEditModal: false,
             newResource: [],
             saveButton: 'Save',
             afterSaveButton: false,
-            classLoad: true
+            classLoad: true,
+            editResource: [],
+            editButton: 'Update'
         };
     },
     methods: {
@@ -15887,10 +15860,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             inheritance.resourceAddModal = true;
             inheritance.afterSaveButton = false;
         },
+        openEditModal: function openEditModal(resource) {
+            var inheritance = this;
+            inheritance.editResource = resource;
+            inheritance.resourceEditModal = true;
+            //inheritance.afterSaveButton = false;
+        },
         closeAddModal: function closeAddModal() {
             var inheritance = this;
             inheritance.newResource = [];
             inheritance.resourceAddModal = false;
+        },
+        closeEditModal: function closeEditModal() {
+            var inheritance = this;
+            inheritance.editResource = [];
+            inheritance.resourceEditModal = false;
         },
         allResources: function allResources() {
             var inheritance = this;
@@ -15912,6 +15896,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 inheritance.saveButton = 'Saved';
                 inheritance.afterSaveButton = true;
                 inheritance.allResources();
+            }.bind(this));
+        },
+        editResources: function editResources() {
+            var inheritance = this;
+            inheritance.editButton = 'Editing...';
+            //console.log(inheritance.newResource);
+            axios.post(base_url + '/resources/lab/edit', { resource_name: inheritance.editResource.resource_name,
+                description: inheritance.editResource.description,
+                unit_price: inheritance.editResource.unit_price,
+                resource_id: inheritance.editResource.id }).then(function (response) {
+                console.log(response.data);
+                //inheritance.saveButton = 'Saved';
+                inheritance.allResources();
+                inheritance.closeEditModal();
             }.bind(this));
         }
     }
@@ -16045,6 +16043,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -16056,10 +16075,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             clients: [],
             clientModal: false,
             currentClient: [],
-            updateButton: 'Update'
+            updateButton: 'Update',
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         openModal: function openModal() {
             var inheritance = this;
             inheritance.clientModal = true;
@@ -43040,7 +43068,50 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('table', {
+  return _c('div', [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n            Registered Clients\n        ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-bordered dt-responsive",
     staticStyle: {
       "font-size": "10px"
@@ -43050,7 +43121,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "cellspacing": "0",
       "width": "100%"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.clients), function(client) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(client.first_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.other_names))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.yob))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.gender))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(client.id_number))]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-success",
       on: {
@@ -43058,14 +43129,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.viewClient(client)
         }
       }
-    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-success",
-      on: {
-        "click": function($event) {
-          _vm.editClient(client)
-        }
-      }
-    }, [_vm._v("Edit")])])])
+    }, [_c('i', {
+      staticClass: "fa fa-edit"
+    }, [_vm._v("\n                        Edit\n                    ")])])])])
   }))]), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
@@ -43311,6 +43377,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("\n                                Cancel\n                            ")])])], 2)]) : _vm._e()])])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the CLients registered in the System")]), _vm._v(" "), _c('li', [_vm._v("Further details can be viewed by clicking on the Edit Button of each client, of which edit operations can be performed also")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("First Name")]), _vm._v(" "), _c('th', [_vm._v("Other Name(s)")]), _vm._v(" "), _c('th', [_vm._v("D.O.B")]), _vm._v(" "), _c('th', [_vm._v("Type")]), _vm._v(" "), _c('th', [_vm._v("Gender")]), _vm._v(" "), _c('th', [_vm._v("Id No.")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true
@@ -43336,7 +43404,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "stat_text"
   }, [_c('strong', {
     staticStyle: {
-      "font-size": "80px"
+      "font-size": "70px"
     }
   }, [_c('i', {
     staticClass: "fa fa-user"
@@ -43346,7 +43414,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "stat_text"
   }, [_c('strong', {
     staticStyle: {
-      "font-size": "80px"
+      "font-size": "70px"
     }
   }, [_c('i', {
     staticClass: "fa fa-calendar"
@@ -43356,7 +43424,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "stat_text"
   }, [_c('strong', {
     staticStyle: {
-      "font-size": "80px"
+      "font-size": "70px"
     }
   }, [_c('i', {
     staticClass: "fa fa-calendar"
@@ -43366,7 +43434,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "stat_text"
   }, [_c('strong', {
     staticStyle: {
-      "font-size": "80px"
+      "font-size": "70px"
     }
   }, [_c('i', {
     staticClass: "fa fa-calendar"
@@ -43446,7 +43514,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_c('div', {
       staticClass: "row"
-    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(client.id) + "\n                    " + _vm._s(client.c_fname) + ", " + _vm._s(client.c_othernames) + "\n                    "), _c('i', {
+    }, [_c('label', [_vm._v(" Client Name:")]), _vm._v("\n                    " + _vm._s(client.c_fname) + ", " + _vm._s(client.c_othernames) + "\n                    "), _c('i', {
       staticClass: "pull-right"
     }, [_vm._v("\n                        Ticket created on:" + _vm._s(client.created_at) + "\n                    ")])]), _vm._v(" "), _c('hr', {
       staticStyle: {
@@ -43454,7 +43522,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }), _vm._v(" "), _c('div', {
       staticClass: "row"
-    }, [_vm._v("\n                    Details:\n                ")]), _vm._v(" "), _c('hr', {
+    }, [_c('label', [_vm._v("Details")]), _vm._v(" Tests requested are; " + _vm._s(client.tests) + "\n                ")]), _vm._v(" "), _c('hr', {
       staticStyle: {
         "margin": "5px"
       }
@@ -48315,17 +48383,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-success",
       on: {
         "click": function($event) {
-          _vm.viewClient(_vm.client)
+          _vm.openEditModal(resource)
         }
       }
-    }, [_vm._v("Open")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-success",
-      on: {
-        "click": function($event) {
-          _vm.editClient(_vm.client)
-        }
-      }
-    }, [_vm._v("Edit")])])])
+    }, [_c('i', {
+      staticClass: "fa fa-edit"
+    }, [_vm._v("Edit")])])])])
   }))]), _vm._v(" "), _c('transition', {
     attrs: {
       "name": "modal"
@@ -48456,6 +48519,138 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         _vm.closeAddModal()
+      }
+    }
+  }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]), _vm._v(" "), _c('transition', {
+    attrs: {
+      "name": "modal"
+    }
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.resourceEditModal),
+      expression: "resourceEditModal"
+    }],
+    staticClass: "modal-mask"
+  }, [_c('div', {
+    staticClass: "modal-wrapper"
+  }, [_c('div', {
+    staticClass: "modal-container",
+    staticStyle: {
+      "width": "50% !important"
+    }
+  }, [_c('div', {
+    staticClass: "modal-header"
+  }, [_vm._t("header", [_c('label', [_vm._v("Edit Lab Resource")])])], 2), _vm._v(" "), (_vm.editResource) ? _c('div', {
+    staticClass: "modal-body",
+    staticStyle: {
+      "max-height": "350px",
+      "overflow-y": "scroll"
+    }
+  }, [_vm._t("body", [_c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Name")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.resource_name),
+      expression: "editResource.resource_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.editResource.resource_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.resource_name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Description")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.description),
+      expression: "editResource.description"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      "value": (_vm.editResource.description)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.description = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('label', [_vm._v("Resource Unit Price")])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-8",
+    staticStyle: {
+      "margin-bottom": "10px"
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editResource.unit_price),
+      expression: "editResource.unit_price"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "number"
+    },
+    domProps: {
+      "value": (_vm.editResource.unit_price)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editResource.unit_price = $event.target.value
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })])])])], 2) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_vm._t("footer", [_c('button', {
+    class: {
+      btn: _vm.classLoad, 'btn-success': _vm.classLoad
+    },
+    on: {
+      "click": function($event) {
+        _vm.editResources()
+      }
+    }
+  }, [_vm._v("\n                                " + _vm._s(_vm.editButton) + "\n                            ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    on: {
+      "click": function($event) {
+        _vm.closeEditModal()
       }
     }
   }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])])], 1)

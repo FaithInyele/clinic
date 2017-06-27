@@ -107,6 +107,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/lab', 'LabResourceController@index');
     Route::get('resources/lab/all', 'LabResourceController@all');
     Route::post('resources/lab/new', 'LabResourceController@addNew');
+    Route::post('resources/lab/edit', 'LabResourceController@edit');
     //chemist resources
     Route::get('resources/chemist', 'ChemistResourceController@index');
     Route::get('resources/chemist/all', 'ChemistResourceController@all');
@@ -156,6 +157,7 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('reports/test-trend', 'ReportsController@testTrend');
     Route::get('reports/med-trend', 'ReportsController@medTrend');
     Route::get('payments', 'PaymentController@report');
+    Route::get('payments/view/{payment_id}', 'PaymentController@reportIndividual');
 
     //socket
     Route::get('bridge', 'ReportsController@bridge');

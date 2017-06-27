@@ -75,4 +75,8 @@ class PaymentController extends Controller
 
         return Response::json($request->lab_datas['id']);
     }
+
+    public function reportIndividual($Payment_id){
+
+    }
 }
