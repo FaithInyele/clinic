@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class DocMiddleware
+class LogMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class DocMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->role != 'Doctor' || Auth::user()->role != 'Admin'){
+        if (Auth::user()->active == 0){
             return redirect('not-allowed');
         }
         return $next($request);

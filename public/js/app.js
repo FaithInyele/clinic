@@ -16309,6 +16309,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -16319,10 +16342,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             users: [],
             activateBtn: 'Activate',
-            deActivateBtn: 'deActivate'
+            deActivateBtn: 'deActivate',
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         allUsers: function allUsers() {
             var inheritance = this;
             axios.get(base_url + '/users/all').then(function (response) {
@@ -43345,7 +43377,50 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
+  return _c('div', [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n            Registered Users\n        ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-bordered dt-responsive",
     staticStyle: {
       "font-size": "10px"
@@ -43355,7 +43430,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "cellspacing": "0",
       "width": "100%"
     }
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(user.first_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.last_name))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.role))]), _vm._v(" "), _c('td', [(user.active == 1) ? _c('a', {
       staticClass: "btn btn-danger",
       on: {
@@ -43371,8 +43446,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Activate")]) : _vm._e()])])
-  }))])
+  }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Usres registered in the System")]), _vm._v(" "), _c('li', [_vm._v("Users can be Deactivated and this loose access to the system by clicking on the Deactivate\n                    button besides their names\n                ")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("First Name")]), _vm._v(" "), _c('th', [_vm._v("Last Name")]), _vm._v(" "), _c('th', [_vm._v("Role")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
 }]}
 module.exports.render._withStripped = true

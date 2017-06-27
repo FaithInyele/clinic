@@ -14,31 +14,35 @@
 Auth::routes();
 
 
-
 //Super Admin Routes
 
 Route::group(['middleware' => 'logIn'], function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/access-denied', 'HomeController@denied');
+    Route::get('/not-allowed', 'HomeController@notAllowed');
     /**
      * managing users routes
      */
-
-    Route::post('users/add', 'RegisterController@store');
-    Route::get('users/add', 'RegisterController@regForm');
-    Route::get('users/view', 'RegisterController@listAll');
-    Route::get('users/all', 'RegisterController@allUsers');
-    Route::post('users/activate', 'RegisterController@activate');
+    Route::group(['middleware' => 'admin'], function () {
+        Route::post('users/add', 'RegisterController@store');
+        Route::get('users/add', 'RegisterController@regForm');
+        Route::get('users/view', 'RegisterController@listAll');
+        Route::get('users/all', 'RegisterController@allUsers');
+        Route::post('users/activate', 'RegisterController@activate');
+    });
 
     /**
      * Managing clients routes
      */
+    Route::get('clients/all', 'ClientsController@listAll');
     Route::get('clients', 'ClientsController@index');
+    
     Route::get('clients/add', 'ClientsController@create');
     Route::post('clients/add', 'ClientsController@store');
-    Route::get('clients/all', 'ClientsController@listAll');
     Route::post('clients/delete', 'ClientsController@destroy');
     Route::get('clients/{id}', 'ClientsController@show');
     Route::post('clients/edit', 'ClientsController@update');
+
 
 //special condition routes
     Route::get('clients/medical-conditions/open', 'ClientsController@special_condition');
@@ -87,18 +91,24 @@ Route::group(['middleware' => 'logIn'], function () {
     /**
      * atLab routes.
      */
-    Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
-    Route::post('atlab/test/update', 'LabController@updateTest');
-    Route::get('atlab/lab/update/{lab_id}', 'LabController@finishTest');
+    Route::group(['middleware' => 'lab'], function () {
+
+        Route::get('atlab/view/{ticket_id}', 'LabController@openTicket');
+        Route::post('atlab/test/update', 'LabController@updateTest');
+        Route::get('atlab/lab/update/{lab_id}', 'LabController@finishTest');
+    });
 
     /**
      * atChemist routes
      */
-    Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
-    Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
-    Route::get('atchemist/submit/in-patient/{prescription_id}', 'ChemistController@submitPrescriptionInpatient');
-    Route::get('atchemist/close', 'ChemistController@closePrescription');
-    Route::post('atchemist/update', 'ChemistController@updatePrescription');
+    Route::group(['middleware' => 'chem'], function () {
+
+        Route::get('atchemist/view/{ticket_id}', 'ChemistController@currentTicket');
+        Route::get('atchemist/submit/{prescription_id}', 'ChemistController@submitPrescription');
+        Route::get('atchemist/submit/in-patient/{prescription_id}', 'ChemistController@submitPrescriptionInpatient');
+        Route::get('atchemist/close', 'ChemistController@closePrescription');
+        Route::post('atchemist/update', 'ChemistController@updatePrescription');
+    });
 
     /**
      * resources routes
@@ -118,7 +128,6 @@ Route::group(['middleware' => 'logIn'], function () {
     Route::get('resources/nurse-station/all', 'NurseStationController@all');
     Route::post('resources/nurse-station/new', 'NurseStationController@addNew');
     Route::get('resources/nurse-station/update', 'NurseStationController@update');
-
 
 
     Route::get('search/test', 'LabController@search');

@@ -42,6 +42,22 @@ class Kernel extends HttpKernel
         ],
         'logIn' => [
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
+            //'suspended' => \App\Http\Middleware\LogMiddleware::class
+        ],
+        'admin'=>[
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        ],
+        'doctor'=>[
+            'doc'=>\App\Http\Middleware\DocMiddleware::class,
+        ],
+        'lab'=>[
+            'lab'=>\App\Http\Middleware\LabMiddleware::class
+        ],
+        'chemist'=>[
+            'chem'=>\App\Http\Middleware\ChemistMiddleware::class,
+        ],
+        'receptionist'=>[
+            'recep'=>\App\Http\Middleware\ReceptionistMiddleware::class,
         ]
     ];
 

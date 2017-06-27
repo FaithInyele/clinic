@@ -11,7 +11,7 @@
                 <label for="first_name" class="col-md-4 control-label">First Name</label><br>
 
                 <div class="row">
-                    <input id="first_name" type="text" class="validate[required] form-control" name="first_name" value="{{ old('first_name') }}" required autofocus>
+                    <input id="first_name" type="text"  class="validate[required] form-control" name="first_name" value="{{ old('first_name') }}" required autofocus>
 
                     @if ($errors->has('first_name'))
                         <span class="help-block">
@@ -41,7 +41,7 @@
                     <label for="id_no" class="row control-label">National Identification Number</label><br>
 
                     <div class="row">
-                        <input id="id_no" type="number" class="form-control" name="id_no" value="{{ old('id_no') }}" required autofocus>
+                        <input id="id_no" type="number" maxlength="12" minlength="8" class="form-control" name="id_no" value="{{ old('id_no') }}" required autofocus>
 
                         @if ($errors->has('id_no'))
                             <span class="help-block">
@@ -153,18 +153,21 @@
         </form>
     </div>
     <div class="col-lg-4" style="padding-top: 15px">
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Warning!</strong> <br>
-            1. Ensure NO fields are left blank while registering a user.<br>
-            3. Ensure All data is Valid.<br>
-            3. The newly registered user's account will be activated immediately after registration
+        <div class="alert alert-info">
+            <i class="pull-right fa fa-question-circle"></i>
+            <strong>Help</strong> <br>
+            <ol>
+                <li>This Page is Used to Add New Users to the System.</li>
+                <li>Ensure All fields with a (*) are NOT left blank</li>
+                <li>Ensure all data is valid</li>
+                <li>The newly registered user's account will be activated immediately after registration</li>
+            </ol>
         </div>
         <!-- .well well-small -->
         <div class="well well-small dark">
-            <strong>Stats</strong> <br>
+            <strong>Statistics</strong> <br>
             <ul class="list-unstyled">
-                <li>My Facility <span class="inlinesparkline pull-right">Egerton, Sanatorium</span></li>
+                <li>My Facility <span class="inlinesparkline pull-right"></span></li>
                 <hr>
                 <li>Active Users <span class="dynamicbar pull-right">{{ $active_users }}</span></li>
                 <li>Inactive Users <span class="inlinebar pull-right"> {{ $inactive_users }} </span></li>
@@ -173,9 +176,5 @@
             </ul>
         </div>
         <!-- /.well well-small -->
-        <!-- .well well-small -->
-        <div class="well well-small dark">
-
-        </div>
     </div>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class ReceptionistMiddleware
 {
@@ -15,6 +16,9 @@ class ReceptionistMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if(Auth::user()->role != 'Receptionist' || Auth::user()->role != 'Admin' ){
+            return redirect('not-allowed');
+        }
         return $next($request);
     }
 }

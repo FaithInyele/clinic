@@ -27,4 +27,10 @@ class HomeController extends Controller
 
         return view('temp', compact('title'));
     }
+    public function denied(){
+        return view('denied');
+    }
+    public function notAllowed(){
+        return view('not-allowed');
+    }
 }
