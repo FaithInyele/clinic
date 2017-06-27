@@ -63,9 +63,7 @@
                            class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
                             <i class="fa fa-bars"></i>
                         </a>
-                        <a href="#right" data-toggle="onoffcanvas" class="btn btn-default btn-sm" aria-expanded="false">
-                            <span class="fa fa-fw fa-comment"></span>
-                        </a>
+                        
                     </div>
 
                 </div>
@@ -78,18 +76,7 @@
                     <!-- .nav -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{url('/')}}"><i class="fa fa-home"> Home</i></a></li>
-                        <li><a href=""><i class="fa fa-user-md"> My Profile</i></a></li>
-                        <li class='dropdown '>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Atherere <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {{--<li><a href="form-general.html">General</a></li>
-                                <li><a href="form-validation.html">Validation</a></li>
-                                <li><a href="form-wysiwyg.html">WYSIWYG</a></li>
-                                <li><a href="form-wizard.html">Wizard &amp; File Upload</a></li>--}}
-                            </ul>
-                        </li>
+                        {{--<li><a href=""><i class="fa fa-user-md"> My Profile</i></a></li>--}}
                     </ul>
                     <!-- /.nav -->
                 </div>

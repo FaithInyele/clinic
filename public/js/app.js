@@ -16462,6 +16462,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -16477,10 +16496,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             saveButton: 'save',
             serviceFee: false,
             editPreference: [],
-            editButton: 'Edit'
+            editButton: 'Edit',
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         allPreferences: function allPreferences() {
             var inheritance = this;
             axios.get(base_url + '/resources/nurse-station/all').then(function (response) {
@@ -16674,6 +16702,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     mounted: function mounted() {
@@ -16690,10 +16738,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             editPreference: [],
             editButton: 'Edit',
             payButton: true,
-            printButton: false
+            printButton: false,
+            help: false
         };
     },
     methods: {
+        helpOn: function helpOn() {
+            var inheritance = this;
+            inheritance.help = true;
+        },
+        helpOff: function helpOff() {
+            var inheritance = this;
+            inheritance.help = false;
+        },
         allPayments: function allPayments() {
             var inheritance = this;
             axios.get(base_url + '/tickets/payments/pending').then(function (response) {
@@ -42838,7 +42895,50 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
-  }, [_c('h3', [_vm._v("Pending Payments")]), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.payments), function(payment) {
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                Pending Payments\n            ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('h3', [_vm._v("Pending Payments")]), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.payments), function(payment) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -43011,7 +43111,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.closeModal
     }
   }, [_vm._v("\n                                Cancel\n                            ")])])], 2)])])])]) : _vm._e()], 1)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the Pending payments, before service delivery")]), _vm._v(" "), _c('li', [_vm._v("Click on pay to perform a transaction and ,by choice, print the accompanying receipt")]), _vm._v(" "), _c('li', [_vm._v("Ensure Payment is Done/Completed before proceeding in this page.")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -46504,14 +46606,57 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-lg-8"
+  }, [_c('div', {
+    staticClass: "row",
+    staticStyle: {
+      "margin-bottom": "10px",
+      "margin-left": "0px"
+    }
+  }, [_c('label', {
+    staticClass: "pull-left",
+    staticStyle: {
+      "font-size": "20px"
+    }
+  }, [_vm._v("\n                    Nurse Station Resources\n                ")]), _vm._v(" "), _c('i', {
+    staticClass: "fa fa-question-circle pull-right",
+    staticStyle: {
+      "color": "darkblue",
+      "font-size": "20px",
+      "cursor": "pointer"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOn()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.help),
+      expression: "help"
+    }],
+    staticClass: "row alert alert-info"
   }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.helpOff()
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('header', [_vm._v("Help information")]), _vm._v(" "), _vm._m(0)])]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     on: {
       "click": _vm.addPreference
     }
   }, [_c('i', {
     staticClass: "fa fa-plus"
-  }, [_vm._v(" Add New Nurse Station Resource")])]), _vm._v(" "), _c('h5', [_vm._v("Nurse Station Resource(s)")]), _vm._v(" "), _c('hr'), _vm._v(" "), _vm._l((_vm.preferences), function(preference) {
+  }, [_vm._v(" Add New Nurse Station Resource")])]), _vm._v(" "), _c('br'), _c('br'), _vm._v(" "), _vm._l((_vm.preferences), function(preference) {
     return _c('div', {
       staticClass: "row"
     }, [_c('div', {
@@ -46631,7 +46776,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.closeAddPreference
     }
   }, [_vm._v("\n                                    Cancel\n                                ")])])], 2)])])])]) : _vm._e()], 1)
-},staticRenderFns: []}
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('p', [_c('ol', [_c('li', [_vm._v("This Page displays all the pleriminary activities to be performed on Clients before being assigned Tickets")]), _vm._v(" "), _c('li', [_vm._v("These activities include checking of client's general Physical, Mental and Health Conditions")]), _vm._v(" "), _c('li', [_vm._v("These Resources can be Added, And Suspended at any given time, with immediate effect")])])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

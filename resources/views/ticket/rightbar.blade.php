@@ -1,8 +1,11 @@
-<div class="alert alert-danger">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Warning!</strong> <br>
-    1. Ensure NO fields are left Blank.<br>
-    3. Ensure All data is Valid.
+<div class="alert alert-info">
+    <strong>Help</strong> <i class="fa fa-question-circle pull-right"></i> <br>
+    <ol>
+        <li>This Page is used to search for registered clients and create a ticket for them. Creating a Ticket enables the client accessmedical services.</li>
+        <li>If Client isn't found Click <a href="{{url('clients/add')}}">here</a> to Register them. </li>
+        <li>Start typing , with the criteria specified, as the system automatically searches</li>
+    </ol>
+
 </div>
 <!-- .well well-small -->
 <div class="well well-small dark">

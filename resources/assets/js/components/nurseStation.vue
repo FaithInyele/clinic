@@ -1,9 +1,28 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
+            <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+                <label class="pull-left" style="font-size: 20px">
+                    Nurse Station Resources
+                </label>
+                <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer"
+                   @click="helpOn()"></i>
+            </div>
+            <div class="row">
+                <div class="row alert alert-info" v-show="help">
+                    <button type="button" class="close" @click="helpOff()">&times;</button>
+                    <header>Help information</header>
+                    <p>
+                    <ol>
+                        <li>This Page displays all the pleriminary activities to be performed on Clients before being assigned Tickets</li>
+                        <li>These activities include checking of client's general Physical, Mental and Health Conditions</li>
+                        <li>These Resources can be Added, And Suspended at any given time, with immediate effect</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
             <button class="btn btn-success" @click="addPreference"><i class="fa fa-plus"> Add New Nurse Station Resource</i></button>
-            <h5>Nurse Station Resource(s)</h5>
-            <hr>
+            <br><br>
             <div class="row" v-for="preference in preferences">
                 <div class="row" style="background-color: #f8f8f8;border: 2px solid #53CDF6">
                     <div class="row">
@@ -86,10 +105,19 @@
                 saveButton: 'save',
                 serviceFee: false,
                 editPreference: [],
-                editButton: 'Edit'
+                editButton: 'Edit',
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             allPreferences: function () {
                 var inheritance = this;
                 axios.get(base_url+'/resources/nurse-station/all')

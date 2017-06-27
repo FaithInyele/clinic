@@ -1,6 +1,26 @@
 <template xmlns:v-bind="http://www.w3.org/1999/xhtml">
     <div class="row">
         <div class="col-lg-8">
+            <div class="row" style="margin-bottom: 10px;margin-left: 0px">
+                <label class="pull-left" style="font-size: 20px">
+                    Pending Payments
+                </label>
+                <i class="fa fa-question-circle pull-right" style="color: darkblue;font-size: 20px;cursor: pointer"
+                   @click="helpOn()"></i>
+            </div>
+            <div class="row">
+                <div class="row alert alert-info" v-show="help">
+                    <button type="button" class="close" @click="helpOff()">&times;</button>
+                    <header>Help information</header>
+                    <p>
+                    <ol>
+                        <li>This Page displays all the Pending payments, before service delivery</li>
+                        <li>Click on pay to perform a transaction and ,by choice, print the accompanying receipt</li>
+                        <li>Ensure Payment is Done/Completed before proceeding in this page.</li>
+                    </ol>
+                    </p>
+                </div>
+            </div>
             <h3>Pending Payments</h3>
             <hr>
             <div class="row" v-for="payment in payments">
@@ -145,10 +165,19 @@
                 editPreference: [],
                 editButton: 'Edit',
                 payButton: true,
-                printButton: false
+                printButton: false,
+                help: false
             }
         },
         methods:{
+            helpOn: function () {
+                var inheritance = this;
+                inheritance.help = true;
+            },
+            helpOff: function () {
+                var inheritance = this;
+                inheritance.help = false;
+            },
             allPayments: function () {
                 var inheritance = this;
                 axios.get(base_url+'/tickets/payments/pending')

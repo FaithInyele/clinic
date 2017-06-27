@@ -2,6 +2,38 @@
 @section('content')
     <div class="col-lg-8 form-style">
         @if (session('newClient'))
+            <div class="row" id="printable" style="text-align: center">
+                <h1 style="text-align: center">iHospital</h1>
+                <h4 style="text-align: center">Payment Receipt</h4>
+                <div class="row" style="text-align: left">
+                    <div class="row">
+                        Client Name: {{session('newClient')->first_name}}, {{session('newClient')->other_names}}<br>
+                    </div>
+
+                </div>
+                <table class="table table-striped table-bordered dt-responsive"
+                       cellspacing="0" width="100%" style="font-size: 10px">
+                    <thead>
+                    <tr>
+                        <td>Description</td>
+                        <td>Amount</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Registration Fee</td>
+                        <td>{{session('newClient')->reg_fee}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Registration Payment Receipt</strong> <br>
+                <h6>
+                    Print <b>{{ session('newClient')->first_name }}'s</b> Registration Receipt. Click <button class="btn btn-sm btn-primary" onclick="printdata('printable')">Here</button>
+                </h6>
+            </div>
             <div class="alert alert-info">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Special Medical Condition(s)?</strong> <br>
@@ -224,6 +256,7 @@
                         <div class="form-group">
                             <div class="row" style="font-size: 12px">
                                 <input type="checkbox" id="p_check" value="paid" onchange="confirmPayment()">
+                                <input type="hidden" id="" value="100" name="reg_fee">
                                 Confirm. if Client has Paid the KSH. {{$registration_fee->fee->amount}} Registration fee.
                             </div>
                         </div>
@@ -237,19 +270,21 @@
         </div>
     </div>
     <div class="col-lg-4" style="padding-top: 15px">
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Warning!</strong> <br>
-            1. All fields with a * should NOT be left blank.<br>
-            3. Ensure All data is Valid.<br>
-            3. A client registered will be available immediately for Ticket Assignment<br>
-            4. Registration Fee is Ksh. {{$registration_fee->fee->amount}}
+        <div class="alert alert-info">
+            <strong>Help</strong> <i class="fa fa-question-circle pull-right"></i><br>
+            <ol>
+                <li>This Page is used to Add New Clients to the System. THOSE NOT YET REGISTERED</li>
+                <li>All fields with a (*) should NOT be left blank.</li>
+                <li>Click Next once all data is filled</li>
+                <li>A client registered will be available immediately for Ticket Assignment</li>
+                <li>Registration Fee is Ksh. {{$registration_fee->fee->amount}}</li>
+            </ol>
         </div>
         <!-- .well well-small -->
         <div class="well well-small dark">
             <strong>Stats</strong> <br>
             <ul class="list-unstyled">
-                <li>My Facility <span class="inlinesparkline pull-right">Egerton, Sanatorium</span></li>
+                <li>My Facility <span class="inlinesparkline pull-right"></span></li>
                 <hr>
                 <li>Total Clients <span class="dynamicbar pull-right">{{ $total_clients }}</span></li>
                 <li>Active Tickets <span class="dynamicbar pull-right"> {{ $active_tickets }}</span></li>
