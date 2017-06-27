@@ -491,3 +491,6 @@ tabs
     border: 2px solid #77aaff;
     color: #77aaff !important;
 }
+#printable{
+    display: none;
+}

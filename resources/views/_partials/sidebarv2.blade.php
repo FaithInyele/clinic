@@ -69,7 +69,7 @@
         </li>
         <li @if(isset($rightbar)) @if($rightbar=='ticket')class="active" @endif @endif>
             <a href="javascript:;">
-                <i class="fa fa-user "></i>
+                <i class="fa fa-id-badge "></i>
                 <span class="link-title">Tickets</span>
                 <span class="fa arrow"></span>
             </a>

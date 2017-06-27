@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Ticket;
@@ -41,6 +42,7 @@ class PaymentController extends Controller
                 $item->ticket = Ticket::findorFail($item->ticket_id);
                 $item->progress = Progress::where('ticket_id', $item->ticket->id)->latest()->first();
                 $item->client = Clients::findorFail($item->ticket->client_id);
+                $item->doctor = User::findorFail($item->ticket->assigned_to);
                 $item->lab_datas = LabData::where('ticket_id', $item->ticket->id)->first();
                 if ($item->lab_datas){
                     $item->tests = Test::where('lab_id', $item->id)->get();

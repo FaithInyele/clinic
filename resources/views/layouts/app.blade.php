@@ -243,6 +243,21 @@
                 $('#c_submit').attr('disabled', true)
             }
         }
+        function printdata(DivArea){
+            //save all dom structure.
+            var alldocument = document.body.innerHTML;
+            //get printable dom area
+            var printable =  document.getElementById(DivArea).innerHTML;
+            //var printable =  document.getElementById(DivArea).textContent;
+            //make printable dom area occupy all page and call print function
+
+            document.body.innerHTML = printable;
+
+
+            window.print();
+            //restore original dom
+            document.body.innerHTML = alldocument;
+        }
     </script>
     <script>
         function reg_numberr() {

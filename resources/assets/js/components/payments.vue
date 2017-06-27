@@ -37,6 +37,44 @@
                         </div>
 
                         <div class="modal-body">
+                            <div class="row" id="printable" style="text-align: center">
+                                <h1 style="text-align: center">iHospital</h1>
+                                <h4 style="text-align: center">Payment Receipt</h4>
+                                <div class="row" style="text-align: left">
+                                    <div class="row" style="text-align: right">
+                                        Ticket Number: #{{currentPayment.ticket.id}}<br>
+                                        Ticket created on: {{currentPayment.ticket.created_at}}<br>
+                                        Doctor in-charge: {{currentPayment.doctor.first_name}}, {{currentPayment.doctor.last_name}}<br>
+                                    </div>
+                                    <div class="row">
+                                        Client Name: {{currentPayment.client.first_name}}, {{currentPayment.client.other_names}}<br>
+                                    </div>
+
+                                </div>
+                                <table class="table table-striped table-bordered dt-responsive"
+                                       cellspacing="0" width="100%" style="font-size: 10px">
+                                    <thead>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>Amount</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="test in currentPayment.tests">
+                                        <td>{{test.details.resource_name}}</td>
+                                        <td>{{test.amount}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Total</b></td>
+                                        <td><b>{{currentPayment.total}}</b></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row" style="text-align: left">
+                                    Amount Paid: {{currentPayment.total}}<br>
+                                    Payment Method: {{currentPayment.payment_method}}
+                                </div>
+                            </div>
                             <slot name="body">
                                 <table class="table table-striped table-bordered dt-responsive"
                                        cellspacing="0" width="100%" style="font-size: 10px">
@@ -73,8 +111,11 @@
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                <button class="btn btn-success" @click="savePayment(currentPayment)">
+                                <button v-if="payButton" class="btn btn-success" @click="savePayment(currentPayment)">
                                     {{saveButton}}
+                                </button>
+                                <button v-if="printButton" class="btn btn-warning" onclick="printdata('printable')">
+                                    Print Receipt
                                 </button>
                                 <button class="btn btn-warning" @click="closeModal">
                                     Cancel
@@ -102,7 +143,9 @@
                 saveButton: 'Pay',
                 serviceFee: false,
                 editPreference: [],
-                editButton: 'Edit'
+                editButton: 'Edit',
+                payButton: true,
+                printButton: false
             }
         },
         methods:{
@@ -120,8 +163,8 @@
             },
             closeModal: function () {
                 var inheritance =this;
-                inheritance.modal = false;
                 inheritance.allPayments();
+                inheritance.modal = false;
             },
             savePayment: function (payment) {
                 var inheritance = this;
@@ -134,7 +177,9 @@
                             //console.log(response.data);
                             inheritance.saveButton = 'Pay';
                             inheritance.allPayments();
-                            inheritance.modal = false;
+                            inheritance.payButton = false;
+                            inheritance.printButton = true;
+                            //inheritance.modal = false;
                             //console.log(response.data);
                         })
                 }
