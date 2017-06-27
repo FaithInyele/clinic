@@ -68,8 +68,12 @@
     <script src="{{url('assets/js/jquery.backstretch.min.js')}}"></script>
     <script src="{{url('assets/js/scripts.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/af-2.1.3/b-1.2.4/b-colvis-1.2.4/b-flash-1.2.4/b-print-1.2.4/r-2.1.1/datatables.min.js"></script>
-    <!--highCharts-->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>    <!--highCharts-->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
@@ -197,7 +201,25 @@
     <script>
         //dataTables
         $(document).ready(function () {
-            $("#dataTable").dataTable();
+            $("#dataTable").dataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        text: 'Print to PDF',
+                        exportOptions: {
+                            //columns: [1,2,3,4]
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: 'Print to Excel',
+                        exportOptions: {
+                            //columns: [1,2,3,4]
+                        }
+                    }
+                ]
+            });
             $('#c_submit').attr('disabled', true);
 
             //tabs

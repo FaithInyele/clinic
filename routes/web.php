@@ -36,7 +36,7 @@ Route::group(['middleware' => 'logIn'], function () {
      */
     Route::get('clients/all', 'ClientsController@listAll');
     Route::get('clients', 'ClientsController@index');
-    
+
     Route::get('clients/add', 'ClientsController@create');
     Route::post('clients/add', 'ClientsController@store');
     Route::post('clients/delete', 'ClientsController@destroy');
