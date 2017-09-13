@@ -59,7 +59,7 @@
                             <i class="fa fa-list"></i>&nbsp; List All </a>
                     </li>
                 @endif
-                @if(Auth::user()->role == 'Receptionist')
+                @if(Auth::user()->role == 'Receptionist' || Auth::user()->role == 'Admin')
                     <li>
                         <a href="{{url('clients/add')}}">
                             <i class="fa fa-plus-square"></i>&nbsp; Add New Client </a>
@@ -86,13 +86,13 @@
                             <i class="fa fa-list"></i>&nbsp; My Tickets (All)</a>
                     </li>
                 @endif
-                @if(Auth::user()->role == 'Nurse/Doctor' || Auth::user()->role == 'Doctor' )
+                @if(Auth::user()->role == 'Nurse/Doctor' || Auth::user()->role == 'Doctor' || Auth::user()->role == 'Admin' )
                     <li>
                         <a href="{{url('tickets/consultations')}}">
                             <i class="fa fa-list"></i>&nbsp; Requested Consultations</a>
                     </li>
                 @endif
-                @if(Auth::user()->role == 'Receptionist')
+                @if(Auth::user()->role == 'Receptionist' || Auth::user()->role == 'Admin')
                     <li>
                         <a href="{{url('tickets/add')}}">
                             <i class="fa fa-plus-square"></i>&nbsp; Create New Ticket </a>
@@ -111,13 +111,13 @@
                 <span class="fa arrow"></span>
             </a>
             <ul class="collapse">
-                @if(Auth::user()->role == 'Chemist')
+                @if(Auth::user()->role == 'Chemist' || Auth::user()->role == 'Admin')
                     <li>
                         <a href="{{url('resources/chemist')}}">
                             <i class="fa fa-medkit"></i> Chemist Resources</a>
                     </li>
                 @endif
-                @if(Auth::user()->role == 'Lab Technician')
+                @if(Auth::user()->role == 'Lab Technician' || Auth::user()->role == 'Admin')
                     <li>
                         <a href="{{url('resources/lab')}}">
                             <i class="fa fa-thermometer"></i>&nbsp; Lab Resources</a>

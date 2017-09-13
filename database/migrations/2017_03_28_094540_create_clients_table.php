@@ -17,18 +17,22 @@ class CreateClientsTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('other_names');
-            $table->string('id_number')->unique();
-            $table->string('reg_number')->unique()->nullable();
             $table->string('gender');
-            $table->string('yob');
-            $table->string('type');
-            $table->string('phone');
+            $table->date('yob');
+            $table->integer('weight');
+            $table->integer('length');
+            $table->string('county');
+            $table->string('sub-county');
+            $table->string('town');
+            $table->string('vilage');
+            $table->string('mothers_name')->nullable();
+            $table->integer('mothers_id_no')->nullable();
+            $table->integer('mothers_telephone_no')->nullable();
+            $table->string('fathers_name')->nullable();
+            $table->integer('fathers_id_no')->nullable();
+            $table->integer('fathers_telephone_no')->nullable();
             $table->string('address')->nullable();
-            $table->integer('reg_fee')->nullable();
-            $table->string('email')->nullable();
-            $table->string('keen_type')->nullable();
-            $table->string('keen_name')->nullable();
-            $table->string('keen_contact')->nullable();
+
             $table->timestamps();
         });
     }
