@@ -87,10 +87,10 @@
                     </li>
                 @endif
                 @if(Auth::user()->role == 'Nurse/Doctor' || Auth::user()->role == 'Doctor' || Auth::user()->role == 'Admin' )
-                    <li>
-                        <a href="{{url('tickets/consultations')}}">
-                            <i class="fa fa-list"></i>&nbsp; Requested Consultations</a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a href="{{url('tickets/consultations')}}">--}}
+                            {{--<i class="fa fa-list"></i>&nbsp; Requested Consultations</a>--}}
+                    {{--</li>--}}
                 @endif
                 @if(Auth::user()->role == 'Receptionist' || Auth::user()->role == 'Admin')
                     <li>

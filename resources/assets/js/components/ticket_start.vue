@@ -3,7 +3,7 @@
         <div class="row">
             <h3>Search Client to Start ticket</h3>
             <hr>
-            <h6>Search can take Student ID No, National ID No. or Name(s)</h6>
+            <h6>Search can take Name(s)</h6>
             <div class="form-group">
                 <input type="text" class="form-control" v-model="searchTerm">
             </div>
@@ -17,7 +17,7 @@
         <div class="row pullquote-left" v-for="result in results" style="padding-left: 20px">
             <a :href="baseUrl+'/tickets/start?client_id='+result.id+'&client_fname='+result.first_name ">
             <p><b>First Name:</b>{{ result.first_name}}   <b style="margin-left: 10px">Other Names:</b>{{ result.other_names}}</p>
-            <p><b>Client Type:</b> {{result.type}}</p>
+            <p><b>Client Type:</b> {{result.gender}}</p>
             <p><b>Year of Birth:</b> {{ result.yob}}</p>
             </a>
         </div>

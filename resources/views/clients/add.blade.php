@@ -372,7 +372,7 @@
                         <div class="form-group{{ $errors->has('fathers_telephone_no') ? ' has-error' : '' }}">
                             <label for="fathers_telephone_no" class="row control-label">Fathers Telephone No</label>
                             <div class="row">
-                                <input id="fathers_telephone_no" type="text" maxlength="12" minlength="8" onkeypress="return isNumber(event)" class="form-control required" name="fathers_telephone_no" value="{{ old('fathers_telephone_no') }}" required>
+                                <input id="fathers_telephone_no" type="number" class="form-control" name="fathers_telephone_no">
                                     {{ old('fathers_telephone_no') }}
                                 @if ($errors->has('fathers_telephone_no'))
                                     <span class="help-block">
@@ -399,7 +399,7 @@
                         <!--confirm payment -->
                         <div class="form-group">
                             <div class="row" style="font-size: 12px">
-                                <button type="checkbox" id="p_check" value="paid" onchange="confirmPayment()">
+                                <input type="checkbox" id="p_check" value="paid" onchange="confirmPayment()">
                                 <input type="hidden" id="" value="100" name="reg_fee">
                                 Confirm. if Client has Paid the KSH. {{$registration_fee->fee->amount}} Registration fee.
                             </div>

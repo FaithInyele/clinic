@@ -65,7 +65,6 @@ class TicketController extends Controller
         $search_term = $request->term;
         $results = Clients::where('first_name', 'LIKE', '%'.$search_term.'%')
             ->orwhere('other_names', 'LIKE', '%'.$search_term.'%')
-            ->orwhere('id_number', 'LIKE', '%'.$search_term.'%')
             ->get();
         return Response::json($results);
     }
